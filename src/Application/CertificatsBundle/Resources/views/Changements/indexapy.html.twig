@@ -82,8 +82,10 @@ LISTE DES CHANGEMENTS
 
 {% endblock %}
 
+
 {% block footer %}
 {% endblock %}
+        
 
 {% block grid_actions %}
 <div class="mass-actions">
@@ -175,9 +177,9 @@ LISTE DES CHANGEMENTS
 {# -------------------------------------------- grid_column_filter_type_massaction --------------------------------------- #}
 {% block grid_column_filter_type_massaction %}
    <!-- <input type="button" class="grid-search-reset" value="R" title="{{ 'Reset'|trans }}" onclick="return {{ grid.hash }}_reset();"/>-->
-     <input type="button" class="btn btn-small btn-warning" value="Reset" title="{{ 'Reset'|trans }}" onclick="return {{ grid.hash }}_reset();"/>
+     <input type="button" class="btn btn-small btn-primary" value="Reset" title="{{ 'Reset'|trans }}" onclick="return {{ grid.hash }}_reset();"/>
 {% endblock grid_column_filter_type_massaction %}
 {# -------------------------------------------- grid_column_filter_type_massaction_filter --------------------------------------- #}
 {% block grid_column_filter_type_actions %}
-    <a class="btn btn-small btn-warning" href="{{ grid_url('reset', grid) }}">{{ 'Reset Actions'|trans }}</a>
+    <a class="btn btn-small btn-primary" href="{{ grid_url('reset', grid) }}">{{ 'Reset Actions'|trans }}</a>
 {% endblock grid_column_filter_type_actions %}
