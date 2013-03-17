@@ -1,0 +1,95 @@
+<?php
+
+namespace Application\MyNotesBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Notes
+ *
+ * @ORM\Table(name="notes")
+ * @ORM\Entity(repositoryClass="Application\MyNotesBundle\Entity\NotesRepository")
+ */
+
+class Notes
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text", type="string", length=128, nullable=false)
+     */
+    private $text;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=60, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="xyz", type="string", length=20, nullable=false)
+     */
+    private $xyz;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dt", type="datetime", nullable=false)
+     */
+    private $dt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="wh", type="string", length=20, nullable=false)
+     */
+    private $wh;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="proprio", type="integer", nullable=false)
+     */
+    private $proprio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="classement", type="string", length=8, nullable=false)
+     */
+    private $classement;
+
+    /**
+     * @var \NotesCategories
+     *
+     * @ORM\ManyToOne(targetEntity="NotesCategories")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="categories", referencedColumnName="id")
+     * })
+     */
+    private $categories;
+
+    /**
+     * @var \NotesColor
+     *
+     * @ORM\ManyToOne(targetEntity="NotesColor")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="color", referencedColumnName="id")
+     * })
+     */
+    private $color;
+
+
+}

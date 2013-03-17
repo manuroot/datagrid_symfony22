@@ -1,0 +1,114 @@
+{% block NAVIGATION_BAR %}
+<div class="navbar navbar-fixed-top navbar-inverse">
+                    <div class="navbar-inner">
+                        <div class="container-fluid"> 
+                            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span> 
+                                <span class="icon-bar"></span> 
+                            </a>
+                            <a class="brand" href="#">{% block toto %}I-CHANGE(v1.1){% endblock %}</a>
+                              
+
+    
+                              <div class="btn-group pull-right"> 
+                                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-user"></i>
+                                        {% if is_granted("ROLE_USER") or is_granted("ROLE_USER") %}
+                                        {{ app.user.username }} 
+                                     {% else %}
+                                        Username
+                                    {% endif %}
+                                       <span class="caret"></span> 
+                                  </a>
+                                      
+                               
+                               <ul class="dropdown-menu">
+                                  <!--  <li class="divider"></li>-->
+                                    
+                                       {% if is_granted("ROLE_ADMIN") %}
+                                    <li><a href="{{ path('sonata_admin_dashboard') }}">{{ 'Admin Dashboard' }}</a>
+                                
+                                       {% endif %}   
+                                    
+                                    <li><a href="{{ path('sonata_user_profile_edit_authentication') }}">{{ 'Edit Profile' }}</a>
+                                    <li><a href="{{ path('fos_user_registration_register') }}">{{ 'Register'|trans }}</a>
+                                    </li>
+                                 
+                                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                       <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                                     <li><a href="{{ path('fos_user_change_password') }}">{{ 'Changer password' }}</a></li>
+                                    {% else %}
+                                      <li>  <a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                                    {% endif %}   
+                                        
+           
+                                </ul>
+                            </div>
+                            <div class="nav-collapse">
+                                <ul class="nav">
+                                    
+                                        <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
+                                               Changements<b class="caret"></b> </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('changements') }}"><i class="icon-camera"></i> {{ 'Changements'|trans }}</a></li>
+                                             <li><a href="{{ path('changementsapy') }}"><i class="icon-camera"></i> {{ 'Changements DataGrid'|trans }}</a></li>
+                                                <li><a href="{{ path('docchangements') }}"><i class="icon-camera"></i> {{ 'Fichiers'|trans }}</a></li>
+                                        
+                                        
+                                        </ul>
+                                    </li>
+                                      
+                                       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
+                                               Certificats<b class="caret"></b> </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('certificatscenter') }}"><i class="icon-camera"></i> {{ 'Certificats'|trans }}</a></li>
+                                                   <li><a href="{{ path('certificatscenter_viewapy') }}"><i class="icon-plus-sign"></i> {{ 'Certificats-APY'|trans }}</a></li>
+                                                     <li><a href="{{ path('certificatscenter_new') }}"><i class="icon-camera"></i> {{ 'Nouveau Certificat'|trans }}</a></li>
+                           
+                                        </ul>
+                                    </li>
+                                    
+                                   
+  
+                                    
+                                    
+                                       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
+                                               Taches<b class="caret"></b> </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('task') }}"><i class="icon-camera"></i> {{ 'Taches'|trans }}</a></li>
+                                               <li><a href="{{ path('tag') }}"><i class="icon-camera"></i> {{ 'Tags'|trans }}</a></li>
+
+                           
+                                        </ul>
+                                    </li>
+                                    
+                                         
+                                    
+                                    <li><a href="{{ path('sonata_news_home') }}">{{ 'Blog'|trans }}</a></li>
+                               
+                                    
+                                 
+                                    
+                                     <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
+                                               Administration<b class="caret"></b> </a>
+                                        <ul class="dropdown-menu">
+                                               <li><a href="{{ path('chronouser') }}"><i class="icon-camera"></i> {{ 'Utilisateurs'|trans }}</a></li>
+                                            <li><a href="{{ path('chronogroup') }}"><i class="icon-plus-sign"></i> {{ 'Groupes'|trans }}</a></li>
+                                          <li><a href="{{ path('environnement') }}"><i class="icon-camera"></i> {{ 'Environnements'|trans }}</a></li>
+                           
+                                          <li><a href="{{ path('applications') }}"><i class="icon-camera"></i> {{ 'Applications'|trans }}</a></li>
+<li><a href="{{ path('projets') }}"><i class="icon-camera"></i> {{ 'Projets'|trans }}</a></li>
+
+                           
+                                        </ul>
+                                    </li>
+                                    
+                               
+                                 </ul>  
+                                 
+                            </div>
+                            <!--/.nav-collapse -->
+                        </div>
+                    </div>
+                </div>
+{% endblock %}    

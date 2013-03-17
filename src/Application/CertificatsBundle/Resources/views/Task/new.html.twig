@@ -1,0 +1,36 @@
+{% extends "ApplicationCertificatsBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
+     
+ {% endblock %}
+
+{% block content_header '' %}
+{% block title %}AJOUTER UNE TACHE{% endblock %}
+{% block content %}
+
+<br><br>
+<form class="form-horizontal" action="{{ path('task_create') }}" method="post" {{ form_enctype(form) }}>
+{#
+<form action="task_create" method="POST" {{ form_enctype(form) }}>
+    {# render the task's only field: description #}
+    {{ form_row(form.nom) }}
+
+    <h3>Tags</h3>
+    <ul class="tags">
+        {# iterate over each existing tag and render its only field: name #}
+        {% for tag in form.tags %}
+            <li>{{ form_row(tag.nom) }}</li>
+        {% endfor %}
+    </ul>
+
+    {{ form_rest(form) }}
+     <p>
+                          <button type="submit" class="btn btn-large btn-warning">Ajouter</button>
+                    <a href="{{ path('task') }}" class="btn btn-large btn-success">Retour</a>
+                </p>
+            </form>
+  
+</form>
+{% endblock %}

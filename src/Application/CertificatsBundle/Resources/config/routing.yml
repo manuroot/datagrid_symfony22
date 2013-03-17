@@ -1,0 +1,46 @@
+_changements:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/changements.yml"
+    prefix:   /
+    
+application_certificats_certificatscenter:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/certificatscenter.yml"
+    prefix:   /certificatscenter
+
+application_certificats_certificatsapplis:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/certificatsapplis.yml"
+    prefix:   /certificatsapplis
+    
+application_certificats_certificatsprojets:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/certificatsprojet.yml"
+    prefix:   /certificatsprojets
+
+_chronousers:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/chronouser.yml"
+    prefix:   /chronousers
+    
+_chronousergroup:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/chronousergroup.yml"
+    prefix:   /chronogroups
+    
+
+_environnements:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/environnements.yml"
+    prefix:   /environnements
+    
+_tasks:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/task.yml"
+    prefix:   /task
+
+_tags:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/tag.yml"
+    prefix:   /tag
+    #prefix:   /admin/tag
+ 
+_docchangements:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/docchangements.yml"
+    prefix:   /docchangements
+    #prefix:   /admin/tag
+    
+download_route:
+    pattern:  /download/{filename}
+    defaults: { _controller: ApplicationCertificatsBundle:Changements:download }    

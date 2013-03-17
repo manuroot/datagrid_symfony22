@@ -1,0 +1,213 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+     # Sonata Bundles
+    - { resource: sonata/sonata_admin.yml }
+    - { resource: sonata/sonata_doctrine.yml }
+    - { resource: sonata/sonata_user.yml }
+    #- { resource: sonata/sonata_media.yml }
+    - { resource: sonata/sonata_formatter.yml }
+    - { resource: sonata/sonata_news.yml }
+  #  - { resource: sonata/sonata_page.yml }
+   
+#==================================================
+#  FRAMEWORK
+#==================================================
+
+framework:
+    #esi:             ~
+    translator:      { fallback: %locale% }
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         ~
+    fragments:       ~
+
+   
+#==================================================
+# TWIG Configuration
+#==================================================
+
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+
+#==================================================
+#  ASSETIC
+#==================================================
+
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:        [ ]
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        #closure:
+        #    jar: %kernel.root_dir%/Resources/java/compiler.jar
+        #yui_css:
+        #    jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
+
+#==================================================
+#  DOCTRINE
+#==================================================
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver, add the path in parameters.yml
+        # e.g. database_path: %kernel.root_dir%/data/data.db3
+        # path:     %database_path%
+        #mapping_types:
+        #     enum: string
+        types:
+           json: Sonata\Doctrine\Types\JsonType
+    orm:
+      #  entity_managers:
+       #     default:
+       #         mappings:
+       #             SonataMediaBundle: ~
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+        dql:
+            string_functions:
+                        GroupConcat: DoctrineExtensions\Query\Mysql\GroupConcat
+
+
+#==================================================
+#  MAILER
+#==================================================
+
+swiftmailer:
+    transport: %mailer_transport%
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    spool:     { type: memory }
+
+#==================================================
+#  KNP_PAGINATOR ET SORT
+#==================================================
+    
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: false                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+      # sliding pagination controls template
+      pagination: ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig
+       # sliding pagination controls template
+      sortable: ApplicationCertificatsBundle:pagination:sortable_link.html.twig 
+      # sort link template
+   
+#==================================================
+#  DATAGRID APY
+#==================================================
+apy_data_grid:
+    limits:
+        # Defaults:
+        20:                  20
+        50:                  50
+        100:                 100
+    persistence:          false
+    no_data_message:      No data
+    no_result_message:    No result
+    actions_columns_size:  200
+    actions_columns_separator:  " "
+    pagerfanta:
+        enable:               true
+        view_class: Pagerfanta\View\TwitterBootstrapView #default    Pagerfanta\View\DefaultView
+        #options:            #all options of pager fanta view constructor
+        #view_class:           Pagerfanta\View\DefaultView
+#==================================================
+#  FOSUSER
+# pour les commandes fos:user:create
+#==================================================
+#==================================================
+#  FOSUSER
+# pour les commandes fos:user:create
+#==================================================
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Application\Sonata\UserBundle\Entity\User 
+    group:
+      group_class: Application\Sonata\UserBundle\Entity\Group 
+    profile:  # Authentication Form
+        form:
+            type:               fos_user_profile
+            name:               fos_user_profile_form
+            validation_groups:  [Authentication] # Please note : this is not the default value
+            
+            # On utilise twig_swift pour pouvoir envoyer un email en HTML
+    service:
+        mailer: fos_user.mailer.twig_swift
+    # Permet de renseigner le nouveau formulaire d'inscription
+    registration:
+        form:
+          # default form
+            type: fos_user_registration
+        # Permet la validation automatique du compte par envoi d'un email
+        confirmation:
+            enabled:    true
+            from_email:
+                # Adresse de l'expediteur
+                address:        noreply@monsiteweb.com
+                # Nom de l'expediteur
+                sender_name:    Admin de monsiteweb.com
+        # Permet de définir le template de l'email à envoyer (en html)
+        #email:
+        #    template: MyAppMonBundle:User:registration.email.twig
+ 
+   # registration:
+   #   form:
+   #     type: myapp_user_registration
+
+sonata_media:
+    default_context: default
+    db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
+    contexts:
+        default:  # the default context is mandatory
+            providers:
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+
+    cdn:
+        server:
+            path: /uploads/media # http://media.sonata-project.org/
+
+    filesystem:
+        local:
+            directory:  %kernel.root_dir%/../web/uploads/media
+            create:     false
+            
+frequence_web_calend_r:  []
+
+#services:
+#    my_event_provider:
+#        class: Application\CertificatsBundle\Entity\Changements
+ #       tags:
+  #          - { name: calendr.event_provider }

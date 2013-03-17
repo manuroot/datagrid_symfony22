@@ -1,0 +1,30 @@
+environnement:
+    pattern:  /
+    defaults: { _controller: "ApplicationCertificatsBundle:Environnements:index" }
+
+environnement_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationCertificatsBundle:Environnements:show" }
+
+environnement_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationCertificatsBundle:Environnements:new" }
+
+environnement_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationCertificatsBundle:Environnements:create" }
+    requirements: { _method: post }
+
+environnement_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationCertificatsBundle:Environnements:edit" }
+
+environnement_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationCertificatsBundle:Environnements:update" }
+    requirements: { _method: post }
+
+environnement_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationCertificatsBundle:Environnements:delete" }
+    requirements: { _method: post }

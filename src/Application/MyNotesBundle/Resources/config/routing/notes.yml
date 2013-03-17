@@ -1,0 +1,41 @@
+notes:
+    pattern:  /
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:index" }
+
+notesfanta:
+    pattern:  /fanta/{page}
+    defaults: { _controller: ApplicationMyNotesBundle:Notes:viewfanta,page: 1 }
+    requirements:
+       _method:  GET
+       page: \d+
+
+notesapy:
+    pattern:  /apy
+    defaults: { _controller: ApplicationMyNotesBundle:Notes:viewapy }
+       
+notes_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:show" }
+
+notes_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:new" }
+
+notes_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:create" }
+    requirements: { _method: post }
+
+notes_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:edit" }
+
+notes_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:update" }
+    requirements: { _method: post }
+
+notes_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:delete" }
+   # requirements: { _method: post }

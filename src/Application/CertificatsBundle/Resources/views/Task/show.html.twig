@@ -1,0 +1,62 @@
+{% extends "ApplicationCertificatsBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
+
+ {% endblock %}
+
+{% block content_header '' %}
+{% block title %}Taches {% endblock %}
+
+{% block content %}
+
+<br><br>
+
+<table class="table table-striped table-bordered table-hover">
+
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ entity.nom }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('task') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('task_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('task_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+<h3>Nb Tags</h3>
+status: {{ tagstatus }}
+{{ nbtags }}
+                
+<h3>Tags</h3>
+
+    {# iterate over each existing tag and render its only field: name #}
+                {% for tag in entity.tags %}
+        <li>{{ tag.nom }}</li>
+                {% endfor %}
+
+
+
+ {% endblock %}

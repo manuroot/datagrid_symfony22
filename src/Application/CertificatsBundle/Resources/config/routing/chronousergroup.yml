@@ -1,0 +1,30 @@
+chronogroup:
+    pattern:  /
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUsergroup:index" }
+
+chronogroup_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUsergroup:show" }
+
+chronogroup_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUsergroup:new" }
+
+chronogroup_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUsergroup:create" }
+    requirements: { _method: post }
+
+chronogroup_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUsergroup:edit" }
+
+chronogroup_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUsergroup:update" }
+    requirements: { _method: post }
+
+chronogroup_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUsergroup:delete" }
+    requirements: { _method: post }

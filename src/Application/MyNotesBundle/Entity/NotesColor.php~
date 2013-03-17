@@ -1,0 +1,33 @@
+<?php
+
+namespace Application\MyNotesBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * NotesColor
+ *
+ * @ORM\Table(name="notes_color")
+ * @ORM\Entity(repositoryClass="Application\MyNotesBundle\Entity\NotesColorRepository")
+ */
+
+class NotesColor
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=20, nullable=false)
+     */
+    private $nom;
+
+
+}

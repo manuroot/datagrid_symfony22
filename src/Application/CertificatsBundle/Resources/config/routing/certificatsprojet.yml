@@ -1,0 +1,30 @@
+projets:
+    pattern:  /
+    defaults: { _controller: "ApplicationCertificatsBundle:CertificatsProjet:index" }
+
+projets_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationCertificatsBundle:CertificatsProjet:show" }
+
+projets_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationCertificatsBundle:CertificatsProjet:new" }
+
+projets_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationCertificatsBundle:CertificatsProjet:create" }
+    requirements: { _method: post }
+
+projets_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationCertificatsBundle:CertificatsProjet:edit" }
+
+projets_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationCertificatsBundle:CertificatsProjet:update" }
+    requirements: { _method: post }
+
+projets_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationCertificatsBundle:CertificatsProjet:delete" }
+   # requirements: { _method: post|get }

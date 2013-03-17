@@ -1,0 +1,87 @@
+{% extends "ApplicationSonataNewsBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
+     
+ {% endblock %}
+
+      
+       {% block javascripts %}
+      {{ parent() }}
+     {#{ tinymce_init() }#}
+  {% endblock %}
+      
+   
+{% block content_header '' %}
+{% block title %}
+ MON BLOG DETAILS
+{% endblock %}
+
+
+{% block content %}
+
+{#
+
+/*
+ * This file is part of the Sonata package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+#}
+<h1>MES POSTS</h1>
+<div class="sonata-blog-post-container">
+    <div class="sonata-blog-post-date-container">
+        {{ post.publicationDateStart | format_date }}
+    </div>
+
+    <h1 class="sonata-blog-post-title">
+        <a href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(post) }) }}">{{ post.title }}</a>
+        <span class="sonata-blog-post-author">{{ 'archive_author'|trans({'%author%': post.author }, 'SonataNewsBundle') }}</span>
+    </h1>
+
+    <div class="sonata-blog-post-information">
+
+        <div class="sonata-blog-post-tag-container">
+            <div class="sonata-blog-post-tag-title">
+                {{ 'published_under'|transchoice(post.tags|length, {}, 'SonataNewsBundle') }}
+            </div>
+            <div class="sonata-blog-post-tag-list">
+                {% for tag in post.tags%}
+                    <a href="{{ url('sonata_news_tag', {'tag': tag.slug} ) }}">{{ tag.name }}</a>
+                    {% if not loop.last%}, {%endif%}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="sonata-blog-post-content">
+        {{ post.content|raw }}
+    </div>
+
+        
+       {{ render(controller('SonataNewsBundle:Post:comments', { 'postId': post.id  })) }}
+  
+
+    {#% render 'SonataNewsBundle:Post:comments' with {'postId': post.id} %#}
+
+    {% if post.iscommentable %}
+         {{ render(controller('SonataNewsBundle:Post:addCommentForm', { 'postId': post.id,
+            'form': form  })) }}
+         
+         {#% render 'SonataNewsBundle:Post:addCommentForm' with {
+        {% render 'SonataNewsBundle:Post:addCommentForm' with {
+            'postId': post.id,
+            'form': form
+        } %#}
+    {% else %}
+        <div>
+            {{ 'message_comments_are_closed'|trans({}, 'SonataNewsBundle') }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

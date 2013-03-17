@@ -1,0 +1,38 @@
+changements:
+    pattern:  /
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:index" }
+
+changementsapy:
+    pattern:  /indexapy
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:indexapy" }
+    
+changements_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:show" }
+
+changements_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:new" }
+
+changements_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:create" }
+    requirements: { _method: post }
+
+changements_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:edit" }
+
+changements_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:update" }
+    requirements: { _method: post }
+
+changements_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:delete" }
+    requirements: { _method: post }
+changements_upload:
+    pattern:  /upload
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:upload" }
+   

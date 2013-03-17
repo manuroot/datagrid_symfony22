@@ -1,0 +1,108 @@
+{% extends "ApplicationCertificatsBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
+     
+ {% endblock %}
+
+{% block content_header '' %}
+{% block title %}
+LISTE DES {{ parent() }} 
+{% endblock %}
+{% block content %}
+
+{% for type, flashMessages in app.session.flashbag.all() %}
+    {% for flashMessage in flashMessages %}
+        <div class="alert alert-{{ type }}">
+            {{ flashMessage|trans }}
+        </div>
+    {% endfor %}
+{% endfor %}
+<a href="{{ path('certificatscenter_new') }}" class="btn btn-small btn-primary">Ajouter Certificat</a>
+<br> <br>  
+
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr class="title">
+              <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+    <th{% if pagination.isSorted('a.fileName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Filename', 'a.fileName') }}</th>
+ 
+ <th{% if pagination.isSorted('b.nomprojet') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Projet', 'b.nomprojet') }}</th>
+ <th{% if pagination.isSorted('c.fileType') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Type', 'c.fileType') }}</th>
+ 
+ <th{% if pagination.isSorted('a.cnName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'CN', 'a.cnName') }}</th>
+      
+ <th{% if pagination.isSorted('a.endTime') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Fin', 'a.endTime') }}</th>
+ 
+ <th{% if pagination.isSorted('a.serverName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Serveur', 'a.serverName') }}</th>
+ 
+ <th{% if pagination.isSorted('a.port') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Port', 'a.port') }}</th>
+ <th{% if pagination.isSorted('a.serviceName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Service', 'a.serviceName') }}</th>
+            <th colspan="3"><center>Actions</center></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in pagination %}
+  
+             {% if date(entity.endTime) < date('-30days') %}
+              <tr class="warning">
+              {% else %}
+              <tr>
+             {% endif %}   
+            <td> {{entity.id }}</td>
+            <td>{{ entity.fileName }}</td>
+               <td>{{ entity.project.nomprojet }}</td>
+           <td>{{ entity.typeCert.FileType }}</td>
+            
+        
+            <td>{{ entity.cnName }}</td>
+           <!-- <td>{% if entity.startDate %}
+                    {{ entity.startDate|date('Y-m-d') }}{% endif %}</td>-->
+                    
+                    
+            {% if entity.endTime %}
+
+              
+           <td>    {{ entity.endTime|date('Y-m-d') }}</td>
+           
+{% endif %}
+       <!--    <td>{#% if entity.addedDate %}{{ entity.addedDate|date('Y-m-d') }}{% endif %#}</td>-->
+            <td>{{ entity.serverName }}</td>
+            <td>{{ entity.port }}</td>
+            <td>{{ entity.serviceName }}</td>
+           <!-- <td>{{ entity.way }}</td>-->
+           <!-- <td>{{ entity.statusFile }}</td>-->
+                 <td>
+                    <a href="{{ path('certificatscenter_show', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationcertificats/images/detail.png') }}" alt="show" width="15" height="15" />
+                    </a>
+                </td>
+                <td>
+
+
+                    <a href="{{ path('certificatscenter_edit', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationcertificats/images/edit.png') }}" alt="edit" width="15" height="15" />
+                    </a>
+                </td>
+                   {% if is_granted("ROLE_ADMIN") %}
+                  <td>
+
+
+                    <a href="{{ path('certificatscenter_delete', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationcertificats/images/delete.png') }}" alt="delete" width="15" height="15" />
+                    </a>
+                </td>
+{% else %}  <td></td>
+                           {% endif %}  
+                
+                
+          
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+   {{ knp_pagination_render(pagination, 'ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig') }}
+  {#{ knp_pagination_render(pagination) }#}
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "ApplicationMyNotesBundle::layout.html.twig" %}
+
+{% block title %}Symfony 2.1- Demos {% endblock %}
+
+{% block content_header '' %}
+
+{% block content %}
+
+<h1>Notes list</h1>
+
+<h1>Notes creation</h1>
+
+<form action="{{ path('notes_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('notes') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+chronouser:
+    pattern:  /
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUser:index" }
+
+chronouser_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUser:show" }
+
+chronouser_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUser:new" }
+
+chronouser_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUser:create" }
+    requirements: { _method: post }
+
+chronouser_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUser:edit" }
+
+chronouser_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUser:update" }
+    requirements: { _method: post }
+
+chronouser_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationCertificatsBundle:ChronoUser:delete" }
+    requirements: { _method: post }

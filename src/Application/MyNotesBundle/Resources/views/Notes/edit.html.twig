@@ -1,0 +1,21 @@
+{% extends "ApplicationMyNotesBundle::layout.html.twig" %}
+
+{% block title %}Sticky Notes{% endblock %}
+
+{% block content_header '' %}
+
+{% block content %}
+
+<h1>Notes edit</h1>
+
+<form class="form-horizontal" action="{{ path('notes_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit" class="btn btn-warning">Modifier</button>
+ 
+        <a href="{{ path('notes') }}" class="btn btn-small btn-success">Retour</a>
+
+    </p>
+</form>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+services:
+   application.certificats.admin.certificatsprojet:
+      class: Application\CertificatsBundle\Admin\CertificatsProjetAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Projets, label: Liste des Projets }
+      arguments: [null, Application\CertificatsBundle\Entity\CertificatsProjet, ApplicationCertificatsBundle:CertificatsProjetAdmin]   
+
+   application.certificats.admin.certificatsfiletype:
+      class: Application\CertificatsBundle\Admin\CertificatsFiletypeAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Projets, label: Liste des Types }
+      arguments: [null, Application\CertificatsBundle\Entity\CertificatsFiletype, ApplicationCertificatsBundle:CertificatsFiletypeAdmin]   
+      
+  
