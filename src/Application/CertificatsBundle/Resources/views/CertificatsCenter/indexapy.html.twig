@@ -50,10 +50,15 @@ LISTE DES {{ parent() }}
 <a href="{{ path('certificatscenter_new') }}" class="btn btn-small btn-primary">Ajouter Certificat</a>
 <br> <br> 
 
+
+{{ grid_search(grid) }}
+
+
+
 {{ grid(grid, _self) }}
 
 
-<!--{{ grid_search(grid) }}-->
+
 {#{ grid(grid, 'ApplicationCertificatsBundle::apygrid/blocks.html.twig') }#} 
 
 {% endblock %}
