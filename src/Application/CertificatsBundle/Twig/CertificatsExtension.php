@@ -10,7 +10,7 @@ class CertificatsExtension extends \Twig_Extension
             'price' => new \Twig_Filter_Method($this, 'priceFilter'),
             'var_dump'   => new \Twig_Filter_Function('var_dump'),
             'highlight'  => new \Twig_Filter_Method($this, 'highlight'),
-
+   'highlightme'  => new \Twig_Filter_Method($this, 'highlightme'),
             
         );
     }
@@ -20,11 +20,13 @@ class CertificatsExtension extends \Twig_Extension
                             '<span style="color:red">\1</span>', $sentence);
     }
     
-    
+     public function highlightme($expr) {
+        return '<h2><span style="color:red">' . $expr . '</span></h2>';
+    }
     public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
     {
         $price = number_format($number, $decimals, $decPoint, $thousandsSep);
-        $price = '$' . $price;
+        $price = '$' . $price . 'monprice';
 
         return $price;
     }
