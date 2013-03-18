@@ -56,7 +56,7 @@ class Changements
       Au moins {{ limit }} caracteres."
       )
      * @Assert\MaxLength(
-     *      limit=10,
+     *      limit=35,
      *      message="Less than {{ limit }} characters.|
       Au max {{ limit }} caracteres."
      * )

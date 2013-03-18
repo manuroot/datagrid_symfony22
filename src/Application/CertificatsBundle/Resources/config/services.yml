@@ -10,5 +10,8 @@ services:
       tags:
         - { name: sonata.admin, manager_type: orm, group: Projets, label: Liste des Types }
       arguments: [null, Application\CertificatsBundle\Entity\CertificatsFiletype, ApplicationCertificatsBundle:CertificatsFiletypeAdmin]   
-      
-  
+ 
+   application.twig.certificats_extension:
+        class: Application\CertificatsBundle\Twig\CertificatsExtension
+        tags:
+            - { name: twig.extension }  

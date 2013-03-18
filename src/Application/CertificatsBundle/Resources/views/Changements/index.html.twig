@@ -22,6 +22,11 @@ Changements
     </div>
     {% endfor %}
 {% endfor %}
+{# outputs $5,500.00 #}
+{{ '5500'|price }}
+
+{{ 'Highlight this sentence'|highlight('i')|raw }}
+
 
  <a href="{{ path('changements_new') }}" class="btn btn-small btn-primary">Ajouter Changement</a>
     
