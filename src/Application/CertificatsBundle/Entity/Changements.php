@@ -438,7 +438,7 @@ class Changements
         $this->idusers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idapplis = new \Doctrine\Common\Collections\ArrayCollection();
           $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
-      //  $this->idEnvironnement = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idEnvironnement = new \Doctrine\Common\Collections\ArrayCollection();
      //   $this->idapplis = new \Doctrine\Common\Collections\ArrayCollection();
      /*         $this->uid = $uid;
         $this->begin = clone $start;
@@ -553,6 +553,7 @@ class Changements
      * Get idEnvironnement
      *
      * @return \Doctrine\Common\Collections\Collection 
+  
      */
     public function getIdEnvironnement()
     {
@@ -633,5 +634,9 @@ class Changements
         $this->picture->removeElement($picture);
     }
 
+    public function getConfirmation(){
+        
+        return "Nom:" . $this->getNom() . "<br>" . $this->getIdapplis();
+    }
    
 }

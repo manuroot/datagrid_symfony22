@@ -23,9 +23,9 @@ use APY\DataGridBundle\Grid\Column\DateColumn;
 use APY\DataGridBundle\Grid\Export\ExcelExport;
 
 
-use Pagerfanta\Pagerfanta;
+/*use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Exception\NotValidCurrentPageException;
+use Pagerfanta\Exception\NotValidCurrentPageException;*/
 
 /**
  * Changements controller.
@@ -55,7 +55,7 @@ class ChangementsController extends Controller {
     
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $query, $this->get('request')->query->get('page', 1)/* page number */, 5/* limit per page */
+                $query, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
         );
         $pagination->setTemplate('ApplicationCertificatsBundle:pagination:sliding.html.twig');
         return $this->render('ApplicationCertificatsBundle:Changements:index.html.twig', array(
@@ -164,6 +164,63 @@ class ChangementsController extends Controller {
                 ));
     }
 
+    
+     /**
+     * Displays a form to create a new Changements entity.
+     *
+     */
+    public function newflowAction() {
+        $entity = new Changements();
+     //   $form = $this->createForm(new ChangementsFlowType(), $entity);
+       // $form->getData()->getNom()->setData('someklklm');
+//$entity->setNom("tre");
+       
+        
+        
+        
+         $flow = $this->get('application.form.flow.new.changement');
+     //     $flow->reset();
+// must match the flow's service id
+    $flow->bind($entity);
+
+    // form of the current step
+    $form = $flow->createForm($entity);
+    if ($flow->isValid($form)) {
+        $flow->saveCurrentStepData();
+
+        if ($flow->nextStep()) {
+            // form for the next step
+            $form = $flow->createForm($entity);
+        } else {
+            // flow finished
+            
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+            $flow->reset();
+            $id=$entity->getId();
+                $session = $this->getRequest()->getSession();
+            $session->getFlashBag()->add('warning', "Enregistrement $id ajouté avec succès");
+        
+            return $this->redirect($this->generateUrl('changements')); // redirect when done
+        }
+    }
+
+    
+       return $this->render('ApplicationCertificatsBundle:Changements:newflow.html.twig', array(
+              
+        'form' => $form->createView(),
+        'flow' => $flow,
+           'entity' => $entity,
+           
+                ));
+      
+    
+    
+        
+    }
+    
+    
     /**
      * Creates a new Changements entity.
      *

@@ -44,6 +44,7 @@ class AppKernel extends Kernel {
                new Sonata\NewsBundle\SonataNewsBundle(),
              new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
+            new Craue\FormFlowBundle\CraueFormFlowBundle(),
              // MES APPLICATIONS
              new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
@@ -51,7 +52,7 @@ class AppKernel extends Kernel {
             new Application\Sonata\NewsBundle\ApplicationSonataNewsBundle(),
                 new Application\CertificatsBundle\ApplicationCertificatsBundle(),
                 new Application\MyNotesBundle\ApplicationMyNotesBundle()
-            
+         
             
             
         

@@ -36,3 +36,8 @@ changements_upload:
     pattern:  /upload
     defaults: { _controller: "ApplicationCertificatsBundle:Changements:upload" }
    
+changements_newflow:
+    pattern:  /newflow
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:newflow" }
+ 
+    

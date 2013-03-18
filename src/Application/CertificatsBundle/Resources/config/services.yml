@@ -15,3 +15,17 @@ services:
         class: Application\CertificatsBundle\Twig\CertificatsExtension
         tags:
             - { name: twig.extension }  
+            
+   application.form.new.changement:
+        class: Application\CertificatsBundle\Form\ChangementsStepsType
+        tags:
+            - { name: form.type, alias: changements }
+            
+   application.form.flow.new.changement:
+      class: Application\CertificatsBundle\Form\ChangementsFlow
+      parent: craue.form.flow
+      scope: request 
+      calls:
+            - [ setFormType, [ @application.form.new.changement ] ]
+        
+  

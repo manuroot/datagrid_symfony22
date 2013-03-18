@@ -5,7 +5,7 @@ namespace Application\CertificatsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CertificatsProjet
+ * CertificatsApplis
  *
  * @ORM\Table(name="certificats_applis")
  * @ORM\Entity
