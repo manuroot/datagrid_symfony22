@@ -70,8 +70,11 @@ Changements
                 <th{% if pagination.isSorted('a.nom') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nom', 'a.nom') }}</th>
                 <th{% if pagination.isSorted('a.dateDebut') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date Debut', 'a.dateDebut') }}</th>
                 <th{% if pagination.isSorted('a.dateFin') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date Fin', 'a.dateFin') }}</th>
-                <th{% if pagination.isSorted('a.dateComep') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date COMEP', 'a.dateComep') }}</th>
-                <th{% if pagination.isSorted('a.dateVsr') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date VSR', 'a.dateVsr') }}</th>
+               
+           <!--     <th{#% if pagination.isSorted('a.dateComep') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date COMEP', 'a.dateComep') }}</th>
+                <th{% if pagination.isSorted('a.dateVsr') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date VSR', 'a.dateVsr') }#}</th>
+               --> 
+                
                 <th{% if pagination.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Description', 'a.description') }}</th>
                 <th{% if pagination.isSorted('b.nomprojet') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Projet', 'b.nomprojet') }}</th>
                 <th{% if pagination.isSorted('c.nomUser') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Demandeur', 'c.nomUser') }}</th>
@@ -91,20 +94,20 @@ Changements
                     <td>{{ entity.nom }}</td>
                     <td>{% if entity.dateDebut %}{{ entity.dateDebut|date('Y-m-d H') ~ 'h' }}{% endif %}</td>
                     <td>{% if entity.dateFin %}{{ entity.dateFin|date('Y-m-d') }}{% endif %}</td>
-                    <td>
-                    {% if entity.dateComep is not null %}
+                    <!--<td>
+                    {#% if entity.dateComep is not null %}
                {{ entity.dateComep|date('Y-m-d') }}
                     {% else %}
                             ----
-            {% endif %}
+            {% endif %#}
                         </td>
                         <td>
-                        {% if entity.dateVsr is not null %}
+                        {#% if entity.dateVsr is not null %}
                {{ entity.dateVsr|date('Y-m-d') }}
                     {% else %}
                                 ----
-            {% endif %}
-                            </td>
+            {% endif %#}
+                            </td>-->
 
 
 

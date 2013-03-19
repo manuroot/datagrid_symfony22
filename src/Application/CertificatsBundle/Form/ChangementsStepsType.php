@@ -145,7 +145,7 @@ class ChangementsStepsType extends AbstractType {
                       'expanded' => 'true',
                             'multiple' => true,
                             'required' => true,
-                            'label' => 'Env'
+                            'label' => 'Environnement(s)'
                         ))
                     ->add('idStatus', 'entity', array(
                             'class' => 'ApplicationCertificatsBundle:ChangementsStatus',

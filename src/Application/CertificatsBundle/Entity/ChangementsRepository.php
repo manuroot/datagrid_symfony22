@@ -14,6 +14,7 @@ class ChangementsRepository extends EntityRepository {
 
     public function myFindaAll() {
         return $this->createQueryBuilder('a')
+                ->orderBy('id')
                         ->getQuery();
 
         //->getResult();
@@ -24,6 +25,7 @@ class ChangementsRepository extends EntityRepository {
                         ->leftJoin('a.idProjet', 'b')
                         ->leftJoin('a.idStatus', 'd')
                         ->leftJoin('a.demandeur', 'c')
+                 ->add('orderBy', 'a.id DESC')
                         //   ->leftJoin('a.demandeur', 'c')
                         ->getQuery();
     }
