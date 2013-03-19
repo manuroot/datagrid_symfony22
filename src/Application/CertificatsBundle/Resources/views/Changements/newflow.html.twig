@@ -22,7 +22,7 @@
            .mytextarea {
             border: 1px solid #D4E0EE;
             background-color: #f1f1f1;
-            width:330px; height:100px;
+            width:330px; height:150px;
 
         }
         
@@ -35,9 +35,12 @@
 {% endblock %}
 
 
+    
 {% block javascripts %}
 {{ parent() }}
+    
 <script type="text/javascript" src="{{ asset('bundles/applicationcertificats/js/datenew.js') }}"></script>
+{{ tinymce_init() }}
 {% endblock %}
 
 {% block content_header '' %}

@@ -56,8 +56,16 @@ class ChangementsType extends AbstractType
         ),
                      'required' => false,
         ))
-      
-           ->add('description')
+        ->add('description', 'textarea', array(
+        'attr' => array(
+            'cols'=>"60",
+          //  'rows'=>"10",
+            'class' => 'tinymce',
+         'data-theme' => 'simple'
+           
+// simple, advanced, bbcode
+        )))
+        //   ->add('description')
                 /*,'textarea',  array(
                'widget' => 'textarea',*/
        /* 'widget_addon' => array(

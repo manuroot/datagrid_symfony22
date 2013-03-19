@@ -45,9 +45,13 @@
     </style> 
 {% endblock %}
 
-
 {% block javascripts %}
 {{ parent() }}
+    {{ tinymce_init({ 
+    height:"200px", 
+  width:"100px" 
+}) }}
+    
    <!--<script type="text/javascript" src="{{ asset('bundles/applicationcertificats/js/selectapplis.js') }}"></script>
     -->
     <script type="text/javascript">
@@ -112,6 +116,7 @@
         return false;
     });
         </script>
+      
 {% endblock %}
 
 
@@ -185,8 +190,8 @@
                                                                     </div>
                                                                     <br>   
                                                                            <div>
-    {{ form_row(edit_form.description,{ 'attr': {'class': 'mytextarea'} }) }}
-
+    {#{ form_row(edit_form.description,{ 'attr': {'class': 'mytextarea'} }) }#}
+{{ form_row(edit_form.description) }}
     
                                     </div>
 

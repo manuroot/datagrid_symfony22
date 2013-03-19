@@ -75,7 +75,7 @@ Changements
                 <th{% if pagination.isSorted('a.dateVsr') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date VSR', 'a.dateVsr') }#}</th>
                --> 
                 
-                <th{% if pagination.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Description', 'a.description') }}</th>
+           <!--     <th{#% if pagination.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Description', 'a.description') }#}</th>-->
                 <th{% if pagination.isSorted('b.nomprojet') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Projet', 'b.nomprojet') }}</th>
                 <th{% if pagination.isSorted('c.nomUser') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Demandeur', 'c.nomUser') }}</th>
                 <th>Files</th>
@@ -111,7 +111,7 @@ Changements
 
 
 
-                            <td>{{ entity.description }}</td>
+                            <!--<td>{#{ entity.description|raw }#}</td>-->
                             <td>{{ entity.idProjet.nomprojet }}</td>
                             <td>{{ entity.demandeur.nomUser }}</td>
                             <td>{{ entity.picture|length }}</td>

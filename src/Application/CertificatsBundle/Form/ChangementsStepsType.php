@@ -39,7 +39,24 @@ class ChangementsStepsType extends AbstractType {
                                 'type' => 'prepend'
                             ),
                         ))
-                        ->add('description');
+                     ->add('description', 'textarea', array(
+        'attr' => array(
+            'cols'=>"60",
+          //  'rows'=>"10",
+            'class' => 'tinymce',
+         'data-theme' => 'simple'
+           
+// simple, advanced, bbcode
+        )))
+                         
+                       /* ->add('description','textarea',array(
+                             'label' => 'Description',
+                            //'widget' => 'single_text',
+                            'attr' => array('class'=>'mytextarea'),
+                        ))*/
+                        
+                        
+                        ;
                 break;
           
                 //====================================================
