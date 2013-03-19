@@ -56,6 +56,7 @@ class ChangementsType extends AbstractType
         ),
                      'required' => false,
         ))
+                
         ->add('description', 'textarea', array(
         'attr' => array(
             'cols'=>"60",
