@@ -19,6 +19,12 @@
             color: red;
             font-weight: bold;
         }
+           .mytextarea {
+            border: 1px solid #D4E0EE;
+            background-color: #f1f1f1;
+            width:330px; height:100px;
+
+        }
         
         .boxlist {
             border: 1px solid #D4E0EE;
@@ -41,18 +47,21 @@
 
         <table class="table table-striped table-bordered">
            <tbody>
-             <tr>
-                    <td>
-                        <div>
-                            ETAPES:
+           <tr><td><div>
+            ETAPES:
     {% include 'CraueFormFlowBundle:FormFlow:stepList.html.twig' %}
-                        </div>
-                    </td><td>
-                        <form method="post" {{ form_enctype(form) }}>
+          </div>
+            </td><td>
+                 <form method="post" {{ form_enctype(form) }}>
     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
 
     {{ form_errors(form) }}
 
+                                {#% if flow.getCurrentStep() == 4 %}
+                                  {{ form_row(edit_form.description,{ 'attr': {'class': 'mytextarea'} }) }}
+                                {{ form_rest(edit_form) }}
+                                
+ {% endif %#}
  {% if flow.getCurrentStep() == 6 %}
                                 <div>
                                    
