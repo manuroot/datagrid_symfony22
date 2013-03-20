@@ -22,11 +22,11 @@ use CalendR\Event\AbstractEvent;
  * @ORM\Table(name="changements")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\ChangementsRepository")
- * @GRID\Source(columns="id,nom,dateDebut,dateFin,dateComep,dateVsr,description,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"})
+ * @GRID\Source(columns="id,nom,dateDebut,dateFin,dateComep,dateVsr,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"})
   * @Vich\Uploadable
  */
 
-
+  // @GRID\Source(columns="id,nom,dateDebut,dateFin,dateComep,dateVsr,description,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"})
 
 //class Changements extends AbstractEvent
 class Changements
@@ -41,7 +41,7 @@ class Changements
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @GRID\Column(title="id", size="20", type="text",filter="false")
+     * @GRID\Column(title="id", size="15", type="text",filter="false")
      */
     private $id;
 
@@ -69,7 +69,7 @@ class Changements
      * @var \DateTime
      *
      * @ORM\Column(name="date_debut", type="datetime", nullable=false)
-     * @GRID\Column(title="Début", size="50",format="Y-m-d",type="datetime")
+     * @GRID\Column(title="Début", size="40",format="Y-m-d",type="datetime")
      */
     private $dateDebut;
 
@@ -77,7 +77,7 @@ class Changements
      * @var \DateTime
      *
      * @ORM\Column(name="date_fin", type="datetime", nullable=false)
-      * @GRID\Column(title="Fin", size="50",format="Y-m-d",type="datetime")
+      * @GRID\Column(title="Fin", size="40",format="Y-m-d",type="datetime")
      * 
      */
     private $dateFin;

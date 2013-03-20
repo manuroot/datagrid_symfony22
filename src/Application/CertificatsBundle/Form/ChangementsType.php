@@ -62,7 +62,7 @@ class ChangementsType extends AbstractType
             'cols'=>"60",
           //  'rows'=>"10",
             'class' => 'tinymce',
-         'data-theme' => 'simple'
+        // 'data-theme' => 'simple'
            
 // simple, advanced, bbcode
         )))

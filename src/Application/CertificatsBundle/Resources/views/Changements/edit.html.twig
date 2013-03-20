@@ -47,10 +47,22 @@
 
 {% block javascripts %}
 {{ parent() }}
-    {{ tinymce_init({ 
+{{    tinymce_init({  
+mode : "exact",  
+theme : "advanced",  
+elements : "description,notes", 
+theme_advanced_toolbar_location : "top",  
+theme_advanced_toolbar_align : "left", 
+height:"300px",  
+width:"500px"
+ 
+})
+}}
+
+    {#{ tinymce_init({ 
     height:"200px", 
   width:"100px" 
-}) }}
+}) }#}
     
    <!--<script type="text/javascript" src="{{ asset('bundles/applicationcertificats/js/selectapplis.js') }}"></script>
     -->
