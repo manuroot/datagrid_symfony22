@@ -22,11 +22,11 @@ use CalendR\Event\AbstractEvent;
  * @ORM\Table(name="changements")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\ChangementsRepository")
- * @GRID\Source(columns="id,nom,dateDebut,dateFin,dateComep,dateVsr,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"})
+ * @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"})
   * @Vich\Uploadable
  */
 
-  // @GRID\Source(columns="id,nom,dateDebut,dateFin,dateComep,dateVsr,description,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"})
+
 
 //class Changements extends AbstractEvent
 class Changements
@@ -41,7 +41,7 @@ class Changements
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @GRID\Column(title="id", size="15", type="text",filter="false")
+     * @GRID\Column(title="id", size="20", type="text",filter="false")
      */
     private $id;
 
@@ -60,7 +60,7 @@ class Changements
      *      message="Less than {{ limit }} characters.|
       Au max {{ limit }} caracteres."
      * )
-   
+     * @GRID\Column(field="nom", title="Nom",size="55")
     */
   
     private $nom;
@@ -132,7 +132,7 @@ class Changements
      * @ORM\ManyToMany(targetEntity="Environnements", inversedBy="idchangements",cascade={"persist"})
      * @ORM\OrderBy({"nom" = "ASC"})
      * @ORM\JoinTable(name="changements_environnements")
-     * @GRID\Column(title="Environnements", field="idEnvironnement.nom:GroupConcat",  visible=true, sortable=true, filtrable="true")
+     * @GRID\Column(title="Environnements", field="idEnvironnement.nom:GroupConcat", size="30", visible=true, sortable=true, filtrable="true")
      */
   
      

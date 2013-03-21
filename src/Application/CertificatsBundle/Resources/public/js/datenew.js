@@ -40,8 +40,7 @@
     $( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
     }
     });
-    }); //Eof:: ready
-
+  
     $('.btn-add').click(function(event) {
         var collectionHolder = $('#' + $(this).attr('data-target'));
         var prototype = collectionHolder.attr('data-prototype');
@@ -58,3 +57,4 @@
         return false;
     });
    
+}); //Eof:: ready
