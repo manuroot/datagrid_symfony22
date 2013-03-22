@@ -8,12 +8,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Abhoryo/APYDataGridBundle.git",
-                "reference": "1598f70ef08e14afdc00f726f88b56a7df6cc425"
+                "reference": "dddefb50fa04fc0a7fc166a4f5421ca33a6e7fc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Abhoryo/APYDataGridBundle/zipball/1598f70ef08e14afdc00f726f88b56a7df6cc425",
-                "reference": "1598f70ef08e14afdc00f726f88b56a7df6cc425",
+                "url": "https://api.github.com/repos/Abhoryo/APYDataGridBundle/zipball/dddefb50fa04fc0a7fc166a4f5421ca33a6e7fc4",
+                "reference": "dddefb50fa04fc0a7fc166a4f5421ca33a6e7fc4",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,7 @@
                 "datagrid",
                 "symfony"
             ],
-            "time": "2013-03-15 14:17:26"
+            "time": "2013-03-20 08:51:54"
         },
         {
             "name": "beberlei/DoctrineExtensions",
@@ -517,26 +517,26 @@
         },
         {
             "name": "egeloen/ckeditor-bundle",
-            "version": "2.1.2",
+            "version": "2.1.3",
             "target-dir": "Ivory/CKEditorBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egeloen/IvoryCKEditorBundle.git",
-                "reference": "2.1.2"
+                "reference": "2.1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egeloen/IvoryCKEditorBundle/zipball/2.1.2",
-                "reference": "2.1.2",
+                "url": "https://api.github.com/repos/egeloen/IvoryCKEditorBundle/zipball/2.1.3",
+                "reference": "2.1.3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
+                "symfony/form": ">=2.1",
                 "symfony/framework-bundle": ">=2.1"
             },
             "require-dev": {
-                "symfony/form": "2.1.*",
-                "symfony/yaml": "2.1.*",
+                "symfony/yaml": ">=2.1",
                 "twig/twig": "1.*"
             },
             "type": "symfony-bundle",
@@ -559,7 +559,7 @@
             "keywords": [
                 "CKEditor"
             ],
-            "time": "2013-02-19 19:15:52"
+            "time": "2013-03-18 22:09:28"
         },
         {
             "name": "free-agent/workflow-bundle",
@@ -1666,12 +1666,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "fcee205a5a3a859c009d976ba3acfe67958e912c"
+                "reference": "89e9837425ec32dedf1c90bb3cc48056b9315113"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/fcee205a5a3a859c009d976ba3acfe67958e912c",
-                "reference": "fcee205a5a3a859c009d976ba3acfe67958e912c",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/89e9837425ec32dedf1c90bb3cc48056b9315113",
+                "reference": "89e9837425ec32dedf1c90bb3cc48056b9315113",
                 "shasum": ""
             },
             "require": {
@@ -1729,7 +1729,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2013-03-05 17:56:54"
+            "time": "2013-03-20 02:05:59"
         },
         {
             "name": "kriswallsmith/buzz",
@@ -2387,12 +2387,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataCacheBundle.git",
-                "reference": "2.1.0"
+                "reference": "2.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataCacheBundle/zipball/2.1.0",
-                "reference": "2.1.0",
+                "url": "https://api.github.com/repos/sonata-project/SonataCacheBundle/zipball/2.1.1",
+                "reference": "2.1.1",
                 "shasum": ""
             },
             "require": {
@@ -2444,7 +2444,7 @@
             "keywords": [
                 "cache block"
             ],
-            "time": "2013-02-25 13:05:15"
+            "time": "2013-03-20 18:10:46"
         },
         {
             "name": "sonata-project/doctrine-extensions",
@@ -2613,16 +2613,16 @@
         },
         {
             "name": "sonata-project/exporter",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/exporter.git",
-                "reference": "1.2.0"
+                "reference": "1.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/exporter/zipball/1.2.0",
-                "reference": "1.2.0",
+                "url": "https://api.github.com/repos/sonata-project/exporter/zipball/1.2.1",
+                "reference": "1.2.1",
                 "shasum": ""
             },
             "require": {
@@ -2662,7 +2662,7 @@
                 "export",
                 "xls"
             ],
-            "time": "2013-02-22 11:58:00"
+            "time": "2013-03-04 14:20:46"
         },
         {
             "name": "sonata-project/formatter-bundle",

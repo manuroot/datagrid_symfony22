@@ -218,7 +218,7 @@ frequence_web_calend_r:  []
 #==================================================
 
 stfalcon_tinymce:
-        include_jquery: true
+        include_jquery: false
         tinymce_jquery: true
         textarea_class: "tinymce"
         theme:
