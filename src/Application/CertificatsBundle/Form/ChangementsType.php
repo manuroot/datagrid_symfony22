@@ -22,17 +22,21 @@ class ChangementsType extends AbstractType
         ),
         
     ))
-            ->add('dateDebut', 'date', array(
+            ->add('dateDebut', 'datetime', array(
             'label' => 'Date début',
             'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'yyyy-MM-dd HH:mm',
                       'widget_addon' => array(
             'icon' => 'time',
             'type' => 'prepend'
         ),
         ))
-           ->add('dateFin', 'date', array(
+           ->add('dateFin', 'datetime', array(
             'label' => 'Date Fin',
             'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'yyyy-MM-dd HH:mm',
                       'widget_addon' => array(
             'icon' => 'time',
             'type' => 'prepend'

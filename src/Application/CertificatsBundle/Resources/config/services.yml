@@ -20,7 +20,7 @@ services:
         class: Application\CertificatsBundle\Form\ChangementsStepsType
         tags:
             - { name: form.type, alias: changements }
-            
+
    application.form.flow.new.changement:
       class: Application\CertificatsBundle\Form\ChangementsFlow
       parent: craue.form.flow
@@ -29,3 +29,10 @@ services:
             - [ setFormType, [ @application.form.new.changement ] ]
         
   
+   booking_repository:
+        class:           Application\CertificatsBundle\Entity\ChangementsRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method:  getRepository
+        arguments:       ['ApplicationCertificatsBundle:Changements']
+        tags:
+            - { name: calendr.event_provider }

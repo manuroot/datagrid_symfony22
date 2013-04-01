@@ -22,7 +22,7 @@ Changements
     </div>
     {% endfor %}
 {% endfor %}
-
+{#% set events = calendr_events(week) %#}
 {# outputs $5,500.00 }
 {{ '5500'|price }}
 
@@ -47,12 +47,17 @@ Changements
         <td><p class="text-warning"> S-{{ week }} </p></td>
             {% for day in week %}
                 <td>
-                    {% if month.contains(day.begin) %}
-                         {{ day.begin.format('d') }} 
-         
-                    {% else %}
+                    {#% if month.contains(day.begin) %#}
+                        
+                        <span class="label label-important">  {{ day.begin.format('d') }} </span><br>
+         {% for event in evenement.find(day) %}
+                        <a href="{{ path('changements_show', { 'id': event.uid }) }}">
+            {{ event }}</a>
+                        <br>
+        {% endfor %}
+                    {#% else %}
                         &nbsp;
-                    {% endif %}
+                    {% endif %#}
                 </td>
             {% endfor %}
         </tr>
@@ -60,6 +65,24 @@ Changements
 
 </table>
 
+ {#%
+<h1>Events for Month #{{ month }}</h1>
+{% for week in month %}
+    {% for day in week %}
+        <h2>{{ day }} - {{ day.begin.format('d') }}  - {{ month }}</h2>
+        <ul>
+           
+        {% for event in evenement.find(day.begin) %}
+            <li>{{ event }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+{% endfor %}    
+    %#}      
+            
+  {#% for ev in events %}
+ {{ ev.nom }} <br>
+ {% endfor %#}
 
    <br> <br>  
 

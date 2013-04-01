@@ -4,7 +4,6 @@ namespace Application\CertificatsBundle\Entity;
 use CalendR\Extension\Doctrine2\QueryHelper;
 use Doctrine\ORM\EntityRepository;
 use CalendR\Event\Provider\ProviderInterface;
-//use CalendR\Extension\Doctrine2\EventRepository as EventRepositoryTrait;
 /**
  * NotesRepository
  *
@@ -12,8 +11,7 @@ use CalendR\Event\Provider\ProviderInterface;
  * repository methods below.
  */
 class ChangementsRepository extends EntityRepository implements ProviderInterface{
-//class ChangementsRepository extends EntityRepository{
- //use EventRepositoryTrait;
+
     public function myFindaAll() {
         return $this->createQueryBuilder('a')
                 ->orderBy('id')
@@ -31,40 +29,21 @@ class ChangementsRepository extends EntityRepository implements ProviderInterfac
                         //   ->leftJoin('a.demandeur', 'c')
                         ->getQuery();
     }
-   
  public function getEventsQueryBuilder(\DateTime $begin, \DateTime $end, array $options = array())
     {
         $qb = $this->createQueryBuilder('e');
 
         return QueryHelper::addEventQuery($qb, 'e.dateDebut', 'e.dateFin', $begin, $end)
             ->getQuery()
-            ->getResult();
+            ->getResults()
         ;
     }
      public function getEvents(\DateTime $begin, \DateTime $end, array $options = array())
     {
          return $this->getEventsQueryBuilder($begin, $end,$options);
-      
+        /*
+         Returns an array of events here. $options is the second argument of
+         $factory->getEvents(), so you can filter your event on anything (Calendar id/slug ?)
+        */
     }
-    
-    /* public function createQueryBuilderForGetEvent(array $options)
-    {
-        // do what you want with the $option array
-        return $this->createQueryBuilder('evt')
-            ->setMaxResults(10)
-        ;
-    }
-
-   
-    public function getBeginFieldName()
-    {
-        return 'evt.beginDate';
-    }
-
-  
-    public function getEndFieldName()
-    {
-        return 'evt.endDate';
-    }*/
 }
-

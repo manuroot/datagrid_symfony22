@@ -28,13 +28,13 @@ use CalendR\Event\AbstractEvent;
 
 
 
-//class Changements extends AbstractEvent
-class Changements
+class Changements extends AbstractEvent
+//class Changements
 {
     
-   /*   protected $begin;
+    protected $begin;
     protected $end;
-    protected $uid;*/
+    protected $uid;
     /**
      * @var integer
      *
@@ -69,7 +69,7 @@ class Changements
      * @var \DateTime
      *
      * @ORM\Column(name="date_debut", type="datetime", nullable=false)
-     * @GRID\Column(title="Début", size="40",format="Y-m-d",type="datetime")
+     * @GRID\Column(title="Début", size="40",format="Y-m-d h:i",type="datetime")
      */
     private $dateDebut;
 
@@ -77,7 +77,7 @@ class Changements
      * @var \DateTime
      *
      * @ORM\Column(name="date_fin", type="datetime", nullable=false)
-      * @GRID\Column(title="Fin", size="40",format="Y-m-d",type="datetime")
+      * @GRID\Column(title="Fin", size="40",format="Y-m-d h:i",type="datetime")
      * 
      */
     private $dateFin;
@@ -639,4 +639,19 @@ class Changements
         return "Nom:" . $this->getNom() . "<br>" . $this->getIdapplis();
     }
    
+    
+    public function getUid()
+    {
+        return $this->id;
+    }
+
+    public function getBegin()
+    {
+        return $this->dateDebut;
+    }
+
+    public function getEnd()
+    {
+        return $this->dateFin;
+    }
 }

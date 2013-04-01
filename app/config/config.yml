@@ -204,7 +204,7 @@ sonata_media:
             directory:  %kernel.root_dir%/../web/uploads/media
             create:     false
             
-frequence_web_calend_r:  []
+#frequence_web_calend_r:  []
 
 #services:
 #    my_event_provider:
@@ -285,3 +285,12 @@ stfalcon_tinymce:
 #==================================================
 #  TINYMCE
 #==================================================
+#rizza_calendar: 
+#    db_driver: orm
+
+#    class:
+#        model:
+#            calendar: Rizza\CalendarBundle\Entity\Calendar
+#            event: Rizza\CalendarBundle\Entity\Event
+#            user: Application\Sonata\UserBundle\Entity\User
+#            attendee: Rizza\CalendarBundle\Entity\Attendee

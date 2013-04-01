@@ -3,9 +3,9 @@
       $( "#changements_dateDebut" ).datepicker({
     maxDate: "+3M +10D",
     changeMonth: true,
-    changeYeat: true,
+    changeYear: true,
     numberOfMonths: 1,
-    dateFormat: "yy-mm-dd",
+    dateFormat: "yy-mm-dd 08:00",
     onClose: function( selectedDate ) {
     $( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
     }
@@ -13,9 +13,9 @@
         $( "#changements_dateFin" ).datepicker({
     maxDate: "+3M +10D",
     changeMonth: true,
-    changeYeat: true,
+    changeYear: true,
     numberOfMonths: 1,
-    dateFormat: "yy-mm-dd",
+     dateFormat: "yy-mm-dd 17:00",
     onClose: function( selectedDate ) {
     $( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
     }

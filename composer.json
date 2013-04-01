@@ -60,7 +60,8 @@
         "knplabs/knp-menu-bundle": "1.1.x-dev",
         "knplabs/knp-menu": "1.1.x-dev",
         "frequence-web/calendr-bundle": "dev-master",
-        "beberlei/DoctrineExtensions": "dev-master"
+        "beberlei/DoctrineExtensions": "dev-master",
+        "rizza/calendar-bundle": "dev-master"
         
     },
     "scripts": {

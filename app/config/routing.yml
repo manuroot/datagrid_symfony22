@@ -43,7 +43,16 @@ gallery:
 media:
     resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
     prefix: /media
-    
+ 
+#rizza_calendar_calendar:
+#  resource: "@RizzaCalendarBundle/Resources/config/routing/calendar.yml"
+#  prefix: /calendar
+
+#rizza_calendar_event:
+#  resource: "@RizzaCalendarBundle/Resources/config/routing/event.yml"
+#  prefix: /event
+  
+  
 news:
     resource: '@SonataNewsBundle/Resources/config/routing/news.xml'
     prefix: /news

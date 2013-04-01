@@ -11,7 +11,6 @@ use Application\CertificatsBundle\Entity\Document;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\CertificatsBundle\Form\ChangementsType;
 use Application\CertificatsBundle\Entity\GridExport;
-
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Grid;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
@@ -22,10 +21,9 @@ use APY\DataGridBundle\Grid\Column\TextColumn;
 use APY\DataGridBundle\Grid\Column\DateColumn;
 use APY\DataGridBundle\Grid\Export\ExcelExport;
 
-
-/*use Pagerfanta\Pagerfanta;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Exception\NotValidCurrentPageException;*/
+/* use Pagerfanta\Pagerfanta;
+  use Pagerfanta\Adapter\DoctrineORMAdapter;
+  use Pagerfanta\Exception\NotValidCurrentPageException; */
 
 /**
  * Changements controller.
@@ -38,6 +36,14 @@ class ChangementsController extends Controller {
      *
      */
     public function indexAction() {
+
+        //     $past = date('Y-m-d', strtotime('-30days'));
+        //      $currenta = ($row->getField('endTime')->format('Y-m-d'));
+        //$current = date('Y-m-d', strtotime('+30days'));
+        $current = new \DateTime("2013-06");
+        $past = new \DateTime("2013-05");
+        //$current = new \DateTime($row->getField('endTime')->format('Y-m-d'));
+
         /* $em = $this->getDoctrine()->getManager();
 
           $entities = $em->getRepository('ApplicationCertificatsBundle:Changements')->findAll();
@@ -45,14 +51,23 @@ class ChangementsController extends Controller {
           return $this->render('ApplicationCertificatsBundle:Changements:index.html.twig', array(
           'entities' => $entities,
           )); */
-
-       $session = $this->getRequest()->getSession();
+//$factory = new CalendR\Calendar;
+//$factory->getEventManager()->addProvider('myawesomeprovider', 'new MyAwesomeProvider');
+        //  $f=$this->get('booking_repository');
+        //  $month = $f->getMonth(2012, 6);
+        $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'changements');
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('ApplicationCertificatsBundle:Changements')->myFindAll();
-        
-       // $nbtags = $query->getPicture()->count();
-    
+        $query_events = $em->getRepository('ApplicationCertificatsBundle:Changements')
+                ->getEventsQueryBuilder($past, $current);
+/*$nb_events=$em->getRepository('ApplicationCertificatsBundle:Changements')
+                ->findcount($past, $current);*/
+        //    print_r($query_events);
+        // exit(1);
+        // $nbtags = $query->getPicture()->count();
+        $month = $this->get('calendr')->getMonth(2013, 03);
+        $events = $this->get('calendr')->getEvents($month);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $query, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
@@ -60,15 +75,15 @@ class ChangementsController extends Controller {
         $pagination->setTemplate('ApplicationCertificatsBundle:pagination:sliding.html.twig');
         return $this->render('ApplicationCertificatsBundle:Changements:index.html.twig', array(
                     'pagination' => $pagination,
-            'month' => $this->get('calendr')->getMonth(2013, 03),
-            'myweek' =>  $this->get('calendr')->getWeek(2012, 14),
-            
+                    'month' => $this->get('calendr')->getMonth(2013, 03),
+                    // 'myweek' =>  $this->get('calendr')->getWeek(2012, 14),
+                    'events' => $query_events,
+                    'evenement' => $events,
+                        // 'current_month' => $month
                 ));
     }
 
-    
-    
-     //==============================================
+    //==============================================
     // VIEW ALL ACTEURS
     //==============================================
     public function indexapyAction($page = 1) {
@@ -82,15 +97,15 @@ class ChangementsController extends Controller {
         $source->manipulateRow(
                 function ($row) {
                     // Don't show the row if the price is greater than $maxPrice
-          //  $past = date('Y-m-d');
+                    //  $past = date('Y-m-d');
                     $next = date('Y-m-d', strtotime('+5days'));
                     $currenta = ($row->getField('dateDebut')->format('Y-m-d'));
                     $current = date('Y-m-d', strtotime($currenta));
                     //$current = new \DateTime($row->getField('endTime')->format('Y-m-d'));
                     //$current = date('Y-m-d', strtotime($row->getField('endTime')));
                     /* if ($current < $past) {
-                        $row->setColor('#fddddd');
-                    }*/
+                      $row->setColor('#fddddd');
+                      } */
                     //elseif ($current < $next) {
                     if ($current < $next) {
                         $row->setColor('#fcf8e3');
@@ -99,7 +114,7 @@ class ChangementsController extends Controller {
                     return $row;
                 }
         );
-     
+
 
         $grid = $this->container->get('grid');
         // Attach the source to the grid
@@ -107,14 +122,14 @@ class ChangementsController extends Controller {
 
         $grid->setId('certificatsgrid');
         //chiant si error
-      /*  $grid->addExport(new ExcelExport('Excel Export','changements.xls',array(),'Windows-1252'));
-        //$grid->addExport(new ExcelExport($title, $fileName, $params, $charset, $role));
-        $grid->addExport(new GridExport('CSV Export in French', 'export', array('delimiter' => ';'), 'Windows-1252'));
-// $grid->addExport(new GridExport('CSV Export', 'export'));*/
- $grid->setPersistence(false);
+        /*  $grid->addExport(new ExcelExport('Excel Export','changements.xls',array(),'Windows-1252'));
+          //$grid->addExport(new ExcelExport($title, $fileName, $params, $charset, $role));
+          $grid->addExport(new GridExport('CSV Export in French', 'export', array('delimiter' => ';'), 'Windows-1252'));
+          // $grid->addExport(new GridExport('CSV Export', 'export')); */
+        $grid->setPersistence(false);
         $grid->setDefaultOrder('id', 'desc');
         // Set the selector of the number of items per page
-        $grid->setLimits(array(3));
+        $grid->setLimits(array(10));
 
         // Set the default page
         $grid->setPage($page);
@@ -156,7 +171,7 @@ class ChangementsController extends Controller {
     public function newAction() {
         $entity = new Changements();
         $form = $this->createForm(new ChangementsType(), $entity);
-       // $form->getData()->getNom()->setData('someklklm');
+        // $form->getData()->getNom()->setData('someklklm');
 //$entity->setNom("tre");
         return $this->render('ApplicationCertificatsBundle:Changements:new.html.twig', array(
                     'entity' => $entity,
@@ -164,63 +179,55 @@ class ChangementsController extends Controller {
                 ));
     }
 
-    
-     /**
+    /**
      * Displays a form to create a new Changements entity.
      *
      */
     public function newflowAction() {
         $entity = new Changements();
-     //   $form = $this->createForm(new ChangementsFlowType(), $entity);
-       // $form->getData()->getNom()->setData('someklklm');
+        //   $form = $this->createForm(new ChangementsFlowType(), $entity);
+        // $form->getData()->getNom()->setData('someklklm');
 //$entity->setNom("tre");
-       
-        
-        
-        
-         $flow = $this->get('application.form.flow.new.changement');
-     //     $flow->reset();
+
+
+
+
+        $flow = $this->get('application.form.flow.new.changement');
+        //     $flow->reset();
 // must match the flow's service id
-    $flow->bind($entity);
+        $flow->bind($entity);
 
-    // form of the current step
-    $form = $flow->createForm($entity);
-    if ($flow->isValid($form)) {
-        $flow->saveCurrentStepData();
+        // form of the current step
+        $form = $flow->createForm($entity);
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData();
 
-        if ($flow->nextStep()) {
-            // form for the next step
-            $form = $flow->createForm($entity);
-        } else {
-            // flow finished
-            
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
-            $flow->reset();
-            $id=$entity->getId();
+            if ($flow->nextStep()) {
+                // form for the next step
+                $form = $flow->createForm($entity);
+            } else {
+                // flow finished
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($entity);
+                $em->flush();
+                $flow->reset();
+                $id = $entity->getId();
                 $session = $this->getRequest()->getSession();
-            $session->getFlashBag()->add('warning', "Enregistrement $id ajouté avec succès");
-        
-            return $this->redirect($this->generateUrl('changements')); // redirect when done
+                $session->getFlashBag()->add('warning', "Enregistrement $id ajouté avec succès");
+
+                return $this->redirect($this->generateUrl('changements')); // redirect when done
+            }
         }
+
+
+        return $this->render('ApplicationCertificatsBundle:Changements:newflow.html.twig', array(
+                    'form' => $form->createView(),
+                    'flow' => $flow,
+                    'entity' => $entity,
+                ));
     }
 
-    
-       return $this->render('ApplicationCertificatsBundle:Changements:newflow.html.twig', array(
-              
-        'form' => $form->createView(),
-        'flow' => $flow,
-           'entity' => $entity,
-           
-                ));
-      
-    
-    
-        
-    }
-    
-    
     /**
      * Creates a new Changements entity.
      *
@@ -284,16 +291,16 @@ class ChangementsController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new ChangementsType(), $entity);
         $editForm->bind($request);
-          
+
         if ($editForm->isValid()) {
-        /*  $data = $editForm->getData();
-             var_dump($data);
-             exit;*/
-  /* if ($form->get('file')->getData() != NULL) {//user have uploaded a new file
-        $file = $form->get('file')->getData();//get 'UploadedFile' object
-        $news->setPath($file->getClientOriginalName());//change field that holds file's path in db to a temporary value,i.e original file name uploaded by user
-    }*/
-             $em->persist($entity);
+            /*  $data = $editForm->getData();
+              var_dump($data);
+              exit; */
+            /* if ($form->get('file')->getData() != NULL) {//user have uploaded a new file
+              $file = $form->get('file')->getData();//get 'UploadedFile' object
+              $news->setPath($file->getClientOriginalName());//change field that holds file's path in db to a temporary value,i.e original file name uploaded by user
+              } */
+            $em->persist($entity);
             $em->flush();
             $session = $this->getRequest()->getSession();
             $session->getFlashBag()->add('warning', "Enregistrement $id update successfull");
@@ -341,73 +348,65 @@ class ChangementsController extends Controller {
         ;
     }
 
-/**
- * @Template()
- */
+    /**
+     * @Template()
+     */
+    public function uploadAction() {
+        $document = new Document();
+        $form = $this->createFormBuilder($document)
+                ->add('name')
+                ->add('file')
+                ->getForm()
+        ;
 
-    public function uploadAction()
-{
-    $document = new Document();
-    $form = $this->createFormBuilder($document)
-        ->add('name')
-        ->add('file')
-        ->getForm()
-    ;
-
-    if ($this->getRequest()->isMethod('POST')) {
-        $form->bind($this->getRequest());
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-           //  $document->upload();    
-            $em->persist($document);
-            $em->flush();
-
-            
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                //  $document->upload();    
+                $em->persist($document);
+                $em->flush();
+            }
         }
-    }
- return $this->render('ApplicationCertificatsBundle:Changements:upload.html.twig', array(
-                     'form' => $form->createView(),
+        return $this->render('ApplicationCertificatsBundle:Changements:upload.html.twig', array(
+                    'form' => $form->createView(),
                 ));
-    
-}
+    }
 
-public function downloadAction($filename)
-{
-    $request = $this->get('request');
-    $path = $this->get('kernel')->getRootDir(). "/../web/uploads/documents/";
-    
-    // Flush in "safe" mode to enforce an Exception if keys are not unique
-try {
-     $content=file_get_contents($path.$filename);
+    public function downloadAction($filename) {
+        $request = $this->get('request');
+        $path = $this->get('kernel')->getRootDir() . "/../web/uploads/documents/";
 
-} catch (\ErrorException $e) {
-    $session = $this->getRequest()->getSession();
+        // Flush in "safe" mode to enforce an Exception if keys are not unique
+        try {
+            $content = file_get_contents($path . $filename);
+        } catch (\ErrorException $e) {
+            $session = $this->getRequest()->getSession();
             $session->getFlashBag()->add('error', "Le fichier $filename n 'existe pas");
-          return $this->redirect($this->generateUrl('docchangements'));
- 
-}
-
-     
-    //catches all exceptions extended from Exception (which is everything)
+            return $this->redirect($this->generateUrl('docchangements'));
+        }
 
 
+        //catches all exceptions extended from Exception (which is everything)
 
- /*  if (!$data = file_get_contents(file_get_contents($path.$filename))) {
-  //  $content = file_get_contents($path.$filename);
-//if (!isset($content)){
-       
- }*/
 
-    $response = new Response();
 
-    //set headers
-    $response->headers->set('Content-Type', 'mime/type');
-    $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename);
- $session = $this->getRequest()->getSession();
-            $session->getFlashBag()->add('notice', "Le fichier $filename a ete téléchargé");
-   
-    $response->setContent($content);
-    return $response;
-}
+        /*  if (!$data = file_get_contents(file_get_contents($path.$filename))) {
+          //  $content = file_get_contents($path.$filename);
+          //if (!isset($content)){
+
+          } */
+
+        $response = new Response();
+
+        //set headers
+        $response->headers->set('Content-Type', 'mime/type');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename);
+        $session = $this->getRequest()->getSession();
+        $session->getFlashBag()->add('notice', "Le fichier $filename a ete téléchargé");
+
+        $response->setContent($content);
+        return $response;
+    }
 
 }
