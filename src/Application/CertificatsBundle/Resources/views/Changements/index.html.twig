@@ -22,49 +22,70 @@ Changements
     </div>
     {% endfor %}
 {% endfor %}
+
+
 {#% set events = calendr_events(week) %#}
 {# outputs $5,500.00 }
 {{ '5500'|price }}
 
 {{ 'Highlight this sentence'|highlight('i')|raw }}
 {{ 'Highlight this sentence'|highlightme|raw }#}
- <a href="{{ path('changements_newflow') }}" class="btn btn-small btn-primary">Ajouter Changement</a>
-    
-<table class="table small table-striped table-condensed table-bordered table-hover">
-       
- <thead>
-      <tr class="title">
-           
-          <th></th> <th> Lundi</th>
-               <th> Mardi</th>   <th> Mercredi</th>
-                  <th> Jeudi</th>   <th> Vendredi</th>
-  <th> Samedi</th>   <th> Dimanche</th>
-        </tr>  
-          </thead>
-    <tbody>
-        <tr>
+    <a href="{{ path('changements_newflow') }}" class="btn btn-small btn-primary">Ajouter Changement</a>
+
+    <table class="table small table-striped table-condensed table-bordered table-hover">
+
+        <thead>
+            <tr class="title">
+                <th>S</th> 
+                <th> <span class="label label-warning">  Lundi</span></th>
+                <th> <span class="label label-warning">  Mardi</span></th>
+                <th> <span class="label label-warning">  Mercredi</span></th>
+                <th> <span class="label label-warning">  Jeudi</span></th>
+                <th> <span class="label label-warning">  Vendredi</span></th>
+                <th> <span class="label label-warning">  Samedi</span></th>
+                <th> <span class="label label-warning">  Diamche</span></th>
+            </tr>  
+        </thead>
+        <tbody>
+            <tr>
     {% for week in month %}
-        <td><p class="text-warning"> S-{{ week }} </p></td>
+                    <td><p class="text-warning"> S-{{ week }} </p></td>
             {% for day in week %}
-                <td>
-                    {#% if month.contains(day.begin) %#}
-                        
-                        <span class="label label-important">  {{ day.begin.format('d') }} </span><br>
+                    <td>
+                         {#% if month.includes(day) %#}
+                    {% if month.contains(day.begin) %}
+
+                            <span class="label">  {{ day.begin.format('d') }} </span><br>
          {% for event in evenement.find(day) %}
-                        <a href="{{ path('changements_show', { 'id': event.uid }) }}">
+                            <a href="{{ path('changements_show', { 'id': event.uid }) }}">
             {{ event }}</a>
-                        <br>
+                                <br>
         {% endfor %}
-                    {#% else %}
-                        &nbsp;
-                    {% endif %#}
-                </td>
+                    {% else %}
+                                &nbsp;
+                    {% endif %}
+                            </td>
             {% endfor %}
-        </tr>
+                        </tr>
     {% endfor %}
 
-</table>
+                </table>
+{#
+    {% set week = calendr_week(2012, 14) %}
+{% set events = calendr_events(week) %}
 
+<h1>Events for week #{{ week }}</h1>
+{% for day in week %}
+    <h2>{{ day }}</h2>
+    <ul>
+        {% for event in events.find(day) %}
+            <li>{{ event }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+#}
+    
+    
  {#%
 <h1>Events for Month #{{ month }}</h1>
 {% for week in month %}
@@ -79,109 +100,109 @@ Changements
 {% endfor %}
 {% endfor %}    
     %#}      
-            
+
   {#% for ev in events %}
  {{ ev.nom }} <br>
  {% endfor %#}
 
-   <br> <br>  
+                <br> <br>  
 
-    <table class="table table-striped table-bordered table-hover">
-        <thead>
-            <tr class="title">
-                <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
-                <th{% if pagination.isSorted('a.nom') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nom', 'a.nom') }}</th>
-                <th{% if pagination.isSorted('a.dateDebut') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date Debut', 'a.dateDebut') }}</th>
-                <th{% if pagination.isSorted('a.dateFin') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date Fin', 'a.dateFin') }}</th>
-               
-           <!--     <th{#% if pagination.isSorted('a.dateComep') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date COMEP', 'a.dateComep') }}</th>
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr class="title">
+                            <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+                            <th{% if pagination.isSorted('a.nom') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nom', 'a.nom') }}</th>
+                            <th{% if pagination.isSorted('a.dateDebut') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date Debut', 'a.dateDebut') }}</th>
+                            <th{% if pagination.isSorted('a.dateFin') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date Fin', 'a.dateFin') }}</th>
+
+                            <!--     <th{#% if pagination.isSorted('a.dateComep') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date COMEP', 'a.dateComep') }}</th>
                 <th{% if pagination.isSorted('a.dateVsr') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Date VSR', 'a.dateVsr') }#}</th>
-               --> 
-                
-           <!--     <th{#% if pagination.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Description', 'a.description') }#}</th>-->
-                <th{% if pagination.isSorted('b.nomprojet') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Projet', 'b.nomprojet') }}</th>
-                <th{% if pagination.isSorted('c.nomUser') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Demandeur', 'c.nomUser') }}</th>
-                <th>Files</th>
-                <th{% if pagination.isSorted('a.nomUser') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Users', 'c.nomUser') }}</th>
-                <th{% if pagination.isSorted('d.idStatus.nom') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Status', 'd.idStatus.nom') }}</th>
+                            --> 
 
-                <th>Environnements</th>
-                <!--<th>Avatar</th>-->
-                <th colspan="2">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<!--     <th{#% if pagination.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Description', 'a.description') }#}</th>-->
+                            <th{% if pagination.isSorted('b.nomprojet') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Projet', 'b.nomprojet') }}</th>
+                            <th{% if pagination.isSorted('c.nomUser') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Demandeur', 'c.nomUser') }}</th>
+                            <th>Files</th>
+                            <th{% if pagination.isSorted('a.nomUser') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Users', 'c.nomUser') }}</th>
+                            <th{% if pagination.isSorted('d.idStatus.nom') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Status', 'd.idStatus.nom') }}</th>
+
+                            <th>Environnements</th>
+                            <!--<th>Avatar</th>-->
+                            <th colspan="2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
     {% for entity in pagination %}
-                <tr>
-                    <td><a href="{{ path('changements_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                    <td>{{ entity.nom }}</td>
-                    <td>{% if entity.dateDebut %}{{ entity.dateDebut|date('Y-m-d H') ~ 'h' }}{% endif %}</td>
-                    <td>{% if entity.dateFin %}{{ entity.dateFin|date('Y-m-d') }}{% endif %}</td>
-                    <!--<td>
+                            <tr>
+                                <td><a href="{{ path('changements_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                                <td>{{ entity.nom }}</td>
+                                <td>{% if entity.dateDebut %}{{ entity.dateDebut|date('Y-m-d H') ~ 'h' }}{% endif %}</td>
+                                <td>{% if entity.dateFin %}{{ entity.dateFin|date('Y-m-d') }}{% endif %}</td>
+                                <!--<td>
                     {#% if entity.dateComep is not null %}
                {{ entity.dateComep|date('Y-m-d') }}
                     {% else %}
                             ----
             {% endif %#}
-                        </td>
-                        <td>
+                                    </td>
+                                    <td>
                         {#% if entity.dateVsr is not null %}
                {{ entity.dateVsr|date('Y-m-d') }}
                     {% else %}
                                 ----
             {% endif %#}
-                            </td>-->
+                                        </td>-->
 
 
 
                             <!--<td>{#{ entity.description|raw }#}</td>-->
-                            <td>{{ entity.idProjet.nomprojet }}</td>
-                            <td>{{ entity.demandeur.nomUser }}</td>
-                            <td>{{ entity.picture|length }}</td>
-                            <td>
+                                <td>{{ entity.idProjet.nomprojet }}</td>
+                                <td>{{ entity.demandeur.nomUser }}</td>
+                                <td>{{ entity.picture|length }}</td>
+                                <td>
                  {{ entity.idusers|join(', ') }}   
                {#% for user in entity.idusers %} {{ user.nomUser }}
 
        {% endfor %#}
-                                </td>
-                                <td>
+                                    </td>
+                                    <td>
                                {% if entity.idStatus.description == 'open' %}
 
-                                        <img src="{{ asset('bundles/applicationcertificats/images/cadenas-souvert.png') }}" alt="show" width="15" height="15" />
+                                            <img src="{{ asset('bundles/applicationcertificats/images/cadenas-souvert.png') }}" alt="show" width="15" height="15" />
 
  {% else %}
 
-                                        <img src="{{ asset('bundles/applicationcertificats/images/cadenas-sferme.png') }}" alt="show" width="15" height="15" />
+                                            <img src="{{ asset('bundles/applicationcertificats/images/cadenas-sferme.png') }}" alt="show" width="15" height="15" />
         {% endif %}   </td> 
-                                    <td>
+                                        <td>
                                     {{ entity.idEnvironnement|join(', ') }}   
 
                  {#{ entity.idEnvironnement|join(', ') }}   
                {% for envi in entity.idEnvironnement %} {{ envi.nom }}
        {% endfor %#}
-                                        </td>
+                                            </td>
 
-<!--                                        <td>-->
+                                            <!--                                        <td>-->
 
 {#% if entity.avatar %}{{ entity.avatar }}{% endif %#}<!--</td>-->
 
-                                        <td>
-                                            <a href="{{ path('changements_show', { 'id': entity.id }) }}">
-                                                <img src="{{ asset('bundles/applicationcertificats/images/detail.png') }}" alt="show" width="15" height="15" />
-                                            </a>
-                                        </td>
-                                        <td>
+                                            <td>
+                                                <a href="{{ path('changements_show', { 'id': entity.id }) }}">
+                                                    <img src="{{ asset('bundles/applicationcertificats/images/detail.png') }}" alt="show" width="15" height="15" />
+                                                </a>
+                                            </td>
+                                            <td>
 
 
-                                            <a href="{{ path('changements_edit', { 'id': entity.id }) }}">
-                                                <img src="{{ asset('bundles/applicationcertificats/images/edit.png') }}" alt="edit" width="15" height="15" />
-                                            </a>
-                                        </td>
+                                                <a href="{{ path('changements_edit', { 'id': entity.id }) }}">
+                                                    <img src="{{ asset('bundles/applicationcertificats/images/edit.png') }}" alt="edit" width="15" height="15" />
+                                                </a>
+                                            </td>
 
-                                    </tr>
+                                        </tr>
     {% endfor %}
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
 
    {{ knp_pagination_render(pagination, 'ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig') }}
 
