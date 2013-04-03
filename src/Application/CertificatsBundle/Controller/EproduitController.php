@@ -20,12 +20,18 @@ class EproduitController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->findAll();
-
+        
+          $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->findAll();
+        
+        //$query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $query, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
+        $pagination->setTemplate('ApplicationCertificatsBundle:pagination:sliding.html.twig');
         return $this->render('ApplicationCertificatsBundle:Eproduit:index.html.twig', array(
-            'entities' => $entities,
+                 'pagination' => $pagination,
         ));
     }
 

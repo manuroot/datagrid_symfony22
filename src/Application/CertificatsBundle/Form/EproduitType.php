@@ -13,6 +13,7 @@ class EproduitType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
+            ->add('services')
         ;
     }
 

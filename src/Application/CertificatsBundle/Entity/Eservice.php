@@ -108,9 +108,15 @@ class Eservice
     */
     private $demandeur;
     
-
+/**
+ * @ORM\OneToMany(targetEntity="Eproduit", mappedBy="services", cascade={"remove", "persist"})
+ */
+protected $produits;
     
-    
+      public function __toString() {
+        return $this->getName();  
+        }
+  
     public function getId()
     {
         return $this->id;

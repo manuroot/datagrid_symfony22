@@ -68,7 +68,11 @@ class Eproduit
      */
     private $description;
 
-    
+/**
+ * @ORM\ManyToOne(targetEntity="Eservice", inversedBy="produits", cascade={"remove"})
+ * @ORM\JoinColumn(name="id", referencedColumnName="id")
+ */
+protected $services;
     
     
     
@@ -77,7 +81,10 @@ class Eproduit
         return $this->id;
     }
 
-   
+     public function __toString() {
+        return $this->getName();  
+        }
+  
     
      /**
       *  Set nom
@@ -137,4 +144,27 @@ class Eproduit
    
   
    
+
+    /**
+     * Set services
+     *
+     * @param \Application\CertificatsBundle\Entity\Eservice $services
+     * @return Eproduit
+     */
+    public function setServices(\Application\CertificatsBundle\Entity\Eservice $services = null)
+    {
+        $this->services = $services;
+    
+        return $this;
+    }
+
+    /**
+     * Get services
+     *
+     * @return \Application\CertificatsBundle\Entity\Eservice 
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }
 }
