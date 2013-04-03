@@ -1,6 +1,12 @@
 _changements:
     resource: "@ApplicationCertificatsBundle/Resources/config/routing/changements.yml"
     prefix:   /
+
+    
+_eservice:
+    resource: "@ApplicationCertificatsBundle/Resources/config/routing/eservice.yml"
+    prefix:   /service
+    
     
 application_certificats_certificatscenter:
     resource: "@ApplicationCertificatsBundle/Resources/config/routing/certificatscenter.yml"

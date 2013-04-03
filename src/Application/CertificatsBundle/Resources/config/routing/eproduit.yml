@@ -1,0 +1,30 @@
+eproduit:
+    pattern:  /
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:index" }
+
+eproduit_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:show" }
+
+eproduit_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:new" }
+
+eproduit_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:create" }
+    requirements: { _method: post }
+
+eproduit_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:edit" }
+
+eproduit_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:update" }
+    requirements: { _method: post|put }
+
+eproduit_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:delete" }
+    requirements: { _method: post|delete }

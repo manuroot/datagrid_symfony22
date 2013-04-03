@@ -1,0 +1,30 @@
+eservice:
+    pattern:  /
+    defaults: { _controller: "ApplicationCertificatsBundle:Eservice:index" }
+
+eservice_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationCertificatsBundle:Eservice:show" }
+
+eservice_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationCertificatsBundle:Eservice:new" }
+
+eservice_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationCertificatsBundle:Eservice:create" }
+    requirements: { _method: post }
+
+eservice_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationCertificatsBundle:Eservice:edit" }
+
+eservice_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationCertificatsBundle:Eservice:update" }
+    requirements: { _method: post|put }
+
+eservice_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationCertificatsBundle:Eservice:delete" }
+    requirements: { _method: post|delete }
