@@ -26,11 +26,14 @@ use Doctrine\ORM\EntityRepository;
 class EserviceRepository extends EntityRepository
 {
     
-     public function myFindAll($user_id=1) {
+     public function myFindAll($user_id) {
          
          $query = $this->createQueryBuilder('a')
     ->where('a.demandeur = :demandeur')
-    ->setParameter('demandeur', $user_id)
+                  ->setParameter('demandeur', $user_id)
+                          ->leftJoin('a.idStatus', 'd')
+                     ->add('orderBy', 'a.id DESC')
+   
     //->orderBy('p.price', 'ASC')
     ->getQuery();
       return $query;
@@ -42,5 +45,45 @@ class EserviceRepository extends EntityRepository
                         //   ->leftJoin('a.demandeur', 'c')
                         ->getQuery();*/
     }
- 
+    
+    public function myFindOther($user_id) {
+         
+         $query = $this->createQueryBuilder('a')
+    ->where('a.demandeur <> :demandeur')
+                  ->setParameter('demandeur', $user_id)
+                          ->leftJoin('a.idStatus', 'd')
+                     ->add('orderBy', 'a.id DESC')
+   
+    //->orderBy('p.price', 'ASC')
+    ->getQuery();
+      return $query;
+       /*  return $this->createQueryBuilder('a')
+                        ->leftJoin('a.idProjet', 'b')
+                        ->leftJoin('a.idStatus', 'd')
+                        ->leftJoin('a.demandeur', 'c')
+                 ->add('orderBy', 'a.id DESC')
+                        //   ->leftJoin('a.demandeur', 'c')
+                        ->getQuery();*/
+    }
+    
+ public function findproposal($user_id=null) {
+         
+     /*    $query = $this->createQueryBuilder('a')
+    ->where('a.demandeur = :demandeur')
+                  ->setParameter('demandeur', $user_id)
+                          ->leftJoin('a.idStatus', 'd')
+                 ->where('c. IS NOT NULL');
+                     ->add('orderBy', 'a.id DESC')
+   
+    //->orderBy('p.price', 'ASC')
+    ->getQuery();
+      return $query;*/
+       /*  return $this->createQueryBuilder('a')
+                        ->leftJoin('a.idProjet', 'b')
+                        ->leftJoin('a.idStatus', 'd')
+                        ->leftJoin('a.demandeur', 'c')
+                 ->add('orderBy', 'a.id DESC')
+                        //   ->leftJoin('a.demandeur', 'c')
+                        ->getQuery();*/
+    }
 }

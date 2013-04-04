@@ -27,6 +27,8 @@ class ChangementsRepository extends EntityRepository implements ProviderInterfac
                         ->leftJoin('a.idProjet', 'b')
                         ->leftJoin('a.idStatus', 'd')
                         ->leftJoin('a.demandeur', 'c')
+                 ->leftJoin('a.idusers', 'e')
+             //   ->groupby('e.nomUser')
                  ->add('orderBy', 'a.id DESC')
                         //   ->leftJoin('a.demandeur', 'c')
                         ->getQuery();

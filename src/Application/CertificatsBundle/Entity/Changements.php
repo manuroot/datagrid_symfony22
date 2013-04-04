@@ -22,11 +22,11 @@ use CalendR\Event\AbstractEvent;
  * @ORM\Table(name="changements")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\ChangementsRepository")
- * @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"})
+ * @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idusers.nomUser:GroupConcat,idEnvironnement.nom:GroupConcat",groupBy={"id"}))
   * @Vich\Uploadable
  */
 
-
+// @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat,idusers.nomUser:GroupConcat",groupBy={"id"})
 
 class Changements extends AbstractEvent
 //class Changements
@@ -69,7 +69,7 @@ class Changements extends AbstractEvent
      * @var \DateTime
      *
      * @ORM\Column(name="date_debut", type="datetime", nullable=false)
-     * @GRID\Column(title="Début", size="40",format="Y-m-d h:i",type="datetime")
+     * @GRID\Column(title="Début", size="30",format="Y-m-d",type="datetime")
      */
     private $dateDebut;
 
@@ -77,11 +77,12 @@ class Changements extends AbstractEvent
      * @var \DateTime
      *
      * @ORM\Column(name="date_fin", type="datetime", nullable=false)
-      * @GRID\Column(title="Fin", size="40",format="Y-m-d h:i",type="datetime")
+      * @GRID\Column(title="Fin", size="30",format="Y-m-d",type="datetime")
      * 
      */
     private $dateFin;
 
+      // @GRID\Column(title="Fin", size="40",format="Y-m-d h:i",type="datetime")
     /**
      * @var \DateTime
      *
@@ -132,7 +133,7 @@ class Changements extends AbstractEvent
      * @ORM\ManyToMany(targetEntity="Environnements", inversedBy="idchangements",cascade={"persist"})
      * @ORM\OrderBy({"nom" = "ASC"})
      * @ORM\JoinTable(name="changements_environnements")
-     * @GRID\Column(title="Environnements", field="idEnvironnement.nom:GroupConcat", size="30", visible=true, sortable=true, filtrable="true")
+     * @GRID\Column(title="Env", field="idEnvironnement.nom:GroupConcat", size="30", visible=true, sortable=true, filtrable="true")
      */
   
      
@@ -150,9 +151,9 @@ class Changements extends AbstractEvent
      * @ORM\ManyToMany(targetEntity="ChronoUser", inversedBy="idchangement",cascade={"persist"})
      * @ORM\OrderBy({"nomUser" = "ASC"})
      * @ORM\JoinTable(name="changements_users")
-     */
+      */
     private $idusers;
-   
+   // @GRID\Column(title="Users", field="idusers.nomUser:GroupConcat", size="20", visible=true, sortable=true, filtrable="true")
     
      /**
      * @var \ChronoUser

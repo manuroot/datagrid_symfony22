@@ -20,7 +20,23 @@ class EproduitController extends Controller
      */
     public function indexAction()
     {
+        
         $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $user_security = $this->container->get('security.context');
+        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user_id = $user->getId();
+        } else {
+            $user_id = 0;
+        }
+
+        $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->myFindAll($user_id);
+
+        
+        
+        
         $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->findAll();
         
         //$query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();

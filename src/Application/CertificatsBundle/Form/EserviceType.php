@@ -37,15 +37,15 @@ class EserviceType extends AbstractType
                 ->add('description', 'textarea', array(
         'attr' => array(
             'cols'=>"60",
-          //  'rows'=>"10",
+            'rows'=>"20",
             'class' => 'tinymce',
         // 'data-theme' => 'simple'
            
 // simple, advanced, bbcode
         )))
-           
+            ->add('idStatus',null,array('label' =>'Status'))
             ->add('idusers',null,array('label' =>'Utilisateurs'))
-            ->add('demandeur')
+            //->add('demandeur')
             ->add('produits')   
         ;
     }

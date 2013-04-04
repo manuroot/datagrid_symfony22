@@ -7,7 +7,7 @@
         .mytextarea {
             border: 1px solid #D4E0EE;
             background-color: #f1f1f1;
-            width:330px; height:100px;
+            width:330px; height:200px;
 
         }
         </script>
@@ -63,10 +63,10 @@ Ajouter Un Service
                </div>
    
           
-           <div>
+         {#  <div>
     {{ form_row(form.demandeur) }}
                </div> 
-     
+     #}
                </td>
            <td>
                 <div>
@@ -83,7 +83,7 @@ Ajouter Un Service
                                      
 <tr><td colspan="3">
                                    
-  <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+  <button type="submit" class="btn btn-small btn-warning">Ajouter</button>
   <a href="{{ path('eservice') }}" class="btn btn-small btn-primary">Retour</a>
    </form>       
                                     

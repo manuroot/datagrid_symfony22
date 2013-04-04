@@ -37,6 +37,71 @@ class ChangementsController extends Controller {
      */
     public function indexAction() {
 
+        
+        
+    /*    
+   $filters = new Filters();
+
+    $form = $this->createForm(new FiltersType(), $filters);
+
+    $session = $this->getRequest()->getSession();
+
+    if ($session->get('dql') == null) {
+        $session->set('dql', "SELECT a FROM ViciousAmateurBundle:Post a WHERE a.is_active = true");
+    }
+
+    if ($request->isMethod('POST')) {
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $dql = "SELECT a FROM ViciousAmateurBundle:Post a WHERE a.is_active = true";
+            $country = $filters->getCountry();
+            $city = $filters->getCity();
+            $gender = $filters->getGender();
+            $sexualOrientation = $filters->getSexualOrientation();
+
+            if (isset($country)) {
+                $dql .= " AND a.country = '" . $filters->getCountry() . "'";
+            }
+            if (isset($city)) {
+                $dql .= " AND a.city = '" . $filters->getCity() . "'";
+            }
+            if (isset($gender)) {
+                $dql .= " AND a.gender = '" . $filters->getGender() . "'";
+            }
+            if (isset($sexualOrientation)) {
+                $dql .= " AND a.sexual_orientation = '" . $filters->getSexualOrientation() . "'";
+            }
+
+            $session->set('dql', $dql);
+        }
+    }
+
+    $em = $this->get('doctrine.orm.entity_manager');
+
+    $query = $em->createQuery($session->get('dql'));
+
+    $paginator = $this->get('knp_paginator');
+    $pagination = $paginator->paginate(
+        $query,
+        $this->get('request')->query->get('page', $page),
+        5
+    );
+
+    return $this->render('ViciousAmateurBundle:Default:index.html.twig', array(
+        'form' => $form->createView(),
+        'pagination' => $pagination
+        )
+    );
+    */
+    
+    
+    
+    
+    
+    
+    
+    
         //     $past = date('Y-m-d', strtotime('-30days'));
         //      $currenta = ($row->getField('endTime')->format('Y-m-d'));
         //$current = date('Y-m-d', strtotime('+30days'));
@@ -59,6 +124,8 @@ class ChangementsController extends Controller {
         $session->set('buttonretour', 'changements');
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('ApplicationCertificatsBundle:Changements')->myFindAll();
+        
+        
         $query_events = $em->getRepository('ApplicationCertificatsBundle:Changements')
                 ->getEventsQueryBuilder($past, $current);
 /*$nb_events=$em->getRepository('ApplicationCertificatsBundle:Changements')
@@ -83,7 +150,53 @@ class ChangementsController extends Controller {
                 ));
     }
 
-    //==============================================
+
+    public function calendarAction() {
+
+        //     $past = date('Y-m-d', strtotime('-30days'));
+        //      $currenta = ($row->getField('endTime')->format('Y-m-d'));
+        //$current = date('Y-m-d', strtotime('+30days'));
+        $current = new \DateTime("2013-06");
+        $past = new \DateTime("2013-05");
+        //$current = new \DateTime($row->getField('endTime')->format('Y-m-d'));
+
+        /* $em = $this->getDoctrine()->getManager();
+
+          $entities = $em->getRepository('ApplicationCertificatsBundle:Changements')->findAll();
+
+          return $this->render('ApplicationCertificatsBundle:Changements:index.html.twig', array(
+          'entities' => $entities,
+          )); */
+//$factory = new CalendR\Calendar;
+//$factory->getEventManager()->addProvider('myawesomeprovider', 'new MyAwesomeProvider');
+        //  $f=$this->get('booking_repository');
+        //  $month = $f->getMonth(2012, 6);
+        $session = $this->getRequest()->getSession();
+        $session->set('buttonretour', 'changements');
+        $em = $this->getDoctrine()->getManager();
+   
+        $query_events = $em->getRepository('ApplicationCertificatsBundle:Changements')
+                ->getEventsQueryBuilder($past, $current);
+/*$nb_events=$em->getRepository('ApplicationCertificatsBundle:Changements')
+                ->findcount($past, $current);*/
+        //    print_r($query_events);
+        // exit(1);
+        // $nbtags = $query->getPicture()->count();
+        $month = $this->get('calendr')->getMonth(2013, 03);
+        $events = $this->get('calendr')->getEvents($month);
+        $paginator = $this->get('knp_paginator');
+      
+        return $this->render('ApplicationCertificatsBundle:Changements:calendar.html.twig', array(
+                     'month' => $this->get('calendr')->getMonth(2013, 03),
+                    // 'myweek' =>  $this->get('calendr')->getWeek(2012, 14),
+                    'events' => $query_events,
+                    'evenement' => $events,
+                        // 'current_month' => $month
+                ));
+    }
+
+    
+//==============================================
     // VIEW ALL ACTEURS
     //==============================================
     public function indexapyAction($page = 1) {

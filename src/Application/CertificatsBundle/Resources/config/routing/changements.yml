@@ -2,6 +2,10 @@ changements:
     pattern:  /
     defaults: { _controller: "ApplicationCertificatsBundle:Changements:index" }
 
+changements_calendar:
+    pattern:  /calendar
+    defaults: { _controller: "ApplicationCertificatsBundle:Changements:calendar" }
+
 changementsapy:
     pattern:  /indexapy
     defaults: { _controller: "ApplicationCertificatsBundle:Changements:indexapy" }

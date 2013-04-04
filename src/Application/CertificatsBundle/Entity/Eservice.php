@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
-
 namespace Application\CertificatsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -28,39 +26,35 @@ use Application\Sonata\UserBundle\entity\User as User;
  * @author <yourname> <youremail>
  */
 
-
 /**
  * Changements
  *
  * @ORM\Table(name="eservices")
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\EserviceRepository")
  */
+class Eservice {
 
-class Eservice
-{
-     /**
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-   /**
+    /**
      * Get id
      *
      * @return integer 
      */
-    
-    
-     private $dateDebut;
+    private $dateDebut;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_fin", type="datetime", nullable=false)
-      * @GRID\Column(title="Fin", size="40",format="Y-m-d h:i",type="datetime")
+     * @GRID\Column(title="Fin", size="40",format="Y-m-d h:i",type="datetime")
      * 
      */
     private $dateFin;
@@ -71,40 +65,36 @@ class Eservice
      * @ORM\Column(name="date_comep", type="datetime", nullable=true)
      * @GRID\Column(title="COMEP", size="50",format="Y-m-d",type="datetime")
      */
-    
-    
 
-       /**
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
     private $name;
-    
-      /**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=false)
      */
     private $description;
 
-    
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="brouzoufs", type="integer", nullable=false)
      */
     private $brouzoufs;
-    
-    
-     /**
+
+    /**
      * @ORM\ManyToMany(targetEntity="Application\Sonata\UserBundle\Entity\User",cascade={"persist"})
      * @ORM\OrderBy({"username" = "ASC"})
      * @ORM\JoinTable(name="eservice_users")
      */
     private $idusers;
-   
-     /**
+
+    /**
      * @var \ChronoUser
      *
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
@@ -112,36 +102,52 @@ class Eservice
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="demandeur", referencedColumnName="id")
      * })
-    */
+     */
     private $demandeur;
+
     
-/**
- * @ORM\OneToMany(targetEntity="Eproduit", mappedBy="services", cascade={"remove", "persist"})
- */
-protected $produits;
+ /**
+     * @ORM\ManyToMany(targetEntity="Eproduit", inversedBy="services",cascade={"persist"})
+     * @ORM\JoinTable(name="eservice_produit",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="service_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="produit_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $produits;
+
     
-      public function __toString() {
-        return $this->getName();  
-        }
-  
-    public function getId()
-    {
+    /**
+     * @var \EserviceStatus
+     *
+     * @ORM\ManyToOne(targetEntity="EserviceStatus", inversedBy="eservice"))
+      * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_status", referencedColumnName="id")
+     *  })
+     */
+    private $idStatus;
+    
+    
+    public function __toString() {
+        return $this->getName();
+    }
+
+    public function getId() {
         return $this->id;
     }
 
-     
-   
-    
-     /**
-      *  Set nom
+    /**
+     *  Set nom
      *
      * @param string $fileName
      * @return CertificatsCenter
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -150,31 +156,29 @@ protected $produits;
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
-    
-   
+
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
+    //public function __construct($id_user) {
         $this->idusers = new \Doctrine\Common\Collections\ArrayCollection();
- 
+
+       // $this->demandeur = $id_user;
     }
-    
+
     /**
      * Set dateFin
      *
      * @param \DateTime $dateFin
      * @return Eservice
      */
-    public function setDateFin($dateFin)
-    {
+    public function setDateFin($dateFin) {
         $this->dateFin = $dateFin;
-    
+
         return $this;
     }
 
@@ -183,12 +187,9 @@ protected $produits;
      *
      * @return \DateTime 
      */
-    public function getDateFin()
-    {
+    public function getDateFin() {
         return $this->dateFin;
     }
-
-   
 
     /**
      * Set description
@@ -196,10 +197,9 @@ protected $produits;
      * @param string $description
      * @return Eservice
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
-    
+
         return $this;
     }
 
@@ -208,8 +208,7 @@ protected $produits;
      *
      * @return string 
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -219,10 +218,9 @@ protected $produits;
      * @param \Application\Sonata\UserBundle\Entity\User $idusers
      * @return Eservice
      */
-    public function addIduser(\Application\Sonata\UserBundle\Entity\User $idusers)
-    {
+    public function addIduser(\Application\Sonata\UserBundle\Entity\User $idusers) {
         $this->idusers[] = $idusers;
-    
+
         return $this;
     }
 
@@ -231,8 +229,7 @@ protected $produits;
      *
      * @param \Application\Sonata\UserBundle\Entity\User $idusers
      */
-    public function removeIduser(\Application\Sonata\UserBundle\Entity\User $idusers)
-    {
+    public function removeIduser(\Application\Sonata\UserBundle\Entity\User $idusers) {
         $this->idusers->removeElement($idusers);
     }
 
@@ -241,8 +238,7 @@ protected $produits;
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIdusers()
-    {
+    public function getIdusers() {
         return $this->idusers;
     }
 
@@ -252,10 +248,9 @@ protected $produits;
      * @param \Application\Sonata\UserBundle\Entity\User $demandeur
      * @return Eservice
      */
-    public function setDemandeur(\Application\Sonata\UserBundle\Entity\User $demandeur = null)
-    {
+    public function setDemandeur(\Application\Sonata\UserBundle\Entity\User $demandeur = null) {
         $this->demandeur = $demandeur;
-    
+
         return $this;
     }
 
@@ -264,12 +259,9 @@ protected $produits;
      *
      * @return \Application\Sonata\UserBundle\Entity\User 
      */
-    public function getDemandeur()
-    {
+    public function getDemandeur() {
         return $this->demandeur;
     }
-
-   
 
     /**
      * Set brouzoufs
@@ -277,10 +269,9 @@ protected $produits;
      * @param integer $brouzoufs
      * @return Eservice
      */
-    public function setBrouzoufs($brouzoufs)
-    {
+    public function setBrouzoufs($brouzoufs) {
         $this->brouzoufs = $brouzoufs;
-    
+
         return $this;
     }
 
@@ -289,8 +280,7 @@ protected $produits;
      *
      * @return integer 
      */
-    public function getBrouzoufs()
-    {
+    public function getBrouzoufs() {
         return $this->brouzoufs;
     }
 
@@ -300,10 +290,9 @@ protected $produits;
      * @param \Application\CertificatsBundle\Entity\Eproduit $produits
      * @return Eservice
      */
-    public function addProduit(\Application\CertificatsBundle\Entity\Eproduit $produits)
-    {
+    public function addProduit(\Application\CertificatsBundle\Entity\Eproduit $produits) {
         $this->produits[] = $produits;
-    
+
         return $this;
     }
 
@@ -312,8 +301,7 @@ protected $produits;
      *
      * @param \Application\CertificatsBundle\Entity\Eproduit $produits
      */
-    public function removeProduit(\Application\CertificatsBundle\Entity\Eproduit $produits)
-    {
+    public function removeProduit(\Application\CertificatsBundle\Entity\Eproduit $produits) {
         $this->produits->removeElement($produits);
     }
 
@@ -322,8 +310,31 @@ protected $produits;
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProduits()
-    {
+    public function getProduits() {
         return $this->produits;
+    }
+
+
+    /**
+     * Set idStatus
+     *
+     * @param \Application\CertificatsBundle\Entity\EserviceStatus $idStatus
+     * @return Eservice
+     */
+    public function setIdStatus(\Application\CertificatsBundle\Entity\EserviceStatus $idStatus = null)
+    {
+        $this->idStatus = $idStatus;
+    
+        return $this;
+    }
+
+    /**
+     * Get idStatus
+     *
+     * @return \Application\CertificatsBundle\Entity\EserviceStatus 
+     */
+    public function getIdStatus()
+    {
+        return $this->idStatus;
     }
 }
