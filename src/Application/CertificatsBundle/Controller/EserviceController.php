@@ -24,8 +24,26 @@ class EserviceController extends Controller
         
 
         $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('ApplicationCertificatsBundle:Eservice')->findAll();
+     
+       
+        $user= $this->get('security.context')->getToken()->getUser();
         
+       //   $user = $this->container->get('security.context')->getToken()->getUser();
+
+    /*    if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this     section.');
+        }*/
+
+        
+        
+        $user->getUsername();
+        $user_id=$user->getId();
+           $query = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindAll($user_id);
+/*
+$username = $this->container->get('security.context')->getToken()->getUser();
+$em = $this->container->get('doctrine')->getEntityManager();
+$user = $em->getRepository('SiteUtilisateurBundle:Utilisateur')->find($username);
+*/
         //$query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
