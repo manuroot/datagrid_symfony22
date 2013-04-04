@@ -441,7 +441,7 @@ $message = \Swift_Message::newInstance()
         $grid->setPersistence(false);
         $grid->setDefaultOrder('id', 'desc');
         // Set the selector of the number of items per page
-        $grid->setLimits(array(20));
+        $grid->setLimits(array(10));
 
         // Set the default page
         $grid->setPage($page);
