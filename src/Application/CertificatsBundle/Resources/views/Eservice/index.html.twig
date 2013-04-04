@@ -8,7 +8,7 @@
 
 {% block content_header '' %}
 {% block title %}
-LISTE DES SERVICES 
+LISTE DE MES SERVICES 
 {% endblock %}
 {% block content %}
 
@@ -20,29 +20,39 @@ LISTE DES SERVICES
     {% endfor %}
 {% endfor %}
 
+<a href="{{ path('eservice_new') }}" class="btn btn-small btn-primary">Ajouter un Service</a>
+<br> <br>
 
-    <h1>Eservice list</h1>
-
-
+<br><br>
 <table class="table table-striped table-bordered table-hover">
     <thead>
         <tr class="title">
                 <th>Id</th>
-                <th>Datefin</th>
-                <th>Name</th>
-                <th>Description</th>
+                 <th>Name</th>
+                  <th>Datefin <i class="icon-calendar"></i></th>
+                
+                 <th>Demandeur <i class="icon-user"></i></th>
+                  <th>Utilisateurs <i class="icon-user"></i></th>
+                   <th>Produits <i class="icon-gift"></i></th>
+                     <th>Brouzoufs <i class="icon-shopping-cart"></i></th>
                 <th colspan="3">Actions</th>
             </tr>
         </thead>
         <tbody>
        {% for entity in pagination %}
 
+             
+                          
             <tr>
                 <td><a href="{{ path('eservice_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.dateFin %}{{ entity.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.name }}</td>
-                <td>{{ entity.description }}</td>
+                 <td>{{ entity.name }}</td>
+                 <td>{% if entity.dateFin %}{{ entity.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
+              
                 
+                    <td>{{ entity.demandeur }}</td>
+                     <td>{{ entity.idusers|join(', ') }}   </td>
+                       <td>{{ entity.produits|join(', ') }}   </td>
+                             <td>{{ entity.brouzoufs }}</td>
                 <td>
                     <a href="{{ path('eservice_show', { 'id': entity.id }) }}">
                         <img src="{{ asset('bundles/applicationcertificats/images/detail.png') }}" alt="show" width="15" height="15" />
@@ -65,12 +75,6 @@ LISTE DES SERVICES
         {% endfor %}
         </tbody>
     </table>
+  {{ knp_pagination_render(pagination) }}
 
-        <ul>
-        <li>
-            <a href="{{ path('eservice_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

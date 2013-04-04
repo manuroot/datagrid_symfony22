@@ -29,9 +29,9 @@ class EserviceController extends Controller
         //$query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $query, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+                $query, $this->get('request')->query->get('page', 1)/* page number */, 5/* limit per page */
         );
-        $pagination->setTemplate('ApplicationCertificatsBundle:pagination:sliding.html.twig');
+        $pagination->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
         //$pagination->setTemplate('ApplicationMyNotesBundle:pagination:sliding.html.twig');
         return $this->render('ApplicationCertificatsBundle:Eservice:index.html.twig', array(
                     'pagination' => $pagination,

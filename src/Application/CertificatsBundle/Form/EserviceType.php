@@ -11,11 +11,42 @@ class EserviceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dateFin')
-            ->add('name')
-            ->add('description')
-            ->add('idusers')
+            ->add('dateFin', 'datetime', array(
+            'label' => 'Date Fin',
+            'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'yyyy-MM-dd HH:mm',
+                      'widget_addon' => array(
+            'icon' => 'time',
+            'type' => 'prepend'
+        )))
+                      ->add('name', 'text',  array(
+        'widget_addon' => array(
+            'icon' => 'pencil',
+            'type' => 'prepend'
+        ),
+        
+    ))
+                ->add('brouzoufs', 'text',  array(
+        'widget_addon' => array(
+            'icon' => 'pencil',
+            'type' => 'prepend'
+        ),
+        
+    ))
+                ->add('description', 'textarea', array(
+        'attr' => array(
+            'cols'=>"60",
+          //  'rows'=>"10",
+            'class' => 'tinymce',
+        // 'data-theme' => 'simple'
+           
+// simple, advanced, bbcode
+        )))
+           
+            ->add('idusers',null,array('label' =>'Utilisateurs'))
             ->add('demandeur')
+            ->add('produits')   
         ;
     }
 
@@ -28,6 +59,6 @@ class EserviceType extends AbstractType
 
     public function getName()
     {
-        return 'application_certificatsbundle_eservicetype';
+        return 'eservice_form';
     }
 }

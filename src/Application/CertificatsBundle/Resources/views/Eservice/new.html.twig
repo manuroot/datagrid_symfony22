@@ -3,28 +3,93 @@
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
-     
+   <script>
+        .mytextarea {
+            border: 1px solid #D4E0EE;
+            background-color: #f1f1f1;
+            width:330px; height:100px;
+
+        }
+        </script>
  {% endblock %}
 
+    
+        
+{% block javascripts %}
+{{ parent() }}
+   <!--<script type="text/javascript" src="{{ asset('bundles/applicationcertificats/js/selectapplis.js') }}"></script>
+    -->
+<script type="text/javascript">
+$(document).ready(function() {
+//$(function() {
+  $( "#eservice_form_dateFin" ).datepicker({
+maxDate: "+3M +10D",
+changeMonth: true,
+changeYeat: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+  
+});
+</script>
+
+
+
+  {{ tinymce_init() }}
+{% endblock %}
+    
 {% block content_header '' %}
 {% block title %}
-LISTE DES SERVICES 
+Ajouter Un Service
 {% endblock %}
 {% block content %}
-    <h1>Eservice creation</h1>
-
-    <form action="{{ path('eservice_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('eservice') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+  
+    
+ <form action="{{ path('eservice_create') }}" method="post" {{ form_enctype(form) }}>
+    <table class="table table-bordered">
+    <tbody>         <tr><td>
+                 <div>
+                  {{ form_row(form.name) }}
+              </div>
+                              <div>
+    {{ form_row(form.brouzoufs) }}
+               </div> 
+                            
+                               <div>
+    {{ form_row(form.dateFin) }}
+               </div>
+   
+          
+           <div>
+    {{ form_row(form.demandeur) }}
+               </div> 
+     
+               </td>
+           <td>
+                <div>
+          {{ form_row(form.idusers) }}
+               </div>
+                    <div>
+          {{ form_row(form.produits) }}
+               </div>
+                   </td>
+ <td>
+ {{ form_row(form.description) }}
+{{ form_rest(form) }} </td>
+                                 </tr>
+                                     
+<tr><td colspan="3">
+                                   
+  <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+  <a href="{{ path('eservice') }}" class="btn btn-small btn-primary">Retour</a>
+   </form>       
+                                    
+                                       
+                                </td></tr>
+                        </tbody>
+                    </table>
+  
 {% endblock %}

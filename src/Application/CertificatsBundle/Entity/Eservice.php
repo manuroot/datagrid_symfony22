@@ -89,10 +89,17 @@ class Eservice
     private $description;
 
     
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="brouzoufs", type="integer", nullable=false)
+     */
+    private $brouzoufs;
+    
     
      /**
      * @ORM\ManyToMany(targetEntity="Application\Sonata\UserBundle\Entity\User",cascade={"persist"})
-     * @ORM\OrderBy({"User" = "ASC"})
+     * @ORM\OrderBy({"username" = "ASC"})
      * @ORM\JoinTable(name="eservice_users")
      */
     private $idusers;
@@ -263,4 +270,60 @@ protected $produits;
     }
 
    
+
+    /**
+     * Set brouzoufs
+     *
+     * @param integer $brouzoufs
+     * @return Eservice
+     */
+    public function setBrouzoufs($brouzoufs)
+    {
+        $this->brouzoufs = $brouzoufs;
+    
+        return $this;
+    }
+
+    /**
+     * Get brouzoufs
+     *
+     * @return integer 
+     */
+    public function getBrouzoufs()
+    {
+        return $this->brouzoufs;
+    }
+
+    /**
+     * Add produits
+     *
+     * @param \Application\CertificatsBundle\Entity\Eproduit $produits
+     * @return Eservice
+     */
+    public function addProduit(\Application\CertificatsBundle\Entity\Eproduit $produits)
+    {
+        $this->produits[] = $produits;
+    
+        return $this;
+    }
+
+    /**
+     * Remove produits
+     *
+     * @param \Application\CertificatsBundle\Entity\Eproduit $produits
+     */
+    public function removeProduit(\Application\CertificatsBundle\Entity\Eproduit $produits)
+    {
+        $this->produits->removeElement($produits);
+    }
+
+    /**
+     * Get produits
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProduits()
+    {
+        return $this->produits;
+    }
 }

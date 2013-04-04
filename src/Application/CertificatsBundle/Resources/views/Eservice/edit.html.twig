@@ -6,33 +6,84 @@
      
  {% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+   <!--<script type="text/javascript" src="{{ asset('bundles/applicationcertificats/js/selectapplis.js') }}"></script>
+    -->
+<script type="text/javascript">
+$(document).ready(function() {
+//$(function() {
+  $( "#eservice_form_dateFin" ).datepicker({
+maxDate: "+3M +10D",
+changeMonth: true,
+changeYeat: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd 11:00",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+  
+});
+</script>
+  {{ tinymce_init() }}
+{% endblock %}      
+
 {% block content_header '' %}
 {% block title %}
 LISTE DES SERVICES 
 {% endblock %}
 {% block content %}
-    <h1>Eservice edit</h1>
+       
+  <form action="{{ path('eservice_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <table class="table table-bordered">
+    <tbody>         <tr><td>
+                 <div>
+                  {{ form_row(edit_form.name) }}
+              </div>
+                              <div>
+    {{ form_row(edit_form.brouzoufs) }}
+               </div> 
+                            
+                               <div>
+    {{ form_row(edit_form.dateFin) }}
+               </div>
+   
+            <div>
+    {{ form_row(edit_form.demandeur) }}
+               </div> 
+     
+               </td>
+               
+                  <td>
+                <div>
+          {{ form_row(edit_form.idusers) }}
+               </div>
+                    <div>
+          {{ form_row(edit_form.produits) }}
+               </div>
+                   </td>
+ <td>
+ {{ form_row(edit_form.description) }}
+{{ form_rest(edit_form) }} </td>
+                                 </tr>
+                                
 
-    <form action="{{ path('eservice_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-    </form>
+                                     
+<tr><td colspan="2">
+                                   
+  <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+  <a href="{{ path('eservice') }}" class="btn btn-small btn-primary">Retour</a>
+   </form>       
+                                    
+                                       
+                                </td></tr>
+                        </tbody>
+                    </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('eservice') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('eservice_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+
+    
+          
+          
+       
 {% endblock %}

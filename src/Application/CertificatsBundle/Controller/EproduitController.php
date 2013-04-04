@@ -20,8 +20,7 @@ class EproduitController extends Controller
      */
     public function indexAction()
     {
-        
-          $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->findAll();
         
         //$query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();

@@ -6,26 +6,28 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EproduitType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+class EproduitType extends AbstractType {
+
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('services')
+                ->add('name')
+                ->add('description', 'textarea', array(
+                    'attr' => array(
+                        'cols' => "60",
+                        'class' => 'tinymce',
+                     )))
+                ->add('services')
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Application\CertificatsBundle\Entity\Eproduit'
         ));
     }
 
-    public function getName()
-    {
+    public function getName() {
         return 'application_certificatsbundle_eproduittype';
     }
+
 }
