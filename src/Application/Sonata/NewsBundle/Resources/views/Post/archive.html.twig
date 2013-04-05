@@ -2,9 +2,9 @@
 
   {% block stylesheets %}
 {{ parent() }}
-      <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
-     
- {% endblock %}
+  <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
+  <link rel="stylesheet" href="{{ asset('bundles/applicationsonatanews/css/news.css') }}" type="text/css" media="all"/>
+  {% endblock %}
 
 {% block content_header '' %}
 {% block title %}
@@ -27,7 +27,9 @@
 
 #}
 
+ {#
 <h1>{{ 'title_archive'|trans({}, 'SonataNewsBundle') }}</h1>
+#}
 {{ test }}
 <div class="sonata-blog-post-list">
     {% for post in pager.getResults() %}
@@ -36,7 +38,7 @@
             <div class="sonata-blog-post-date-container">
                 {{ post.publicationDateStart | format_date }}
             </div>
-            <h2 class="sonata-blog-post-title">
+            <h2 class="sonata-blog-post-title-a">
                 <a href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(post) }) }}">{{ post.title }}</a>
                 <span class="sonata-blog-post-author">{{ 'archive_author'|trans({'%author%': post.author }, 'SonataNewsBundle') }}</span>
             </h2>

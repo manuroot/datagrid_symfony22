@@ -33,9 +33,7 @@ $( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
 LISTE DES {{ parent() }} 
 {% endblock %}
  
-
 {% block content %}
- 
 
 {% for type, flashMessages in app.session.flashbag.all() %}
     {% for flashMessage in flashMessages %}
@@ -152,7 +150,11 @@ LISTE DES {{ parent() }}
 {% block grid_column_type_filter %}
 {{ column.id }}
 {% endblock grid_column_type_filter %}
-  
+
+
+
+
+
 {# -------------------------------------------- grid_column_filter_type_massaction --------------------------------------- #}
 {% block grid_column_filter_type_massaction %}
    <!-- <input type="button" class="grid-search-reset" value="R" title="{{ 'Reset'|trans }}" onclick="return {{ grid.hash }}_reset();"/>-->
