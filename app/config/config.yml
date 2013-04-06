@@ -282,7 +282,24 @@ stfalcon_tinymce:
                 remove_linebreaks: false
                 inline_styles: false
                 convert_fonts_to_spans: false
-  
+#==================================================
+#  UPLOADER
+#==================================================
+vich_uploader:
+    db_driver: orm # or mongodb
+    storage:              vich_uploader.storage.file_system
+    twig:                 true
+    gaufrette:            false
+    mappings:
+        product_image:
+            uri_prefix: /uploads/eproduits
+            #upload_destination: %kernel.root_dir%/../web/images/products
+            upload_destination:  %kernel.root_dir%/../web/uploads/eproduits
+            namer: vich_uploader.namer_uniqid
+            directory_namer:      ~
+            delete_on_remove:     true
+            delete_on_update:     false
+            inject_on_load:       true  
 #==================================================
 #  TINYMCE
 #==================================================

@@ -17,6 +17,11 @@ use Doctrine\ORM\Mapping as ORM;
 use APY\DataGridBundle\Grid\Mapping as GRID;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
@@ -34,6 +39,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="eproduits")
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\EproduitRepository")
+ * @Vich\Uploadable
  */
 
 class Eproduit
@@ -73,7 +79,43 @@ class Eproduit
      */
     private $services;
     
-    
+   /**
+* @Assert\File(
+* maxSize="5M",
+* mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
+* )
+* @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
+*
+* @var File $image
+*/
+protected $image;
+ 
+/**
+* @ORM\Column(type="string", length=255, name="image_name", nullable=true)
+*
+* @var string $imageName
+*/
+protected $imageName;
+ 
+
+/**
+* @var datetime $updatedAt
+*
+* @ORM\Column(name="updated_at", type="datetime")
+*/
+protected $updatedAt;
+   
+ /**
+     * @var \ChronoUser
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\OrderBy({"username" = "ASC"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="proprietaire", referencedColumnName="id")
+     * })
+     */
+    private $proprietaire;
+
     public function getId()
     {
         return $this->id;
@@ -187,5 +229,101 @@ class Eproduit
     public function removeService(\Application\CertificatsBundle\Entity\Eservice $services)
     {
         $this->services->removeElement($services);
+    }
+
+    
+ /**
+* Set image
+*
+* @param string $image
+* @return Message
+*/
+public function setImage($image)
+{
+$this->image = $image;
+ 
+return $this;
+}
+ 
+/**
+* Get image
+*
+* @return string
+*/
+public function getImage()
+{
+return $this->image;
+}
+    /**
+* Set imageName
+*
+* @param string $imageName
+* @return Message
+*/
+public function setImageName($imageName)
+{
+$this->imageName = $imageName;
+return $this;
+}
+ 
+/**
+* Get imageName
+*
+* @return string
+*/
+public function getImageName()
+{
+return $this->imageName;
+}
+
+
+ 
+/**
+* Set updatedAt
+*
+* @param \DateTime $updatedAt
+* @return Message
+*/
+public function setUpdatedAt($updatedAt)
+{
+$this->updatedAt=new \DateTime();
+//$this->updatedAt = $updatedAt;
+return $this;
+}
+ 
+/**
+* Get updatedAt
+*
+* @return \DateTime
+*/
+public function getUpdatedAt()
+{
+    if (!isset($this->updatedAt))
+        $this->updatedAt=new \DateTime();
+return $this->updatedAt;
+}
+ 
+
+    /**
+     * Set proprietaire
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $proprietaire
+     * @return Eproduit
+     */
+    public function setProprietaire(\Application\Sonata\UserBundle\Entity\User $proprietaire = null)
+    {
+        $this->proprietaire = $proprietaire;
+    
+        return $this;
+    }
+
+    /**
+     * Get proprietaire
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getProprietaire()
+    {
+        return $this->proprietaire;
     }
 }

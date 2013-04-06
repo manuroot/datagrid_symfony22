@@ -46,6 +46,8 @@ class AppKernel extends Kernel {
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
              new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
+             new Vich\UploaderBundle\VichUploaderBundle(),
+                    new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
          //   new \Rizza\CalendarBundle\RizzaCalendarBundle(),
              // MES APPLICATIONS
              new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),

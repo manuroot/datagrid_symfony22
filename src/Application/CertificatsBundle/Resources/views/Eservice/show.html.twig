@@ -51,10 +51,24 @@ LISTE DE MES SERVICES
                  </td>
                     </tr>
                     
-                     <tr>
-                <th>Produits</th>
-                <td>{{ entity.produits|join(', ') }}</td>
-            </tr>
+           
+                    <tr class="title"><th colspan="2">Produits associés a ce service</th></tr>
+                   
+          {#     <td> {{ entity.produits|join(', ') }}</td>#}
+                {% for produit in entity.produits %}
+            <tr>  <th>{{ produit.name }}:</th>  
+                <td>
+               {% if produit.imageName is not null %}               
+                                   
+         <img width="150px" src="{{ vich_uploader_asset(produit, 'image') }}" alt="{{ produit.imageName }}" />
+         {% else %}
+           --
+         {% endif %}
+          
+                        </td>
+               </tr>{% endfor %}
+              
+            
         </tbody>
     </table>
 

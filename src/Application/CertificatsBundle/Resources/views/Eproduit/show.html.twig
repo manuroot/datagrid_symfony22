@@ -13,7 +13,8 @@ PRODUIT: {{ entity.name }}
 
 {% block content %}
      <br>  
-<a href="{{ path('eservice') }}" class="btn btn-small btn-success">Retour</a>
+{#{ path }#}
+     <a href="{{ path('eproduit') }}" class="btn btn-small btn-success">Retour</a>
 <a href="{{ path('eproduit_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning">Editer</a>
 <br> <br> 
 
@@ -29,8 +30,22 @@ PRODUIT: {{ entity.name }}
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ entity.description }}</td>
+                <td>{{ entity.description|raw }}</td>
             </tr>
+            <tr>
+                <th>Image</th>
+         <td> {% if entity.imageName is not null %}               
+           
+         
+         <img width="200px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
+         {% else %}
+           ---
+         {% endif %}
+                {#   <td> <img src="{{ asset('uploads/eproduits/51603dde20000.png') }}"/></td> #}
+        
+      </td>
+       </tr>
+            
         </tbody>
     </table>
 

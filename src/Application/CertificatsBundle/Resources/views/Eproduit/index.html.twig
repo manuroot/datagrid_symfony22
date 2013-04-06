@@ -8,7 +8,7 @@
 
 {% block content_header '' %}
 {% block title %}
-LISTE DES PRODUITS 
+MES PRODUITS 
 {% endblock %}
 {% block content %}
 
@@ -29,19 +29,29 @@ LISTE DES PRODUITS
                  <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
+                 <th>Image</th>
                  <th colspan="3">Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in pagination %}
+        {% for entity in paginationa %}
             <tr>
                 
                 
                 <td><a href="{{ path('eproduit_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.name }}</td>
                 <td>{{ entity.description|raw }}</td>
-                
-                
+                       <td>
+                {% if entity.image is not null %}               
+           
+         
+         <img width="60px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
+         {% else %}
+           ---
+         {% endif %}
+           </td>
+           
+                  
                      <td>
                     <a href="{{ path('eproduit_show', { 'id': entity.id }) }}">
                         <img src="{{ asset('bundles/applicationcertificats/images/detail.png') }}" alt="show" width="15" height="15" />
@@ -63,6 +73,61 @@ LISTE DES PRODUITS
         {% endfor %}
         </tbody>
     </table>
-  {{ knp_pagination_render(pagination) }}
+  {{ knp_pagination_render(paginationa) }}
 
+
+
+
+
+{#-----------------------------------------------#}
+
+ <center><h1>PRODUITS PROPOSES</h1></center>
+<br>
+
+
+
+
+
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr class="title"> 
+                 <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                 <th>Image</th>
+                 <th colspan="1">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in paginationb %}
+            <tr>
+                
+                
+                <td><a href="{{ path('eproduit_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.description|raw }}</td>
+                       <td>
+                {% if entity.image is not null %}               
+           
+         
+         <img width="60px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
+         {% else %}
+           ---
+         {% endif %}
+           </td>
+           
+                  
+                     <td>
+                    <a href="{{ path('eproduit_show', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationcertificats/images/detail.png') }}" alt="show" width="15" height="15" />
+                    </a>
+                </td>
+            
+                
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  {{ knp_pagination_render(paginationb) }}
     {% endblock %}

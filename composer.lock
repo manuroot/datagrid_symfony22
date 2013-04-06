@@ -2277,12 +2277,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/whiteoctober/Pagerfanta.git",
-                "reference": "92921b9bb155cecc68695fb273729a08586ceaf4"
+                "reference": "4fded9adde16a4133b4db9f14815efadbbd268d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/92921b9bb155cecc68695fb273729a08586ceaf4",
-                "reference": "92921b9bb155cecc68695fb273729a08586ceaf4",
+                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/4fded9adde16a4133b4db9f14815efadbbd268d1",
+                "reference": "4fded9adde16a4133b4db9f14815efadbbd268d1",
                 "shasum": ""
             },
             "require": {
@@ -2329,7 +2329,7 @@
                 "page",
                 "paging"
             ],
-            "time": "2013-04-02 11:00:09"
+            "time": "2013-04-04 17:07:12"
         },
         {
             "name": "phpoption/phpoption",

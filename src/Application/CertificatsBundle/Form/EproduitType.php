@@ -5,7 +5,7 @@ namespace Application\CertificatsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
+use Symfony\Component\HttpFoundation\File\File;
 class EproduitType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -16,7 +16,18 @@ class EproduitType extends AbstractType {
                         'cols' => "60",
                         'class' => 'tinymce',
                      )))
-                ->add('services')
+               // ->add('services')
+                //->add('image')
+        ->add('image', 'file', array(
+                    'data_class' => 'Symfony\Component\HttpFoundation\File\File',
+                    'property_path' => 'image',
+                    'required' => false,
+                ))
+                /* ->add('image', 'file',
+array(
+'label' => 'Hast du ein Screenshot von der Nachricht'
+)
+)*/
         ;
     }
 

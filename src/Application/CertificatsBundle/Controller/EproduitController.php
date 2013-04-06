@@ -33,20 +33,28 @@ class EproduitController extends Controller
         }
 
         $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->myFindAll($user_id);
-
-        
-        
-        
-        $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->findAll();
-        
-        //$query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-                $query, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+          $query_other = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->myFindOtherAll($user_id);
+              $paginator = $this->get('knp_paginator');
+    //   $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->findAll();
+          $pagename1 = 'page1'; // Set custom page variable name
+        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
+        $paginationa = $paginator->paginate(
+                $query, $page1, 3, array('pageParameterName' => $pagename1)
         );
-        $pagination->setTemplate('ApplicationCertificatsBundle:pagination:sliding.html.twig');
+
+        $pagename2 = 'page2'; // Set another custom page variable name
+        $page2 = $this->get('request')->query->get($pagename2, 1); // Get another custom page variable
+        $paginationb = $paginator->paginate(
+                $query_other, $page2, 3, array('pageParameterName' => $pagename2)
+        );
+        //$query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();
+      
+        $paginationa->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
+       $paginationb->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
+      //  $pagination->setTemplate('ApplicationCertificatsBundle:pagination:sliding.html.twig');
         return $this->render('ApplicationCertificatsBundle:Eproduit:index.html.twig', array(
-                 'pagination' => $pagination,
+                 'paginationa' => $paginationa,
+            'paginationb' => $paginationb,
         ));
     }
 
@@ -62,6 +70,7 @@ class EproduitController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+             $entity->setUpdatedAt(new \DateTime());
             $em->persist($entity);
             $em->flush();
 
@@ -81,10 +90,14 @@ class EproduitController extends Controller
     public function newAction()
     {
         $entity = new Eproduit();
+     /*   
+       $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+$path = $helper->asset($entity, 'image');*/
         $form   = $this->createForm(new EproduitType(), $entity);
 
         return $this->render('ApplicationCertificatsBundle:Eproduit:new.html.twig', array(
             'entity' => $entity,
+            
             'form'   => $form->createView(),
         ));
     }
@@ -98,7 +111,8 @@ class EproduitController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->find($id);
-
+ $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+//$path = $helper->asset($entity, 'image');
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Eproduit entity.');
         }
@@ -107,6 +121,7 @@ class EproduitController extends Controller
 
         return $this->render('ApplicationCertificatsBundle:Eproduit:show.html.twig', array(
             'entity'      => $entity,
+         //   'path' => $path,
             'delete_form' => $deleteForm->createView(),        ));
     }
 
@@ -153,6 +168,7 @@ class EproduitController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+             $entity->setUpdatedAt(new \DateTime());
             $em->persist($entity);
             $em->flush();
 

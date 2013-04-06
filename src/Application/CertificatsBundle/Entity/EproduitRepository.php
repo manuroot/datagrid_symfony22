@@ -26,7 +26,27 @@ use Doctrine\ORM\EntityRepository;
 
 class EproduitRepository extends EntityRepository
 {
-    public function myFindAll($user_id) {
+    
+     public function myFindAll($user_id) {
+
+        $query = $this->createQueryBuilder('a')
+                ->where('a.proprietaire = :proprietaire')
+                ->setParameter('proprietaire', $user_id)
+                 ->add('orderBy', 'a.id DESC')
+                ->getQuery();
+        return $query;
+    }
+     public function myFindOtherAll($user_id) {
+
+        $query = $this->createQueryBuilder('a')
+                ->where('a.proprietaire <> :proprietaire')
+                ->setParameter('proprietaire', $user_id)
+                ->add('orderBy', 'a.id DESC')
+                ->getQuery();
+        return $query;
+    }
+    
+    /*public function myFindAll($user_id) {
          
          $query = $this->createQueryBuilder('a')
     ->where('a.demandeur = :demandeur')
@@ -34,12 +54,6 @@ class EproduitRepository extends EntityRepository
     //->orderBy('p.price', 'ASC')
     ->getQuery();
       return $query;
-       /*  return $this->createQueryBuilder('a')
-                        ->leftJoin('a.idProjet', 'b')
-                        ->leftJoin('a.idStatus', 'd')
-                        ->leftJoin('a.demandeur', 'c')
-                 ->add('orderBy', 'a.id DESC')
-                        //   ->leftJoin('a.demandeur', 'c')
-                        ->getQuery();*/
-    }
+       
+    }*/
 }

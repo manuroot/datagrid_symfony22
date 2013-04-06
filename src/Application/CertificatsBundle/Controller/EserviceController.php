@@ -32,8 +32,9 @@ class EserviceController extends Controller {
         } else {
             $user_id = 0;
         }
+        //myFindOtherForme
         $query = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindAll($user_id);
-        $query_other = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindOther($user_id);
+        $query_other = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindOtherForme($user_id);
 
 
         //  $query = $em->getRepository('ApplicationCertificatsBundle:Eservice')->findAll();
