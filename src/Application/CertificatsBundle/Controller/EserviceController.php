@@ -21,8 +21,9 @@ class EserviceController extends Controller {
     public function indexAction() {
 
 
-
+        $user_id = $this->getuserid();
         $em = $this->getDoctrine()->getManager();
+        /*
         $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
         if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
@@ -31,9 +32,12 @@ class EserviceController extends Controller {
             $user_id = $user->getId();
         } else {
             $user_id = 0;
-        }
-        //myFindOtherForme
-        $query = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindAll($user_id);
+        }*/
+        /*==========================================
+         * myFindAll: user,(messervices=0,mes_demande_service=1)
+         ===========================================*/
+        $query_s = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindAll($user_id,0);
+        $query_d = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindAll($user_id,1);
         $query_other = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindOtherForme($user_id);
 
 
@@ -48,19 +52,28 @@ class EserviceController extends Controller {
          */
         //$query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();
 
-        $paginator = $this->get('knp_paginator');
+        
+        $paginator1 = $this->get('knp_paginator');
         $pagename1 = 'page1'; // Set custom page variable name
         $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
-        $paginationa = $paginator->paginate(
-                $query, $page1, 3, array('pageParameterName' => $pagename1)
+        $paginationa = $paginator1->paginate(
+                $query_s, $page1, 3, array('pageParameterName' => $pagename1)
         );
 
+         $paginator2 = $this->get('knp_paginator');
         $pagename2 = 'page2'; // Set another custom page variable name
         $page2 = $this->get('request')->query->get($pagename2, 1); // Get another custom page variable
-        $paginationb = $paginator->paginate(
+        $paginationb = $paginator2->paginate(
                 $query_other, $page2, 3, array('pageParameterName' => $pagename2)
         );
        
+          $paginator3 = $this->get('knp_paginator');
+        $pagename_demande = 'page3'; // Set custom page variable name
+        $page_demandes = $this->get('request')->query->get($pagename_demande, 1); // Get custom page variable
+        $pagination_mesdemandes = $paginator3->paginate(
+                $query_d, $page_demandes, 3, array('pageParameterName' => $pagename_demande)
+        );
+        
        /* $pagination = $paginator->paginate(
                 $query, $this->get('request')->query->get('page', 1), 3
         );*/
@@ -71,6 +84,7 @@ class EserviceController extends Controller {
                     //'pagination' => $pagination,
             'paginationa' => $paginationa,
             'paginationb' => $paginationb,
+            'pagination_demandes' => $pagination_mesdemandes,
                 ));
 
 
@@ -84,6 +98,99 @@ class EserviceController extends Controller {
           )); */
     }
 
+    
+     private function getuserid() {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $user_security = $this->container->get('security.context');
+        if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+        //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user_id = $user->getId();
+        } else {
+            $user_id = 0;
+        }
+        return ($user_id);
+     }
+    
+       public function indexotherservicesAction() {
+
+
+        $em = $this->getDoctrine()->getManager();
+          $user_id = $this->getuserid();
+            /*==========================================
+         * myFindAll: user,(messervices=0,mes_demande_service=1)
+         ===========================================*/
+         $query = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindOtherForme($user_id);
+    $paginator = $this->get('knp_paginator');
+      
+        $pagename = 'page'; // Set another custom page variable name
+        $page = $this->get('request')->query->get($pagename, 1); // Get another custom page variable
+        $pagination = $paginator->paginate(
+                $query, $page, 3, array('pageParameterName' => $pagename)
+        );
+       
+        $pagination->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
+     
+        return $this->render('ApplicationCertificatsBundle:Eservice:indexother.html.twig', array(
+            'pagination' => $pagination,
+                ));
+     
+    }
+    
+     public function indexmesservicesAction() {
+
+
+        $em = $this->getDoctrine()->getManager();
+          $user_id = $this->getuserid();
+            /*==========================================
+         * myFindAll: user,(messervices=0,mes_demande_service=1)
+         ===========================================*/
+          $query = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindAll($user_id,0);
+    $paginator = $this->get('knp_paginator');
+      
+        $pagename = 'page'; // Set another custom page variable name
+        $page = $this->get('request')->query->get($pagename, 1); // Get another custom page variable
+        $pagination = $paginator->paginate(
+                $query, $page, 3, array('pageParameterName' => $pagename)
+        );
+       
+        $pagination->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
+     
+        return $this->render('ApplicationCertificatsBundle:Eservice:indexservices.html.twig', array(
+            'pagination' => $pagination,
+                ));
+     
+    }
+    
+       public function indexdemandesservicesAction() {
+
+
+        $em = $this->getDoctrine()->getManager();
+          $user_id = $this->getuserid();
+            /*==========================================
+         * myFindAll: user,(messervices=0,mes_demande_service=1)
+         ===========================================*/
+        $query = $em->getRepository('ApplicationCertificatsBundle:Eservice')->myFindAll($user_id,1);
+           
+    $paginator = $this->get('knp_paginator');
+      
+        $pagename = 'page2'; // Set another custom page variable name
+        $page = $this->get('request')->query->get($pagename, 1); // Get another custom page variable
+        $pagination = $paginator->paginate(
+                $query, $page, 3, array('pageParameterName' => $pagename)
+        );
+       
+        $pagination->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
+     
+        return $this->render('ApplicationCertificatsBundle:Eservice:indexdemandes.html.twig', array(
+            'pagination' => $pagination,
+                ));
+     
+    }
+    
     /**
      * Creates a new Eservice entity.
      *
@@ -167,17 +274,29 @@ class EserviceController extends Controller {
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
-
+        $user_id = $this->getuserid();
+        //pas proprio par defaut
+        $ismine=0;
         $entity = $em->getRepository('ApplicationCertificatsBundle:Eservice')->find($id);
-
-        if (!$entity) {
+      
+      
+         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Eservice entity.');
         }
 
+          $proprietaire=$entity->getDemandeur()->getId();
+      
+        /*  print_r($proprietaire);
+          print_r($user_id);*/
+         // exit(1);
+         if ($user_id ==  $proprietaire){
+             $ismine=1;
+         }
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ApplicationCertificatsBundle:Eservice:show.html.twig', array(
                     'entity' => $entity,
+                       'ismine' => $ismine, 
                     'delete_form' => $deleteForm->createView(),));
     }
 
@@ -186,15 +305,21 @@ class EserviceController extends Controller {
      *
      */
     public function editAction($id) {
+        //pas proprio par defaut
+        $ismine=0;
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ApplicationCertificatsBundle:Eservice')->find($id);
-
-        if (!$entity) {
+       $entity = $em->getRepository('ApplicationCertificatsBundle:Eservice')->find($id);
+     if (!$entity) {
             throw $this->createNotFoundException('Unable to find Eservice entity.');
         }
 
-        $editForm = $this->createForm(new EserviceType(), $entity);
+        $user_id = $this->getuserid();
+        $proprietaire=$entity->getDemandeur()->getId();
+        if ($user_id !=  $proprietaire){
+            return $this->render('ApplicationCertificatsBundle:Eservice:deny.html.twig', array(
+                 ));
+         }
+          $editForm = $this->createForm(new EserviceType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ApplicationCertificatsBundle:Eservice:edit.html.twig', array(
@@ -204,6 +329,29 @@ class EserviceController extends Controller {
                 ));
     }
 
+    public function contratAction($id) {
+        //pas proprio par defaut
+        $ismine=0;
+        $em = $this->getDoctrine()->getManager();
+       $entity = $em->getRepository('ApplicationCertificatsBundle:Eservice')->find($id);
+     if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Eservice entity.');
+        }
+        
+
+        $user_id = $this->getuserid();
+        $proprietaire=$entity->getDemandeur()->getId();
+        if ($user_id ==  $proprietaire){
+            return $this->render('ApplicationCertificatsBundle:Eservice:ownerdeny.html.twig', array(
+                 ));
+         }
+          return $this->render('ApplicationCertificatsBundle:Eservice:contrat.html.twig', array(
+                    'entity' => $entity,
+                    
+                ));
+    }
+    
+           
     /**
      * Edits an existing Eservice entity.
      *

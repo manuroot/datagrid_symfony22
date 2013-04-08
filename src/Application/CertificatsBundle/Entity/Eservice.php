@@ -130,7 +130,13 @@ class Eservice {
      */
     private $idStatus;
     
-    
+    /**
+   * @var boolean $isEnabled
+   *
+  * @ORM\Column(name="isDemande", type="boolean")
+  */
+  private $isDemande;
+
     public function __toString() {
         return $this->getName();
     }
@@ -166,7 +172,7 @@ class Eservice {
     public function __construct() {
     //public function __construct($id_user) {
         $this->idusers = new \Doctrine\Common\Collections\ArrayCollection();
-
+ $this->isDemande = true; // Default value for column is_visible
        // $this->demandeur = $id_user;
     }
 
@@ -336,5 +342,28 @@ class Eservice {
     public function getIdStatus()
     {
         return $this->idStatus;
+    }
+
+    /**
+     * Set isDemande
+     *
+     * @param boolean $isDemande
+     * @return Eservice
+     */
+    public function setIsDemande($isDemande)
+    {
+        $this->isDemande = $isDemande;
+    
+        return $this;
+    }
+
+    /**
+     * Get isDemande
+     *
+     * @return boolean 
+     */
+    public function getIsDemande()
+    {
+        return $this->isDemande;
     }
 }

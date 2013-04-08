@@ -23,11 +23,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class EserviceRepository extends EntityRepository {
 
-    public function myFindAll($user_id) {
+    public function myFindAll($user_id,$isDemande=0) {
 
         $query = $this->createQueryBuilder('a')
                 ->where('a.demandeur = :demandeur')
+                ->andWhere('a.isDemande = :typedemande')
                 ->setParameter('demandeur', $user_id)
+                ->setParameter('typedemande', $isDemande)
                 ->leftJoin('a.idStatus', 'd')
                 ->add('orderBy', 'a.id DESC')
                 ->getQuery();

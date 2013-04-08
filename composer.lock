@@ -1030,12 +1030,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/genemu/GenemuFormBundle.git",
-                "reference": "598a5100717e21ac7c4446c27b8fe935dff4bf44"
+                "reference": "85016ccaec1648746331f51f3491cc771ac72394"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/genemu/GenemuFormBundle/zipball/598a5100717e21ac7c4446c27b8fe935dff4bf44",
-                "reference": "598a5100717e21ac7c4446c27b8fe935dff4bf44",
+                "url": "https://api.github.com/repos/genemu/GenemuFormBundle/zipball/85016ccaec1648746331f51f3491cc771ac72394",
+                "reference": "85016ccaec1648746331f51f3491cc771ac72394",
                 "shasum": ""
             },
             "require": {
@@ -1090,7 +1090,7 @@
                 "extra form",
                 "form"
             ],
-            "time": "2013-03-17 14:24:08"
+            "time": "2013-04-08 09:49:00"
         },
         {
             "name": "imagine/Imagine",
@@ -2616,12 +2616,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "d42d79d2dcbb3f47fcbce58363447e05c6177469"
+                "reference": "9f7291d7ccb33ea80102a3764680706681ceaacd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/d42d79d2dcbb3f47fcbce58363447e05c6177469",
-                "reference": "d42d79d2dcbb3f47fcbce58363447e05c6177469",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/9f7291d7ccb33ea80102a3764680706681ceaacd",
+                "reference": "9f7291d7ccb33ea80102a3764680706681ceaacd",
                 "shasum": ""
             },
             "require": {
@@ -2682,7 +2682,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2013-04-06 12:01:08"
+            "time": "2013-04-08 15:51:28"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -2868,12 +2868,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle.git",
-                "reference": "5e27b299e0fd8dfd63a52e62751a251497c7c3c8"
+                "reference": "c5c263af5a4effa93267c2a3207eafe442e34aba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/5e27b299e0fd8dfd63a52e62751a251497c7c3c8",
-                "reference": "5e27b299e0fd8dfd63a52e62751a251497c7c3c8",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/c5c263af5a4effa93267c2a3207eafe442e34aba",
+                "reference": "c5c263af5a4effa93267c2a3207eafe442e34aba",
                 "shasum": ""
             },
             "require": {
@@ -2920,7 +2920,7 @@
                 "generator",
                 "sonata"
             ],
-            "time": "2013-04-05 15:44:24"
+            "time": "2013-04-08 14:44:41"
         },
         {
             "name": "sonata-project/easy-extends-bundle",
@@ -3148,27 +3148,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataIntlBundle.git",
-                "reference": "08deba84f5f1393bef0809bd34daded71cef8788"
+                "reference": "8c664dca139c21982c4a192dcc98978282cfc4ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataIntlBundle/zipball/08deba84f5f1393bef0809bd34daded71cef8788",
-                "reference": "08deba84f5f1393bef0809bd34daded71cef8788",
+                "url": "https://api.github.com/repos/sonata-project/SonataIntlBundle/zipball/8c664dca139c21982c4a192dcc98978282cfc4ba",
+                "reference": "8c664dca139c21982c4a192dcc98978282cfc4ba",
                 "shasum": ""
             },
             "require": {
                 "ext-intl": "*",
-                "symfony/dependency-injection": "2.*",
-                "symfony/http-kernel": "2.*",
-                "symfony/locale": "2.*",
-                "symfony/templating": "2.*",
+                "symfony/dependency-injection": "2.2.*",
+                "symfony/http-kernel": "2.2.*",
+                "symfony/locale": "2.2.*",
+                "symfony/templating": "2.2.*",
                 "twig/twig": "*"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-2.0": "2.0.x-dev",
-                    "dev-master": "2.1.x-dev"
+                    "dev-master": "2.2.x-dev"
                 }
             },
             "autoload": {
@@ -3200,7 +3199,7 @@
                 "sonata",
                 "time"
             ],
-            "time": "2013-03-28 17:59:58"
+            "time": "2013-04-08 15:23:21"
         },
         {
             "name": "sonata-project/jquery-bundle",
@@ -3400,18 +3399,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataNewsBundle.git",
-                "reference": "14cbe0eb94735a7885fca8102301b47df5970d99"
+                "reference": "48c3a7014c4a5f62c05a158cf4bb059e8dcffae4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataNewsBundle/zipball/14cbe0eb94735a7885fca8102301b47df5970d99",
-                "reference": "14cbe0eb94735a7885fca8102301b47df5970d99",
+                "url": "https://api.github.com/repos/sonata-project/SonataNewsBundle/zipball/48c3a7014c4a5f62c05a158cf4bb059e8dcffae4",
+                "reference": "48c3a7014c4a5f62c05a158cf4bb059e8dcffae4",
                 "shasum": ""
             },
             "require": {
+                "knplabs/knp-menu-bundle": "1.1.*@dev",
                 "sonata-project/admin-bundle": "2.2.*@dev",
                 "sonata-project/easy-extends-bundle": "2.1.*",
-                "sonata-project/formatter-bundle": "2.2.*",
+                "sonata-project/formatter-bundle": "2.2.*@dev",
                 "sonata-project/intl-bundle": "2.1.*",
                 "sonata-project/media-bundle": "2.2.*@dev",
                 "sonata-project/user-bundle": "2.2.*@dev",
@@ -3421,7 +3421,7 @@
                 "doctrine/orm": "*",
                 "sonata-project/block-bundle": "2.2.*@dev",
                 "sonata-project/doctrine-orm-admin-bundle": "2.2.*@dev",
-                "sonata-project/notification-bundle": "2.1.*@dev"
+                "sonata-project/notification-bundle": "2.2.*@dev"
             },
             "suggest": {
                 "sonata-project/doctrine-orm-admin-bundle": "2.2.*@dev",
@@ -3463,7 +3463,7 @@
                 "post",
                 "sonata"
             ],
-            "time": "2013-04-05 14:18:25"
+            "time": "2013-04-08 15:34:45"
         },
         {
             "name": "sonata-project/notification-bundle",
@@ -4030,16 +4030,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.12.2",
+            "version": "v1.12.3",
             "source": {
                 "type": "git",
-                "url": "git://github.com/fabpot/Twig.git",
-                "reference": "v1.12.2"
+                "url": "https://github.com/fabpot/Twig.git",
+                "reference": "v1.12.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.12.2",
-                "reference": "v1.12.2",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/v1.12.3",
+                "reference": "v1.12.3",
                 "shasum": ""
             },
             "require": {
@@ -4075,7 +4075,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-02-09 18:21:53"
+            "time": "2013-04-08 12:40:11"
         },
         {
             "name": "twitter/bootstrap",
