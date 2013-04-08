@@ -78,8 +78,9 @@ $message = \Swift_Message::newInstance()
 //$foo = $session->get('foo');
         //  $session = new Session();
 //$session->start();
-
-
+  //$searchForm = $this->createSearchForm();
+$searchForm=$this->createForm(new CertificatsCenterType());
+   
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();
         $paginator = $this->get('knp_paginator');
@@ -90,6 +91,8 @@ $message = \Swift_Message::newInstance()
         //$pagination->setTemplate('ApplicationMyNotesBundle:pagination:sliding.html.twig');
         return $this->render('ApplicationCertificatsBundle:CertificatsCenter:index.html.twig', array(
                     'pagination' => $pagination,
+            //'search_form' => $searchForm->createView(),
+            'search_form' => $searchForm->createView(),
                 ));
 //return compact('pagination');
     }
@@ -382,6 +385,25 @@ $message = \Swift_Message::newInstance()
         return $this->redirect($this->generateUrl('certificatscenter'));
     }
 
+    protected function createSearchForm() {
+
+        return $this->createFormBuilder()
+                        ->add('Serveur', 'text',array('label'=>'Serveur'))
+                        ->add('amount', 'choice', array(
+                            'label' => 'Montant en euros',
+                            'choices' => array(
+                                1 => 1,
+                                2 => 2,
+                                10 => 10, 20 => 20, 50 => 50, 100 => 100, 200 => 200),
+                            'preferred_choices' => array(10),
+                        ))
+                        //->add('currency', null, array('data' => 'EUR', 'label' => 'Devise'))
+                        ->add('item_name', 'hidden', array(
+                            'data' => 'Participation Au Blog MROOT',
+                        ))
+                        ->getForm()
+        ;
+    }
     private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
                         ->add('id', 'hidden')

@@ -23,6 +23,7 @@ tr.title {
     background-color: #e4e4e4;
 }
 /*calendar big*/
+
 div#ptitbutton{
     /*position:absolute; */
     /* on positionne le conteneur */
@@ -31,12 +32,17 @@ div#ptitbutton{
     /*    margin-bottom: -20px;*/
 
     margin-right:15px;
+     position:absolute; 
+     right: 30px;
+     top:50px;
+     
     /* height:50px;*/
 
 }
 
 div#textptitbutton{
-    /*position:absolute; */
+    position:absolute; 
+     right: 30px;
     /* on positionne le conteneur */
     /* vertical-align:top;*/
     float:right;

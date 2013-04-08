@@ -67,14 +67,28 @@ class EproduitController extends Controller
         $entity  = new Eproduit();
         $form = $this->createForm(new EproduitType(), $entity);
         $form->bind($request);
-
+ $user = $this->get('security.context')->getToken()->getUser();
+        $user_security = $this->container->get('security.context');
+       if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+      //  if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user_id = $user->getId();
+        } else {
+            $user_id = 0;
+        }
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-             $entity->setUpdatedAt(new \DateTime());
+            $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+            $entity->setProprietaire($current_user);
+            $entity->setUpdatedAt(new \DateTime());
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('eproduit_show', array('id' => $entity->getId())));
+         $session = $this->getRequest()->getSession();
+         $nom_modif = $entity->getName();
+         $id = $entity->getId();
+         $session->getFlashBag()->add('warning', "Enregistrement $nom_modif ($id) ajouté");
+         return $this->redirect($this->generateUrl('eproduit_show', array('id' => $entity->getId())));
         }
 
         return $this->render('ApplicationCertificatsBundle:Eproduit:new.html.twig', array(

@@ -29,6 +29,11 @@ class EproduitRepository extends EntityRepository
     
      public function myFindAll($user_id) {
 
+       /*   $query = $this->createQueryBuilder('a')
+                 ->add('orderBy', 'a.id DESC')
+                ->getQuery();
+        return $query;*/
+        
         $query = $this->createQueryBuilder('a')
                 ->where('a.proprietaire = :proprietaire')
                 ->setParameter('proprietaire', $user_id)
