@@ -57,26 +57,45 @@ class EserviceController extends Controller {
         $pagename1 = 'page1'; // Set custom page variable name
         $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
         $paginationa = $paginator1->paginate(
-                $query_s, $page1, 3, array('pageParameterName' => $pagename1)
+                $query_s, $page1, 3, array('pageParameterName' => $pagename1,
+                            "sortDirectionParameterName" => "dir1",
+                            'sortFieldParameterName' => "sort1")
         );
 
          $paginator2 = $this->get('knp_paginator');
         $pagename2 = 'page2'; // Set another custom page variable name
         $page2 = $this->get('request')->query->get($pagename2, 1); // Get another custom page variable
         $paginationb = $paginator2->paginate(
-                $query_other, $page2, 3, array('pageParameterName' => $pagename2)
+                $query_other, $page2, 3, array('pageParameterName' => $pagename2,
+                    "sortDirectionParameterName" => "dir2",
+                    'sortFieldParameterName' => "sort2")
         );
        
           $paginator3 = $this->get('knp_paginator');
         $pagename_demande = 'page3'; // Set custom page variable name
         $page_demandes = $this->get('request')->query->get($pagename_demande, 1); // Get custom page variable
         $pagination_mesdemandes = $paginator3->paginate(
-                $query_d, $page_demandes, 3, array('pageParameterName' => $pagename_demande)
+                $query_d, $page_demandes, 3, array('pageParameterName' => $pagename_demande,
+               "sortDirectionParameterName" => "dir3",
+                    'sortFieldParameterName' => "sort3")
         );
         
        /* $pagination = $paginator->paginate(
                 $query, $this->get('request')->query->get('page', 1), 3
         );*/
+        // set an array of custom parameters
+$paginationa->setCustomParameters(array(
+    'style' => 'bottom',
+    'span_class' => 'whatever'
+));
+/*
+$pagination = $paginator->paginate(
+    $query, // target to paginate
+    $this->get('request')->query->get('section', 1), // page parameter, now section
+    10, // limit per page
+    array('pageParameterName' => 'section', 'sortDirectionParameterName' => 'dir')
+);*/
+//$paginationa->setDefaultPaginatorOptions(array()
         $paginationa->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
         $paginationb->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
         //$pagination->setTemplate('ApplicationMyNotesBundle:pagination:sliding.html.twig');

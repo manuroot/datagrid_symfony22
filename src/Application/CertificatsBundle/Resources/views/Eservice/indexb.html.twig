@@ -1,0 +1,68 @@
+{% extends "ApplicationCertificatsBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
+     
+ {% endblock %}
+      
+      
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+          
+$(function () {
+   var activeTab = null;
+$('a[data-toggle="tab"]').on('shown', function (e) {
+  activeTab = e.target;
+})
+/*$('#myTab a:last').tab('show');*/
+  /*var activeTab = $('[href=' + location.hash + ']');
+  activeTab && activeTab.tab('show');*/
+});
+</script>
+{% endblock %}
+
+{% block content_header '' %}
+{% block title %}
+
+DASHBOARD - SERVICES
+{% endblock %}
+{% block content %}
+<br>
+<div id="ptitbutton">
+        <img width="50px" src="{{ asset('images/pieces.jpg') }}" alt="brouzoufs" />
+       
+      </div>
+<div id="textptitbutton">
+       Mon total de brouzoufs: xxxx
+      </div>
+{% for type, flashMessages in app.session.flashbag.all() %}
+    {% for flashMessage in flashMessages %}
+        <div class="alert alert-{{ type }}">
+            {{ flashMessage|trans }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<center><h2>MES PROPOSITIONS</h2></center>
+
+
+<a href="{{ path('eservice_new') }}" class="btn btn-small btn-primary">Ajouter un Service</a>
+<br><br>
+{% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': paginationa,'etitable':'1'} %}
+
+
+<center><h2>LES PROPOSITIONS</h2></center>
+<a href="{{ path('eservice_other') }}" class="btn btn-small btn-primary">Consulter les propositions</a>
+{% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': paginationb,'etitable':'0'} %}
+<br><br>
+
+         
+         
+<center><h2>MES DEMANDES</h2></center>
+<a href="{{ path('eservice_demandes') }}" class="btn btn-small btn-primary">Ajouter une demande</a>
+<br><br>
+{% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': pagination_demandes,'etitable':'1'} %}
+
+{% endblock %}
