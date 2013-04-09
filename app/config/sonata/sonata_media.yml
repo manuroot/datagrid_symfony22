@@ -20,6 +20,7 @@ sonata_media:
             formats:
                 small: { width: 100 , quality: 70}
                 big:   { width: 500 , quality: 70}
+                mini: { width: 50 , quality: 70}
 
       
         news:
@@ -35,6 +36,7 @@ sonata_media:
             formats:
                 small: { width: 150 , quality: 95}
                 big:   { width: 500 , quality: 90}
+                mini: { width: 50 , quality: 70}
 
     cdn:
         server:
