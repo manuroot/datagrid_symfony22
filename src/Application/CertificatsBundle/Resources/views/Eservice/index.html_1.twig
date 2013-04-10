@@ -45,30 +45,38 @@ DASHBOARD - SERVICES
     {% endfor %}
 {% endfor %}
 
-    <div class="container-fluid">
-    <div class="row-fluid">
-  
-    <div>
-<center><h2>MES PROPOSITIONS</h2></center>
+
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+<ul class="nav nav-tabs">
+<li class="active"><a href="#tab1" data-toggle="tab">MES PROPOSITIONS</a></li>
+<li><a href="#tab2" data-toggle="tab">PROPOSITIONS EN ATTENTE</a></li>
+<li><a href="#tab3" data-toggle="tab">MES DEMANDES</a></li>
+</ul>
+        
+ <div class="tab-content">
+<div class="tab-pane active" id="tab1">
+
 <a href="{{ path('eservice_new') }}" class="btn btn-small btn-primary">Ajouter un Service</a>
 <br><br>
 {% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': paginationa,'etitable':'1'} %}
-    </div>
-          <div>
 
+</div>
+<div class="tab-pane" id="tab2">
 
-<center><h2>LES PROPOSITIONS</h2></center>
 <a href="{{ path('eservice_other') }}" class="btn btn-small btn-primary">Consulter les propositions</a>
 {% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': paginationb,'etitable':'0'} %}
 <br><br>
-
+</div>
          
          
-<center><h2>MES DEMANDES</h2></center>
+<div class="tab-pane" id="tab3">
 <a href="{{ path('eservice_demandes') }}" class="btn btn-small btn-primary">Ajouter une demande</a>
 <br><br>
 {% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': pagination_demandes,'etitable':'1'} %}
-  </div>
-    </div>
-    </div>
+</div>
+
+</div>
+</div>
+
+
 {% endblock %}

@@ -28,7 +28,18 @@ services:
       calls:
             - [ setFormType, [ @application.form.new.changement ] ]
         
-  
+   application.form.new.eservice:
+        class: Application\CertificatsBundle\Form\EserviceContratType
+        tags:
+            - { name: form.type, alias: changements }
+
+   application.form.flow.new.eservice:
+      class: Application\CertificatsBundle\Form\EserviceFlow
+      parent: craue.form.flow
+      scope: request 
+      calls:
+            - [ setFormType, [ @application.form.new.eservice ] ]
+        
    booking_repository:
         class:           Application\CertificatsBundle\Entity\ChangementsRepository
         factory_service: doctrine.orm.default_entity_manager

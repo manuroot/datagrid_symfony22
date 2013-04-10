@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EserviceType extends AbstractType {
+class EserviceContratType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder

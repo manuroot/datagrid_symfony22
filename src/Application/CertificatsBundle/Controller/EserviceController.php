@@ -99,7 +99,7 @@ $pagination = $paginator->paginate(
         $paginationa->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
         $paginationb->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
         //$pagination->setTemplate('ApplicationMyNotesBundle:pagination:sliding.html.twig');
-        return $this->render('ApplicationCertificatsBundle:Eservice:index.html.twig', array(
+        return $this->render('ApplicationCertificatsBundle:Eservice:indexb.html.twig', array(
                     //'pagination' => $pagination,
             'paginationa' => $paginationa,
             'paginationb' => $paginationb,
@@ -349,13 +349,59 @@ $pagination = $paginator->paginate(
     }
 
     public function contratAction($id) {
-        //pas proprio par defaut
-        $ismine=0;
-        $em = $this->getDoctrine()->getManager();
-       $entity = $em->getRepository('ApplicationCertificatsBundle:Eservice')->find($id);
-     if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Eservice entity.');
+         $entity = new Eservice();
+        //   $form = $this->createForm(new ChangementsFlowType(), $entity);
+        // $form->getData()->getNom()->setData('someklklm');
+//$entity->setNom("tre");
+
+
+
+
+        $flow = $this->get('application.form.flow.new.eservice');
+        //     $flow->reset();
+// must match the flow's service id
+        $flow->bind($entity);
+
+        // form of the current step
+        $form = $flow->createForm($entity);
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData();
+
+            if ($flow->nextStep()) {
+                // form for the next step
+                $form = $flow->createForm($entity);
+            } else {
+                // flow finished
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($entity);
+                $em->flush();
+                $flow->reset();
+                $id = $entity->getId();
+                $session = $this->getRequest()->getSession();
+                $session->getFlashBag()->add('warning', "Enregistrement $id ajouté avec succès");
+
+                return $this->redirect($this->generateUrl('changements')); // redirect when done
+            }
         }
+
+
+        /*return $this->render('ApplicationCertificatsBundle:Eservice:index.html.twig', array(
+                    'form' => $form->createView(),
+                    'flow' => $flow,
+                    'entity' => $entity,
+                ));**/
+
+
+
+
+//pas proprio par defaut
+        $ismine=0;
+      //  $em = $this->getDoctrine()->getManager();
+     //  $entity = $em->getRepository('ApplicationCertificatsBundle:Eservice')->find($id);
+    /* if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Eservice entity.');
+        }*/
         
 
         $user_id = $this->getuserid();
@@ -364,11 +410,16 @@ $pagination = $paginator->paginate(
             return $this->render('ApplicationCertificatsBundle:Eservice:ownerdeny.html.twig', array(
                  ));
          }
-          return $this->render('ApplicationCertificatsBundle:Eservice:contrat.html.twig', array(
-                    'entity' => $entity,
-                    
-                ));
+         else {
+              return $this->render('ApplicationCertificatsBundle:Eservice:contrat.html.twig', array(
+                 ));
+         }
+         
+         
+     
     }
+
+  //  }
     
            
     /**
