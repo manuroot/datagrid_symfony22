@@ -110,7 +110,7 @@ class EserviceContratStepsType extends AbstractType {
     }
 
     public function getName() {
-        return 'changements';
+        return 'service';
     }
 
 }

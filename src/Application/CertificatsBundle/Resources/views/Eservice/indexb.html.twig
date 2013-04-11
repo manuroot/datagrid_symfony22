@@ -50,7 +50,7 @@ DASHBOARD - SERVICES
   
     <div>
 <center><h2>MES PROPOSITIONS</h2></center>
-<a href="{{ path('eservice_new') }}" class="btn btn-small btn-primary">Ajouter un Service</a>
+<a href="{{ path('eservice_new') }}" class="btn btn-small btn-primary"><i class="icon-plus"></i> Ajouter un Service</a>
 <br><br>
 {% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': paginationa,'etitable':'1'} %}
     </div>
@@ -58,14 +58,15 @@ DASHBOARD - SERVICES
 
 
 <center><h2>LES PROPOSITIONS</h2></center>
-<a href="{{ path('eservice_other') }}" class="btn btn-small btn-primary">Consulter les propositions</a>
-{% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': paginationb,'etitable':'0'} %}
+<a href="{{ path('eservice_other') }}" class="btn btn-small btn-primary"><i class="icon-search"></i> Consulter les propositions</a>
 <br><br>
+{% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': paginationb,'etitable':'0'} %}
+
 
          
          
 <center><h2>MES DEMANDES</h2></center>
-<a href="{{ path('eservice_demandes') }}" class="btn btn-small btn-primary">Ajouter une demande</a>
+<a href="{{ path('eservice_demandes') }}" class="btn btn-small btn-primary"><i class="icon-plus"></i> Ajouter une demande</a>
 <br><br>
 {% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': pagination_demandes,'etitable':'1'} %}
   </div>

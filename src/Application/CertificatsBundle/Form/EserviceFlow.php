@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 //class ChangementsFlow extends FormFlow implements EventSubscriberInterface{
 class EserviceFlow extends FormFlow {
-    protected $maxSteps = 3;
+    protected $maxSteps = 4;
     protected $allowDynamicStepNavigation = true;
 
 
