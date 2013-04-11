@@ -175,7 +175,26 @@ class Eservice {
  $this->isDemande = true; // Default value for column is_visible
        // $this->demandeur = $id_user;
     }
+/**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     * @return Eservice
+     */
+    public function setDateDebut($dateDebut) {
+        $this->dateDebut = $dateDebut;
 
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime 
+     */
+    public function getDateDebut() {
+        return $this->dateDebut;
+    }
     /**
      * Set dateFin
      *

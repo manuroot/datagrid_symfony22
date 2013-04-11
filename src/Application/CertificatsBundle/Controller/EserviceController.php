@@ -349,13 +349,16 @@ $pagination = $paginator->paginate(
     }
 
     public function contratAction($id) {
-         $entity = new Eservice();
+        // $entity = new Eservice();
         //   $form = $this->createForm(new ChangementsFlowType(), $entity);
         // $form->getData()->getNom()->setData('someklklm');
 //$entity->setNom("tre");
 
 
 
+ $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('ApplicationCertificatsBundle:Eservice')->find($id);
 
         $flow = $this->get('application.form.flow.new.eservice');
         //     $flow->reset();
@@ -412,6 +415,7 @@ $pagination = $paginator->paginate(
          }
          else {
               return $this->render('ApplicationCertificatsBundle:Eservice:contrat.html.twig', array(
+                  'entity'=>$entity
                  ));
          }
          

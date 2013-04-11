@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 //class ChangementsFlow extends FormFlow implements EventSubscriberInterface{
 class EserviceFlow extends FormFlow {
-    protected $maxSteps = 6;
+    protected $maxSteps = 3;
     protected $allowDynamicStepNavigation = true;
 
 
@@ -26,8 +26,6 @@ protected function loadStepDescriptions() {
         'Données Principales',
         'Demandeur et Utilisateurs',
         'Projet/Application(s)',
-        'Environnement/Status',
-         'Dates COMEP/VSR',
         'Confirmation'
      
         /*'confirmation',*/
