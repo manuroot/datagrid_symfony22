@@ -51,7 +51,7 @@ LISTE DES {{ parent() }}
  <th{% if pagination.isSorted('a.port') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Port', 'a.port') }}</th>
  <th{% if pagination.isSorted('a.serviceName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Service', 'a.serviceName') }}</th>
            {% if is_granted("ROLE_ADMIN") %}
- <th colspan="2"><center>Actions</center></th>
+ <th colspan="3"><center>Actions</center></th>
 {% else %}
  <th><center>Actions</center></th>
 {% endif %}
