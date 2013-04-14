@@ -12,7 +12,24 @@
    <style>
 .main-col { width: 70%; display: inline-block; float: left; border-right: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }
 .sidebar {  padding: 10px; display: inline-block; }
-#footer { border-top: 1px solid #ccc; clear: both; text-align: center; padding: 10px; color: #aaa; }
+ #footer {
+              border: 1px solid #ccc; 
+              clear: both; 
+              text-align: center; 
+              padding: 10px; 
+              color: #aaa;
+              
+    position:relative;
+    bottom:5px;
+    width:99%;
+    margin:auto;
+    height:30px;   /* Height of the footer */
+    background:#eaeaea;
+}         
+
+body {
+background-image:url(images/ravenna.png);
+}
     </style> 
  {% endblock %}
         
@@ -40,11 +57,12 @@
     <br>tag clouds 
     </div>
     </div>
-    </div>
-             <div id="footer">
+                     <div id="footer">
                     <p align="center">{{ 'copyright MROOT'|trans }} © 2013</p>
                      
                 </div>
+    </div>
+               
                 <!-- Le javascript ================================================== -->
                 <!-- Placed at the end of the document so the pages load faster -->
 

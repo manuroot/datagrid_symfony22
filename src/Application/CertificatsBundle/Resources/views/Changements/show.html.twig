@@ -10,9 +10,9 @@
 {% block title %}DETAILS CHANGEMENT:  {{ entity.nom }} {% endblock %}
 {% block content %}
 
-<a href="{{ path('changements') }}" class="btn btn-small btn-success">Retour</a>
+<a href="{{ path('changements') }}" class="btn btn-medium btn-success">Retour</a>
 
-<a href="{{ path('changements_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning">Editer</a>
+<a href="{{ path('changements_edit', { 'id': entity.id }) }}" class="btn btn-medium btn-warning">Editer</a>
 <br> <br> 
 
 
@@ -126,7 +126,7 @@
 
 
             <h3><center>Fichiers de la demande</center></h3>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover table-striped">
                 <thead>
                     <tr class="title"><th>id</th><th>Nom</th><th>Date Maj</th><th>Lien</th></tr>
                 </thead>

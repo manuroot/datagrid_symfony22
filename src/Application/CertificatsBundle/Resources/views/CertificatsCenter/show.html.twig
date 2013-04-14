@@ -20,8 +20,10 @@
     {% endfor %}
 {% endfor %}
      <a href="{{ path(btnretour) }}" class="btn btn-small btn-success">Retour</a>
-              
+      {% if is_granted("ROLE_ADMIN") %}           
 <a href="{{ path('certificatscenter_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning">Editer</a>
+{% endif %}
+
 <br> <br> 
 
 

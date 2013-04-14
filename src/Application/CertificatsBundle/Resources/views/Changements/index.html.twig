@@ -29,7 +29,9 @@ Changements
     {% endfor %}
 {% endfor %}
  
-<a href="{{ path('changements_newflow') }}" class="btn btn-small btn-primary">Ajouter un Changement</a>
+ {% if is_granted("ROLE_ADMIN") %}
+<a href="{{ path('changements_newflow') }}" class="btn btn-medium btn-primary">Ajouter un Changement</a>
+{% endif %}
  <br><br> 
                 <table class="table table-striped table-bordered table-hover">
                     <thead>

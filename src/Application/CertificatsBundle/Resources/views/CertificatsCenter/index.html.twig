@@ -19,9 +19,12 @@ LISTE DES {{ parent() }}
         </div>
     {% endfor %}
 {% endfor %}
-<a href="{{ path('certificatscenter_new') }}" class="btn btn-small btn-primary">Ajouter Certificat</a>
-<br> <br>  
 
+   {% if is_granted("ROLE_ADMIN") %}
+<a href="{{ path('certificatscenter_new') }}" class="btn btn-medium btn-primary">Ajouter Certificat</a>
+{% endif %}
+<br> <br>  
+{#
 <form  class="form-horizontal" action="{{ path('certificatscenter') }}" method="post" {{ form_enctype(search_form) }}>
     {{ form_widget(search_form) }}
     <p>
@@ -29,6 +32,7 @@ LISTE DES {{ parent() }}
        
     </p>
 </form>
+#}
 <table class="table table-striped table-bordered table-hover">
     <thead>
         <tr class="title">
@@ -46,7 +50,11 @@ LISTE DES {{ parent() }}
  
  <th{% if pagination.isSorted('a.port') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Port', 'a.port') }}</th>
  <th{% if pagination.isSorted('a.serviceName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Service', 'a.serviceName') }}</th>
-            <th colspan="3"><center>Actions</center></th>
+           {% if is_granted("ROLE_ADMIN") %}
+ <th colspan="2"><center>Actions</center></th>
+{% else %}
+ <th><center>Actions</center></th>
+{% endif %}
         </tr>
     </thead>
     <tbody>
@@ -85,6 +93,8 @@ LISTE DES {{ parent() }}
                         <img src="{{ asset('bundles/applicationcertificats/images/detail.png') }}" alt="show" width="15" height="15" />
                     </a>
                 </td>
+                
+                   {% if is_granted("ROLE_ADMIN") %}
                 <td>
 
 
@@ -92,15 +102,14 @@ LISTE DES {{ parent() }}
                         <img src="{{ asset('bundles/applicationcertificats/images/edit.png') }}" alt="edit" width="15" height="15" />
                     </a>
                 </td>
-                   {% if is_granted("ROLE_ADMIN") %}
-                  <td>
+                <td>
 
 
                     <a href="{{ path('certificatscenter_delete', { 'id': entity.id }) }}">
                         <img src="{{ asset('bundles/applicationcertificats/images/delete.png') }}" alt="delete" width="15" height="15" />
                     </a>
                 </td>
-{% else %}  <td></td>
+
                            {% endif %}  
                 
                 

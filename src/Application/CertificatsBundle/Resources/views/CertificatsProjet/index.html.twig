@@ -20,7 +20,9 @@
     {% endfor %}
 {% endfor %}
  
-<a href="{{ path('projets_new') }}" class="btn btn-small btn-primary">Ajouter Projet</a>
+   {% if is_granted("ROLE_ADMIN") %}
+<a href="{{ path('projets_new') }}" class="btn btn-medium btn-primary">Ajouter Projet</a>
+{% endif %}
 <br> <br>  
 
 <table class="table table-striped table-bordered table-hover">
@@ -30,8 +32,13 @@
             <th>Id</th>
             <th>Nomprojet</th>
               <th>Description</th>
-            <th colspan="3">Actions</th>
-        </tr>
+               
+                {% if is_granted("ROLE_ADMIN") %}
+                <th colspan="3">Actions</th>
+                {% else %}
+                <th>Actions</th>
+                {% endif %}
+             </tr>
     </thead>
     <tbody>
     {% for entity in pagination %}
@@ -44,7 +51,11 @@
                         <img src="{{ asset('bundles/applicationcertificats/images/detail.png') }}" alt="show" width="15" height="15" />
                     </a>
                 </td>
-                <td>
+               
+                
+  {% if is_granted("ROLE_ADMIN") %}
+                         
+                          <td>
 
 
                     <a href="{{ path('projets_edit', { 'id': entity.id }) }}">
@@ -52,12 +63,12 @@
                     </a>
                 </td>
                  <td>
-  {% if is_granted("ROLE_ADMIN") %}
                     <a href="{{ path('projets_delete', { 'id': entity.id }) }}">
                         <img src="{{ asset('bundles/applicationcertificats/images/delete.png') }}" alt="delete" width="15" height="15" />
                     </a>
+                             </td>
                          {% endif %}
-                </td>
+            
               
 
         </tr>

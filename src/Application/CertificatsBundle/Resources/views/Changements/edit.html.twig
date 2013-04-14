@@ -41,6 +41,9 @@
             font-size:18px;
             color:red;
         }
+        tr.single {
+         background-color: #f1f1f1;
+        }
 
     </style> 
 {% endblock %}
@@ -74,7 +77,7 @@
     <form action="{{ path('changements_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <table class="table table-bordered">
             <tbody>
-                <tr>
+                <tr class="single">
                     <td>
                         <div> {{ form_row(edit_form.nom) }}</div>
                         <div>  {{ form_row(edit_form.dateDebut) }} </div>

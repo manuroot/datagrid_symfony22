@@ -9,7 +9,28 @@
         <link rel="stylesheet" href="{{ asset('css/jquery-ui-1.9.2.custom.css') }}" type="text/css" media="all"/>
         <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" media="all" />
         <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/certificatscenter.css') }}" type="text/css" media="all"/>
-         {% endblock %}
+<style>
+body {
+background-image:url(/images/ravenna.png);
+}
+#footer {
+              border: 1px solid #ccc; 
+              clear: both; 
+              text-align: center; 
+              padding: 10px; 
+              color: #aaa;
+              
+    position:relative;
+    bottom:5px;
+    width:99%;
+    margin:auto;
+    height:30px;   /* Height of the footer */
+    background:#eaeaea;
+}         
+
+</style>
+       
+{% endblock %}
     </head>
     <body>
         
@@ -24,11 +45,14 @@
                  <center><h1>   {% block title %}CERTIFICATS{% endblock %}</h1></center>
                 {% block content %}
                 {% endblock %}
+               
                 </div>
-                <div id="footer">
+                
+         <div id="footer">
                     <p align="center">{{ 'copyright MROOT'|trans }} © 2012-2013</p>
                      
-                </div>
+                </div>        </div>
+        
                 <!-- Le javascript ================================================== -->
                 <!-- Placed at the end of the document so the pages load faster -->
 
@@ -43,7 +67,7 @@
     
  {% endblock %}
     
-            </div>
+           
         </body>
 
     </html>

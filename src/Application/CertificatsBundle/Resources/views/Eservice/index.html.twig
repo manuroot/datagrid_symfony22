@@ -3,7 +3,11 @@
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
-     
+   <style>
+body {
+background-image:url(/images/ravenna.png);
+}
+</style>  
  {% endblock %}
       
       
@@ -57,21 +61,21 @@ DASHBOARD - SERVICES
 <div class="tab-pane active" id="tab1">
 
 
-<a href="{{ path('eservice_new') }}" class="btn btn-small btn-primary"><i class="icon-plus"></i> Ajouter un Service</a>
+<a href="{{ path('eservice_new') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Ajouter un Service</a>
 <br><br>
 {% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': paginationa,'etitable':'1'} %}
 
 </div>
 <div class="tab-pane" id="tab2">
 
-<a href="{{ path('eservice_other') }}" class="btn btn-small btn-primary"><i class="icon-search"></i> Consulter les propositions</a>
+<a href="{{ path('eservice_other') }}" class="btn btn-medium btn-primary"><i class="icon-search"></i> Consulter les propositions</a>
 {% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': paginationb,'etitable':'0'} %}
 <br><br>
 </div>
          
          
 <div class="tab-pane" id="tab3">
-<a href="{{ path('eservice_demandes') }}" class="btn btn-small btn-primary"><i class="icon-plus"></i> Ajouter une demande</a>
+<a href="{{ path('eservice_demandes') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Ajouter une demande</a>
 <br><br>
 {% include 'ApplicationCertificatsBundle:Eservice:template_services.html.twig' with {'mypagination': pagination_demandes,'etitable':'1'} %}
 </div>
