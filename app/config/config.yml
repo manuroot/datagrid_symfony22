@@ -105,6 +105,14 @@ swiftmailer:
 #==================================================
 #  KNP_PAGINATOR ET SORT
 #==================================================
+knp_menu:
+    twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
+        #template: "ApplicationCertificatsBundle:Menu:knp_menu.html.twig"
+        template: knp_main_menu.html.twig
+        #template: k"BraincraftedBootstrapBundle:Menu:menu.html.twig"np_main_menu.html.twig
+        #template: knp_menu.html.twig
+    templating: true # if true, enables the helper for PHP templates
+    default_renderer: twig # The renderer to use, list is also available by default
     
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
@@ -315,3 +323,10 @@ vich_uploader:
 #            event: Rizza\CalendarBundle\Entity\Event
 #            user: Application\Sonata\UserBundle\Entity\User
 #            attendee: Rizza\CalendarBundle\Entity\Attendee
+
+mopa_bootstrap:
+    form:
+        show_legend: false # default is true
+        show_child_legend: false # default is true
+        error_type: block # or inline which is default
+    navbar: ~

@@ -3,7 +3,11 @@
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
-     
+       <style>
+         .single {
+         background-color: #f1f1f1;
+        }
+        </style>
  {% endblock %}
 
 {% block javascripts %}
@@ -37,7 +41,7 @@ LISTE DES SERVICES
        
   <form action="{{ path('eservice_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     <table class="table table-bordered">
-    <tbody>         <tr><td>
+    <tbody>         <tr class="single"><td>
                  <div>
                   {{ form_row(edit_form.name) }}
               </div>

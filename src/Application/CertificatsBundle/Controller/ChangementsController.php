@@ -203,7 +203,7 @@ class ChangementsController extends Controller {
 
         $session = $this->getRequest()->getSession();
         // ajoute des messages flash
-        $session->set('buttonretour', 'changementsapy');
+        $session->set('buttonretour', 'changements_apy');
         $source = new Entity('ApplicationCertificatsBundle:Changements');
 
 

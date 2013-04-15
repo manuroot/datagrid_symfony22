@@ -1,17 +1,36 @@
 {% block NAVIGATION_BAR %}
+ {% set foo = app.request.attributes.get('_route') %}
+ {#{{ foo }}#}
+{% set foo = foo|split('_') %}
+{#{{ foo[0] }} #}
+
 <div class="navbar navbar-fixed-top navbar-inverse">
+   {# <div class="navbar r navbar-static-top navbar-inverse">#}
                     <div class="navbar-inner">
                         <div class="container-fluid"> 
-                            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+                          {#  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span> 
                                 <span class="icon-bar"></span> 
                             </a>
-                            <a class="brand" href="#">{% block toto %}I-CHANGE(v1.1a){% endblock %}</a>
-                              
+                        #}
+                                <a class="brand" href="#">
+<i class="icon-white icon-home"></i>
+                                {% block toto %}I-CHANGE(v1.1a){% endblock %}</a>
+ {#                             
+ <ul class="nav">
 
+  <li class=" active ">
+    <a href="{{ path('changements') }}"><i class="icon-camera"></i> {{ 'Changements'|trans }}</a>
     
-                              <div class="btn-group pull-right"> 
+  </li>
+  <li class="">
+   <a href="{{ path('eservice_messervices') }}"><i class="icon-camera"></i> {{ 'Mes Propositions de Services'|trans }}</a>
+  </li>
+</ul>
+   #} 
+
+                                <div class="btn-group pull-right"> 
                                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i class="icon-user"></i>
                                         {% if is_granted("ROLE_USER") or is_granted("ROLE_USER") %}
                                         {{ app.user.username }} 
@@ -42,22 +61,36 @@
                                     {% endif %}   
                                 </ul>
                             </div>
-                            <div class="nav-collapse">
+                            <div class="nav-collapse collapse">
                                 <ul class="nav">
-                                    
-                                        <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
+          
+           {% if foo[0] == 'changements' %}
+                                    <li class="dropdown active">
+                                    {% else %}  
+                                               <li class="dropdown">
+                                    {% endif %}
+                      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-th"></i>
                                                Changements<b class="caret"></b> </a>
                                         <ul class="dropdown-menu">
                                             <li><a href="{{ path('changements') }}"><i class="icon-camera"></i> {{ 'Changements'|trans }}</a></li>
                                               <li><a href="{{ path('changements_calendar') }}"><i class="icon-time"></i> {{ 'Calendrier'|trans }}</a></li>
                                             
-                                            <li><a href="{{ path('changementsapy') }}"><i class="icon-camera"></i> {{ 'Changements DataGrid'|trans }}</a></li>
+                                            <li><a href="{{ path('changements_apy') }}"><i class="icon-camera"></i> {{ 'Changements DataGrid'|trans }}</a></li>
                                                 <li><a href="{{ path('docchangements') }}"><i class="icon-camera"></i> {{ 'Fichiers'|trans }}</a></li>
                                         
                                         
                                         </ul>
                                     </li>
-                                       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
+                                    {#{{ "one,two,three,four,five"|split(',', 3) }}#}
+                                    
+                                     {#{% if app.request.attributes.get('_route') == '(eservice)' %}#}
+                                    {% if foo[0] == 'eservice' %}
+                                    <li class="dropdown active">
+                                    {% else %}  
+                                               <li class="dropdown">
+                                    {% endif %}
+                                    
+                                           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
                                                Services<b class="caret"></b> </a>
                                         <ul class="dropdown-menu">
                                             <li><a href="{{ path('eservice') }}"><i class="icon-camera"></i> {{ 'Dashboard Services'|trans }}</a></li>
@@ -69,12 +102,15 @@
                                             </ul>
                                     </li>
                                     
-                                   
-                                      
-                                       <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
+                                   {% if foo[0] == 'certificatscenter' %}
+                                    <li class="dropdown active">
+                                    {% else %}  
+                                               <li class="dropdown">
+                                    {% endif %}
+                                   <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-fire"></i>
                                                Certificats<b class="caret"></b> </a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{{ path('certificatscenter') }}"><i class="icon-camera"></i> {{ 'Certificats'|trans }}</a></li>
+                                            <li><a href="{{ path('certificatscenter') }}"><i class="icon-fire"></i> {{ 'Certificats'|trans }}</a></li>
                                                    <li><a href="{{ path('certificatscenter_viewapy') }}"><i class="icon-plus-sign"></i> {{ 'Certificats-APY'|trans }}</a></li>
                                                      <li><a href="{{ path('certificatscenter_new') }}"><i class="icon-camera"></i> {{ 'Nouveau Certificat'|trans }}</a></li>
                            
@@ -102,7 +138,7 @@
                                     
                                  
                                     
-                                     <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
+                                     <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white icon-wrench"></i>
                                                Administration<b class="caret"></b> </a>
                                         <ul class="dropdown-menu">
                                                <li><a href="{{ path('chronouser') }}"><i class="icon-camera"></i> {{ 'Utilisateurs'|trans }}</a></li>
@@ -121,7 +157,11 @@
                                  
                             </div>
                             <!--/.nav-collapse -->
+                            {#  <form class="navbar-search pull-left">
+    <input type="text" class="search-query" placeholder="Search">
+    </form>#}
                         </div>
-                    </div>
+                    </div> 
+        
                 </div>
 {% endblock %}    

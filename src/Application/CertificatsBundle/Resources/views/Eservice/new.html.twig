@@ -3,14 +3,19 @@
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
-   <script>
+   <style>
         .mytextarea {
             border: 1px solid #D4E0EE;
             background-color: #f1f1f1;
             width:330px; height:200px;
 
         }
-        </script>
+     
+        tr.single {
+         background-color: #f1f1f1;
+        }
+
+    </style> 
  {% endblock %}
 
     
@@ -50,7 +55,9 @@ Ajouter Un Service
     
  <form action="{{ path('eservice_create') }}" method="post" {{ form_enctype(form) }}>
     <table class="table table-bordered">
-    <tbody>         <tr><td>
+    <tbody>       
+        <tr class="single">
+            <td>
                  <div>
                   {{ form_row(form.name) }}
               </div>

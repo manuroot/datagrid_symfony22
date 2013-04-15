@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/certificatscenter.css') }}" type="text/css" media="all"/>
 <style>
 body {
-background-image:url(/images/ravenna.png);
+background-image:url("/images/ravenna.png");
 }
 #footer {
        position: relative;
@@ -64,8 +64,67 @@ background-image:url(/images/ravenna.png);
        {% block javascripts %}
                 <script src="{{ asset('jquery/jquery-1.8.3.js') }}" type="text/javascript"></script>
                 <script type="text/javascript" src="{{ asset('jquery/jquery-ui-1.9.2.custom.min.js') }}"></script>
-                <script type="text/javascript" src="{{ asset('jquery/jquery.ui.datepicker-fr.js') }}"></script>
-                <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
+             {#
+   <script type="text/javascript" src="{{ asset('jquery/jquery.ui.datepicker-fr.js') }}"></script>
+#}
+                <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+            
+<script>
+ /*   $('li a').click(function(e) {
+  var $this = $(this);
+   alert("nav parent");
+     var $thisLi = $(this).parents('li.active');
+      $thisLi.removeClass('active');
+  if (!$this.hasClass('active')) {
+    $this.addClass('active');
+  }
+  e.preventDefault();
+});*/
+/*
+$('.nav').on('click', 'li:has(a[href^="#"])', function (e) {
+  $('.nav li').removeClass('active');
+  $(this).addClass('active');
+});*/
+     /*      $('body').delegate('.menu li a', 'click', function(){
+    var $thisLi = $(this).parents('li:first');
+    var $ul = $thisLi.parents('ul:first');
+    if (!$thisLi.hasClass('active')){
+        $ul.find('li.active').removeClass('active');
+        $thisLi.addClass('active');
+    }
+});
+         
+<script>*/
+  /*  $('.menu li a').click(function(e) {
+  var $this = $(this);
+  if (!$this.hasClass('active')) {
+    $this.addClass('active');
+  }
+  e.preventDefault();
+});*/
+          /* $('.nav').on('click', 'li:has(a[href^="#"])', function (e) {
+  $('.nav li').removeClass('active');
+  $(this).addClass('active');
+});*/
+     /* $("ul.dropdown-menu li a").click(function(){     
+    var $thisLi = $(this).parents('li:first');
+   
+   // var $ul = $thisLi.parents('ul:first');
+   if (!$thisLi.hasClass('active')){
+     //    alert("nav parent");
+     //   var $thisLia = $(this).parents('li:first');
+         // alert("Raison de la cloture" + $("thisLia").val())
+     //   $ul.find('li.active').removeClass('active');
+        $thisLi.addClass('active');
+    }
+});*/
+
+</script>
+
+
+ {#
+       <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap-dropdown.js') }}"></script>
+#}
    {#{ tinymce_init('advanced') }#}
         <!-- <script type="text/javascript" src="{#{ asset('bundles/staflcontinymce/vendor/tiny_mce/tiny_mce.js') }#}"></script>
             -->         

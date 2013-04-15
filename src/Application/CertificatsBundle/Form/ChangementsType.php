@@ -12,10 +12,15 @@ class ChangementsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+       
+      $builder->setAttribute('show_legend', false); // no legend for main form
+   // $child = $builder->create('user', new SomeSubFormType(), array('show_child_legend' => true)); // but legend for this subform
+  //  $builder->add($child);
         $builder
          //   ->add('nom')
                 
             ->add('nom', 'text',  array(
+            /*      "help_inline"=>"Please specify some understandable title",*/
         'widget_addon' => array(
             'icon' => 'pencil',
             'type' => 'prepend'

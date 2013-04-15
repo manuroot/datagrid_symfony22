@@ -47,3 +47,4 @@ services:
         arguments:       ['ApplicationCertificatsBundle:Changements']
         tags:
             - { name: calendr.event_provider }
+            

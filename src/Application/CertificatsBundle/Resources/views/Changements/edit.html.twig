@@ -1,4 +1,5 @@
 {% extends "ApplicationCertificatsBundle::layout.html.twig" %}
+{% form_theme edit_form 'MopaBootstrapBundle:Form:fields.html.twig' %}
 {% macro widget_prototype(widget, remove_text) %}
     {% if widget.get('prototype') %}
         {% set form = widget.get('prototype') %}
