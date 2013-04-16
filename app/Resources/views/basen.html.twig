@@ -8,7 +8,12 @@
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/jquery-ui-1.9.2.custom.css') }}" type="text/css" media="all"/>
            <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" media="all" />
-        <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/certificatscenter.css') }}" type="text/css" media="all"/>
+      {% stylesheets 
+ '@ApplicationCertificatsBundle/Resources/public/css/certificatscenter.css' 
+ output='css/compiled/main.css' filter='yui_css' %}
+<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
    <style>
 .main-col { width: 70%; display: inline-block; float: left; border-right: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }
 .sidebar {  padding: 10px; display: inline-block; }
@@ -26,10 +31,10 @@
     height:30px;   /* Height of the footer */
     background:#eaeaea;
 }         
-
+/*
 body {
 background-image:url(images/ravenna.png);
-}
+}*/
 
     </style> 
  {% endblock %}

@@ -39,7 +39,7 @@
         "sonata-project/user-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "sonata-project/notification-bundle":  "dev-master",
-     "sonata-project/jquery-bundle": "1.8.3",
+        "sonata-project/jquery-bundle": "1.8.3",
         "sonata-project/media-bundle" : "dev-master",
         "sonata-project/formatter-bundle": "dev-master",
         "sonata-project/news-bundle":  "dev-master",
@@ -60,7 +60,8 @@
         "knplabs/knp-menu": "1.1.x-dev",
         "frequence-web/calendr-bundle": "dev-master",
         "beberlei/DoctrineExtensions": "dev-master",
-        "rizza/calendar-bundle": "dev-master"
+        "rizza/calendar-bundle": "dev-master",
+        "braincrafted/bootstrap-bundle": "dev-master"
         
     },
     "scripts": {

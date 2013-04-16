@@ -20,18 +20,18 @@ class Docchangements {
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      * @Assert\NotBlank
      */
-    public $name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    public $path;
+    private $path;
 
     /**
      * @ORM\ManyToMany(targetEntity="Changements", mappedBy="picture",cascade={"persist"})
@@ -41,7 +41,7 @@ class Docchangements {
     /**
      * @Assert\File(maxSize="6000000")
      */
-    public $file;
+    private $file;
     //Assert\NotBlank
 
     /**

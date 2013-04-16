@@ -1,5 +1,5 @@
 {
-    "hash": "b1d2b60d778844b4c2adfb83ccccca0e",
+    "hash": "6d828de0d3508dbbd2501a667cf85845",
     "packages": [
         {
             "name": "apy/datagrid-bundle",
@@ -87,18 +87,76 @@
             "time": "2012-05-16 07:04:34"
         },
         {
+            "name": "braincrafted/bootstrap-bundle",
+            "version": "dev-master",
+            "target-dir": "Bc/Bundle/BootstrapBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/braincrafted/bootstrap-bundle.git",
+                "reference": "v1.4.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/braincrafted/bootstrap-bundle/zipball/v1.4.2",
+                "reference": "v1.4.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "instaclick/php-code-sniffer": "dev-master",
+                "instaclick/symfony2-coding-standard": "dev-master",
+                "knplabs/knp-markdown-bundle": "dev-master",
+                "knplabs/knp-menu": "dev-master",
+                "knplabs/knp-menu-bundle": "dev-master",
+                "knplabs/knp-paginator-bundle": "dev-master",
+                "nikic/php-parser": "dev-master",
+                "phpmd/phpmd": "1.4.*"
+            },
+            "suggest": {
+                "knplabs/knp-menu": "Required to use KnpMenuBundle.",
+                "knplabs/knp-menu-bundle": "BraincraftedBootstrapBundle styles the menus provided by KnpMenuBundle.",
+                "knplabs/knp-paginator-bundle": "BraincraftedBootstrapBundle styles the pagination provided by KnpPaginatorBundle.",
+                "twitter/bootstrap": "Twitter Bootstrap provides the assets (images, CSS and JS)"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Bc\\Bundle\\BootstrapBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Florian Eckerstorfer",
+                    "email": "florian@eckerstorfer.co",
+                    "homepage": "http://florianeckerstorfer.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Twitter Bootstrap for Symfony2",
+            "keywords": [
+                "bootstrap"
+            ],
+            "time": "2013-04-12 23:57:05"
+        },
+        {
             "name": "craue/formflow-bundle",
             "version": "dev-master",
             "target-dir": "Craue/FormFlowBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/craue/CraueFormFlowBundle.git",
-                "reference": "1.1.1"
+                "reference": "7942b210c6aa52a78267858c223fac2f4f931a86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/1.1.1",
-                "reference": "1.1.1",
+                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/7942b210c6aa52a78267858c223fac2f4f931a86",
+                "reference": "7942b210c6aa52a78267858c223fac2f4f931a86",
                 "shasum": ""
             },
             "require": {
@@ -138,7 +196,7 @@
                 "Symfony2",
                 "form"
             ],
-            "time": "2013-04-14 12:19:03"
+            "time": "2013-04-15 11:54:00"
         },
         {
             "name": "dflydev/markdown",
@@ -1562,12 +1620,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/Gaufrette.git",
-                "reference": "bafb3ad404d9e34c593bae30e2a1c61ee111f382"
+                "reference": "8e621420008b3d59c4862bc59a59ba9fa522d29b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/Gaufrette/zipball/bafb3ad404d9e34c593bae30e2a1c61ee111f382",
-                "reference": "bafb3ad404d9e34c593bae30e2a1c61ee111f382",
+                "url": "https://api.github.com/repos/KnpLabs/Gaufrette/zipball/8e621420008b3d59c4862bc59a59ba9fa522d29b",
+                "reference": "8e621420008b3d59c4862bc59a59ba9fa522d29b",
                 "shasum": ""
             },
             "require": {
@@ -1629,7 +1687,7 @@
                 "filesystem",
                 "media"
             ],
-            "time": "2013-03-25 12:59:27"
+            "time": "2013-04-15 06:10:15"
         },
         {
             "name": "knplabs/knp-components",
@@ -1699,12 +1757,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpGaufretteBundle.git",
-                "reference": "013f50495b58c4d241e5cc993cb58592e179ff98"
+                "reference": "de1ef2f9b2cb422f11e9585f29af0c73c105f01d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpGaufretteBundle/zipball/013f50495b58c4d241e5cc993cb58592e179ff98",
-                "reference": "013f50495b58c4d241e5cc993cb58592e179ff98",
+                "url": "https://api.github.com/repos/KnpLabs/KnpGaufretteBundle/zipball/de1ef2f9b2cb422f11e9585f29af0c73c105f01d",
+                "reference": "de1ef2f9b2cb422f11e9585f29af0c73c105f01d",
                 "shasum": ""
             },
             "require": {
@@ -1750,7 +1808,7 @@
                 "filesystem",
                 "media"
             ],
-            "time": "2013-03-01 13:08:05"
+            "time": "2013-04-15 06:12:02"
         },
         {
             "name": "knplabs/knp-markdown-bundle",
@@ -2283,12 +2341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/whiteoctober/Pagerfanta.git",
-                "reference": "797944b0f70f71a24a273752dbf063cba5b11513"
+                "reference": "6d37d04645ab875042e08b54ddacc5c0bd294c44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/797944b0f70f71a24a273752dbf063cba5b11513",
-                "reference": "797944b0f70f71a24a273752dbf063cba5b11513",
+                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/6d37d04645ab875042e08b54ddacc5c0bd294c44",
+                "reference": "6d37d04645ab875042e08b54ddacc5c0bd294c44",
                 "shasum": ""
             },
             "require": {
@@ -2335,7 +2393,7 @@
                 "page",
                 "paging"
             ],
-            "time": "2013-04-10 12:34:33"
+            "time": "2013-04-14 14:47:11"
         },
         {
             "name": "phpoption/phpoption",
@@ -4306,7 +4364,8 @@
         "knplabs/knp-menu": 20,
         "frequence-web/calendr-bundle": 20,
         "beberlei/doctrineextensions": 20,
-        "rizza/calendar-bundle": 20
+        "rizza/calendar-bundle": 20,
+        "braincrafted/bootstrap-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

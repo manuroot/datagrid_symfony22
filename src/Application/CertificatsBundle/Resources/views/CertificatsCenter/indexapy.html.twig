@@ -3,6 +3,8 @@
   {% block stylesheets %}
 {{ parent() }}
 <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/datagrid.css') }}" type="text/css" media="all" /> 
+<source>
+
 {% endblock %}
 
 
@@ -12,17 +14,17 @@
           
 $(document).ready(function() {
 //$(function() {
-  $( "#grid_certificatsgrid__endTime__query__from" ).datepicker({
-maxDate: "+3M +10D",
-changeMonth: true,
-changeYeat: true,
-numberOfMonths: 1,
-dateFormat: "yy-mm-dd",
-onClose: function( selectedDate ) {
-$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
-}
-});
-  
+   $( "#grid_certificatsgrid__endTime__query__from" ).datepicker({
+  /*  maxDate: "+3M +10D",*/
+    yearRange: '2010:2030',
+    changeMonth: true,
+    changeYear: true,
+    numberOfMonths: 1,
+    dateFormat: "yy-mm-dd",
+    onClose: function( selectedDate ) {
+    $( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+    }
+    });
 });
 </script>
 

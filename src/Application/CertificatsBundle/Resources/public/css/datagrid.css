@@ -5,6 +5,13 @@
     Description:
         Purpose of the stylesheet follows.
 */
+div.pagination 
+{
+margin:auto;
+width:80%;
+text-align:center;
+}
+
 .grid table
 {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;

@@ -34,33 +34,28 @@ class AppKernel extends Kernel {
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\CacheBundle\SonataCacheBundle(),
             new Sonata\MarkItUpBundle\SonataMarkItUpBundle(),
-       
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Sonata\MediaBundle\SonataMediaBundle(),
             new Sonata\FormatterBundle\SonataFormatterBundle(),
-               new Sonata\NewsBundle\SonataNewsBundle(),
-             new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(),
+            new Sonata\NewsBundle\SonataNewsBundle(),
+            new FrequenceWeb\Bundle\CalendRBundle\FrequenceWebCalendRBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
-             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
-             new Vich\UploaderBundle\VichUploaderBundle(),
-                    new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
-         //   new \Rizza\CalendarBundle\RizzaCalendarBundle(),
-             // MES APPLICATIONS
-             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
-           new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            // new Bc\Bundle\BootstrapBundle\BcBootstrapBundle(),
+            //   new \Rizza\CalendarBundle\RizzaCalendarBundle(),
+            // MES APPLICATIONS
+            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             new Application\Sonata\AdminBundle\ApplicationSonataAdminBundle(),
             new Application\Sonata\NewsBundle\ApplicationSonataNewsBundle(),
-                new Application\CertificatsBundle\ApplicationCertificatsBundle(),
-                new Application\MyNotesBundle\ApplicationMyNotesBundle()
-         
-            
-            
-        
-            
+            new Application\CertificatsBundle\ApplicationCertificatsBundle(),
+            new Application\MyNotesBundle\ApplicationMyNotesBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

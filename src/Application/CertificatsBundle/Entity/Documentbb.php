@@ -20,18 +20,18 @@ class Documentbb
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
-    public $name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    public $path;
+    private $path;
     
     /**
     * @ORM\ManyToMany(targetEntity="CertificatsProjet", mappedBy="picture")
@@ -41,7 +41,7 @@ class Documentbb
     /**
      * @Assert\File(maxSize="6000000")
      */
-    public $file;
+    private $file;
     
 
     public function getAbsolutePath()
