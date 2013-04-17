@@ -52,7 +52,26 @@ class Docchangements {
      */
     private $updatedAt;
 
+    /**
+     * Get id
+     *
+     * @return string 
+     */
+    public function getFile() {
+        return $this->file;
+    }
+ /**
+     * Set file
+     *
+     * @param string $file
+     * @return Document
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
     
+        return $this;
+    }
     
        public function __toString() {
         return $this->getName();    // this will not look good if SonataAdminBundle uses this ;)

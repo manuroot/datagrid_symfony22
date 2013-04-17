@@ -2,6 +2,12 @@ eproduit:
     pattern:  /
     defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:index" }
 
+eproduit_indexserch:
+    pattern:  /search
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:indexsearch" }
+
+
+
 eproduit_show:
     pattern:  /{id}/show
     defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:show" }

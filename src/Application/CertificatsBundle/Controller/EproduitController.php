@@ -8,6 +8,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\CertificatsBundle\Entity\Eproduit;
 use Application\CertificatsBundle\Form\EproduitType;
 
+
+
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * Eproduit controller.
  *
@@ -234,4 +246,80 @@ $path = $helper->asset($entity, 'image');*/
             ->getForm()
         ;
     }
+ public function searchProduitAction() {
+        $request = $this->getRequest();
+
+        if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST') {
+            $em = $this->getDoctrine()->getEntityManager();
+            $id = '';
+            $applis = array();
+            $cert_app = array();
+
+            $id = $request->request->get('id_projet');
+            $projet = $em->getRepository('ApplicationCertificatsBundle:CertificatsProjet')->find($id);
+
+            $id_cert = $request->request->get('id_cert');
+            if (isset($id_cert) && $id_cert != "create") {
+                //    var_dump($id_cert);
+                $cert = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->find($id_cert);
+                foreach ($cert->getIdapplis() as $appli) {
+                    array_push($cert_app, $appli->getId());
+                }
+                $applis['cert'] = $cert_app;
+            }
+            foreach ($projet->getIdapplis() as $appli) {
+                //$applis[] = array($appli);
+                $applis['applis'][$appli->getId()] = $appli->getNomapplis();
+                //      $applis[] = array($appli->getId(), $appli->getNomapplis());
+            }
+
+            //    $appli=array(3,4);
+            $response = new Response(json_encode($applis));
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
+        }
+        // return new Response();
+    }
+      public function indexsearchAction()
+    {
+        
+         $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $user_security = $this->container->get('security.context');
+        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user_id = $user->getId();
+        } else {
+            $user_id = 0;
+        }
+
+        $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->myFindAll($user_id);
+          $query_other = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->myFindOtherAll($user_id);
+              $paginator = $this->get('knp_paginator');
+    //   $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->findAll();
+          $pagename1 = 'page1'; // Set custom page variable name
+        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
+        $paginationa = $paginator->paginate(
+                $query, $page1, 3, array('pageParameterName' => $pagename1)
+        );
+
+        $pagename2 = 'page2'; // Set another custom page variable name
+        $page2 = $this->get('request')->query->get($pagename2, 1); // Get another custom page variable
+        $paginationb = $paginator->paginate(
+                $query_other, $page2, 3, array('pageParameterName' => $pagename2)
+        );
+        //$query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();
+      
+        $paginationa->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
+       $paginationb->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
+      //  $pagination->setTemplate('ApplicationCertificatsBundle:pagination:sliding.html.twig');
+        return $this->render('ApplicationCertificatsBundle:Eproduit:search.html.twig', array(
+                 'paginationa' => $paginationa,
+            'paginationb' => $paginationb,
+        ));
+       ;
+    }
+    
 }

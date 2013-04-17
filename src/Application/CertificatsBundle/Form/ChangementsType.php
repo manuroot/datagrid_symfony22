@@ -19,7 +19,7 @@ class ChangementsType extends AbstractType
         $builder
          //   ->add('nom')
                 
-            ->add('nom', 'text',  array(
+          ->add('nom', 'text',  array(
             /*      "help_inline"=>"Please specify some understandable title",*/
         'widget_addon' => array(
             'icon' => 'pencil',
@@ -27,6 +27,14 @@ class ChangementsType extends AbstractType
         ),
         
     ))
+                // Suggestions with doctrine orm
+      /*  ->add('nom', 'genemu_jqueryautocomplete_entity', array(
+            'class' => 'Application\CertificatsBundle\Entity\Changements',
+            'property' => 'nom',
+        ))
+                
+         */       
+                
             ->add('dateDebut', 'datetime', array(
             'label' => 'Date début',
             'widget' => 'single_text',
@@ -85,9 +93,14 @@ class ChangementsType extends AbstractType
         
  //   ))
                     
-                    
-                    
-                   
+    /*    
+        ->add('idStatus', 'genemu_jqueryselect2_entity', array(
+            'class' => 'ApplicationCertificatsBundle:ChangementsStatus',
+            'property' => 'nom',
+        ))
+    
+       */   /* ->add('country', 'genemu_jqueryselect2_country',
+                   array('property_path'=>false)  )    */   
             ->add('idStatus', 'entity', array(
              'class' => 'ApplicationCertificatsBundle:ChangementsStatus',
             'property' => 'nom',
@@ -96,7 +109,7 @@ class ChangementsType extends AbstractType
             'required' => true,
             'label' => 'Status',
            'empty_value' => '--- Choisir une option ---'
-        ))     
+        ))   
                 
              ->add('idProjet', 'entity', array(
              'class' => 'ApplicationCertificatsBundle:CertificatsProjet',

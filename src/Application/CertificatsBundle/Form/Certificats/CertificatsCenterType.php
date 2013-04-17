@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\CertificatsBundle\Form;
+namespace Application\CertificatsBundle\Form\Certificats;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

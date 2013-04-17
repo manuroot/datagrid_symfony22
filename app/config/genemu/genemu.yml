@@ -1,0 +1,8 @@
+genemu_form:
+
+    tinymce: ~
+    autocomplete: ~
+    select2:
+
+        enabled:              true
+

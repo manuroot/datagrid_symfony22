@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\CertificatsBundle\Form;
+namespace Application\CertificatsBundle\Form\Certificats;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,17 +10,26 @@ use Doctrine\ORM\EntityRepository;
 class CertificatsCenterCheckType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder
-                ->add('contenu', 'textarea', array(
-                     'attr' => array('cols' => "60", 'rows' => '10')
-                   /* array(
-                        'placeholder' => 'Working Hours',
-                         'cols'=>"100",
-                        'rows' => "10",
+         /* ->add('contenu', 'textarea', array(
+                 //    'attr' => array('rows' => 20,'cols' => 20)
+              */
+              $builder->add('contenu', 'textarea', array(
+                    'attr'=> array(
+                        'placeholder' => 'Placer le Contenu de votre certificat ICI',
+                         'help_block'    => 'Example block-level help text here.'
+                       /*  'cols'=>"100",
+                       'rows' => "10",*/
                     //   'class'=>'ui-spinner-box',
-                    )*/
-                    ))
-                ->add('opecert', 'choice', array('label' => 'Certificat',
+                    
+                    )))
+                       
+                ->add('opecert', 'choice', array(
+ 
+                    'widget_addon' => array(
+            'icon' => 'time',
+            'type' => 'prepend'
+        ),
+                    'label' => 'Certificat',
                     'multiple' => false,
                     'choices' => array(
                         0 => 'Certificats(crt)',
@@ -28,12 +37,12 @@ class CertificatsCenterCheckType extends AbstractType {
                         'Autorité(crt)',
                         'Autorité(pem)',
                     ),
-                    'attr' => array('style' => 'width:300px', 'customattr' => 'customdata')
+                  //  'attr' => array('style' => 'width:100px', 'customattr' => 'customdata')
                 ))
                 ->add('typecert', 'choice', array('label' => 'Opération',
                     'multiple' => false,
                     'choices' => $this->mycert(),
-                    'attr' => array('style' => 'width:300px', 'customattr' => 'customdata')
+                //   'attr' => array('style' => 'width:100px', 'customattr' => 'customdata')
                 ));
      
         ;

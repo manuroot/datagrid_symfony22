@@ -102,6 +102,17 @@ $("select#moncert_project").change(function(){
 
 {% endblock %}
 
+    
+{% block stylesheets %}
+{{ parent() }}
+<style>
+        
+        tr.single {
+         background-color: #f1f1f1;
+        }
+
+    </style> 
+{% endblock %}
 {% block title %}
  NOUVEAU CERTIFICAT
 {% endblock %}
@@ -113,7 +124,7 @@ $("select#moncert_project").change(function(){
     <form action="{{ path('certificatscenter_create') }}" method="post" {{ form_enctype(form) }}>
         <table class="table table-bordered">
             <tbody>
-                <tr><td>
+                <tr class="single"><td>
                         <div>
     {{ form_errors(form.fileName) }}
     {{ form_label(form.fileName, 'Nom du Fichier'|trans) }}

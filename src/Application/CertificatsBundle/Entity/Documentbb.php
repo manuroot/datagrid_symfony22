@@ -43,6 +43,27 @@ class Documentbb
      */
     private $file;
     
+     /**
+     * Get id
+     *
+     * @return string 
+     */
+    public function getFile() {
+        return $this->file;
+    }
+ /**
+     * Set file
+     *
+     * @param string $file
+     * @return Document
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    
+        return $this;
+    }
+
 
     public function getAbsolutePath()
     {

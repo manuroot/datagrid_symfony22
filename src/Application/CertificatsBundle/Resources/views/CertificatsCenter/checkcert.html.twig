@@ -2,8 +2,18 @@
 
   {% block stylesheets %}
 {{ parent() }}
-      <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
-     
+<link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
+<style>
+
+   textarea {
+    width: 80ex;
+    height:40ex;
+    margin: 0;
+    padding: 2px; /* it's best to have a little padding */
+    border: 1px solid #ccc; /* gets around varying border styles */
+    border-radius: 4px /* optional; for newer browsers */
+}
+    </style>
  {% endblock %}
 
 {% block content_header '' %}
@@ -14,16 +24,16 @@ VERIFICATION CERTIFICAT
 
 {% for type, flashMessages in app.session.flashbag.all() %}
     {% for flashMessage in flashMessages %}
-        <div class="alert alert-{{ type }}">
+<div class="alert alert-{{ type }}">
             {{ flashMessage|trans }}
-        </div>
+    </div>
     {% endfor %}
 {% endfor %}
 
    {% if is_granted("ROLE_ADMIN") %}
-<a href="{{ path('certificatscenter_new') }}" class="btn btn-medium btn-primary">Ajouter Certificat</a>
+    <a href="{{ path('certificatscenter_new') }}" class="btn btn-medium btn-primary">Ajouter Certificat</a>
 {% endif %}
-<br> <br>  
+    <br> <br>  
 {#
 <form  class="form-horizontal" action="{{ path('certificatscenter') }}" method="post" {{ form_enctype(search_form) }}>
     {{ form_widget(search_form) }}
@@ -35,23 +45,29 @@ VERIFICATION CERTIFICAT
 #}
 
 {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-<form class="form-horizontal" action="{{ path('certificatscenter_validatecert') }}" method="post" {{ form_enctype(form) }}>
-   <div class="span5"> 
-          {{ form_row(form.opecert) }}
+    <form class="form-horizontal" action="{{ path('certificatscenter_validatecert') }}" method="post" {{ form_enctype(form) }}>
+
+
+        <div class="row">
+    <div class="span9">
+   
+    <div class="row">
+    <div class="span6">
+         {{ form_row(form.opecert) }}
                 {{ form_row(form.typecert) }}
-   <button type="submit" class="btn btn-large btn-warning">Modifier</button>
- 
-   </div>
-        <div class="span5">
-         {{ form_widget(form.contenu}) }}
+    </div>
+          
+    <div class="span3">
+        {{ form_widget(form.contenu) }}
 
         {{ form_rest(form) }}
-    
-  
+          
+          
 </div>
-        </form>
+    </div>
+         <button type="submit" class="btn btn-large btn-warning">Modifier</button>
+    </div>
+    </div>
+           </form>
     
-
-   
-
 {% endblock %}

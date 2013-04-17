@@ -16,6 +16,7 @@ class EproduitType extends AbstractType {
                         'cols' => "60",
                         'class' => 'tinymce',
                      )))
+                
                // ->add('services')
                 //->add('image')
         ->add('image', 'file', array(
