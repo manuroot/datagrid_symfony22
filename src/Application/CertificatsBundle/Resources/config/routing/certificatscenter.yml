@@ -2,6 +2,16 @@ certificatscenter:
     pattern:  /
     defaults: { _controller: "ApplicationCertificatsBundle:CertificatsCenter:index" }
     
+certificatscenter_check:
+    pattern:  /checkcert
+    defaults: { _controller: "ApplicationCertificatsBundle:CertificatsCenter:checkcert" }
+    
+certificatscenter_validatecert:
+    pattern:  /validatecert
+    defaults: { _controller: "ApplicationCertificatsBundle:CertificatsCenter:validatecheckcert" }
+    requirements: { _method: post }
+    
+    
 certificatscenter_show:
     pattern:  /{id}/show
     defaults: { _controller: "ApplicationCertificatsBundle:CertificatsCenter:show" }

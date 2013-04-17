@@ -11,6 +11,7 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Application\CertificatsBundle\Entity\CertificatsCenter;
 use Application\CertificatsBundle\Form\CertificatsCenterType;
+use Application\CertificatsBundle\Form\CertificatsCenterCheckType;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Grid;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
@@ -48,18 +49,18 @@ class CertificatsCenterController extends Controller {
     }
 
     public function indexAction() {
-/*
-$message = \Swift_Message::newInstance()
-        ->setSubject('Hello Email')
-        ->setFrom('send@example.com')
-        ->setTo('mroot72000@yahoo.fr')
-        ->setBody(
-            $this->renderView(
-                'ApplicationCertificatsBundle:CertificatsCenter:email.txt.twig'
-             )
-        )
-    ;
-    $this->get('mailer')->send($message);*/
+        /*
+          $message = \Swift_Message::newInstance()
+          ->setSubject('Hello Email')
+          ->setFrom('send@example.com')
+          ->setTo('mroot72000@yahoo.fr')
+          ->setBody(
+          $this->renderView(
+          'ApplicationCertificatsBundle:CertificatsCenter:email.txt.twig'
+          )
+          )
+          ;
+          $this->get('mailer')->send($message); */
         /* $session = new Session();
           $session->start();
           // définit et récupère des attributs de session
@@ -78,9 +79,9 @@ $message = \Swift_Message::newInstance()
 //$foo = $session->get('foo');
         //  $session = new Session();
 //$session->start();
-  //$searchForm = $this->createSearchForm();
-$searchForm=$this->createForm(new CertificatsCenterType());
-   
+        //$searchForm = $this->createSearchForm();
+        $searchForm = $this->createForm(new CertificatsCenterType());
+
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindaAll();
         $paginator = $this->get('knp_paginator');
@@ -91,41 +92,41 @@ $searchForm=$this->createForm(new CertificatsCenterType());
         //$pagination->setTemplate('ApplicationMyNotesBundle:pagination:sliding.html.twig');
         return $this->render('ApplicationCertificatsBundle:CertificatsCenter:index.html.twig', array(
                     'pagination' => $pagination,
-            //'search_form' => $searchForm->createView(),
-            'search_form' => $searchForm->createView(),
+                    //'search_form' => $searchForm->createView(),
+                    'search_form' => $searchForm->createView(),
                 ));
 //return compact('pagination');
     }
 
-    public function indexoldAction($page = null) {
-        //   $session = $request->getSession();
-        $em = $this->container->get('doctrine')->getEntityManager();
-        $repo = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->myFindAll();
-        $adapter = new DoctrineORMAdapter($repo);
-        $pagerfanta = $this->mypager($adapter);
-        try {
-            $pagerfanta->setCurrentPage($page);
-            $q = $pagerfanta->getCurrentPageResults();
-        } catch (NotValidCurrentPageException $e) {
-            throw new NotFoundHttpException();
-        }
+    public function checkcertAction() {
 
-        return $this->container->get('templating')->renderResponse(
-                        'ApplicationCertificatsBundle:CertificatsCenter:index.html.twig', array(
-                    'pagerfanta' => $pagerfanta,
-                    'entities' => $q,
+        $form = $this->createForm(new CertificatsCenterCheckType());
+
+        return $this->render('ApplicationCertificatsBundle:CertificatsCenter:checkcert.html.twig', array(
+                    'form' => $form->createView(),
                 ));
     }
 
-    private function mypager($adapter = null, $max = 5, $page = 1) {
-        if (isset($adapter)) {
-            $pagerfanta = new Pagerfanta($adapter);
-            $pagerfanta->setMaxPerPage(20);
+    public function validatecheckcertAction(Request $request) {
 
-            return $pagerfanta;
-        } else {
-            return null;
-        }
+        $vForm = $this->createForm(new CertificatsCenterCheckType());
+
+        $postData = $request->request->get('checkcert');
+        //   var_dump($request->request->all());
+        var_dump($postData);
+        exit(1);
+//   unset($postData['id']);
+        //      var_dump($postData);
+
+        $vForm->bind($postData);
+
+        return $this->render('ApplicationCertificatsBundle:CertificatsCenter:validatecert.html.twig', array(
+                ));
+
+
+        /*  return $this->render('ApplicationCertificatsBundle:CertificatsCenter:checkcert.html.twig', array(
+          'form' => $form->createView(),
+          )); */
     }
 
     /**
@@ -196,7 +197,14 @@ $searchForm=$this->createForm(new CertificatsCenterType());
             $securityContext = $this->get('security.context');
             $user = $securityContext->getToken()->getUser();
             $securityIdentity = UserSecurityIdentity::fromAccount($user);
-
+          /*  $builder = new MaskBuilder();
+            $builder
+                    ->add('view')
+                    ->add('edit')
+                    ->add('delete')
+                    ->add('undelete')
+            ;
+            $mask = $builder->get(); // int(29)*/
             // grant owner access
             $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
             $aclProvider->updateAcl($acl);
@@ -388,7 +396,7 @@ $searchForm=$this->createForm(new CertificatsCenterType());
     protected function createSearchForm() {
 
         return $this->createFormBuilder()
-                        ->add('Serveur', 'text',array('label'=>'Serveur'))
+                        ->add('Serveur', 'text', array('label' => 'Serveur'))
                         ->add('amount', 'choice', array(
                             'label' => 'Montant en euros',
                             'choices' => array(
@@ -404,6 +412,7 @@ $searchForm=$this->createForm(new CertificatsCenterType());
                         ->getForm()
         ;
     }
+
     private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
                         ->add('id', 'hidden')
@@ -492,7 +501,7 @@ $searchForm=$this->createForm(new CertificatsCenterType());
 
             $id_cert = $request->request->get('id_cert');
             if (isset($id_cert) && $id_cert != "create") {
-            //    var_dump($id_cert);
+                //    var_dump($id_cert);
                 $cert = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->find($id_cert);
                 foreach ($cert->getIdapplis() as $appli) {
                     array_push($cert_app, $appli->getId());

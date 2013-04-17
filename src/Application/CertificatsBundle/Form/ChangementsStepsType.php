@@ -18,6 +18,7 @@ class ChangementsStepsType extends AbstractType {
             case 1:
                 $builder
                         ->add('nom', 'text', array(
+                            
                             'widget_addon' => array(
                                 'icon' => 'pencil',
                                 'type' => 'prepend'
@@ -39,8 +40,10 @@ class ChangementsStepsType extends AbstractType {
                                 'type' => 'prepend'
                             ),
                         ))
+                 
                      ->add('description', 'textarea', array(
         'attr' => array(
+            //'placeholder'=>'Description du changement',
             'cols'=>"60",
           //  'rows'=>"10",
             'class' => 'tinymce',
