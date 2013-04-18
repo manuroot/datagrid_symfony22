@@ -39,7 +39,9 @@ class EproduitType extends AbstractType {
             'required' => true,
             'label' => 'Categorie',
            'empty_value' => '--- Choisir une option ---'
-        ));
+        ))
+            
+             ->add('idStatus', null, array('label' => 'Status'))
                 /* ->add('image', 'file',
 array(
 'label' => 'Hast du ein Screenshot von der Nachricht'

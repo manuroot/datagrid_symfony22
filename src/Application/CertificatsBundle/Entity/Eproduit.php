@@ -129,6 +129,16 @@ protected $updatedAt;
     */
     private $categorie;
 
+     /**
+     * @var \EserviceStatus
+     *
+     * @ORM\ManyToOne(targetEntity="EproduitStatus", inversedBy="eproduit"))
+      * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_status", referencedColumnName="id")
+     *  })
+     */
+    private $idStatus;
+    
     public function getId()
     {
         return $this->id;
@@ -362,5 +372,28 @@ return $this->updatedAt;
     public function getCategorie()
     {
         return $this->categorie;
+    }
+    
+     /**
+     * Set idStatus
+     *
+     * @param \Application\CertificatsBundle\Entity\EserviceStatus $idStatus
+     * @return Eservice
+     */
+    public function setIdStatus(\Application\CertificatsBundle\Entity\EproduitStatus $idStatus = null)
+    {
+        $this->idStatus = $idStatus;
+    
+        return $this;
+    }
+
+    /**
+     * Get idStatus
+     *
+     * @return \Application\CertificatsBundle\Entity\EproduitStatus 
+     */
+    public function getIdStatus()
+    {
+        return $this->idStatus;
     }
 }

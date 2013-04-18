@@ -98,7 +98,24 @@
                                             <li><a href="{{ path('eservice_demandes') }}"><i class="icon-camera"></i> {{ 'Mes Demandes de Services'|trans }}</a></li>
                                            <li><a href="{{ path('eservice_other') }}"><i class="icon-camera"></i> {{ 'Services Propsés'|trans }}</a></li>
                                            
-                                            <li><a href="{{ path('eproduit') }}"><i class="icon-plus-sign"></i> {{ 'Produits'|trans }}</a></li>
+                                         
+                                            </ul>
+                                    </li>
+                                     {% if foo[0] == 'eproduit' %}
+                                    <li class="dropdown active">
+                                    {% else %}  
+                                               <li class="dropdown">
+                                    {% endif %}
+                                    
+                                           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-shopping-cart"></i>
+                                               Produits<b class="caret"></b> </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('eproduit') }}"><i class="icon-plus-sign"></i> {{ 'DashBoard Produits'|trans }}</a></li>
+                                             <li><a href="{{ path('eproduit_mesproduits') }}"><i class="icon-plus-sign"></i> {{ 'Gérer Mes Produits'|trans }}</a></li>
+                                             <li><a href="{{ path('eproduit_propositions') }}"><i class="icon-plus-sign"></i> {{ 'Gérer Les Propositions'|trans }}</a></li>
+                                            <li><a href="{{ path('eproduit_indexserch') }}"><i class="icon-camera"></i> {{ 'Recherche Produit'|trans }}</a></li>
+                                            <li><a href="{{ path('eproduit_indexadmin') }}"><i class="icon-camera"></i> {{ 'Tous les Produits'|trans }}</a></li>
+                                     
                                             </ul>
                                     </li>
                                     
@@ -120,7 +137,7 @@
                                     
                                    
   
-                                    
+                                    {#
                                     
                                        <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-user"></i>
                                                Taches<b class="caret"></b> </a>
@@ -131,7 +148,7 @@
                            
                                         </ul>
                                     </li>
-                                    
+                                    #}
                                          
                                     {#
                                     <li><a href="{{ path('sonata_news_home') }}">{{ 'Blog'|trans }}</a></li>

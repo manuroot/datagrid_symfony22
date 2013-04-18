@@ -28,6 +28,7 @@ class EproduitRepository extends EntityRepository {
         $query = $this->createQueryBuilder('a')
                 ->leftJoin('a.proprietaire', 'b')
                 ->leftJoin('a.categorie', 'c')
+                ->leftJoin('a.idStatus', 'd')
                 ->add('orderBy', 'a.id DESC')
                 ->getQuery();
         return $query;
@@ -38,7 +39,10 @@ class EproduitRepository extends EntityRepository {
         $query = $this->createQueryBuilder('a')
                 ->add('orderBy', 'a.id DESC')
                 ->where('a.proprietaire = :proprietaire')
-                ->setParameter('proprietaire', $user_id)
+                ->leftJoin('a.proprietaire', 'b')
+                ->leftJoin('a.categorie', 'c')
+                ->leftJoin('a.idStatus', 'd')
+                 ->setParameter('proprietaire', $user_id)
                 ->getQuery();
 
         return $query;
@@ -61,6 +65,10 @@ class EproduitRepository extends EntityRepository {
         $query = $this->createQueryBuilder('a')
                 ->where('a.proprietaire <> :proprietaire')
                 ->setParameter('proprietaire', $user_id)
+                   ->leftJoin('a.proprietaire', 'b')
+                ->leftJoin('a.categorie', 'c')
+                ->leftJoin('a.idStatus', 'd')
+             
                 ->add('orderBy', 'a.id DESC')
                 ->getQuery();
         return $query;

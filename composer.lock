@@ -151,12 +151,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/craue/CraueFormFlowBundle.git",
-                "reference": "7942b210c6aa52a78267858c223fac2f4f931a86"
+                "reference": "1.1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/7942b210c6aa52a78267858c223fac2f4f931a86",
-                "reference": "7942b210c6aa52a78267858c223fac2f4f931a86",
+                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/1.1.2",
+                "reference": "1.1.2",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                 "Symfony2",
                 "form"
             ],
-            "time": "2013-04-15 11:54:00"
+            "time": "2013-04-17 19:01:13"
         },
         {
             "name": "dflydev/markdown",
@@ -2341,12 +2341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/whiteoctober/Pagerfanta.git",
-                "reference": "6d37d04645ab875042e08b54ddacc5c0bd294c44"
+                "reference": "48ed04c9797e96c70cfc514d0dc0ded8546f2b55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/6d37d04645ab875042e08b54ddacc5c0bd294c44",
-                "reference": "6d37d04645ab875042e08b54ddacc5c0bd294c44",
+                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/48ed04c9797e96c70cfc514d0dc0ded8546f2b55",
+                "reference": "48ed04c9797e96c70cfc514d0dc0ded8546f2b55",
                 "shasum": ""
             },
             "require": {
@@ -2391,9 +2391,11 @@
             "description": "Pagination for PHP 5.3",
             "keywords": [
                 "page",
+                "pagination",
+                "paginator",
                 "paging"
             ],
-            "time": "2013-04-14 14:47:11"
+            "time": "2013-04-16 21:43:21"
         },
         {
             "name": "phpoption/phpoption",
@@ -3665,12 +3667,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/stfalcon/TinymceBundle.git",
-                "reference": "f7422a4dc860641d57805a99705f5f32c4fb10d5"
+                "reference": "8fe6ae5f6c03525e4b03fb6e3ea49c69a66fb64b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stfalcon/TinymceBundle/zipball/f7422a4dc860641d57805a99705f5f32c4fb10d5",
-                "reference": "f7422a4dc860641d57805a99705f5f32c4fb10d5",
+                "url": "https://api.github.com/repos/stfalcon/TinymceBundle/zipball/8fe6ae5f6c03525e4b03fb6e3ea49c69a66fb64b",
+                "reference": "8fe6ae5f6c03525e4b03fb6e3ea49c69a66fb64b",
                 "shasum": ""
             },
             "require": {
@@ -3714,7 +3716,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2013-02-21 12:21:06"
+            "time": "2013-04-18 08:00:55"
         },
         {
             "name": "swiftmailer/swiftmailer",

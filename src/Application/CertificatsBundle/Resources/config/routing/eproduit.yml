@@ -10,6 +10,14 @@ eproduit_indexadmin:
     pattern:  /indexadmin
     defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:indexAll" }
 
+eproduit_mesproduits:
+    pattern:  /mesproduits
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:indexmesproduits" }
+
+eproduit_propositions:
+    pattern:  /propositions
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:indexpropositions" }
+
 
 
 eproduit_show:

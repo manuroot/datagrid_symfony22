@@ -21,6 +21,8 @@ PRODUIT: {{ entity.name }}
         <tr><td>
                  <div>
                   {{ form_row(edit_form.name) }}
+                           {{ form_row(edit_form.idStatus) }}
+        
                  {#    {{ form_row(edit_form.services) }}#}
               </div>
                               <div>
@@ -42,7 +44,8 @@ PRODUIT: {{ entity.name }}
 <tr><td colspan="2">
                                    
   <button type="submit" class="btn btn-small btn-warning">Modifier</button>
-  <a href="{{ path('eproduit') }}" class="btn btn-small btn-primary">Retour</a>
+  
+    <a href="{{ path(btnretour)  }}" class="btn btn-small btn-success">Retour</a>
    </form>       
                                     
                                        
