@@ -115,6 +115,19 @@ protected $updatedAt;
      * })
      */
     private $proprietaire;
+    
+     
+    
+     /**
+     * @var \EproduitCategories
+     *
+     * @ORM\ManyToOne(targetEntity="EproduitCategories")
+     * @ORM\OrderBy({"nom" = "ASC"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="categorie", referencedColumnName="id")
+     * })
+    */
+    private $categorie;
 
     public function getId()
     {
@@ -325,5 +338,29 @@ return $this->updatedAt;
     public function getProprietaire()
     {
         return $this->proprietaire;
+    }
+
+    
+       /**
+     * Set project
+     *
+     * @param \Application\CertificatsBundle\Entity\CertificatsProjet $project
+     * @return CertificatsCenter
+     */
+    public function setCategorie(\Application\CertificatsBundle\Entity\EproduitCategories $categorie = null)
+    {
+        $this->categorie = $categorie;
+    
+        return $this;
+    }
+
+    /**
+     * Get project
+     *
+     * @return \Application\CertificatsBundle\Entity\CertificatsProjet 
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
     }
 }

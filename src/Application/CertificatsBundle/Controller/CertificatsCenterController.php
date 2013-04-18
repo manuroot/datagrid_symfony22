@@ -166,7 +166,9 @@ class CertificatsCenterController extends Controller {
         $form = $this->createForm(new CertificatsCenterType(), $entity);
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
-
+       // print_r($myretour);
+      //  exit(1);
+        if (! isset($myretour)){$myretour='certificatscenter';}
         return $this->render('ApplicationCertificatsBundle:CertificatsCenter:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -181,6 +183,9 @@ class CertificatsCenterController extends Controller {
     public function createAction(Request $request) {
         $entity = new CertificatsCenter();
         $form = $this->createForm(new CertificatsCenterType(), $entity);
+           $session = $this->getRequest()->getSession();
+        $myretour = $session->get('buttonretour');
+      
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -223,6 +228,7 @@ class CertificatsCenterController extends Controller {
         return $this->render('ApplicationCertificatsBundle:CertificatsCenter:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
+              'btnretour' => $myretour,
                 ));
     }
 
@@ -240,6 +246,7 @@ class CertificatsCenterController extends Controller {
 // dans un autre contrôleur pour une autre requête
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
+           if (! isset($myretour)){$myretour='certificatscenter';}
         $entity = $em->getRepository('ApplicationCertificatsBundle:CertificatsCenter')->find($id);
 
         // check rights

@@ -11,27 +11,88 @@ class CertificatsCenterType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('fileName')
+                ->add('fileName' ,'text',array(
+                    'widget_addon' => array(
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    ),))
               /*  ->add('myid','hidden',
                         array(
                     "mapped" => false,
                             'data' => $data->getId()
                         ))*/
-                ->add('cnName')
+                ->add('cnName','text',array(
+                    'widget_addon' => array(
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    ),))
                 // ->add('startDate')
                 //  ->add('endTime')
                 // ->add('addedDate')
-                ->add('serverName')
-                ->add('port')
-                ->add('serviceName')
-                ->add('way')
+                ->add('serverName','text',array(
+                    'widget_addon' => array(
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    ),))
+                ->add('port','text',array(
+                    'widget_addon' => array(
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    ),))
+                ->add('serviceName','text',array(
+                    'widget_addon' => array(
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    ),))
+                ->add('way','text',array(
+                    'widget_addon' => array(
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    ),))
                 ->add('statusFile', 'checkbox', array('label' => 'Verification'))
+                
                // ->add('picture', array(), array('edit' => 'list', 'link_parameters' => array('context' => 'symbols')))
                 /*
 ->add('picture', 'sonata_type_model_list', array('required' => false),
                    array('link_parameters'=>array('context'=>'default',
                    'provider'=>'sonata.media.provider.image')))*/
-        ;
+        
+        
+        
+         ->add('startDate', 'date', array(
+                    'label' => 'Date début',
+                    'widget' => 'single_text',
+                    'input' => 'datetime',
+                    'format' => 'yyyy-MM-dd',
+                    'widget_addon' => array(
+                        'icon' => 'time',
+                        'type' => 'prepend'
+                    ),
+                ));
+        $builder->add('addedDate', 'datetime', array(
+            'label' => 'Date d\'ajout',
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => 'yyyy-MM-dd',
+            'widget_addon' => array(
+                'icon' => 'time',
+                'type' => 'prepend'
+            ),
+        ));
+        $builder->add('endTime', 'datetime', array(
+            'label' => 'Date d\'ajout',
+            'widget' => 'single_text',
+            'input' => 'datetime',
+            'format' => 'yyyy-MM-dd',
+            'widget_addon' => array(
+                'icon' => 'time',
+                'type' => 'prepend'
+            ),
+        ));
+        
+        
+        
+        /*
         $builder->add('startDate', 'date', array(
             'label' => 'Date début',
             'widget' => 'single_text'
@@ -44,7 +105,7 @@ class CertificatsCenterType extends AbstractType {
         $builder->add('endTime', 'date', array(
             'label' => 'Date de Fin',
             'widget' => 'single_text'
-        ));
+        ));*/
         $builder->add('typeCert', 'entity', array(
             'class' => 'Application\CertificatsBundle\Entity\CertificatsFiletype',
             'query_builder' => function(EntityRepository $em) {
