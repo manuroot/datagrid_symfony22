@@ -1,0 +1,115 @@
+{% extends "ApplicationCertificatsBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
+     
+ {% endblock %}
+
+{% block content_header '' %}
+{% block title %}
+PRODUITS DISPONIBLES
+{% endblock %}
+{% block content %}
+
+
+{% for type, flashMessages in app.session.flashbag.all() %}
+    {% for flashMessage in flashMessages %}
+        <div class="alert alert-{{ type }}">
+            {{ flashMessage|trans }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<a href="{{ path('eproduit_new') }}" class="btn btn-small btn-primary">Ajouter un Produit</a>
+
+<table class="table table-striped table-bordered table-hover">
+       <thead>
+        <tr class="title">
+              <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+    <th{% if pagination.isSorted('a.id') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Filename', 'a.id') }}</th>
+ 
+ <th{% if pagination.isSorted('b.nomprojet') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Projet', 'b.nomprojet') }}</th>
+ <th{% if pagination.isSorted('c.fileType') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Type', 'c.fileType') }}</th>
+ 
+ <th{% if pagination.isSorted('a.cnName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'CN', 'a.cnName') }}</th>
+      
+ <th{% if pagination.isSorted('a.endTime') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Fin', 'a.endTime') }}</th>
+ 
+ <th{% if pagination.isSorted('a.serverName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Serveur', 'a.serverName') }}</th>
+ 
+ <th{% if pagination.isSorted('a.port') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Port', 'a.port') }}</th>
+ <th{% if pagination.isSorted('a.serviceName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Service', 'a.serviceName') }}</th>
+           {% if is_granted("ROLE_ADMIN") %}
+ <th colspan="3"><center>Actions</center></th>
+{% else %}
+ <th><center>Actions</center></th>
+{% endif %}
+        </tr>
+    </thead>
+    <thead>
+        <tr class="title"> 
+                 <th>Id</th>
+                <th>Name</th>
+                 <th>Catégorie</th>
+                    <th>Propriétaire</th>
+                <th>Description</th>
+                 <th>Image</th>
+                 <th colspan="3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in paginationa %}
+            <tr>
+                
+                
+                <td><a href="{{ path('eproduit_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.name }}</td>
+                   {% if entity.categorie is not null %}               
+                  <td>{{ entity.categorie.nom }}</td>
+                  {% else %}
+                  <td>---</td>
+                  {% endif %}
+                      {% if entity.proprietaire is not null %}               
+                    <td>{{ entity.proprietaire.username }}</td>
+                 {% else %}
+                  <td>---</td>
+                     {% endif %}
+                <td>{{ entity.description|raw }}</td>
+                       <td>
+                {% if entity.image is not null %}               
+           
+         
+         <img width="60px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
+         {% else %}
+           ---
+         {% endif %}
+           </td>
+           
+                  
+                     <td>
+                    <a href="{{ path('eproduit_show', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationcertificats/images/detail.png') }}" alt="show" width="15" height="15" />
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('eproduit_edit', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationcertificats/images/edit.png') }}" alt="edit" width="15" height="15" />
+                    </a>
+                </td>
+                   <td>
+     <a href="{{ path('eproduit_delete', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationcertificats/images/delete.png') }}" alt="delete" width="15" height="15" />
+                    </a>
+                </td>
+                
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  {{ knp_pagination_render(paginationa) }}
+
+
+
+    {% endblock %}

@@ -70,6 +70,37 @@ class EproduitController extends Controller
         ));
     }
 
+    
+    public function indexAllAction()
+    {
+       $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $user_security = $this->container->get('security.context');
+        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user_id = $user->getId();
+        } else {
+            $user_id = 0;
+        }
+
+        $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->myFind();
+       
+              $paginator = $this->get('knp_paginator');
+    //   $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->findAll();
+          $pagename1 = 'page1'; // Set custom page variable name
+        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
+        $paginationa = $paginator->paginate(
+                $query, $page1, 10, array('pageParameterName' => $pagename1)
+        );
+
+        
+        $paginationa->setTemplate('ApplicationCertificatsBundle:pagination:twitter_bootstrap_pagination.html.twig');
+      //  $pagination->setTemplate('ApplicationCertificatsBundle:pagination:sliding.html.twig');
+        return $this->render('ApplicationCertificatsBundle:Eproduit:indexadmin.html.twig', array(
+                 'paginationa' => $paginationa,
+         ));
+    }
+    
     /**
      * Creates a new Eproduit entity.
      *

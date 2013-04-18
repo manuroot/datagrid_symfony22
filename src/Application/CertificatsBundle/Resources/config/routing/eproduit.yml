@@ -6,6 +6,10 @@ eproduit_indexserch:
     pattern:  /search
     defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:indexsearch" }
 
+eproduit_indexadmin:
+    pattern:  /indexadmin
+    defaults: { _controller: "ApplicationCertificatsBundle:Eproduit:indexAll" }
+
 
 
 eproduit_show:
