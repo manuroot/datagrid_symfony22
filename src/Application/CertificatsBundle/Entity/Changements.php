@@ -357,8 +357,6 @@ class Changements extends AbstractEvent
     }
 
    
-  
-   
 
   
      /**

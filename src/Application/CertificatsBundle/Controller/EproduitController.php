@@ -21,6 +21,22 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class EproduitController extends Controller {
 
+    private function getuserid() {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $user_security = $this->container->get('security.context');
+        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user_id = $user->getId();
+        } else {
+            $user_id = 0;
+        }
+        return ($user_id);
+    }
+
     /**
      * Lists all Eproduit entities.
      *
@@ -103,11 +119,11 @@ class EproduitController extends Controller {
     }
 
     /**
-    *
+     *
      */
     public function indexmesproduitsAction() {
-        
-          $em = $this->getDoctrine()->getManager();
+
+        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
         //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
@@ -134,10 +150,10 @@ class EproduitController extends Controller {
                     'paginationa' => $paginationa,
                 ));
     }
-    
-      public function indexpropositionsAction() {
-        
-          $em = $this->getDoctrine()->getManager();
+
+    public function indexpropositionsAction() {
+
+        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
         //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
@@ -150,7 +166,7 @@ class EproduitController extends Controller {
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit_propositions');
         $query = $em->getRepository('ApplicationCertificatsBundle:Eproduit')->myFindOtherAll($user_id);
-     
+
         $paginator = $this->get('knp_paginator');
         $pagename1 = 'page1'; // Set custom page variable name
         $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
@@ -165,7 +181,6 @@ class EproduitController extends Controller {
                 ));
     }
 
-    
     /**
      * Creates a new Eproduit entity.
      *
@@ -264,6 +279,12 @@ class EproduitController extends Controller {
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
 
+        $user_id = $this->getuserid();
+        $proprietaire = $entity->getProprietaire()->getId();
+        if ($user_id != $proprietaire) {
+            return $this->render('ApplicationCertificatsBundle:Eservice:deny.html.twig', array(
+                    ));
+        }
 
         $editForm = $this->createForm(new EproduitType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -297,8 +318,13 @@ class EproduitController extends Controller {
             $entity->setUpdatedAt(new \DateTime());
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('eproduit_edit', array('id' => $id)));
+            $session = $this->getRequest()->getSession();
+            $session->getFlashBag()->add('warning', "Enregistrement $id update successfull");
+            $route_back = $session->get('buttonretour');
+            if (isset($route_back))
+                return $this->redirect($this->generateUrl($route_back, array('id' => $id)));
+            else
+                return $this->redirect($this->generateUrl('eproduit', array('id' => $id)));
         }
 
         return $this->render('ApplicationCertificatsBundle:Eproduit:edit.html.twig', array(

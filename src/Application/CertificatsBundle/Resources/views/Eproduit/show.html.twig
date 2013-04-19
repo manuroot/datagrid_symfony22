@@ -46,7 +46,14 @@ PRODUIT: {{ entity.name }}
                      {% else %}
                   <td>---</td>
                   {% endif %}
-            </tr>
+                  
+                  <tr>
+            <th>Groupe</th>
+            <td>{{ entity.proprietaire.idgroup }}</td>
+        </tr>
+        
+        
+            
             
             
              <tr>
