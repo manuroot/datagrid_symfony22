@@ -1,0 +1,48 @@
+eproduit:
+    pattern:  /
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:index" }
+
+eproduit_indexserch:
+    pattern:  /search
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:indexsearch" }
+
+eproduit_indexadmin:
+    pattern:  /indexadmin
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:indexAll" }
+
+eproduit_mesproduits:
+    pattern:  /mesproduits
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:indexmesproduits" }
+
+eproduit_propositions:
+    pattern:  /propositions
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:indexpropositions" }
+
+
+
+eproduit_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:show" }
+
+eproduit_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:new" }
+
+eproduit_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:create" }
+    requirements: { _method: post }
+
+eproduit_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:edit" }
+
+eproduit_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:update" }
+    requirements: { _method: post|put }
+
+eproduit_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationEservicesBundle:Eproduit:delete" }
+    requirements: { _method: post|delete }

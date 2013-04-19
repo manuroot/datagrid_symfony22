@@ -1,0 +1,7 @@
+parameters:
+#    application_eservices.example.class: Application\EservicesBundle\Example
+
+services:
+#    application_eservices.example:
+#        class: %application_eservices.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

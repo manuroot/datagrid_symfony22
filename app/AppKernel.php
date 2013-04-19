@@ -56,7 +56,8 @@ class AppKernel extends Kernel {
             new Application\Sonata\AdminBundle\ApplicationSonataAdminBundle(),
             new Application\Sonata\NewsBundle\ApplicationSonataNewsBundle(),
             new Application\CertificatsBundle\ApplicationCertificatsBundle(),
-            new Application\MyNotesBundle\ApplicationMyNotesBundle()
+            new Application\MyNotesBundle\ApplicationMyNotesBundle(),
+            new Application\EservicesBundle\ApplicationEservicesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

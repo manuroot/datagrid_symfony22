@@ -1,0 +1,47 @@
+eservice:
+    pattern:  /
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:index" }
+
+eservice_demandes:
+    pattern:  /demandes
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:indexdemandesservices" }
+
+eservice_contrat:
+    pattern:  /{id}/contrat
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:contrat" }
+
+eservice_other:
+    pattern:  /autres
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:indexotherservices" }
+
+eservice_messervices:
+    pattern:  /messervices
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:indexmesservices" }
+
+
+eservice_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:show" }
+
+eservice_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:new" }
+
+eservice_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:create" }
+    requirements: { _method: post }
+
+eservice_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:edit" }
+
+eservice_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:update" }
+    requirements: { _method: post|put }
+
+eservice_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:delete" }
+    requirements: { _method: post|delete }

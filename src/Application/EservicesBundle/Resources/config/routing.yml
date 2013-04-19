@@ -1,0 +1,12 @@
+_eservice:
+    resource: "@ApplicationEservicesBundle/Resources/config/routing/eservice.yml"
+    prefix:   /eservice
+    
+_eproduit:
+    resource: "@ApplicationEservicesBundle/Resources/config/routing/eproduit.yml"
+    prefix:   /eproduit
+    
+_egroup:
+    resource: "@ApplicationEservicesBundle/Resources/config/routing/eservicegroup.yml"
+    prefix:   /egroupes    
+    

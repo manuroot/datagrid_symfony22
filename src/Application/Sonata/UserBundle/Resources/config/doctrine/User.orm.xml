@@ -11,7 +11,7 @@
         </id>
    <many-to-one
     field="idgroup"
-    target-entity="Application\CertificatsBundle\Entity\ChronoUsergroup"
+    target-entity="Application\EservicesBundle\Entity\EserviceGroup"
     >
     <cascade>
         <cascade-all/>

@@ -1,7 +1,21 @@
-{% extends '::base.html.twig' %}
+{% extends "ApplicationEservicesBundle::layout.html.twig" %}
 
-{% block body -%}
-    <h1>User edit</h1>
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationeservices/css/sliding.css') }}" type="text/css" media="all"/>
+       <style>
+         .single {
+         background-color: #f1f1f1;
+        }
+        </style>
+ {% endblock %}
+ 
+
+{% block content_header '' %}
+{% block title %}
+EDITION USER
+{% endblock %}
+{% block content %}
 
     <form action="{{ path('users_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />

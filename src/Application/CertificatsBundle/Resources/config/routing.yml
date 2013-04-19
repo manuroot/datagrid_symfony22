@@ -3,15 +3,6 @@ _changements:
     prefix:   /
 
     
-_eservice:
-    resource: "@ApplicationCertificatsBundle/Resources/config/routing/eservice.yml"
-    prefix:   /service
-    
-_eproduit:
-    resource: "@ApplicationCertificatsBundle/Resources/config/routing/eproduit.yml"
-    prefix:   /produit
-    
-    
 application_certificats_certificatscenter:
     resource: "@ApplicationCertificatsBundle/Resources/config/routing/certificatscenter.yml"
     prefix:   /certificatscenter

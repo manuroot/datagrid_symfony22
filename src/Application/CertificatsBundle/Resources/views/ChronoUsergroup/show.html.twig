@@ -7,7 +7,7 @@
  {% endblock %}
 
 {% block content_header '' %}
-{% block title %}DETAILS GROUPE:  {{ entity.nomGroup }} {% endblock %}
+{% block title %}DETAILS DU GROUPE:  {{ entity.nomGroup }} {% endblock %}
 {% block content %}
       
      <br><br>
@@ -41,9 +41,10 @@
   
 <h3><center>Liste des Utilisateurs de ce groupe</center></h3>
 <table class="table table-striped table-bordered table-hover">
-    <thead>
+     
+       <thead>
         <tr class="title"><th>Nom</th><th>Description</th><th>Email</th></tr>
-
+  <tbody>
       </thead>          {% for myuser in entity.users %}
         <tr>
             <td>{{ myuser.nomUser }}</td>

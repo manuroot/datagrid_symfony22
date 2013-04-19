@@ -1,3 +1,7 @@
+application_eservices:
+    resource: "@ApplicationEservicesBundle/Resources/config/routing.yml"
+    prefix:   /
+
 application_certificats:
     resource: "@ApplicationCertificatsBundle/Resources/config/routing.yml"
     prefix:   /
