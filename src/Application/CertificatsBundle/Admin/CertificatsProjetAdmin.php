@@ -14,7 +14,7 @@ use Application\CertificatsBundle\Entity\CertificatsProjet;
 
 class CertificatsProjetAdmin extends Admin {
 
-    public function getTemplate($name)
+  public function getTemplate($name)
  
 {
  
@@ -106,8 +106,8 @@ break;
         //  ->add('tags', null, array('field_options' => array('expanded' => true, 'multiple' => true)))
         ;
     }
-
-   /*public function getEditTemplate()
+/*
+public function getEditTemplate()
 {
     return 'CertificatsBundle:CertificatsProjet:base_edit.html.twig';
 }*/
