@@ -56,6 +56,35 @@ class EproduitController extends Controller {
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit');
 
+     /*      
+        
+        
+         $paginator1 = $this->get('knp_paginator');
+        $pagename1 = 'page1'; // Set custom page variable name
+        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
+        $paginationa = $paginator1->paginate(
+                $query_s, $page1, 3, array('pageParameterName' => $pagename1,
+            "sortDirectionParameterName" => "dir1",
+            'sortFieldParameterName' => "sort1")
+        );
+
+        $paginator2 = $this->get('knp_paginator');
+        $pagename2 = 'page2'; // Set another custom page variable name
+        $page2 = $this->get('request')->query->get($pagename2, 1); // Get another custom page variable
+        $paginationb = $paginator2->paginate(
+                $query_other, $page2, 3, array('pageParameterName' => $pagename2,
+            "sortDirectionParameterName" => "dir2",
+            'sortFieldParameterName' => "sort2")
+        );
+
+        */
+        
+        
+        
+        
+        
+        
+        
         $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
         $query_other = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id);
         $paginator = $this->get('knp_paginator');
