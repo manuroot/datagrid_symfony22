@@ -24,14 +24,15 @@ Ajouter Un Produit
 
  <form action="{{ path('eproduit_create') }}" method="post" {{ form_enctype(form) }}>
     <table class="table table-bordered">
-    <tbody>         <tr><td>
+    <tbody>         <tr>
+            <td>
                  <div>
                   {{ form_row(form.name) }}
                 {#     {{ form_row(form.services) }}#}
               </div>
          
                </td>
-                   </td>
+                  
  <td>
  {{ form_row(form.description) }}
 {{ form_rest(form) }} </td>
@@ -41,11 +42,11 @@ Ajouter Un Produit
                                    
   <button type="submit" class="btn btn-small btn-warning">Modifier</button>
    <a href="{{ path(btnretour)  }}" class="btn btn-small btn-success">Retour</a>
-   </form>       
+  
                                     
                                        
                                 </td></tr>
                         </tbody>
                     </table>
-  
+   </form>       
 {% endblock %}

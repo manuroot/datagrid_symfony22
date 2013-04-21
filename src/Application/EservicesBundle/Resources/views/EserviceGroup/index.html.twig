@@ -39,16 +39,21 @@ DASHBOARD - GROUPES
         <tr class="title">
                 <th>Id</th>
                 <th>Nomgroup</th>
+                <th>Nb Membres</th>
                 <th>Description</th>
                 <th>Email</th>
                 <th>Actions</th>
+
             </tr>
         </thead>
         <tbody>
+         
         {% for entity in entities %}
             <tr>
+                
                 <td><a href="{{ path('egroup_groupes_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.nomGroup }}</td>
+                   <td>{{ entity.users|length }}</td>
                 <td>{{ entity.description }}</td>
                 <td>{{ entity.email }}</td>
                   <td>

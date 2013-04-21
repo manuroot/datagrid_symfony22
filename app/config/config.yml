@@ -297,8 +297,9 @@ vich_uploader:
     mappings:
         product_image:
             uri_prefix: /uploads/eproduits
-            #upload_destination: %kernel.root_dir%/../web/images/products
+            #uri_prefix: /sf2/uploads/eproduits
             upload_destination:  %kernel.root_dir%/../web/uploads/eproduits
+            #upload_destination:  %kernel.root_dir%/../web/sf2/uploads/eproduits
             namer: vich_uploader.namer_uniqid
             directory_namer:      ~
             delete_on_remove:     true

@@ -12,8 +12,9 @@ class EproduitType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('name')
+                ->add('name',null,array('label'=>'Nom du Produit'))
                 ->add('description', 'textarea', array(
+                    'label'=>'Description du Produit',
                     'attr' => array(
                         'cols' => "60",
                         'class' => 'tinymce',

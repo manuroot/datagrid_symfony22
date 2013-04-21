@@ -3,7 +3,14 @@
   {% block stylesheets %}
 {{ parent() }}
 <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
-
+  <style>
+         td.single {
+         font-style: italic;    
+         font-weight: bold;
+         background-color: red;
+         color:blue;
+        }
+        </style>
  {% endblock %}
 
       {% block content_header '' %}
@@ -39,7 +46,7 @@
         </tr>
         <tr>
             <th>Datefin</th>
-            <td>{{ entity.dateFin|date('Y-m-d H:i:s') }}</td>
+            <td class="single">{{ entity.dateFin|date('Y-m-d H:i:s') }}</td>
         </tr>
         <tr>
             <th>Datecomep</th>

@@ -3,7 +3,15 @@
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationeservices/css/sliding.css') }}" type="text/css" media="all"/>
-     
+       <style>
+         td.single {
+         font-style: italic;    
+         font-weight: bold;
+         background-color: red;
+         color:blue;
+        }
+        </style>
+ 
  {% endblock %}
 
 {% block content_header '' %}
@@ -28,6 +36,12 @@ DETAILS DU SERVICE: {{ entity.name }}
                 <th>Id</th>
                 <td>{{ entity.id }}</td>
             </tr>
+            
+            <tr>
+                <th>Brouzoufs</th>
+                <td class="single">{{ entity.brouzoufs }}</td>
+            </tr>
+            
             <tr>
                     <th>Proprietaire</th>
                     <td>

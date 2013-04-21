@@ -24,9 +24,14 @@ eservice_show:
     defaults: { _controller: "ApplicationEservicesBundle:Eservice:show" }
 
 eservice_new:
-    pattern:  /new
-    defaults: { _controller: "ApplicationEservicesBundle:Eservice:new" }
-
+    pattern:  /new/{demande}
+    defaults: { _controller: "ApplicationEservicesBundle:Eservice:new", demande:2 }
+    requirements:  { demande: \d+  }
+    
+#eservice_new:
+#    pattern:  /new
+#    defaults: { _controller: "ApplicationEservicesBundle:Eservice:new" }
+    
 eservice_create:
     pattern:  /create
     defaults: { _controller: "ApplicationEservicesBundle:Eservice:create" }

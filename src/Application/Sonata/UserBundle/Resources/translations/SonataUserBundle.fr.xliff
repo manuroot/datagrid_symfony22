@@ -402,6 +402,10 @@
                 <source>breadcrumb.link_user_show</source>
                 <target>Voir</target>
             </trans-unit>
+            <trans-unit id="form.label_idgroup">
+                <source>form.label_idgroup</source>
+                <target>Nom du groupe</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

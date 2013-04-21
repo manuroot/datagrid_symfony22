@@ -5,7 +5,10 @@ _eservice:
 _eproduit:
     resource: "@ApplicationEservicesBundle/Resources/config/routing/eproduit.yml"
     prefix:   /eproduit
-    
+ 
+_eproduit_comments:
+    resource: "@ApplicationEservicesBundle/Resources/config/routing/eproduitcomments.yml"
+    prefix:   /comments
 _egroup:
     resource: "@ApplicationEservicesBundle/Resources/config/routing/eservicegroup.yml"
     prefix:   /egroupes    

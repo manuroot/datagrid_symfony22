@@ -21,7 +21,7 @@ use Doctrine\ORM\EntityRepository;
  *
  * @author <yourname> <youremail>
  */
-class EproduitRepository extends EntityRepository {
+class EproduitCommentsRepository extends EntityRepository {
 
     public function myFind() {
 
@@ -59,7 +59,21 @@ class EproduitRepository extends EntityRepository {
           ->getQuery(); */
         return $query;
     }
+public function getCommentsForProduit($produitId, $approved = true)
+    {
+        $qb = $this->createQueryBuilder('c')
+                   ->select('c')
+                   ->where('c.produit = :produit_id')
+                   ->addOrderBy('c.created')
+                   ->setParameter('produit_id', $produitId);
 
+        if (false === is_null($approved))
+            $qb->andWhere('c.approved = :approved')
+               ->setParameter('approved', $approved);
+
+        return $qb->getQuery()
+                  ->getResult();
+    }
     public function myFindOtherAll($user_id) {
 
         $query = $this->createQueryBuilder('a')

@@ -198,6 +198,10 @@ class EproduitController extends Controller {
         } else {
             $user_id = 0;
         }
+          $session = $this->getRequest()->getSession();
+      //  $session->get('buttonretour', 'eproduit');
+         $myretour = $session->get('buttonretour');
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
@@ -215,6 +219,7 @@ class EproduitController extends Controller {
 
         return $this->render('ApplicationEservicesBundle:Eproduit:new.html.twig', array(
                     'entity' => $entity,
+             'btnretour' => $myretour,
                     'form' => $form->createView(),
                 ));
     }
@@ -231,7 +236,6 @@ class EproduitController extends Controller {
         $form = $this->createForm(new EproduitType(), $entity);
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
-
         return $this->render('ApplicationEservicesBundle:Eproduit:new.html.twig', array(
                     'entity' => $entity,
                     'btnretour' => $myretour,
@@ -252,6 +256,11 @@ class EproduitController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Eproduit entity.');
         }
+        
+        $comments = $em->getRepository('ApplicationEservicesBundle:EproduitComments')
+                   ->getCommentsForProduit($entity->getId());
+        
+        
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
 
@@ -260,6 +269,7 @@ class EproduitController extends Controller {
         return $this->render('ApplicationEservicesBundle:Eproduit:show.html.twig', array(
                     'entity' => $entity,
                     'btnretour' => $myretour,
+                    'comments'  => $comments,
                     //   'path' => $path,
                     'delete_form' => $deleteForm->createView(),));
     }
@@ -278,7 +288,11 @@ class EproduitController extends Controller {
         }
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
-
+    
+        
+            
+            
+            
         $user_id = $this->getuserid();
         $proprietaire = $entity->getProprietaire()->getId();
         if ($user_id != $proprietaire) {
@@ -313,12 +327,15 @@ class EproduitController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new EproduitType(), $entity);
         $editForm->bind($request);
-
+            $session = $this->getRequest()->getSession();
+            $myretour = $session->get('buttonretour');
+            if (!isset($myretour))
+                $myretour='eproduit';
         if ($editForm->isValid()) {
             $entity->setUpdatedAt(new \DateTime());
             $em->persist($entity);
             $em->flush();
-            $session = $this->getRequest()->getSession();
+           
             $session->getFlashBag()->add('warning', "Enregistrement $id update successfull");
             $route_back = $session->get('buttonretour');
             if (isset($route_back))
@@ -329,6 +346,7 @@ class EproduitController extends Controller {
 
         return $this->render('ApplicationEservicesBundle:Eproduit:edit.html.twig', array(
                     'entity' => $entity,
+            'btnretour' => $myretour,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
                 ));

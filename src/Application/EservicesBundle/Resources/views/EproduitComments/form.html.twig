@@ -1,0 +1,26 @@
+{# src/Blogger/BlogBundle/Resources/public/views/Comment/form.html.twig #}
+
+
+<form action="{{ path('eproduit_comment_create', { 'produit_id' : comment.produit.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
+        <table class="table table-bordered">
+        <tbody>         <tr><td>
+                    <div>
+                  {#{{ form_row(form.user) }}#}
+                          {{ form_row(form.comment) }}
+{{ form_rest(form) }}
+                        </div> 
+                    </td>
+
+
+                </tr>
+                <tr><td>
+                         <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+                    </td></tr></tbody>
+        </table>
+
+   
+       
+    </form>          
+</td></tr>
+</tbody>
+</table>

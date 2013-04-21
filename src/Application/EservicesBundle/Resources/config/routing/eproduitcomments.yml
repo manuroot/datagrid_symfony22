@@ -1,0 +1,7 @@
+eproduit_comment_create:
+    pattern:  /comment/{produit_id}
+    defaults: { _controller: ApplicationEservicesBundle:EproduitComments:create }
+    requirements:
+        _method:  POST
+        produit_id: \d+
+   

@@ -34,12 +34,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="eproduits")
  * @ORM\Entity(repositoryClass="Application\EservicesBundle\Repository\EproduitRepository")
  * @UniqueEntity(fields="name", message="Ce produit existe déjà...")
- * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
 class Eproduit {
 
-  //  protected $comments = array();
     /**
      * @var integer
      *
@@ -92,12 +90,6 @@ class Eproduit {
      */
     protected $imageName;
 
-      /**
-     * @var datetime $updatedAt
-     *
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    protected $createdAt;
     /**
      * @var datetime $updatedAt
      *
@@ -137,10 +129,12 @@ class Eproduit {
      */
     private $idStatus;
 
-    /**
-    * @ORM\OneToMany(targetEntity="EproduitComments", mappedBy="produit",cascade={"persist"})
- */
-private $comments;
+     /**
+* @var \Doctrine\Common\Collections\Collection
+*
+* @ORM\OneToMany(targetEntity="EproduitHistory", mappedBy="produit", cascade={"remove"})
+*/
+    private $history;
 
 
     public function getId() {
@@ -176,9 +170,7 @@ private $comments;
      * Constructor
      */
     public function __construct() {
-     //   $this->history = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->setCreatedAt(new \DateTime());
-        $this->setUpdatedAt(new \DateTime());
+        $this->history = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -291,7 +283,7 @@ private $comments;
      * @param \DateTime $updatedAt
      * @return Message
      */
-    public function setUpdatedAt() {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = new \DateTime();
 //$this->updatedAt = $updatedAt;
         return $this;
@@ -306,14 +298,6 @@ private $comments;
         if (!isset($this->updatedAt))
             $this->updatedAt = new \DateTime();
         return $this->updatedAt;
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue()
-    {
-       $this->setUpdatedAt(new \DateTime());
     }
 
     /**
@@ -379,60 +363,33 @@ private $comments;
         return $this->idStatus;
     }
 
-   
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Eproduit
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    
+* Add history
+*
+* @param \Desarrolla2\Bundle\BlogBundle\Entity\PostHistory $history
+* @return Post
+*/
+    public function addHistory(\Desarrolla2\Bundle\BlogBundle\Entity\PostHistory $history) {
+        $this->history[] = $history;
+
         return $this;
     }
 
     /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
+* Remove history
+*
+* @param \Desarrolla2\Bundle\BlogBundle\Entity\PostHistory $history
+*/
+    public function removeHistory(\Desarrolla2\Bundle\BlogBundle\Entity\PostHistory $history) {
+        $this->history->removeElement($history);
     }
 
     /**
-     * Remove comments
-     *
-     * @param \Application\EservicesBundle\Entity\EproduitComments $comments
-     */
-    public function removeComment(\Application\EservicesBundle\Entity\EproduitComments $comments)
-    {
-        $this->comments->removeElement($comments);
-    }
-
-    /**
-     * Add comments
-     *
-     * @param \Application\EservicesBundle\Entity\EproduitComments $comments
-     * @return Eproduit
-     */
-    public function addComment(\Application\EservicesBundle\Entity\EproduitComments $comments)
-    {
-        $this->comments[] = $comments;
-    
-        return $this;
-    }
-
-    /**
-     * Get comments
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getComments()
-    {
-        return $this->comments;
+* Get history
+*
+* @return \Doctrine\Common\Collections\Collection
+*/
+    public function getHistory() {
+        return $this->history;
     }
 }

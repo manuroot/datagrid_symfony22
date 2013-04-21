@@ -228,8 +228,25 @@ class EserviceController extends Controller {
         $entity = new Eservice();
         $form = $this->createForm(new EserviceType(), $entity);
         $form->bind($request);
-
         if ($form->isValid()) {
+
+           // $postData = $request->request->get('eservice_form');
+
+          //  var_dump($postData);
+           /* if (!isset($postData['isDemande'])) {
+                
+            }*/
+            //$data = $form->getData();
+            //  print_r($data);
+            //if (!(isset$data[''])){}
+            // var_dump($data);
+           // exit(1);
+            /*$saleDataForm->getData()->getImage()->setValue('someimage.jpg');
+            $form->setData($form->getData());
+            $saleDataForm->getData()->getImage()->getValue();
+*/
+
+
             $em = $this->getDoctrine()->getManager();
             $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
             $entity->setDemandeur($current_user);
@@ -254,7 +271,7 @@ class EserviceController extends Controller {
      * Displays a form to create a new Eservice entity.
      *
      */
-    public function newAction() {
+    public function newAction($bool_demande=null) {
 
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
@@ -375,13 +392,11 @@ class EserviceController extends Controller {
 //pas proprio par defaut
         $ismine = 0;
 
-      return $this->render('ApplicationEservicesBundle:Eservice:contrat.html.twig', array(
+        return $this->render('ApplicationEservicesBundle:Eservice:contrat.html.twig', array(
                     'form' => $form->createView(),
                     'flow' => $flow,
                     'entity' => $entity,
                 ));
-         
-       
     }
 
     //  }

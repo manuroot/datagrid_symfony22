@@ -59,7 +59,8 @@
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
            {% if entity.idgroup is not null %}
-                <td>{{ entity.idgroup.nomGroup }}</td>
+               {# <td>{{ entity.idgroup.nomGroup }}</td>#}
+                 <td><a href="{{ path('egroup_groupes_show', { 'id': entity.idgroup.getId }) }}">{{ entity.idgroup.nomGroup }}</a></td>
                 {% else %}
                 <td>---</td>
                 {% endif %}

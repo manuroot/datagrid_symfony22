@@ -59,12 +59,7 @@ PRODUIT: {{ entity.name }}
             <th>Groupe</th>
             <td>{{ entity.proprietaire.idGroup }}</td>
         </tr>
-        
-        
-            
-            
-            
-             <tr>
+                <tr>
                 <th>Description</th>
                 <td>{{ entity.description|raw }}</td>
             </tr>
@@ -86,6 +81,53 @@ PRODUIT: {{ entity.name }}
         </tbody>
     </table>
 
+
+ <h2><center>Commentaires</center></h2>
+ 
+{% if comments|length > 0 %}
+    <section class="comments" id="comments">
+        <section class="previous-comments">
+           
+      
+            
+            <table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr class="title"> 
+                 <th>Id</th>
+                 <th>User</th>
+                <th>Date</th>
+                <th>Commentaire</th>
+        </tr>
+    </thead>
+      
+        <tbody>
+{% for comment in comments %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>{{ comment.user }}</td>
+                
+                <td>{{ comment.created|date('l, F j, Y') }}</td>
+                <td> <p>{{ comment.comment }}</p></td>
+
+    </tr>
+  {% endfor %}
     
+            </tbody>
+        </table>
+{% else %}
+    <p>Il n'y a pas de commentaires pour ce produit...</p>
+{% endif %}
+        </section>
+    </section>
+   <br><br>
    
+   <section class="comments" id="comments">
+        {# .. #}
+
+        <h3>Laisser un message au Proprietaire de ce produit</h3>
+        {% render controller('ApplicationEservicesBundle:EproduitComments:new', { 'produit_id': entity.id }) %}
+{#
+        {% render 'ApplicationEserviceBundle:EproduitComments:new' with { 'produit_id': entity.id } %}
+#}
+    </section>
 {% endblock %}
