@@ -1,0 +1,67 @@
+{% extends "ApplicationEservicesBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationeservices/css/sliding.css') }}" type="text/css" media="all"/>
+     
+ {% endblock %}
+
+{% block content_header '' %}
+{% block title %}
+PRODUIT: {{ entity.produit }} ({{ entity.produit.proprietaire }})
+{% endblock %}
+
+{% block content %}
+
+           
+     <a href="{{ path('ep_history')  }}" class="btn btn-small btn-success">Retour</a>
+<a href="{{ path('ep_history_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning">Editer</a>
+<br> <br> 
+
+
+   <table class="table table-striped table-bordered table-hover">
+        <tbody>
+            
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Datein</th>
+                <td>{{ entity.dateIn|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Dateout</th>
+                <td>{{ entity.dateOut|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Emprunteur</th>
+                <td>{{ entity.emprunteur.username }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+         <td> {% if entity.produit.imageName is not null %}               
+           
+         
+         <img width="220px" src="{{ vich_uploader_asset(entity.produit, 'image') }}" alt="{{ entity.produit.imageName }}" />
+         {% else %}
+           ---
+         {% endif %}
+                {#   <td> <img src="{{ asset('uploads/eproduits/51603dde20000.png') }}"/></td> #}
+        
+      </td>
+       </tr>
+        </tbody>
+    </table>
+
+     
+    {#<li>
+        <form action="{{ path('ep_history_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+#}
+{% endblock %}

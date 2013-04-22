@@ -60,7 +60,7 @@ class CertificatsProjetController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationCertificatsBundle:CertificatsProjet')->find($id);
-        $changements=$em->getRepository('ApplicationCertificatsBundle:Changements')->findByIdProjet($id);
+        $changements=$em->getRepository('ApplicationChangementsBundle:Changements')->findByIdProjet($id);
         
         
    $applis=$entity->getIdapplis();

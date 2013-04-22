@@ -1,0 +1,30 @@
+ep_history:
+    pattern:  /
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitHistory:index" }
+
+ep_history_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitHistory:show" }
+
+ep_history_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitHistory:new" }
+
+ep_history_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitHistory:create" }
+    requirements: { _method: post }
+
+ep_history_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitHistory:edit" }
+
+ep_history_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitHistory:update" }
+    requirements: { _method: post|put }
+
+ep_history_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitHistory:delete" }
+    requirements: { _method: post|delete }

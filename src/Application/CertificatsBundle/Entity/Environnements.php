@@ -36,7 +36,7 @@ class Environnements
     private $description;
     
     /**
-    * @ORM\ManyToMany(targetEntity="Changements", mappedBy="idEnvironnement")
+    * @ORM\ManyToMany(targetEntity="Application\ChangementsBundle\Entity\Changements", mappedBy="idEnvironnement")
     */
     private $idchangements;
 
@@ -118,10 +118,10 @@ class Environnements
     /**
      * Add idchangements
      *
-     * @param \Application\CertificatsBundle\Entity\Changements $idchangements
+     * @param \Application\ChangementsBundle\Entity\Changements $idchangements
      * @return Environnements
      */
-    public function addIdchangement(\Application\CertificatsBundle\Entity\Changements $idchangements)
+    public function addIdchangement(\Application\ChangementsBundle\Entity\Changements $idchangements)
     {
         $this->idchangements[] = $idchangements;
     
@@ -131,9 +131,9 @@ class Environnements
     /**
      * Remove idchangements
      *
-     * @param \Application\CertificatsBundle\Entity\Changements $idchangements
+     * @param \Application\ChangementsBundle\Entity\Changements $idchangements
      */
-    public function removeIdchangement(\Application\CertificatsBundle\Entity\Changements $idchangements)
+    public function removeIdchangement(\Application\ChangementsBundle\Entity\Changements $idchangements)
     {
         $this->idchangements->removeElement($idchangements);
     }

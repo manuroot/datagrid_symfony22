@@ -9,6 +9,11 @@ _eproduit:
 _eproduit_comments:
     resource: "@ApplicationEservicesBundle/Resources/config/routing/eproduitcomments.yml"
     prefix:   /comments
+    
+_eproduit_history:
+    resource: "@ApplicationEservicesBundle/Resources/config/routing/eproduithistory.yml"
+    prefix:   /history
+    
 _egroup:
     resource: "@ApplicationEservicesBundle/Resources/config/routing/eservicegroup.yml"
     prefix:   /egroupes    

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * ChronoUser
  *
@@ -86,7 +87,7 @@ class ChronoUser
     private $email;
     
   /**
-    * @ORM\ManyToMany(targetEntity="Changements", mappedBy="idusers")
+    * @ORM\ManyToMany(targetEntity="Application\ChangementsBundle\Entity\Changements", mappedBy="idusers")
     */
     private $idchangement;
 
@@ -230,10 +231,10 @@ class ChronoUser
     /**
      * Add idchangement
      *
-     * @param \Application\CertificatsBundle\Entity\Changements $idchangement
+     * @param \Application\ChangementsBundle\Entity\Changements $idchangement
      * @return ChronoUser
      */
-    public function addIdchangement(\Application\CertificatsBundle\Entity\Changements $idchangement)
+    public function addIdchangement(\Application\ChangementsBundle\Entity\Changements $idchangement)
     {
         $this->idchangement[] = $idchangement;
     
@@ -243,9 +244,9 @@ class ChronoUser
     /**
      * Remove idchangement
      *
-     * @param \Application\CertificatsBundle\Entity\Changements $idchangement
+     * @param \Application\ChangementsBundle\Entity\Changements $idchangement
      */
-    public function removeIdchangement(\Application\CertificatsBundle\Entity\Changements $idchangement)
+    public function removeIdchangement(\Application\ChangementsBundle\Entity\Changements $idchangement)
     {
         $this->idchangement->removeElement($idchangement);
     }
