@@ -28,10 +28,12 @@ class EproduitCommentsController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
+        $validation=1;
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
                $user_id = $user->getId();
         } else {
-           throw $this->createNotFoundException('User not connected.');
+          // throw $this->createNotFoundException('User not connected.');
+           $validation=0;
         }
       
         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
@@ -45,7 +47,8 @@ class EproduitCommentsController extends Controller {
 
         return $this->render('ApplicationEservicesBundle:EproduitComments:form.html.twig', array(
             'comment' => $comment,
-            'form'   => $form->createView()
+            'form'   => $form->createView(),
+            'validation' => $validation,
         ));
     }
 

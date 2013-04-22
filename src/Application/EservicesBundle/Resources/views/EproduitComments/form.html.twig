@@ -1,6 +1,6 @@
 {# src/Blogger/BlogBundle/Resources/public/views/Comment/form.html.twig #}
 
-
+{% if validation == 1 %}
 <form action="{{ path('eproduit_comment_create', { 'produit_id' : comment.produit.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
         <table class="table table-bordered">
         <tbody>         <tr><td>
@@ -23,4 +23,7 @@
     </form>          
 </td></tr>
 </tbody>
-</table>
+{% else %}
+<h3>Vous devez etre connecté pour ajouter des messages</h3>
+{% endif %}
+
