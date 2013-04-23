@@ -487,7 +487,7 @@ class CertificatsCenter
     /**
      * Remove idapplis
      *
-     * @param \Application\RelationsBundle\Entity\CertificatsApplis $idapplis
+     * @param \Application\RelationsBundle\Entity\Applis $idapplis
      */
     public function removeIdappli(\Application\RelationsBundle\Entity\Applis $idapplis)
     {

@@ -125,7 +125,7 @@ class ChangementsType extends AbstractType
         ))
                     
         ->add('idapplis', 'entity', array(
-            'class' => 'ApplicationCertificatsBundle:CertificatsApplis',
+            'class' => 'ApplicationRelationsBundle:Applis',
            'query_builder' => function(EntityRepository $em) {
                 return $em->createQueryBuilder('u')
                                 ->orderBy('u.nomapplis', 'ASC');
@@ -160,7 +160,7 @@ class ChangementsType extends AbstractType
            //  ->add('fichier', new DocumentsType())
                    
         ->add('idEnvironnement', 'entity', array(
-            'class' => 'ApplicationCertificatsBundle:Environnements',
+            'class' => 'ApplicationRelationsBundle:Environnements',
             'property' => 'nom',
             'expanded' => 'true',
             'multiple' => true,
@@ -168,7 +168,7 @@ class ChangementsType extends AbstractType
             'label' => 'Environnements'
         ))
        ->add('demandeur', 'entity', array(
-             'class' => 'ApplicationCertificatsBundle:ChronoUser',
+             'class' => 'ApplicationRelationsBundle:ChronoUser',
              'query_builder' => function(EntityRepository $em) {
                 return $em->createQueryBuilder('u')
                                 ->orderBy('u.nomUser', 'ASC');
@@ -180,7 +180,7 @@ class ChangementsType extends AbstractType
            'empty_value' => '--- Choisir une option ---'
         ))           
         ->add('idusers', 'entity', array(
-            'class' => 'ApplicationCertificatsBundle:ChronoUser',
+            'class' => 'ApplicationRelationsBundle:ChronoUser',
            'query_builder' => function(EntityRepository $em) {
                 return $em->createQueryBuilder('u')
                                 ->orderBy('u.nomUser', 'ASC');

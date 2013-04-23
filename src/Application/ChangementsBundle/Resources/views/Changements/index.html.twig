@@ -61,6 +61,7 @@ Changements
                             <th{% if pagination.isSorted('c.nomUser') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'D', 'c.nomUser') }}
                              <i class="icon-user"></i></th>
                             <th><i class="icon-book"></i></th>
+                             <th><i class="icon-pencil"></i></th>
                             <th{% if pagination.isSorted('e.nomUser') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Users', 'e.nomUser') }}
                              <i class="icon-user"></i><i class="icon-user"></i></th>
                             <th{% if pagination.isSorted('d.idStatus.nom') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'F', 'd.idStatus.nom') }}
@@ -71,7 +72,7 @@ Changements
 <th class="{{ bootstrap.icon_class(heading) }}">{{ heading }}</th>#}
                             <th> Env <i class="icon-wrench"></i></th>
                             <!--<th>Avatar</th>-->
-                            <th colspan="2">Actions</th>
+                            <th colspan="3">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,6 +103,7 @@ Changements
                                 <td>{{ entity.idProjet.nomprojet }}</td>
                                 <td>{{ entity.demandeur.nomUser }}</td>
                                 <td>{{ entity.picture|length }}</td>
+                                <td>{{ entity.comments|length }}</td>
                                 <td>
                  {{ entity.idusers|join(', ') }}   
                {#% for user in entity.idusers %} {{ user.nomUser }}
@@ -141,6 +143,15 @@ Changements
                                                     <img src="{{ asset('bundles/applicationcertificats/images/edit.png') }}" alt="edit" width="15" height="15" />
                                                 </a>
                                             </td>
+                                            
+                                            <td>
+
+
+                                                <a href="{{ path('changements_comment_show', { 'id': entity.id }) }}">
+                                                  <i class="icon-pencil"></i>
+                                                </a>
+                                            </td>
+                                             
 
                                         </tr>
     {% endfor %}

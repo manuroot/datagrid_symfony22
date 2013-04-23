@@ -79,7 +79,7 @@ class ChangementStatus
      * Set description
      *
      * @param string $description
-     * @return CertificatsApplis
+     * @return Applis
      */
     public function setDescription($description)
     {

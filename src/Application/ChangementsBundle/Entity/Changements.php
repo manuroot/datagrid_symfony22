@@ -488,10 +488,10 @@ private $comments;
     /**
      * Add idapplis
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsApplis $idapplis
+     * @param \Application\RelationsBundle\Entity\Applis $idapplis
      * @return Changements
      */
-    public function addIdappli(\Application\CertificatsBundle\Entity\CertificatsApplis $idapplis)
+    public function addIdappli(\Application\RelationsBundle\Entity\Applis $idapplis)
     {
         $this->idapplis[] = $idapplis;
     
@@ -501,7 +501,7 @@ private $comments;
     /**
      * Remove idapplis
      *
-     * @param \Application\ChangementsBundle\Entity\CertificatsApplis $idapplis
+     * @param \Application\RelationsBundle\Entity\Applis $idapplis
      */
     public function removeIdappli(\Application\RelationsBundle\Entity\Applis $idapplis)
     {
@@ -533,10 +533,10 @@ private $comments;
     /**
      * Add idEnvironnement
      *
-     * @param \Application\ChangementsBundle\Entity\Environnements $idEnvironnement
+     * @param \Application\RelationsBundle\Entity\Environnements $idEnvironnement
      * @return Changements
      */
-    public function addIdEnvironnement(\Application\CertificatsBundle\Entity\Environnements $idEnvironnement)
+    public function addIdEnvironnement(\Application\RelationsBundle\Entity\Environnements $idEnvironnement)
     {
         $this->idEnvironnement[] = $idEnvironnement;
     

@@ -73,7 +73,7 @@ class ChangementsStepsType extends AbstractType {
 
                 
                         ->add('demandeur', 'entity', array(
-                            'class' => 'ApplicationCertificatsBundle:ChronoUser',
+                            'class' => 'ApplicationRelationsBundle:ChronoUser',
                             'query_builder' => function(EntityRepository $em) {
                                 return $em->createQueryBuilder('u')
                                         ->orderBy('u.nomUser', 'ASC');
@@ -87,7 +87,7 @@ class ChangementsStepsType extends AbstractType {
                          
                                
                         ->add('idusers', 'entity', array(
-                            'class' => 'ApplicationCertificatsBundle:ChronoUser',
+                            'class' => 'ApplicationRelationsBundle:ChronoUser',
                             'query_builder' => function(EntityRepository $em) {
                                 return $em->createQueryBuilder('u')
                                         ->orderBy('u.nomUser', 'ASC');
@@ -120,7 +120,7 @@ class ChangementsStepsType extends AbstractType {
                             'empty_value' => '--- Choisir une option ---'
                         ))
                         ->add('idapplis', 'entity', array(
-                            'class' => 'ApplicationCertificatsBundle:CertificatsApplis',
+                            'class' => 'ApplicationRelationsBundle:Applis',
                             'query_builder' => function(EntityRepository $em) {
                                 return $em->createQueryBuilder('u')
                                         ->orderBy('u.nomapplis', 'ASC');
@@ -159,7 +159,7 @@ class ChangementsStepsType extends AbstractType {
                         //  ->add('fichier', new DocumentsType())
                 
                 ->add('idEnvironnement', 'entity', array(
-                            'class' => 'ApplicationCertificatsBundle:Environnements',
+                            'class' => 'ApplicationRelationsBundle:Environnements',
                             
                             'property' => 'nom',
                       'expanded' => 'true',

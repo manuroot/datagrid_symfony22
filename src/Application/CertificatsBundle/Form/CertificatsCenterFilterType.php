@@ -74,7 +74,7 @@ class CertificatsCenterType extends AbstractType {
             
             
         $builder->add('idapplis', 'entity', array(
-            'class' => 'ApplicationCertificatsBundle:CertificatsApplis',
+            'class' => 'ApplicationRelationsBundle:Applis',
            'query_builder' => function(EntityRepository $em) {
                 return $em->createQueryBuilder('u')
                                 ->orderBy('u.nomapplis', 'ASC');

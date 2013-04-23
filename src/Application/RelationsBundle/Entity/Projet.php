@@ -157,7 +157,7 @@ class Projet {
     /**
      * Add idapplis
      *
-     * @param \Application\RelationsBundle\Entity\CertificatsApplis $idapplis
+     * @param \Application\RelationsBundle\Entity\Applis $idapplis
      * @return CertificatsProjet
      */
     public function xaddIdappli(\Application\RelationsBundle\Entity\Applis $applis) {
@@ -167,7 +167,7 @@ class Projet {
                 $this->idapplis->add($applis);
               //  $this->addIdappli($appli);
             }
-        } elseif ($applis instanceof CertificatsApplis) {
+        } elseif ($applis instanceof Applis) {
          /*   $this->addIdappli($applis);*/
               $this->idapplis->add($applis);
             
@@ -216,7 +216,7 @@ public function setIdapplis($applis)
     /**
      * Remove idapplis
      *
-     * @param \Application\RelationsBundle\Entity\CertificatsApplis $idapplis
+     * @param \Application\RelationsBundle\Entity\Applis $idapplis
      */
     public function removeIdappli(\Application\RelationsBundle\Entity\Applis $idapplis) {
         if (!$this->idapplis->contains($idapplis)) {
