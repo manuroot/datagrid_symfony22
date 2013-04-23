@@ -661,7 +661,7 @@ private $comments;
     /**
      * Remove comments
      *
-     * @param \Application\EservicesBundle\Entity\ChangementsComments $comments
+     * @param \Application\ChangementsBundle\Entity\ChangementsComments $comments
      */
     public function removeComment(\Application\ChangementsBundle\Entity\ChangementsComments $comments)
     {
@@ -671,10 +671,10 @@ private $comments;
     /**
      * Add comments
      *
-     * @param \Application\EservicesBundle\Entity\ChangementsComments $comments
+     * @param \Application\ChangementsBundle\Entity\ChangementsComments $comments
      * @return Eproduit
      */
-    public function addComment(\Application\EservicesBundle\Entity\ChangementsComments $comments)
+    public function addComment(\Application\ChangementsBundle\Entity\ChangementsComments $comments)
     {
         $this->comments[] = $comments;
     
