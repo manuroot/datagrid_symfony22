@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\CertificatsBundle\Form;
+namespace Application\RelationsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,7 +21,7 @@ class DocumentsbbType extends AbstractType
         {
             $resolver->setDefaults(array(
             //    'data_class' => 'Symfony\Component\HttpFoundation\File\File',
-                   'data_class' => 'Application\CertificatsBundle\Entity\Documentbb',
+                   'data_class' => 'Application\RelationsBundle\Entity\Documentbb',
                  'cascade_validation' => true,
             ));
         }

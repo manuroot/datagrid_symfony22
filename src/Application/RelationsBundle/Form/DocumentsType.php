@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\CertificatsBundle\Form;
+namespace Application\RelationsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ class DocumentsType extends AbstractType
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
-                    'data_class' => 'Application\CertificatsBundle\Entity\Document',
+                    'data_class' => 'Application\RelationsBundle\Entity\Document',
             ));
         }
 
