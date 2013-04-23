@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * CertificatsProjet
+ * Projet
  *
  * @ORM\Table(name="changements_fichiers")
  * @ORM\Entity(repositoryClass="Application\ChangementsBundle\Entity\DocchangementsRepository")

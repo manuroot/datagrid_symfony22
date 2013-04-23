@@ -1,11 +1,37 @@
 {% extends "ApplicationEservicesBundle::layout.html.twig" %}
 
-          
-{% block javascripts %}
+     
+  {% block javascripts %}
 {{ parent() }}
-{{ tinymce_init() }}
+   <!--<script type="text/javascript" src="{{ asset('bundles/applicationeservices/js/selectapplis.js') }}"></script>
+    -->
+<script type="text/javascript">
+$(document).ready(function() {
+//$(function() {
+  $( "#eproduit_history_type_dateIn" ).datepicker({
+maxDate: "+3M +10D",
+changeMonth: true,
+changeYeat: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd 12:00",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+   $( "#eproduit_history_type_dateOut" ).datepicker({
+maxDate: "+3M +10D",
+changeMonth: true,
+changeYeat: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd 12:00",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+});
+</script>
+ {{ tinymce_init() }}
 {% endblock %}
-
 
 {% block content_header '' %}
 {% block title %}
@@ -13,11 +39,10 @@ PRET-PRODUIT
   {% if entity.produit.proprietaire %} ({{ entity.produit.proprietaire }}){% endif %}
               
 {% endblock %}
+
+
+
 {% block content %}
-
-
-
-
     <form action="{{ path('ep_history_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         

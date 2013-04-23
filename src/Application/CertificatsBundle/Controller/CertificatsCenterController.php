@@ -504,7 +504,7 @@ class CertificatsCenterController extends Controller {
             $cert_app = array();
 
             $id = $request->request->get('id_projet');
-            $projet = $em->getRepository('ApplicationCertificatsBundle:CertificatsProjet')->find($id);
+            $projet = $em->getRepository('ApplicationCertificatsBundle:Projet')->find($id);
 
             $id_cert = $request->request->get('id_cert');
             if (isset($id_cert) && $id_cert != "create") {

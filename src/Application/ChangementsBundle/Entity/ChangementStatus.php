@@ -5,7 +5,7 @@ namespace Application\ChangementsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CertificatsProjet
+ * Projet
  *
  * @ORM\Table(name="changement_status")
  * @ORM\Entity

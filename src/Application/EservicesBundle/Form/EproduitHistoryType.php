@@ -45,6 +45,6 @@ class EproduitHistoryType extends AbstractType
 
     public function getName()
     {
-        return 'application_eservicesbundle_eproduithistorytype';
+        return 'eproduit_history_type';
     }
 }

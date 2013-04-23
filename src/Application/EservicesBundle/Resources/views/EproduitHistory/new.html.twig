@@ -2,19 +2,29 @@
 
   {% block stylesheets %}
 {{ parent() }}
-      <link rel="stylesheet" href="{{ asset('bundles/applicationeservices/css/sliding.css') }}" type="text/css" media="all"/>
-     
+<link rel="stylesheet" href="{{ asset('bundles/applicationeservices/css/sliding.css') }}" type="text/css" media="all"/>
+
  {% endblock %}
 
-    
+
 {% block javascripts %}
 {{ parent() }}
-   <!--<script type="text/javascript" src="{{ asset('bundles/applicationeservices/js/selectapplis.js') }}"></script>
-    -->
+<!--<script type="text/javascript" src="{{ asset('bundles/applicationeservices/js/selectapplis.js') }}"></script>
+-->
 <script type="text/javascript">
 $(document).ready(function() {
 //$(function() {
-  $( "#eservice_form_dateIn" ).datepicker({
+   $( "#eproduit_history_type_dateIn" ).datepicker({
+maxDate: "+3M +10D",
+changeMonth: true,
+changeYeat: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd 12:00",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+   $( "#eproduit_history_type_dateOut" ).datepicker({
 maxDate: "+3M +10D",
 changeMonth: true,
 changeYeat: true,
@@ -26,37 +36,38 @@ $( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
 });
   
 });
-</script>
+    </script>
  {{ tinymce_init() }}
 {% endblock %}
 
-
-
- 
 {% block content_header '' %}
-
       {% block title %}
-Ajouter Un Prêt de Produit
-  
+    Ajouter Un Prêt de Produit
 {% endblock %}
 
-
-
 {% block content %}
-  
-
     <form action="{{ path('ep_history_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
+        <table class="table table-bordered">
+            <tbody>         <tr>
+                    <td>
+                        <div>
+    {{ form_row(form.emprunteur) }}
+            {{ form_row(form.produit) }}
+                {#     {{ form_row(form.services) }}#}
+                        </div>
+                    </td>
+                    <td>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('ep_history') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{{ form_rest(form) }} </td>
+                </tr>
+
+                <tr><td colspan="3">
+                        <button type="submit" class="btn btn-small btn-warning">Ajouter</button>
+                        <a href="{{ path('ep_history')  }}" class="btn btn-small btn-success">Retour</a>
+                    </td></tr>
+            </tbody>
+        </table>
+    </form>       
+
+
 {% endblock %}

@@ -59,6 +59,7 @@ class AppKernel extends Kernel {
             new Application\MyNotesBundle\ApplicationMyNotesBundle(),
             new Application\EservicesBundle\ApplicationEservicesBundle(),
             new Application\ChangementsBundle\ApplicationChangementsBundle(),
+            new Application\RelationsBundle\ApplicationRelationsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

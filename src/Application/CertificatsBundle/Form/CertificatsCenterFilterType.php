@@ -60,7 +60,7 @@ class CertificatsCenterType extends AbstractType {
 
         $builder->add('project', 'entity', array(
             //'class' => 'Application\CertificatsBundle\Entity\CertificatsProjet',
-            'class' => 'ApplicationCertificatsBundle:CertificatsProjet',
+            'class' => 'ApplicationRelationsBundle:Projet',
              'query_builder' => function(EntityRepository $em) {
                 return $em->createQueryBuilder('u')
                                 ->orderBy('u.nomprojet', 'ASC');

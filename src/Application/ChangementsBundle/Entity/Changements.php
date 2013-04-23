@@ -108,9 +108,9 @@ class Changements extends AbstractEvent
 
      
     /**
-     * @var \CertificatsProjet
+     * @var \Projet
      *
-     * @ORM\ManyToOne(targetEntity="Application\CertificatsBundle\Entity\CertificatsProjet")
+     * @ORM\ManyToOne(targetEntity="Application\RelationsBundle\Entity\Projet")
      * @ORM\OrderBy({"nomprojet" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_projet", referencedColumnName="id",nullable=false)
@@ -130,7 +130,7 @@ class Changements extends AbstractEvent
     
     
      /**
-     * @ORM\ManyToMany(targetEntity="Application\CertificatsBundle\Entity\Environnements", inversedBy="idchangements",cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Application\RelationsBundle\Entity\Environnements", inversedBy="idchangements",cascade={"persist"})
      * @ORM\OrderBy({"nom" = "ASC"})
      * @ORM\JoinTable(name="changements_environnements")
      * @GRID\Column(title="Env", field="idEnvironnement.nom:GroupConcat", size="30", visible=true, sortable=true, filtrable="true")
@@ -141,14 +141,14 @@ class Changements extends AbstractEvent
    // GRID\Column(title="Environnements", field="idEnvironnement.nom:GroupConcat",  visible=true, sortable=true, filter="select",selectFrom="query")
      
      /**
-     *  @ORM\ManyToMany(targetEntity="Application\CertificatsBundle\Entity\CertificatsApplis", inversedBy="idprojets",cascade={"persist"})
+     *  @ORM\ManyToMany(targetEntity="Application\RelationsBundle\Entity\Applis", inversedBy="idprojets",cascade={"persist"})
      * @ORM\OrderBy({"nomapplis" = "ASC"})
      * @ORM\JoinTable(name="changements_applis")
      */
     private $idapplis;
  
     /**
-     * @ORM\ManyToMany(targetEntity="Application\CertificatsBundle\Entity\ChronoUser", inversedBy="idchangement",cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Application\RelationsBundle\Entity\ChronoUser", inversedBy="idchangement",cascade={"persist"})
      * @ORM\OrderBy({"nomUser" = "ASC"})
      * @ORM\JoinTable(name="changements_users")
       */
@@ -158,7 +158,7 @@ class Changements extends AbstractEvent
      /**
      * @var \ChronoUser
      *
-     * @ORM\ManyToOne(targetEntity="Application\CertificatsBundle\Entity\ChronoUser")
+     * @ORM\ManyToOne(targetEntity="Application\RelationsBundle\Entity\ChronoUser")
      * @ORM\OrderBy({"nomUser" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="demandeur", referencedColumnName="id")
@@ -370,7 +370,7 @@ private $comments;
      * @param \Application\ChangementsBundle\Entity\ChronoUser $demandeur
      * @return Changements
      */
-    public function setDemandeur(\Application\CertificatsBundle\Entity\ChronoUser $demandeur = null)
+    public function setDemandeur(\Application\RelationsBundle\Entity\ChronoUser $demandeur = null)
     {
         $this->demandeur = $demandeur;
     
@@ -380,7 +380,7 @@ private $comments;
     /**
      * Get idProject
      *
-     * @return \Application\CertificatsBundle\Entity\ChronoUser 
+     * @return \Application\RelationsBundle\Entity\ChronoUser 
      */
     public function getDemandeur()
     {
@@ -390,10 +390,10 @@ private $comments;
     /**
      * Set idProject
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsProjet $idProjet
+     * @param \Application\RelationsBundle\Entity\Projet $idProjet
      * @return Changements
      */
-    public function setIdProjet(\Application\CertificatsBundle\Entity\CertificatsProjet $idProjet = null)
+    public function setIdProjet(\Application\RelationsBundle\Entity\Projet $idProjet = null)
     {
         $this->idProjet = $idProjet;
     
@@ -403,7 +403,7 @@ private $comments;
     /**
      * Get idProject
      *
-     * @return \Application\CertificatsBundle\Entity\CertificatsProjet 
+     * @return \Application\RelationsBundle\Entity\Projet 
      */
     public function getIdProjet()
     {
@@ -452,10 +452,10 @@ private $comments;
     /**
      * Add idusers
      *
-     * @param \Application\CertificatsBundle\Entity\ChronoUser $idusers
+     * @param \Application\RelationsBundle\Entity\ChronoUser $idusers
      * @return Changements
      */
-    public function addIduser(\Application\CertificatsBundle\Entity\ChronoUser $idusers)
+    public function addIduser(\Application\RelationsBundle\Entity\ChronoUser $idusers)
     {
         $this->idusers[] = $idusers;
     
@@ -465,9 +465,9 @@ private $comments;
     /**
      * Remove idusers
      *
-     * @param \Application\CertificatsBundle\Entity\ChronoUser $idusers
+     * @param \Application\RelationsBundle\Entity\ChronoUser $idusers
      */
-    public function removeIduser(\Application\CertificatsBundle\Entity\ChronoUser $idusers)
+    public function removeIduser(\Application\RelationsBundle\Entity\ChronoUser $idusers)
     {
         $this->idusers->removeElement($idusers);
     }
@@ -503,7 +503,7 @@ private $comments;
      *
      * @param \Application\ChangementsBundle\Entity\CertificatsApplis $idapplis
      */
-    public function removeIdappli(\Application\CertificatsBundle\Entity\CertificatsApplis $idapplis)
+    public function removeIdappli(\Application\RelationsBundle\Entity\Applis $idapplis)
     {
         $this->idapplis->removeElement($idapplis);
     }
@@ -546,9 +546,9 @@ private $comments;
     /**
      * Remove idEnvironnement
      *
-     * @param \Application\ChangementsBundle\Entity\Environnements $idEnvironnement
+     * @param \Application\RelationsBundle\Entity\Environnements $idEnvironnement
      */
-    public function removeIdEnvironnement(\Application\CertificatsBundle\Entity\Environnements $idEnvironnement)
+    public function removeIdEnvironnement(\Application\RelationsBundle\Entity\Environnements $idEnvironnement)
     {
         $this->idEnvironnement->removeElement($idEnvironnement);
     }

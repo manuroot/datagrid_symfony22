@@ -107,7 +107,7 @@ class CertificatsCenterType extends AbstractType {
             'widget' => 'single_text'
         ));*/
         $builder->add('typeCert', 'entity', array(
-            'class' => 'Application\CertificatsBundle\Entity\CertificatsFiletype',
+            'class' => 'Application\RelationsBundle\Entity\Filetype',
             'query_builder' => function(EntityRepository $em) {
                 return $em->createQueryBuilder('u')
                                 ->orderBy('u.fileType', 'ASC');
@@ -121,7 +121,7 @@ class CertificatsCenterType extends AbstractType {
 
         $builder->add('project', 'entity', array(
             //'class' => 'Application\CertificatsBundle\Entity\CertificatsProjet',
-            'class' => 'ApplicationCertificatsBundle:CertificatsProjet',
+            'class' => 'ApplicationRelationsBundle:Projet',
              'query_builder' => function(EntityRepository $em) {
                 return $em->createQueryBuilder('u')
                                 ->orderBy('u.nomprojet', 'ASC');
@@ -135,7 +135,7 @@ class CertificatsCenterType extends AbstractType {
             
             
         $builder->add('idapplis', 'entity', array(
-            'class' => 'ApplicationCertificatsBundle:CertificatsApplis',
+            'class' => 'ApplicationRelationsBundle:Applis',
            'query_builder' => function(EntityRepository $em) {
                 return $em->createQueryBuilder('u')
                                 ->orderBy('u.nomapplis', 'ASC');

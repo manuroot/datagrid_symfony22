@@ -317,11 +317,7 @@ class EproduitController extends Controller {
         }
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
-    
-        
-            
-            
-            
+             
         $user_id = $this->getuserid();
         $proprietaire = $entity->getProprietaire()->getId();
         if ($user_id != $proprietaire) {

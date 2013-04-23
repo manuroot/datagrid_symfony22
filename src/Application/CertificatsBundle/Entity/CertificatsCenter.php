@@ -10,6 +10,9 @@ use Symfony\Component\Validator\Constraints\MinLength;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Application\RelationsBundle\Entity\Projet;
+use Application\RelationsBundle\Entity\Applis;
+use Application\RelationsBundle\Entity\FileType;
 
 /**
  * CertificatsCenter
@@ -111,9 +114,9 @@ class CertificatsCenter
     private $statusFile;
 
   /**
-     * @var \CertificatsProjet
+     * @var \Projet
      *
-     * @ORM\ManyToOne(targetEntity="CertificatsProjet")
+     * @ORM\ManyToOne(targetEntity="\Application\RelationsBundle\Entity\Projet")
      * @ORM\OrderBy({"nomprojet" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="project", referencedColumnName="id")
@@ -130,9 +133,9 @@ class CertificatsCenter
     
     //* @OrderBy({"name" = "ASC"})
     /**
-     * @var \CertificatsFiletype
+     * @var \Filetype
      *
-     * @ORM\ManyToOne(targetEntity="CertificatsFiletype")
+     * @ORM\ManyToOne(targetEntity="\Application\RelationsBundle\Entity\Filetype")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="type_cert", referencedColumnName="id")
      * })
@@ -142,7 +145,7 @@ class CertificatsCenter
     private $typeCert;
 
      /**
-     * @ORM\ManyToMany(targetEntity="CertificatsApplis", inversedBy="idprojets",cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="\Application\RelationsBundle\Entity\Applis", inversedBy="idprojets",cascade={"persist"})
      * @ORM\OrderBy({"nomapplis" = "ASC"})
      * @ORM\JoinTable(name="certificats_xapplis")
      */
@@ -402,10 +405,10 @@ class CertificatsCenter
     /**
      * Set typeCert
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsFiletype $typeCert
+     * @param \Application\RelationsBundle\Entity\Filetype $typeCert
      * @return CertificatsCenter
      */
-    public function setTypeCert(\Application\CertificatsBundle\Entity\CertificatsFiletype $typeCert = null)
+    public function setTypeCert(\Application\RelationsBundle\Entity\Filetype $typeCert = null)
     {
         $this->typeCert = $typeCert;
     
@@ -415,7 +418,7 @@ class CertificatsCenter
     /**
      * Get typeCert
      *
-     * @return \Application\CertificatsBundle\Entity\CertificatsFiletype 
+     * @return \Application\RelationsBundle\Entity\Filetype 
      */
     public function getTypeCert()
     {
@@ -425,10 +428,10 @@ class CertificatsCenter
     /**
      * Set project
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsProjet $project
+     * @param \Application\RelationsBundle\Entity\Projet $project
      * @return CertificatsCenter
      */
-    public function setProject(\Application\CertificatsBundle\Entity\CertificatsProjet $project = null)
+    public function setProject(\Application\RelationsBundle\Entity\Projet $project = null)
     {
         $this->project = $project;
     
@@ -438,7 +441,7 @@ class CertificatsCenter
     /**
      * Get project
      *
-     * @return \Application\CertificatsBundle\Entity\CertificatsProjet 
+     * @return \Application\RelationsBundle\Entity\Projet 
      */
     public function getProject()
     {
@@ -471,10 +474,10 @@ class CertificatsCenter
     /**
      * Add idapplis
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsApplis $idapplis
+     * @param \Application\RelationsBundle\Entity\Applis $idapplis
      * @return CertificatsCenter
      */
-    public function addIdappli(\Application\CertificatsBundle\Entity\CertificatsApplis $idapplis)
+    public function addIdappli(\Application\RelationsBundle\Entity\Applis $idapplis)
     {
         $this->idapplis[] = $idapplis;
     
@@ -484,9 +487,9 @@ class CertificatsCenter
     /**
      * Remove idapplis
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsApplis $idapplis
+     * @param \Application\RelationsBundle\Entity\CertificatsApplis $idapplis
      */
-    public function removeIdappli(\Application\CertificatsBundle\Entity\CertificatsApplis $idapplis)
+    public function removeIdappli(\Application\RelationsBundle\Entity\Applis $idapplis)
     {
         $this->idapplis->removeElement($idapplis);
     }

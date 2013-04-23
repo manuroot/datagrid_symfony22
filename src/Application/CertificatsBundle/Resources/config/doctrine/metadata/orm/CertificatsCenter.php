@@ -92,9 +92,9 @@ class CertificatsCenter
     private $statusFile;
 
     /**
-     * @var \CertificatsProjet
+     * @var \Projet
      *
-     * @ORM\ManyToOne(targetEntity="CertificatsProjet")
+     * @ORM\ManyToOne(targetEntity="Projet")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="project", referencedColumnName="id")
      * })
@@ -102,9 +102,9 @@ class CertificatsCenter
     private $project;
 
     /**
-     * @var \CertificatsFiletype
+     * @var \Filetype
      *
-     * @ORM\ManyToOne(targetEntity="CertificatsFiletype")
+     * @ORM\ManyToOne(targetEntity="Filetype")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="type_cert", referencedColumnName="id")
      * })

@@ -1,31 +1,7 @@
 services:
-   application.certificats.admin.certificatsprojet:
-      class: Application\CertificatsBundle\Admin\CertificatsProjetAdmin
-      tags:
-        - { name: sonata.admin, manager_type: orm, group: Projets, label: Liste des Projets }
-      arguments: [null, Application\CertificatsBundle\Entity\CertificatsProjet, ApplicationCertificatsBundle:CertificatsProjetAdmin]   
-
-   application.certificats.admin.certificatsfiletype:
-      class: Application\CertificatsBundle\Admin\CertificatsFiletypeAdmin
-      tags:
-        - { name: sonata.admin, manager_type: orm, group: Projets, label: Liste des Types }
-      arguments: [null, Application\CertificatsBundle\Entity\CertificatsFiletype, ApplicationCertificatsBundle:CertificatsFiletypeAdmin]   
- 
    application.twig.certificats_extension:
         class: Application\CertificatsBundle\Twig\CertificatsExtension
         tags:
             - { name: twig.extension }  
             
-   application.form.new.eservice:
-        class: Application\CertificatsBundle\Form\EserviceContratStepsType
-        tags:
-            - { name: form.type, alias: eservice }
-
-   application.form.flow.new.eservice:
-      class: Application\CertificatsBundle\Form\EserviceFlow
-      parent: craue.form.flow
-      scope: request 
-      calls:
-            - [ setFormType, [ @application.form.new.eservice ] ]
-        
    

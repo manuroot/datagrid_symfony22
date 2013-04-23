@@ -6,13 +6,57 @@
      
  {% endblock %}
 
+      
+{% block javascripts %}
+{{ parent() }}
+   <!--<script type="text/javascript" src="{{ asset('bundles/applicationeservices/js/selectapplis.js') }}"></script>
+    -->
+ <script type="text/javascript" src="{{ asset('js/jquery.quicksand.js') }}"></script>
+    
+     <script type="text/javascript">
+     $(function() {
+    $('#load-webbies a.button').click(function(e) {
+      $.get( $(this).attr('href'), function(data) {
+          $('.webbies').quicksand( $(data).find('li'), 
+            {
+              adjustHeight: 'dynamic',
+              attribute: function(v) {
+                return $(v).find('img').attr('src');
+              }
+            } );
+      });  
+      e.preventDefault();  
+    });
+  });
+  </script>
+{% endblock %}
+
+
 {% block content_header '' %}
 {% block title %}
 MES PRODUITS 
 {% endblock %}
 {% block content %}
 
-
+  <p id="load-webbies">
+            <a href="#">Webbies</a>: 
+            <a href="ajax/ajax-brits.html" class="button">Brits</a>
+            <a href="ajax/ajax-developers.html" class="button">Developers</a>
+            <a href="ajax/ajax-westerners.html" class="button">Westerners</a>
+            <a href="ajax/ajax-designers.html" class="button">Designers</a>
+            <a href="ajax/ajax-legends.html" class="button">Legends</a>
+          </p>
+          
+             <ul class="webbies">
+           
+            <li data-id="ac">
+                 <img src="{{ asset('bundles/applicationeservices/images/cadenas-souvert.png') }}" alt="show" width="15" height="15" />
+                 </li>
+            <li data-id="db">
+                 <img src="{{ asset('bundles/applicationeservices/images/cadenas-sferme.png') }}" alt="show" width="15" height="15" />
+               </li>
+             </ul>
+          
 {% for type, flashMessages in app.session.flashbag.all() %}
     {% for flashMessage in flashMessages %}
         <div class="alert alert-{{ type }}">

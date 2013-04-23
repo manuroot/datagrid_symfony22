@@ -108,7 +108,7 @@ class ChangementsStepsType extends AbstractType {
             case 3:
                 $builder
                         ->add('idProjet', 'entity', array(
-                            'class' => 'ApplicationCertificatsBundle:CertificatsProjet',
+                            'class' => 'ApplicationRelationsBundle:Projet',
                             'query_builder' => function(EntityRepository $em) {
                                 return $em->createQueryBuilder('u')
                                         ->orderBy('u.nomprojet', 'ASC');
