@@ -22,6 +22,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class EproduitCommentsController extends Controller {
 
+     private function getuserid() {
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $user_security = $this->container->get('security.context');
+        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user_id = $user->getuserid();
+        } else {
+            $user_id = 0;
+        }
+        return ($user_id);
+    }
   public function newAction($produit_id)
     {
       
