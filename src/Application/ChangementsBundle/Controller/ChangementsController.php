@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Application\ChangementsBundle\Entity\Changements;
-use Application\ChangementsBundle\Entity\Document;
+use Application\RelationsBundle\Entity\Document;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\ChangementsBundle\Form\ChangementsType;
 use Application\ChangementsBundle\Entity\GridExport;

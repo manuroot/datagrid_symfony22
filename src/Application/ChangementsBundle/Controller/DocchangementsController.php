@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Application\ChangementsBundle\Entity\Changements;
-use Application\ChangementsBundle\Entity\Document;
+use Application\RelationsBundle\Entity\Document;
 use Application\ChangementsBundle\Entity\Docchangements;
 use Application\ChangementsBundle\Form\DocchangementsType;
 use Pagerfanta\Pagerfanta;

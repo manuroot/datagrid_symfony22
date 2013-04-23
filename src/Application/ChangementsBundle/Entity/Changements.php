@@ -571,10 +571,10 @@ private $comments;
     /**
      * Set picture
      *
-     * @param \Application\ChangementsBundle\Entity\Document $picture
+     * @param \Application\RelationsBundle\Entity\Document $picture
      * @return Changements
      */
-    public function setPicture(\Application\ChangementsBundle\Entity\Document $picture = null)
+    public function setPicture(\Application\RelationsBundle\Entity\Document $picture = null)
     {
         $this->picture = $picture;
     
@@ -584,7 +584,7 @@ private $comments;
     /**
      * Get picture
      *
-     * @return \Application\ChangementsBundle\Entity\Document 
+     * @return \Application\RelationsBundle\Entity\Document 
      */
     public function getPicture()
     {
@@ -618,10 +618,10 @@ private $comments;
     /**
      * Add picture
      *
-     * @param \Application\ChangementsBundle\Entity\Document $picture
+     * @param \Application\RelationsBundle\Entity\Document $picture
      * @return Changements
      */
-    public function addPicture(\Application\ChangementsBundle\Entity\Document $picture)
+    public function addPicture(\Application\RelationsBundle\Entity\Document $picture)
     {
         $this->picture[] = $picture;
     
@@ -631,9 +631,9 @@ private $comments;
     /**
      * Remove picture
      *
-     * @param \Application\ChangementsBundle\Entity\Document $picture
+     * @param \Application\RelationsBundle\Entity\Document $picture
      */
-    public function removePicture(\Application\ChangementsBundle\Entity\Document $picture)
+    public function removePicture(\Application\RelationsBundle\Entity\Document $picture)
     {
         $this->picture->removeElement($picture);
     }
