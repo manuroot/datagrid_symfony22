@@ -80,12 +80,13 @@ class ChangementsCommentsController extends Controller {
         $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
         $validation=1;
+          $changement = $this->getChangement($id);
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
                $user_id = $user->getId();
         
       
         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-        $changement = $this->getChangement($id);
+      
         //Creation entity EproduitComments
         
         $comment = new ChangementsComments();
@@ -104,6 +105,7 @@ class ChangementsCommentsController extends Controller {
           // throw $this->createNotFoundException('User not connected.');
            $validation=0;
            return $this->render('ApplicationChangementsBundle:ChangementsComments:show.html.twig', array(
+               'entity' => $changement,
                 'validation' => $validation,
             
         ));

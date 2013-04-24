@@ -167,11 +167,12 @@ CHANGEMENT: {{ entity.nom }}
    <section class="comments" id="comments">
         {# .. #}
 
-        <h3>Ajouter une activité à ce changement</h3>
+   
+{% if validation == 1 %}
+     <h3>Ajouter une activité à ce changement</h3>
     
 <br><br>
 
-{% if validation == 1 %}
 <form action="{{ path('changements_comment_create', { 'changement_id' : comment.changement.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
         <table class="table table-bordered">
         <tbody>         <tr><td>
@@ -197,6 +198,7 @@ CHANGEMENT: {{ entity.nom }}
 {% else %}
 <h3>Vous devez etre connecté pour ajouter une activité</h3>
 {% endif %}
+<br><br>
    {#
  {% render controller('ApplicationChangementsBundle:ChangementsComments:new', { 'changement_id': entity.id }) %}
 #}
