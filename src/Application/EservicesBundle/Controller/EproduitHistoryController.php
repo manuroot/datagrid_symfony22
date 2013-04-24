@@ -59,8 +59,9 @@ class EproduitHistoryController extends Controller
      */
     public function newAction()
     {
+         $user_id = $this->getuserid();
         $entity = new EproduitHistory();
-        $form   = $this->createForm(new EproduitHistoryType(), $entity);
+        $form   = $this->createForm(new EproduitHistoryType($user_id), $entity);
 
         return $this->render('ApplicationEservicesBundle:EproduitHistory:new.html.twig', array(
             'entity' => $entity,
@@ -182,5 +183,21 @@ class EproduitHistoryController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+     private function getuserid() {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $user_security = $this->container->get('security.context');
+        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user_id = $user->getId();
+        } else {
+            $user_id = 0;
+        }
+        return ($user_id);
     }
 }

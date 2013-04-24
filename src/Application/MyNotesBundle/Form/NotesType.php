@@ -16,15 +16,17 @@ class NotesType extends AbstractType
             ->add('xyz')
             ->add('dt')
             ->add('wh')
-            ->add('proprio')
-               ->add('classement')
-        ;
+            ->add('proprietaire')
+               ->add('classement');
+            //    ->add('color');
+        //,null, array('label'=>'toto'));
+     //   ;
          $builder->add('color','entity', array(
             'class' => 'Application\MyNotesBundle\Entity\NotesColor',
             'property' => 'nom',
-            'multiple' => false,
+            'multiple' => true,
             'required' => true,
-            'label' => 'macolor',
+            'label' => 'Couleur',
              )); 
            $builder->add('categories','entity', array(
             'class' => 'Application\MyNotesBundle\Entity\NotesCategories',

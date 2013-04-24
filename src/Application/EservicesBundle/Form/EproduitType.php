@@ -27,7 +27,18 @@ class EproduitType extends AbstractType {
                     'property_path' => 'image',
                     'required' => false,
                 ));
-                
+                /*
+                 * 
+                 * 
+                 *  ->add('produit', 'entity', array(
+            //'class' => 'Application\EservicesBundle\Entity\CertificatsProjet',
+            'class' => 'ApplicationEservicesBundle:Eproduit',
+             'query_builder' => function(EntityRepository $em) {
+                return $em->createQueryBuilder('u')
+                        ->where
+                                ->orderBy('u.nom', 'ASC');
+            },
+                 */
                  $builder->add('categorie', 'entity', array(
             //'class' => 'Application\EservicesBundle\Entity\CertificatsProjet',
             'class' => 'ApplicationEservicesBundle:EproduitCategories',

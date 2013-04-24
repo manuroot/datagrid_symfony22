@@ -22,7 +22,20 @@ use Doctrine\ORM\EntityRepository;
  * @author <yourname> <youremail>
  */
 class EproduitHistoryRepository extends EntityRepository {
-
+ 
+    
+    /*  * Récupération de tous les partenaires donnés pour un
+         * code postal donné.
+         */
+       /* public function findAllActiveByCp($cp)
+        {
+            return $this->createQueryBuilder('p')
+                ->leftJoin('p.adresses', 'a')
+                ->leftJoin('a.ville', 'v')
+                ->where('v.cp=:cp')
+                ->setParameter('cp', $cp);
+    
+        }*/
     public function myFindAll($user_id,$isDemande=0) {
 
         $query = $this->createQueryBuilder('a')

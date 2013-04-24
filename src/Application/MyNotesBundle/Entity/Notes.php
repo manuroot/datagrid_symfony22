@@ -61,11 +61,16 @@ class Notes
     private $wh;
 
     /**
-     * @var integer
+     * @var \Application\Sonata\UserBundle\Entity\User
      *
-     * @ORM\Column(name="proprio", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\OrderBy({"username" = "ASC"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="proprietaire", referencedColumnName="id")
+     * })
      */
-    private $proprio;
+    private $proprietaire;
+
 
     /**
      * @var string
@@ -224,28 +229,27 @@ class Notes
     {
         return $this->wh;
     }
-
-    /**
-     * Set proprio
-     *
-     * @param integer $proprio
-     * @return Notes
-     */
-    public function setProprio($proprio)
-    {
-        $this->proprio = $proprio;
     
+    
+      /**
+     * Set proprietaire
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $proprietaire
+     * @return Eproduit
+     */
+    public function setProprietaire(\Application\Sonata\UserBundle\Entity\User $proprietaire = null) {
+        $this->proprietaire = $proprietaire;
+
         return $this;
     }
 
     /**
-     * Get proprio
+     * Get proprietaire
      *
-     * @return integer 
+     * @return \Application\Sonata\UserBundle\Entity\User 
      */
-    public function getProprio()
-    {
-        return $this->proprio;
+    public function getProprietaire() {
+        return $this->proprietaire;
     }
 
     /**

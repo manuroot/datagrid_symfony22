@@ -43,27 +43,49 @@ PRET-PRODUIT
 
 
 {% block content %}
-    <form action="{{ path('ep_history_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
+  
+  
+    
+   <form action="{{ path('ep_history_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+     <table class="table table-bordered">
+    <tbody>      
+         
+        <tr><td>
+                 <div>
+                  {{ form_row(edit_form.dateIn) }}
+                           {{ form_row(edit_form.dateOut) }}
         
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-    </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('ep_history') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('ep_history_delete', { 'id': entity.id }) }}" method="post">
+                 {#    {{ form_row(edit_form.services) }}#}
+              </div>
+                     </td>
+ <td>
+ <input type="hidden" name="_method" value="PUT" />
+{{ form_rest(edit_form) }} </td>
+       
+                                 </tr>
+                                     
+<tr><td colspan="2">
+                                   
+  <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+  
+    <a href="{{ path('ep_history')  }}" class="btn btn-small btn-success">Retour</a>
+   </form>       
+                                    
+                                       
+                                </td></tr>
+                        </tbody>
+                    </table>
+                
+ 
+  
+        
+   
+   {#     <form action="{{ path('ep_history_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
     </li>
 </ul>
+#}
 {% endblock %}
