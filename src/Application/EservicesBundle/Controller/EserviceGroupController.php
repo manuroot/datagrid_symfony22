@@ -119,6 +119,9 @@ class EserviceGroupController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+       /* echo "update groupe<br>";
+        exit(1);
+        */
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
@@ -135,7 +138,7 @@ class EserviceGroupController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('egroup_groupes_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('egroup_groupes', array('id' => $id)));
         }
 
         return $this->render('ApplicationEservicesBundle:EserviceGroup:edit.html.twig', array(

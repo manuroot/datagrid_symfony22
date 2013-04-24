@@ -49,15 +49,34 @@ class EproduitController extends Controller {
         //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
+             $user_id = $user->getId();
+            $group_id = $user->getIdgroup()->getId();
         } else {
-            $user_id = 0;
+             $user_id = 0;
+            $group_id=0;
         }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit');
 
+ /*       
+ echo "group=" . $group_id . "<br>";
+ exit(1);*/
      /*      
-        
+          if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user_id = $user->getId();
+            $group_id = $user->getIdgroup();
+        } else {
+            $user_id = 0;
+            $group_id=0;
+            
+        }
+        $session = $this->getRequest()->getSession();
+        $session->set('buttonretour', 'eproduit_indexserch');
+
+        $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
+        $query_other = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id,$group_id);
+
         
          $paginator1 = $this->get('knp_paginator');
         $pagename1 = 'page1'; // Set custom page variable name
@@ -86,7 +105,7 @@ class EproduitController extends Controller {
         
         
         $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
-        $query_other = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id);
+        $query_other = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id,$group_id);
         $paginator = $this->get('knp_paginator');
         //   $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->findAll();
         $pagename1 = 'page1'; // Set custom page variable name
@@ -186,15 +205,17 @@ class EproduitController extends Controller {
         $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
         //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+      if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
+             $user_id = $user->getId();
+            $group_id = $user->getIdgroup()->getId();
         } else {
-            $user_id = 0;
+             $user_id = 0;
+            $group_id=0;
         }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit_propositions');
-        $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id);
+        $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id,$group_id);
 
         $paginator = $this->get('knp_paginator');
         $pagename1 = 'page1'; // Set custom page variable name
@@ -459,14 +480,17 @@ class EproduitController extends Controller {
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
             $user_id = $user->getId();
+            $group_id = $user->getIdgroup();
         } else {
             $user_id = 0;
+            $group_id=0;
+            
         }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit_indexserch');
 
         $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
-        $query_other = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id);
+        $query_other = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id,$group_id);
         $paginator = $this->get('knp_paginator');
         //   $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->findAll();
         $pagename1 = 'page1'; // Set custom page variable name

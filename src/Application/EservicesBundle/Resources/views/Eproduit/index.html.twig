@@ -163,15 +163,23 @@ MES PRODUITS
 
 
 
-
+<br><br>
 
 {#-----------------------------------------------#}
 
- <center><h1>PRODUITS PROPOSES</h1></center>
+ {#<center><h1>PRODUITS DU GROUPE {{ entity.proprietaire.idgroup }}</h1></center>
+{% set user = app.security.getToken().getUser() %}#}
+{#<center><h1>PRODUITS DU GROUPE {{ app.security.getToken().getUser() }}</h1></center>#}
+
+{#
+<center><h1>PRODUITS DISPONIBLES ({{ app.security.getToken().getUser().getIdgroup() }})</h1></center>
+#}
+<center><h1>PRODUITS DISPONIBLES </h1></center>
 <br>
 
-
-
+{#
+{{ app.user.username }}
+#}
 
 
 <table class="table table-striped table-bordered table-hover">

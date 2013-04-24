@@ -104,7 +104,11 @@ class EproduitHistoryController extends Controller
             throw $this->createNotFoundException('Unable to find EproduitHistory entity.');
         }
 
-        $editForm = $this->createForm(new EproduitHistoryType(), $entity);
+        
+          $proprietaire_id = $entity->getProduit()->getProprietaire()->getId();
+//     $user_id = $this->getuserid();
+        $editForm   = $this->createForm(new EproduitHistoryType($proprietaire_id), $entity);
+     //   $editForm = $this->createForm(new EproduitHistoryType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ApplicationEservicesBundle:EproduitHistory:edit.html.twig', array(

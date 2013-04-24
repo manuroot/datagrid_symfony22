@@ -71,16 +71,16 @@ public function __construct($roleFlag=null)
 
         return $query;
                */ 
-                
+                if (isset($user_id)){
             $builder->add('produit', 'entity', array(
             //'class' => 'Application\EservicesBundle\Entity\CertificatsProjet',
             'class' => 'ApplicationEservicesBundle:Eproduit',
             'query_builder' => function(EntityRepository $em) use ($user_id) {
             return $em->createQueryBuilder('u')
-                         ->leftJoin('u.produit', 'a')
+                     //    ->leftJoin('u.produit', 'a')
                        //  ->leftJoin('a.proprietaire', 'v')
-                ->where('a.id=:userid')
-                ->setParameter('cp', $user_id)
+                    ->where('u.proprietaire = :proprietaire')
+                ->setParameter('proprietaire', $user_id)
                 ->orderBy('u.name', 'ASC');
             },
             'property' => 'name',
@@ -88,11 +88,29 @@ public function __construct($roleFlag=null)
             'required' => true,
             'label' => 'Produits',
            'empty_value' => '--- Choisir une option ---'
-        ))
+        ));
+                }
+                else {$builder->add('produit');}
                     
-                    
+       /*->add('emprunteur', 'entity', array(
+            //'class' => 'Application\EservicesBundle\Entity\CertificatsProjet',
+            'class' => 'ApplicationSonataUserBundle:User',
+            'query_builder' => function(EntityRepository $em) use ($user_id) {
+            return $em->createQueryBuilder('u')
+                     //    ->leftJoin('u.produit', 'a')
+                       //  ->leftJoin('a.proprietaire', 'v')
+                    ->where('u.id <> :proprietaire')
+                ->setParameter('proprietaire', $user_id)
+                ->orderBy('u.username', 'ASC');
+            },
+            'property' => 'username',
+            'multiple' => false,
+            'required' => true,
+            'label' => 'Emprunteur',
+           'empty_value' => '--- Choisir une option ---'
+        ))  */      
        
-            ->add('emprunteur')
+            $builder->add('emprunteur');
         ;
     }
 

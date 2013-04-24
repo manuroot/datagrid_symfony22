@@ -60,7 +60,7 @@ class EproduitRepository extends EntityRepository {
         return $query;
     }
 
-    public function myFindOtherAll($user_id) {
+    public function myFindOtherAll($user_id,$group_id) {
 
         $query = $this->createQueryBuilder('a')
                 ->where('a.proprietaire <> :proprietaire')
@@ -68,6 +68,8 @@ class EproduitRepository extends EntityRepository {
                 //  ->where('a.proprietaire.getId = :idproprietaire')
                  //       ->setParameter('idproprietaire', '2')
                    ->leftJoin('a.proprietaire', 'b')
+                 ->andWhere('b.idgroup = :groupid')
+                 ->setParameter('groupid', $group_id)
                 ->leftJoin('a.categorie', 'c')
                 ->leftJoin('a.idStatus', 'd')
              
@@ -75,7 +77,13 @@ class EproduitRepository extends EntityRepository {
                 ->getQuery();
         return $query;
     }
-
+/*
+ * 
+ *        //    ->leftJoin('u.produit', 'a')
+                       //  ->leftJoin('a.proprietaire', 'v')
+                    ->where('u.proprietaire = :proprietaire')
+                ->setParameter('proprietaire', $user_id)
+ */
     /* public function myFindAll($user_id) {
 
       $query = $this->createQueryBuilder('a')

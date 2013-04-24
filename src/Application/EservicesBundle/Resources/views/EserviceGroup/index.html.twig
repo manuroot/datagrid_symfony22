@@ -42,7 +42,11 @@ DASHBOARD - GROUPES
                 <th>Nb Membres</th>
                 <th>Description</th>
                 <th>Email</th>
+                {% if is_granted("ROLE_ADMIN") %} 
+                 <th colspan="2">Actions</th>
+                {% else %}
                 <th>Actions</th>
+                {% endif %}
 
             </tr>
         </thead>
@@ -61,14 +65,14 @@ DASHBOARD - GROUPES
                         <img src="{{ asset('bundles/applicationeservices/images/detail.png') }}" alt="show" width="15" height="15" />
                     </a>
                 </td>
-                <td>
-
-
+               
+{% if is_granted("ROLE_ADMIN") %}   
+                 <td>
                     <a href="{{ path('egroup_groupes_edit', { 'id': entity.id }) }}">
                         <img src="{{ asset('bundles/applicationeservices/images/edit.png') }}" alt="edit" width="15" height="15" />
                     </a>
                 </td>
-    
+    {% endif %}
                  
                 
             </tr>

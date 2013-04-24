@@ -19,9 +19,10 @@ EDITION GROUPE
 
     
 
-    
+                
+                                       
 
-    <form action="{{ path('egroup_groupes_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}></form>
+    <form action="{{ path('egroup_groupes_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
          <input type="hidden" name="_method" value="PUT" />
          <table class="table table-bordered">
     <tbody>         <tr><td>

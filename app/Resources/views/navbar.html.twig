@@ -100,39 +100,60 @@
 
                                                     </ul>
                                                 </li>
+
+
+
+
                                      {% if foo[0] == 'eproduit' %}
+                                                        <li class="dropdown active">
+                                    {% else %}  
+                                                            <li class="dropdown">
+                                    {% endif %}
+
+                                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-shopping-cart"></i>
+                                                                        Produits<b class="caret"></b> </a>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li><a href="{{ path('eproduit') }}"><i class="icon-plus-sign"></i> {{ 'DashBoard Produits'|trans }}</a></li>
+                                                                        <li><a href="{{ path('eproduit_mesproduits') }}"><i class="icon-plus-sign"></i> {{ 'Gérer Mes Produits'|trans }}</a></li>
+                                                                        <li><a href="{{ path('eproduit_propositions') }}"><i class="icon-plus-sign"></i> {{ 'Gérer Les Propositions'|trans }}</a></li>
+                                                                        <li><a href="{{ path('eproduit_indexserch') }}"><i class="icon-camera"></i> {{ 'Recherche Produit'|trans }}</a></li>
+                                                                        <li><a href="{{ path('eproduit_indexadmin') }}"><i class="icon-camera"></i> {{ 'Tous les Produits'|trans }}</a></li>
+
+                                                                    </ul>
+                                                                </li>
+
+                                                                
+                                     
+                                                 {% if foo[0] == 'egroup' %}
                                                 <li class="dropdown active">
                                     {% else %}  
                                                     <li class="dropdown">
                                     {% endif %}
 
-                                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-shopping-cart"></i>
-                                                                Produits<b class="caret"></b> </a>
+                                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white icon-user"></i>
+                                                                Groupes<b class="caret"></b> </a>
                                                             <ul class="dropdown-menu">
-                                                                <li><a href="{{ path('eproduit') }}"><i class="icon-plus-sign"></i> {{ 'DashBoard Produits'|trans }}</a></li>
-                                                                <li><a href="{{ path('eproduit_mesproduits') }}"><i class="icon-plus-sign"></i> {{ 'Gérer Mes Produits'|trans }}</a></li>
-                                                                <li><a href="{{ path('eproduit_propositions') }}"><i class="icon-plus-sign"></i> {{ 'Gérer Les Propositions'|trans }}</a></li>
-                                                                <li><a href="{{ path('eproduit_indexserch') }}"><i class="icon-camera"></i> {{ 'Recherche Produit'|trans }}</a></li>
-                                                                <li><a href="{{ path('eproduit_indexadmin') }}"><i class="icon-camera"></i> {{ 'Tous les Produits'|trans }}</a></li>
+                                                                <li><a href="{{ path('egroup_groupes') }}"><i class="icon-camera"></i> {{ 'Dashboard Groupes'|trans }}</a></li>
+                                                              
 
                                                             </ul>
                                                         </li>
-
+                                                                
                                    {% if foo[0] == 'certificatscenter' %}
-                                                        <li class="dropdown active">
+                                                                <li class="dropdown active">
                                     {% else %}  
-                                                            <li class="dropdown">
+                                                                    <li class="dropdown">
                                     {% endif %}
-                                                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-fire"></i>
-                                                                        Certificats<b class="caret"></b> </a>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li><a href="{{ path('certificatscenter') }}"><i class="icon-fire"></i> {{ 'Certificats'|trans }}</a></li>
-                                                                        <li><a href="{{ path('certificatscenter_viewapy') }}"><i class="icon-plus-sign"></i> {{ 'Certificats-APY'|trans }}</a></li>
-                                                                        <li><a href="{{ path('certificatscenter_new') }}"><i class="icon-camera"></i> {{ 'Nouveau Certificat'|trans }}</a></li>
-                                                                        <li><a href="{{ path('certificatscenter_check') }}"><i class="icon-camera"></i> {{ 'Vérifier Certificat'|trans }}</a></li>
+                                                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-fire"></i>
+                                                                                Certificats<b class="caret"></b> </a>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li><a href="{{ path('certificatscenter') }}"><i class="icon-fire"></i> {{ 'Certificats'|trans }}</a></li>
+                                                                                <li><a href="{{ path('certificatscenter_viewapy') }}"><i class="icon-plus-sign"></i> {{ 'Certificats-APY'|trans }}</a></li>
+                                                                                <li><a href="{{ path('certificatscenter_new') }}"><i class="icon-camera"></i> {{ 'Nouveau Certificat'|trans }}</a></li>
+                                                                                <li><a href="{{ path('certificatscenter_check') }}"><i class="icon-camera"></i> {{ 'Vérifier Certificat'|trans }}</a></li>
 
-                                                                    </ul>
-                                                                </li>
+                                                                            </ul>
+                                                                        </li>
 
 
 
@@ -150,38 +171,38 @@
                                     #}
 
 
-                                                                <li><a href="{{ path('sonata_news_home') }}">{{ 'Blog'|trans }}</a></li>
+                                                                        <li><a href="{{ path('sonata_news_home') }}">{{ 'Blog'|trans }}</a></li>
 
 
 
 
-                                                                <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white icon-wrench"></i>
-                                                                        Administration<b class="caret"></b> </a>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li><a href="{{ path('chronouser') }}"><i class="icon-camera"></i> {{ 'Utilisateurs'|trans }}</a></li>
-                                                                        <li><a href="{{ path('chronogroup') }}"><i class="icon-plus-sign"></i> {{ 'Groupes'|trans }}</a></li>
-                                                                        <li><a href="{{ path('environnement') }}"><i class="icon-camera"></i> {{ 'Environnements'|trans }}</a></li>
-                                                                        <li><a href="{{ path('eproduit_indexadmin') }}"><i class="icon-camera"></i> {{ 'Produits'|trans }}</a></li>
-                                                                        <li><a href="{{ path('egroup_groupes') }}"><i class="icon-camera"></i> {{ 'Eservice-Groupes'|trans }}</a></li>
-                                                                        <li><a href="{{ path('ep_history') }}"><i class="icon-camera"></i> {{ 'Historique-Produits'|trans }}</a></li>
-                                                                        <li><a href="{{ path('users') }}"><i class="icon-camera"></i> {{ 'Eservices-Users(FOSUSER)'|trans }}</a></li>                            
-                                                                        <li><a href="{{ path('applications') }}"><i class="icon-camera"></i> {{ 'Applications'|trans }}</a></li>
-                                                                        <li><a href="{{ path('projets') }}"><i class="icon-camera"></i> {{ 'Projets'|trans }}</a></li>
+                                                                        <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white icon-wrench"></i>
+                                                                                Administration<b class="caret"></b> </a>
+                                                                            <ul class="dropdown-menu">
+                                                                                <li><a href="{{ path('chronouser') }}"><i class="icon-camera"></i> {{ 'Utilisateurs'|trans }}</a></li>
+                                                                                <li><a href="{{ path('chronogroup') }}"><i class="icon-plus-sign"></i> {{ 'Groupes'|trans }}</a></li>
+                                                                                <li><a href="{{ path('environnement') }}"><i class="icon-camera"></i> {{ 'Environnements'|trans }}</a></li>
+                                                                                <li><a href="{{ path('eproduit_indexadmin') }}"><i class="icon-camera"></i> {{ 'Produits'|trans }}</a></li>
+                                                                                <li><a href="{{ path('egroup_groupes') }}"><i class="icon-camera"></i> {{ 'Eservice-Groupes'|trans }}</a></li>
+                                                                                <li><a href="{{ path('ep_history') }}"><i class="icon-camera"></i> {{ 'Historique-Produits'|trans }}</a></li>
+                                                                                <li><a href="{{ path('users') }}"><i class="icon-camera"></i> {{ 'Eservices-Users(FOSUSER)'|trans }}</a></li>                            
+                                                                                <li><a href="{{ path('applications') }}"><i class="icon-camera"></i> {{ 'Applications'|trans }}</a></li>
+                                                                                <li><a href="{{ path('projets') }}"><i class="icon-camera"></i> {{ 'Projets'|trans }}</a></li>
 
 
-                                                                    </ul>
-                                                                </li>
+                                                                            </ul>
+                                                                        </li>
 
 
-                                                            </ul>  
+                                                                    </ul>  
 
-                                                        </div>
-                                                        <!--/.nav-collapse -->
+                                                                </div>
+                                                                <!--/.nav-collapse -->
                             {#  <form class="navbar-search pull-left">
     <input type="text" class="search-query" placeholder="Search">
     </form>#}
-                                                    </div>
-                                                </div> 
+                                                            </div>
+                                                        </div> 
 
-                                            </div>
+                                                    </div>
 {% endblock %}    

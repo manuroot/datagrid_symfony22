@@ -18,7 +18,11 @@ users_create:
 users_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "ApplicationSonataUserBundle:User:edit" }
-
+    
+users_ingroup:
+    pattern:  /{id}/useringroup
+    defaults: { _controller: "ApplicationSonataUserBundle:User:usesringroup" }
+    
 users_update:
     pattern:  /{id}/update
     defaults: { _controller: "ApplicationSonataUserBundle:User:update" }
