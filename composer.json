@@ -61,7 +61,11 @@
         "frequence-web/calendr-bundle": "dev-master",
         "beberlei/DoctrineExtensions": "dev-master",
         "rizza/calendar-bundle": "dev-master",
-        "braincrafted/bootstrap-bundle": "dev-master"
+        "braincrafted/bootstrap-bundle": "dev-master",
+         "egeloen/google-map-bundle": "*",
+           "willdurand/geocoder": "*",
+           "kriswallsmith/buzz": "*"
+         
         
     },
     "scripts": {
