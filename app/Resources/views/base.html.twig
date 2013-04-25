@@ -8,7 +8,19 @@
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/jquery-ui-1.9.2.custom.css') }}" type="text/css" media="all"/>
         <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" media="all" />
-   {% stylesheets 
+   
+
+  <style>
+.container {
+    text-align: center;
+}
+.navbar {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+  </style>
+{% stylesheets 
  '@ApplicationCertificatsBundle/Resources/public/css/certificatscenter.css' 
  output='css/compiled/main.css' filter='yui_css' %}
 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />

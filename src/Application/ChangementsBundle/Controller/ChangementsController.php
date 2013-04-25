@@ -171,6 +171,10 @@ class ChangementsController extends Controller {
 //$factory->getEventManager()->addProvider('myawesomeprovider', 'new MyAwesomeProvider');
         //  $f=$this->get('booking_repository');
         //  $month = $f->getMonth(2012, 6);
+        
+        $form=$this->createCalendarForm();
+        
+        
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'changements');
         $em = $this->getDoctrine()->getManager();
@@ -191,6 +195,7 @@ class ChangementsController extends Controller {
                     // 'myweek' =>  $this->get('calendr')->getWeek(2012, 14),
                     'events' => $query_events,
                     'evenement' => $events,
+             'form' => $form->createView(),
                         // 'current_month' => $month
                 ));
     }
@@ -522,4 +527,14 @@ class ChangementsController extends Controller {
         return $response;
     }
 
+     private function createCalendarForm() {
+       return $this->createFormBuilder()
+        ->add('publishedAt', 'date', array(
+    'input'  => 'timestamp',
+    'widget' => 'choice',
+            'format' => 'yyyy-MM-dd',
+))              
+                        ->getForm()
+        ;
+    }
 }
