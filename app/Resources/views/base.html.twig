@@ -4,21 +4,21 @@
         <title>{% block headtitle %}I-CHANGE MROOT{% endblock %}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" />
+           <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" />
+     
         <link rel="stylesheet" href="{{ asset('css/jquery-ui-1.9.2.custom.css') }}" type="text/css" media="all"/>
         <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" media="all" />
    
 
-  <style>
-.container {
-    text-align: center;
-}
-.navbar {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-}
+  <style type="text/css">
+ 
+  
+  /*@media (max-width: 1024px) {
+    body {
+      padding-top: 0;
+    }
+  }*/
   </style>
 {% stylesheets 
  '@ApplicationCertificatsBundle/Resources/public/css/certificatscenter.css' 
@@ -33,7 +33,7 @@
     <body>
         
         <div class="container">
-            <div class="page-header">
+           <div class="page-header">
                       {{ block('NAVIGATION_BAR') }}
                    
                 </div>
@@ -46,7 +46,7 @@
                
                 </div>
           <div id="footer">
-                    <p align="center">{{ 'copyright MROOT'|trans }} © 2012-2013</p>
+                    <p align="center">{{ 'copyright mroot72000@yahoo.fr'|trans }} © 2012-2013</p>
                      
                 </div>        
                </div>

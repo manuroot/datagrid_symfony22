@@ -13,6 +13,7 @@ class EproduitCommentsType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
            $builder
            ->add('user',null,array( 'disabled' => true,'label'=>'Utilisateur'))
+                     ->add('isComment',null,array('label'=>"Demande de Pret",'required' => false))
             ->add('comment')
           //  ->add('approved')
          //   ->add('created')

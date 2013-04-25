@@ -96,7 +96,9 @@ PRODUIT: {{ entity.name }}
                  <th>Id</th>
                  <th>User</th>
                 <th>Date</th>
+                <th>Type</th>
                 <th>Commentaire</th>
+                
         </tr>
     </thead>
       
@@ -107,6 +109,12 @@ PRODUIT: {{ entity.name }}
                 <td>{{ comment.user }}</td>
                 
                 <td>{{ comment.created|date('l, F j, Y') }}</td>
+                {% if comment.isComment == 0 %}
+                 <td> <p>C</p></td>
+                {% else %}
+                 <td> <p>D</p></td>
+                {% endif %}
+            {#    <td> <p>{{ comment.isComment }}</p></td>#}
                 <td> <p>{{ comment.comment }}</p></td>
 
     </tr>

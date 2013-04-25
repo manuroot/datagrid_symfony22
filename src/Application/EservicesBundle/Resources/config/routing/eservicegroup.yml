@@ -6,6 +6,12 @@ egroup_groupes_show:
     pattern:  /{id}/show
     defaults: { _controller: "ApplicationEservicesBundle:EserviceGroup:show" }
 
+egroup_groupes_showmygroup:
+    pattern:  /showmygroup
+    defaults: { _controller: "ApplicationEservicesBundle:EserviceGroup:showmygroup" }
+
+
+
 egroup_groupes_new:
     pattern:  /new
     defaults: { _controller: "ApplicationEservicesBundle:EserviceGroup:new" }

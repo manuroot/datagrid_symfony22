@@ -68,6 +68,13 @@ class EproduitComments {
     protected $approved;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isComment;
+
+    
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Eproduit", inversedBy="comments")
      * @ORM\JoinColumn(name="produit_id", referencedColumnName="id")
      */
@@ -88,6 +95,7 @@ class EproduitComments {
         $this->setCreated(new \DateTime());
         $this->setUpdated(new \DateTime());
         $this->setApproved(true);
+        $this->setIscomment(false);
     }
 
     /**
@@ -156,6 +164,32 @@ class EproduitComments {
         return $this->approved;
     }
 
+     /**
+     * Set approved
+     *
+     * @param boolean $approved
+     * @return EproduitComments
+     */
+    
+    // iscomment ==>0 isdemandedepret==>0
+    public function setIsComment($iscomment)
+    {
+        $this->isComment = $iscomment;
+    
+        return $this;
+    }
+
+    /**
+     * Get approved
+     *
+     * @return boolean 
+     */
+    public function getIsComment()
+    {
+        return $this->isComment;
+    }
+    
+    
     /**
      * Set created
      *

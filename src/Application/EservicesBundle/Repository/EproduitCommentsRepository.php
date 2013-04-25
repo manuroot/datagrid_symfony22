@@ -64,6 +64,7 @@ public function getCommentsForProduit($produitId, $approved = true)
         $qb = $this->createQueryBuilder('c')
                    ->select('c')
                    ->where('c.produit = :produit_id')
+                   ->addOrderBy('c.isComment')
                    ->addOrderBy('c.created')
                    ->setParameter('produit_id', $produitId);
 
