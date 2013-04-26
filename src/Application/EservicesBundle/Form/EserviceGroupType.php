@@ -10,11 +10,33 @@ class EserviceGroupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('nomGroup',null,array('label'=> 'Nom du groupe'))
+         $builder->add('nomGroup', 'text', array(
+                    'widget_addon' => array(
+                        'label'=> 'Nom du groupe',
+                        'icon' => 'user',
+                        'type' => 'prepend'
+                    ),
+                ))
+                ->add('description', 'text', array(
+                    'widget_addon' => array(
+                        'label'=> 'Description',
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    ),
+                ))
+                  ->add('email', 'text', array(
+                    'widget_addon' => array(
+                        'label'=> 'envelope',
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    ),
+                ));
+       
+       /* $builder
+         //  ->add('nomGroup',null,array('label'=> 'Nom du groupe'))
             ->add('description',null,array('label'=> 'Description'))
             ->add('email')
-        ;
+        ;*/
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -155,6 +155,7 @@ var parts = Vid_cert.split('/');
 
 {% block content %}
 
+ <br><br>
 
     <form action="{{ path('certificatscenter_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <table class="table table-bordered">

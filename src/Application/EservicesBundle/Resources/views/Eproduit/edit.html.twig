@@ -13,7 +13,7 @@ PRODUIT: {{ entity.name }}
 {% endblock %}
 {% block content %}
 
-
+<br><br>
 
  <form action="{{ path('eproduit_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
      <table class="table table-bordered">
