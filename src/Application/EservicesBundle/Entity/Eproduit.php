@@ -77,7 +77,7 @@ class Eproduit {
     /**
      * @Assert\File(
      * maxSize="5M",
-     * mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
+     * mimeTypes={"image/png", "image/jpeg", "image/pjpeg","image/gif"}
      * )
      * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
      *

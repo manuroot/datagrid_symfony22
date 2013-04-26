@@ -13,7 +13,15 @@ class ChangementsCommentsType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
            $builder
            ->add('user',null,array( 'disabled' => true,'label'=>'Utilisateur'))
-            ->add('comment',null,array('label'=>'Activité'))
+           /* ->add('comment',null,array('label'=>'Activité'))*/
+                        ->add('comment', 'textarea', array(
+                       'label'=>'Activité',
+                    'attr' => array(
+                        'cols' => "20",
+                         'class' => 'tinymce',
+                       
+// simple, advanced, bbcode
+                        )))
           //  ->add('approved')
          //   ->add('created')
         //    ->add('updated')

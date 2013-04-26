@@ -14,7 +14,16 @@ class EproduitCommentsType extends AbstractType {
            $builder
            ->add('user',null,array( 'disabled' => true,'label'=>'Utilisateur'))
                      ->add('isComment',null,array('label'=>"Demande de Pret",'required' => false))
-            ->add('comment')
+           // ->add('comment')
+                   ->add('comment', 'textarea', array(
+                       'label'=>'Message',
+                    'attr' => array(
+                        'cols' => "20",
+                       
+                        'class' => 'tinymce',
+                    'data-theme' => 'simple'
+// simple, advanced, bbcode
+                        )))
           //  ->add('approved')
          //   ->add('created')
         //    ->add('updated')

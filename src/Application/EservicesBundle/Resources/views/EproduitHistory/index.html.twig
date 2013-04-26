@@ -21,7 +21,11 @@ HISTORIQUE DES PRETS
     {% endfor %}
 {% endfor %}
     
+{% if is_granted("ROLE_ADMIN") %}   
 <a href="{{ path('ep_history_new') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Ajouter un Prêt</a>
+{% endif %}
+
+
 
      <table class="table table-striped table-bordered table-hover">
        <thead>

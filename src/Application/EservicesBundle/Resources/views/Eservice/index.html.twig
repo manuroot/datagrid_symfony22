@@ -56,8 +56,12 @@ DASHBOARD - SERVICES
  <div class="tab-content">
 <div class="tab-pane active" id="tab1">
 
-
+{% if is_granted("ROLE_USER") %}   
 <a href="{{ path('eservice_new') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Ajouter un Service</a>
+{% endif %}
+<br><br>
+
+
 <br><br>
 {% include 'ApplicationEservicesBundle:Eservice:template_services.html.twig' with {'mypagination': paginationa,'etitable':'1'} %}
 

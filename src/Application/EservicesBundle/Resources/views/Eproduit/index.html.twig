@@ -65,7 +65,11 @@ MES PRODUITS
     {% endfor %}
 {% endfor %}
 
+{% if is_granted("ROLE_USER") %}   
 <a href="{{ path('eproduit_new') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Ajouter un Produit</a>
+{% endif %}
+<br><br>
+
 
     <table class="table table-striped table-bordered table-hover">
        <thead>

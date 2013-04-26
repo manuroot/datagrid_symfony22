@@ -27,7 +27,12 @@ MES DEMANDES DE SERVICES
     {% endfor %}
 {% endfor %}
 
+
+{% if is_granted("ROLE_USER") %}   
 <a href="{{ path('eservice_demandes') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Ajouter une demande de services</a>
+{% endif %}
+
+
 <br><br>
 
 

@@ -1,5 +1,20 @@
 {% extends "ApplicationEservicesBundle::layout.html.twig" %}
 
+{% block javascripts %}
+{{ parent() }}
+{#
+<script type="text/javascript">
+tinyMCE.init({
+    mode : "textareas"
+});
+/* This selects all textareas. */
+</script>
+#}
+ {{ tinymce_init() }}
+  {#{{ tinymce_init({ theme : "simple", mode : "textareas" }) }}#}
+ 
+{% endblock %}
+
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationeservices/css/sliding.css') }}" type="text/css" media="all"/>
@@ -115,7 +130,7 @@ PRODUIT: {{ entity.name }}
                  <td> <p>D</p></td>
                 {% endif %}
             {#    <td> <p>{{ comment.isComment }}</p></td>#}
-                <td> <p>{{ comment.comment }}</p></td>
+                <td> <p>{{ comment.comment|raw }}</p></td>
 
     </tr>
   {% endfor %}

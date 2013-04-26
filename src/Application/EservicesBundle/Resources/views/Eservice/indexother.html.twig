@@ -27,7 +27,11 @@ LES SERVICES PROPOSES
     {% endfor %}
 {% endfor %}
 
+{% if is_granted("ROLE_USER") %}   
 <a href="{{ path('eservice_other') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Consulter les propositions</a>
+{% endif %}
+
+
 
 <br><br>
 

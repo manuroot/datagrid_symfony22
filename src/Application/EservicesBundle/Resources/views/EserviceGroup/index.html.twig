@@ -30,7 +30,9 @@ DASHBOARD - GROUPES
 {% endblock %}
 {% block content %}
 
+{% if is_granted("ROLE_USER") %}   
 <a href="{{ path('egroup_groupes_new') }}" class="btn btn-small btn-primary">Ajouter un groupe</a>
+{% endif %}
 <br><br>
 
 

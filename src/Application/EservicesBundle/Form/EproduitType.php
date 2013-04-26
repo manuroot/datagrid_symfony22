@@ -27,7 +27,15 @@ class EproduitType extends AbstractType {
                     'property_path' => 'image',
                     'required' => false,
                 ));
+         /*->add('image', 'sonata_media_type', array(
+                 'provider' => 'sonata.media.provider.image',
+                 'context'  => 'default'
+            ));*/
                 /*
+                 *  $builder->add('logo', 'sonata_media_type', array(
+                 'provider' => 'sonata.media.provider.image',
+                 'context'  => 'avatar'
+            ));
                  * 
                  * 
                  *  ->add('produit', 'entity', array(
