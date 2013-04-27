@@ -1,0 +1,99 @@
+{% extends "ApplicationEservicesBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+{{ parent() }}   
+  <link rel="stylesheet" href="{{ asset('css/jquery.rating.css') }}" type="text/css" media="all"/>
+   
+    {{ form_stylesheet(new_form) }}
+{% endblock %}
+
+   
+
+    
+{% block javascripts %}
+{{ parent() }}
+{{ tinymce_init() }}
+     <script src="{{ asset('js/jquery.rating.js') }}" type="text/javascript"></script>
+        
+    {{ form_javascript(new_form) }}
+{#
+ <script>
+$(function() {
+$( "#slider-range-max" ).slider({
+range: "max",
+min: 1,
+max: 10,
+value: 1,
+slide: function( event, ui ) {
+$( "#application_eservicesbundle_eproduitnotestype_note" ).val( ui.value );
+}
+});
+$( "#application_eservicesbundle_eproduitnotestype_note" ).val( $( "#slider-range-max" ).slider( "value" ) );
+});
+</script>#}
+{% endblock %}
+
+
+{% block content_header '' %}
+{% block title %}
+
+{% endblock %}
+{% block content %}
+
+<br><br>
+
+{#
+    <form action="{{ path('enotes_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(new_form) }}>
+        <input type="hidden" name="_method" value="PUT" />
+        {{ form_widget(new_form) }}
+        <p>
+            <button type="submit">New</button>
+        </p>
+    </form>
+#}
+
+<form action="{{ path('enotes_create') }}" method="post" {{ form_enctype(new_form) }}>
+    <table class="table table-bordered">
+
+
+        <tbody>      
+            <tr><td>
+
+                   
+
+             {% if entity.produit.image is not null %}               
+                        <p>Image Actuelle</p>
+                        <img width="150px" src="{{ vich_uploader_asset(entity.produit, 'image') }}" alt="{{ entity.produit.imageName }}" />
+         {% else %}
+                        <p>Pas d'Image</p>
+         {% endif %}
+                   
+        </td>
+                <td>
+
+<p>
+{#<label for="amount">Minimum number of bedrooms:</label>
+<input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />#}
+        {{ form_row(new_form.note) }} </p>
+
+<div id="slider-range-max"></div>
+</td><td>
+{{ form_rest(new_form) }} </td>
+            </tr>
+
+            <tr><td colspan="2">
+
+                    <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+
+
+                    </form>       
+
+  
+                  
+
+                </td></tr>
+        </tbody>
+    </table>
+     <br>
+     <a href="{{ path('enotes')  }}" class="btn btn-small btn-success">Retour</a>
+{% endblock %}

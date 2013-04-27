@@ -3,7 +3,26 @@
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationeservices/css/sliding.css') }}" type="text/css" media="all"/>
-     
+      <style>
+              .demo .colors {
+  overflow: hidden;
+  margin: 20px 0;
+  padding-left: 55px;
+}
+
+.demo .colors li {
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin: 10px;
+  float: left;
+  border: 16px solid;
+}
+
+.demo .warm {
+  display: none;
+}  
+</style>
  {% endblock %}
 
       
@@ -27,7 +46,16 @@
       });  
       e.preventDefault();  
     });
+   
+  $('.button').click(function(e) {
+    $('.all').quicksand( $('.warm li'), {
+      duration: 3000,
+      attribute: 'id'
+    });
+    e.preventDefault();
   });
+});
+  
   </script>
 {% endblock %}
 
@@ -37,6 +65,8 @@
 MES PRODUITS 
 {% endblock %}
 {% block content %}
+
+
 {#
   <p id="load-webbies">
             <a href="#">Webbies</a>: 
@@ -259,11 +289,18 @@ MES PRODUITS
                     </a>
                 </td>
             
-                
+                 <td>
+                    <a href="{{ path('enotes_addfromproduit', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationeservices/images/Stara.gif') }}" alt="show" width="15" height="15" />
+                    </a>
+                </td> 
                 
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
   {{ knp_pagination_render(paginationb) }}
+
+
     {% endblock %}

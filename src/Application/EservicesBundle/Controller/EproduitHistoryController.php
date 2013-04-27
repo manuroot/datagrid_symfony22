@@ -107,8 +107,8 @@ class EproduitHistoryController extends Controller
 
           $user_id = $this->getuserid();
          $group_id=$this->getgroupid();
-         echo "group=$group_id";
-         exit(1);
+       /*  echo "group=$group_id";
+         exit(1);*/
       // Ajouter test de verif : user connected et proprio du produit
           $proprietaire_id = $entity->getProduit()->getProprietaire()->getId();
           

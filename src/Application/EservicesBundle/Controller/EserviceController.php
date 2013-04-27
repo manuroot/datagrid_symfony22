@@ -229,6 +229,7 @@ class EserviceController extends Controller {
         $form = $this->createForm(new EserviceType(), $entity);
         $form->bind($request);
         if ($form->isValid()) {
+          
 
            // $postData = $request->request->get('eservice_form');
 
@@ -236,7 +237,7 @@ class EserviceController extends Controller {
            /* if (!isset($postData['isDemande'])) {
                 
             }*/
-            //$data = $form->getData();
+            
             //  print_r($data);
             //if (!(isset$data[''])){}
             // var_dump($data);

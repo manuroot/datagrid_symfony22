@@ -1,0 +1,73 @@
+{% extends "ApplicationEservicesBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationeservices/css/sliding.css') }}" type="text/css" media="all"/>
+  <link rel="stylesheet" href="{{ asset('css/jquery.rating.css') }}" type="text/css" media="all"/>
+  
+    {{ form_stylesheet(form) }}
+{% endblock %}
+ 
+      
+{% block javascripts %}
+{{ parent() }}
+{{ tinymce_init() }}
+    <script src="{{ asset('js/jquery.rating.js') }}" type="text/javascript"></script>
+        
+    {{ form_javascript(form) }}
+    {#
+ <script>
+$(function() {
+$( "#slider-range-max" ).slider({
+range: "max",
+min: 1,
+max: 10,
+value: 1,
+slide: function( event, ui ) {
+$( "#application_eservicesbundle_eproduitnotestype_note" ).val( ui.value );
+}
+});
+$( "#application_eservicesbundle_eproduitnotestype_note" ).val( $( "#slider-range-max" ).slider( "value" ) );
+});
+</script>#}
+{% endblock %}
+ 
+{% block content_header '' %}
+
+      {% block title %}
+Ajouter Une note  à un Produit
+{% endblock %}
+
+
+
+{% block content %}
+    <form action="{{ path('enotes_create') }}" method="post" {{ form_enctype(form) }}>
+    <table class="table table-bordered">
+        <tbody>      
+            <tr>
+                <td>
+
+<p>
+{#<label for="amount">Minimum number of bedrooms:</label>
+<input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />#}
+        {{ form_row(form.note) }} </p>
+{#
+<div id="slider-range-max"></div>#}
+</td><td>
+{{ form_rest(form) }} </td>
+            </tr>
+
+            <tr><td colspan="2">
+
+                    <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+
+
+                    </form>       
+
+  
+                  
+
+                </td></tr>
+        </tbody>
+    </table>
+{% endblock %}

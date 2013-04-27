@@ -1,0 +1,40 @@
+enotes:
+    pattern:  /
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitNotes:index" }
+
+enotes_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitNotes:show" }
+
+enotes_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitNotes:new" }
+
+ajax:
+    pattern:  /ajax
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitNotes:ajax" }
+
+
+
+enotes_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitNotes:create" }
+    requirements: { _method: post }
+
+enotes_addfromproduit:
+    pattern:  /{id}/addnote
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitNotes:addnote" }
+
+enotes_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitNotes:edit" }
+
+enotes_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitNotes:update" }
+    requirements: { _method: post|put }
+
+enotes_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationEservicesBundle:EproduitNotes:delete" }
+    requirements: { _method: post|delete }

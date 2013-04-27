@@ -12,61 +12,75 @@ class EproduitType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('name',null,array('label'=>'Nom du Produit'))
+                ->add('name', 'genemu_jqueryautocomplete_entity', array(
+                    'class' => 'Application\EservicesBundle\Entity\Eproduit',
+                    'property' => 'name',
+                    'configs' => array(
+                        'minLength' => 0,
+                    ),
+                ))
+                //  ->add('name',null,array('label'=>'Nom du Produit'))
                 ->add('description', 'textarea', array(
-                    'label'=>'Description du Produit',
+                    'label' => 'Description du Produit',
                     'attr' => array(
                         'cols' => "60",
                         'class' => 'tinymce',
-                     )))
-                
-               // ->add('services')
+                        )))
+
+                // ->add('services')
                 //->add('image')
-        ->add('image', 'file', array(
+                ->add('image', 'file', array(
                     'data_class' => 'Symfony\Component\HttpFoundation\File\File',
                     'property_path' => 'image',
                     'required' => false,
                 ));
-         /*->add('image', 'sonata_media_type', array(
-                 'provider' => 'sonata.media.provider.image',
-                 'context'  => 'default'
-            ));*/
-                /*
-                 *  $builder->add('logo', 'sonata_media_type', array(
-                 'provider' => 'sonata.media.provider.image',
-                 'context'  => 'avatar'
+        
+        $builder->add('soccer_player', 'genemu_jqueryautocomplete_text', array(
+            'suggestions' => array(
+                'Ozil',
+                'Van Persie'
+            ),
+            'mapped'=>false,
             ));
-                 * 
-                 * 
-                 *  ->add('produit', 'entity', array(
-            //'class' => 'Application\EservicesBundle\Entity\CertificatsProjet',
-            'class' => 'ApplicationEservicesBundle:Eproduit',
-             'query_builder' => function(EntityRepository $em) {
-                return $em->createQueryBuilder('u')
-                        ->where
+        /* ->add('image', 'sonata_media_type', array(
+          'provider' => 'sonata.media.provider.image',
+          'context'  => 'default'
+          )); */
+        /*
+         *  $builder->add('logo', 'sonata_media_type', array(
+          'provider' => 'sonata.media.provider.image',
+          'context'  => 'avatar'
+          ));
+         * 
+         * 
+         *  ->add('produit', 'entity', array(
+          //'class' => 'Application\EservicesBundle\Entity\CertificatsProjet',
+          'class' => 'ApplicationEservicesBundle:Eproduit',
+          'query_builder' => function(EntityRepository $em) {
+          return $em->createQueryBuilder('u')
+          ->where
+          ->orderBy('u.nom', 'ASC');
+          },
+         */
+        $builder->add('categorie', 'entity', array(
+                    //'class' => 'Application\EservicesBundle\Entity\CertificatsProjet',
+                    'class' => 'ApplicationEservicesBundle:EproduitCategories',
+                    'query_builder' => function(EntityRepository $em) {
+                        return $em->createQueryBuilder('u')
                                 ->orderBy('u.nom', 'ASC');
-            },
-                 */
-                 $builder->add('categorie', 'entity', array(
-            //'class' => 'Application\EservicesBundle\Entity\CertificatsProjet',
-            'class' => 'ApplicationEservicesBundle:EproduitCategories',
-             'query_builder' => function(EntityRepository $em) {
-                return $em->createQueryBuilder('u')
-                                ->orderBy('u.nom', 'ASC');
-            },
-            'property' => 'nom',
-            'multiple' => false,
-            'required' => true,
-            'label' => 'Categorie',
-           'empty_value' => '--- Choisir une option ---'
-        ))
-            
-             ->add('idStatus', null, array('label' => 'Status'))
-                /* ->add('image', 'file',
-array(
-'label' => 'Hast du ein Screenshot von der Nachricht'
-)
-)*/
+                    },
+                    'property' => 'nom',
+                    'multiple' => false,
+                    'required' => true,
+                    'label' => 'Categorie',
+                    'empty_value' => '--- Choisir une option ---'
+                ))
+                ->add('idStatus', null, array('label' => 'Status'))
+        /* ->add('image', 'file',
+          array(
+          'label' => 'Hast du ein Screenshot von der Nachricht'
+          )
+          ) */
         ;
     }
 

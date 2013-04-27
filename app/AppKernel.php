@@ -47,7 +47,7 @@ class AppKernel extends Kernel {
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
-           //  new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
             // new Bc\Bundle\BootstrapBundle\BcBootstrapBundle(),
             //   new \Rizza\CalendarBundle\RizzaCalendarBundle(),
             // MES APPLICATIONS

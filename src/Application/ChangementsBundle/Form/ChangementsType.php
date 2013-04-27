@@ -18,15 +18,25 @@ class ChangementsType extends AbstractType
   //  $builder->add($child);
         $builder
          //   ->add('nom')
-                
-          ->add('nom', 'text',  array(
-            /*      "help_inline"=>"Please specify some understandable title",*/
-        'widget_addon' => array(
+                 ->add('nom', 'genemu_jqueryautocomplete_entity', array(
+                      'widget_addon' => array(
+            'icon' => 'pencil',
+            'type' => 'prepend'
+        ),
+                    'class' => 'Application\ChangementsBundle\Entity\Changements',
+                    'property' => 'nom',
+                    'configs' => array(
+                        'minLength' => 0,
+                    ),
+                ))
+       /*   ->add('nom', 'text',  array(
+                "help_inline"=>"Please specify some understandable title",*/
+      /*  'widget_addon' => array(
             'icon' => 'pencil',
             'type' => 'prepend'
         ),
         
-    ))
+    ))*/
                 // Suggestions with doctrine orm
       /*  ->add('nom', 'genemu_jqueryautocomplete_entity', array(
             'class' => 'ApplicationChangementsBundle\Entity\Changements',

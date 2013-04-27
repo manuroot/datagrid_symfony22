@@ -32,9 +32,11 @@ HISTORIQUE DES PRETS
         <tr class="title">
               
                 <th>Id</th>
-                <th>Datein</th>
-                <th>Dateout</th>
-                   <th>Produit</th>
+                 <th>Produit</th>
+                <th>Début</th>
+                <th>Fin</th>
+               
+                   <th>idp</th>
                    <th>Proprietaire</th>
                       <th>Emprunteur</th>
                             <th>Image</th>   
@@ -45,9 +47,10 @@ HISTORIQUE DES PRETS
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('ep_history_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{% if entity.produit %}{{ entity.produit }}{% endif %}</td>
                 <td>{% if entity.dateIn %}{{ entity.dateIn|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.dateOut %}{{ entity.dateOut|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.produit %}{{ entity.produit }}{% endif %}</td>
+                 <td>{% if entity.produit %}{{ entity.produit.id }}{% endif %}</td>
                  <td>{% if entity.produit.proprietaire %}{{ entity.produit.proprietaire }}{% endif %}</td>
                  
                  <td>{% if entity.emprunteur %}{{ entity.emprunteur }}{% endif %}</td>
