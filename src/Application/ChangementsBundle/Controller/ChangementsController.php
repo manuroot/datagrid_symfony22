@@ -37,104 +37,10 @@ class ChangementsController extends Controller {
      */
     public function indexAction() {
 
-        
-        
-    /*    
-   $filters = new Filters();
-
-    $form = $this->createForm(new FiltersType(), $filters);
-
-    $session = $this->getRequest()->getSession();
-
-    if ($session->get('dql') == null) {
-        $session->set('dql', "SELECT a FROM ViciousAmateurBundle:Post a WHERE a.is_active = true");
-    }
-
-    if ($request->isMethod('POST')) {
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $dql = "SELECT a FROM ViciousAmateurBundle:Post a WHERE a.is_active = true";
-            $country = $filters->getCountry();
-            $city = $filters->getCity();
-            $gender = $filters->getGender();
-            $sexualOrientation = $filters->getSexualOrientation();
-
-            if (isset($country)) {
-                $dql .= " AND a.country = '" . $filters->getCountry() . "'";
-            }
-            if (isset($city)) {
-                $dql .= " AND a.city = '" . $filters->getCity() . "'";
-            }
-            if (isset($gender)) {
-                $dql .= " AND a.gender = '" . $filters->getGender() . "'";
-            }
-            if (isset($sexualOrientation)) {
-                $dql .= " AND a.sexual_orientation = '" . $filters->getSexualOrientation() . "'";
-            }
-
-            $session->set('dql', $dql);
-        }
-    }
-
-    $em = $this->get('doctrine.orm.entity_manager');
-
-    $query = $em->createQuery($session->get('dql'));
-
-    $paginator = $this->get('knp_paginator');
-    $pagination = $paginator->paginate(
-        $query,
-        $this->get('request')->query->get('page', $page),
-        5
-    );
-
-    return $this->render('ViciousAmateurBundle:Default:index.html.twig', array(
-        'form' => $form->createView(),
-        'pagination' => $pagination
-        )
-    );
-    */
-    
-    
-    
-    
-    
-    
-    
-    
-        //     $past = date('Y-m-d', strtotime('-30days'));
-        //      $currenta = ($row->getField('endTime')->format('Y-m-d'));
-        //$current = date('Y-m-d', strtotime('+30days'));
-        $current = new \DateTime("2013-06");
-        $past = new \DateTime("2013-05");
-        //$current = new \DateTime($row->getField('endTime')->format('Y-m-d'));
-
-        /* $em = $this->getDoctrine()->getManager();
-
-          $entities = $em->getRepository('ApplicationChangementsBundle:Changements')->findAll();
-
-          return $this->render('ApplicationChangementsBundle:Changements:index.html.twig', array(
-          'entities' => $entities,
-          )); */
-//$factory = new CalendR\Calendar;
-//$factory->getEventManager()->addProvider('myawesomeprovider', 'new MyAwesomeProvider');
-        //  $f=$this->get('booking_repository');
-        //  $month = $f->getMonth(2012, 6);
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'changements');
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('ApplicationChangementsBundle:Changements')->myFindAll();
-        
-        
-        $query_events = $em->getRepository('ApplicationChangementsBundle:Changements')
-                ->getEventsQueryBuilder($past, $current);
-/*$nb_events=$em->getRepository('ApplicationChangementsBundle:Changements')
-                ->findcount($past, $current);*/
-        //    print_r($query_events);
-        // exit(1);
-        // $nbtags = $query->getPicture()->count();
-        $month = $this->get('calendr')->getMonth(2013, 03);
-        $events = $this->get('calendr')->getEvents($month);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $query, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
@@ -142,21 +48,44 @@ class ChangementsController extends Controller {
         $pagination->setTemplate('ApplicationChangementsBundle:pagination:sliding.html.twig');
         return $this->render('ApplicationChangementsBundle:Changements:index.html.twig', array(
                     'pagination' => $pagination,
-                    'month' => $this->get('calendr')->getMonth(2013, 03),
-                    // 'myweek' =>  $this->get('calendr')->getWeek(2012, 14),
-                    'events' => $query_events,
-                    'evenement' => $events,
-                        // 'current_month' => $month
                 ));
     }
-
 
     public function calendarAction() {
 
         //     $past = date('Y-m-d', strtotime('-30days'));
+        //     $current_date=date('Y-m-d');
+        //   $value = $date->toString('yyyy-MM');
         //      $currenta = ($row->getField('endTime')->format('Y-m-d'));
         //$current = date('Y-m-d', strtotime('+30days'));
-        $current = new \DateTime("2013-06");
+        $request = $this->get('request');
+        if ($request->getMethod() == 'POST') {
+            $dataform = $this->get('request')->get('form');
+            $data=$dataform['publishedAt'];
+            // print_r($data['publishedAt']);
+           //     exit(1);
+            $current_year = $data['year'];
+            $current_month = $data['month'];
+            $current_yearmonth = ("$current_year-$current_month");
+            // print_r($data);
+            //    exit(1);
+        } else {
+            $current_date = new \DateTime();
+            //   $next=
+            $current_yearmonth = $current_date->format('Y-m');
+            $current_year = $current_date->format('Y');
+            $current_month = $current_date->format('m');
+        }
+        //   $postData = $request->request->get('contact');
+//$name_value = $postData['name'];
+        // }
+        //$current=$current_date->format('Y-m-d H:i:s');
+        //$current=$current_date->format('Y-m-d');
+        //$annee=$current->toString('m');
+        //echo "current=$current annee=$annee<br>";
+        //    echo "current=$current_year month=$current_month<br>";
+        //   exit(1);
+        $current = new \DateTime($current_yearmonth);
         $past = new \DateTime("2013-05");
         //$current = new \DateTime($row->getField('endTime')->format('Y-m-d'));
 
@@ -171,36 +100,35 @@ class ChangementsController extends Controller {
 //$factory->getEventManager()->addProvider('myawesomeprovider', 'new MyAwesomeProvider');
         //  $f=$this->get('booking_repository');
         //  $month = $f->getMonth(2012, 6);
-        
-        $form=$this->createCalendarForm();
-        
-        
+
+        $form = $this->createCalendarForm();
+
+
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'changements');
         $em = $this->getDoctrine()->getManager();
-   
+
         $query_events = $em->getRepository('ApplicationChangementsBundle:Changements')
                 ->getEventsQueryBuilder($past, $current);
-/*$nb_events=$em->getRepository('ApplicationChangementsBundle:Changements')
-                ->findcount($past, $current);*/
+        /* $nb_events=$em->getRepository('ApplicationChangementsBundle:Changements')
+          ->findcount($past, $current); */
         //    print_r($query_events);
         // exit(1);
         // $nbtags = $query->getPicture()->count();
-        $month = $this->get('calendr')->getMonth(2013, 03);
+        $month = $this->get('calendr')->getMonth($current_year, $current_month);
         $events = $this->get('calendr')->getEvents($month);
         $paginator = $this->get('knp_paginator');
-      
+
         return $this->render('ApplicationChangementsBundle:Changements:calendar.html.twig', array(
-                     'month' => $this->get('calendr')->getMonth(2013, 03),
+                    'month' => $this->get('calendr')->getMonth($current_year, $current_month),
                     // 'myweek' =>  $this->get('calendr')->getWeek(2012, 14),
                     'events' => $query_events,
                     'evenement' => $events,
-             'form' => $form->createView(),
+                    'form' => $form->createView(),
                         // 'current_month' => $month
                 ));
     }
 
-    
 //==============================================
     // VIEW ALL ACTEURS
     //==============================================
@@ -232,7 +160,6 @@ class ChangementsController extends Controller {
                     return $row;
                 }
         );
-
 
         $grid = $this->container->get('grid');
         // Attach the source to the grid
@@ -303,13 +230,6 @@ class ChangementsController extends Controller {
      */
     public function newflowAction() {
         $entity = new Changements();
-        //   $form = $this->createForm(new ChangementsFlowType(), $entity);
-        // $form->getData()->getNom()->setData('someklklm');
-//$entity->setNom("tre");
-
-
-
-
         $flow = $this->get('application.form.flow.new.changement');
         //     $flow->reset();
 // must match the flow's service id
@@ -337,7 +257,6 @@ class ChangementsController extends Controller {
                 return $this->redirect($this->generateUrl('changements')); // redirect when done
             }
         }
-
 
         return $this->render('ApplicationChangementsBundle:Changements:newflow.html.twig', array(
                     'form' => $form->createView(),
@@ -527,14 +446,113 @@ class ChangementsController extends Controller {
         return $response;
     }
 
-     private function createCalendarForm() {
-       return $this->createFormBuilder()
-        ->add('publishedAt', 'date', array(
-    'input'  => 'timestamp',
-    'widget' => 'choice',
-            'format' => 'yyyy-MM-dd',
-))              
+    private function createCalendarForm() {
+        return $this->createFormBuilder()
+                        ->add('publishedAt', 'date', array(
+                            'input' => 'timestamp',
+                            'widget' => 'choice',
+                            'format' => 'yyyy-MM-dd',
+                        ))
                         ->getForm()
         ;
     }
+
 }
+
+/*
+     *     //     $past = date('Y-m-d', strtotime('-30days'));
+        //      $currenta = ($row->getField('endTime')->format('Y-m-d'));
+        //$current = date('Y-m-d', strtotime('+30days'));
+        $current = new \DateTime("2013-06");
+        $past = new \DateTime("2013-05");
+        //$current = new \DateTime($row->getField('endTime')->format('Y-m-d'));
+
+       
+//$factory = new CalendR\Calendar;
+//$factory->getEventManager()->addProvider('myawesomeprovider', 'new MyAwesomeProvider');
+        //  $f=$this->get('booking_repository');
+        //  $month = $f->getMonth(2012, 6);
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     *    /*    
+   $filters = new Filters();
+
+    $form = $this->createForm(new FiltersType(), $filters);
+
+    $session = $this->getRequest()->getSession();
+
+    if ($session->get('dql') == null) {
+        $session->set('dql', "SELECT a FROM ViciousAmateurBundle:Post a WHERE a.is_active = true");
+    }
+
+    if ($request->isMethod('POST')) {
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $dql = "SELECT a FROM ViciousAmateurBundle:Post a WHERE a.is_active = true";
+            $country = $filters->getCountry();
+            $city = $filters->getCity();
+            $gender = $filters->getGender();
+            $sexualOrientation = $filters->getSexualOrientation();
+
+            if (isset($country)) {
+                $dql .= " AND a.country = '" . $filters->getCountry() . "'";
+            }
+            if (isset($city)) {
+                $dql .= " AND a.city = '" . $filters->getCity() . "'";
+            }
+            if (isset($gender)) {
+                $dql .= " AND a.gender = '" . $filters->getGender() . "'";
+            }
+            if (isset($sexualOrientation)) {
+                $dql .= " AND a.sexual_orientation = '" . $filters->getSexualOrientation() . "'";
+            }
+
+            $session->set('dql', $dql);
+        }
+    }
+
+   /*    
+   $filters = new Filters();
+
+    $form = $this->createForm(new FiltersType(), $filters);
+
+    $session = $this->getRequest()->getSession();
+
+    if ($session->get('dql') == null) {
+        $session->set('dql', "SELECT a FROM ViciousAmateurBundle:Post a WHERE a.is_active = true");
+    }
+
+    if ($request->isMethod('POST')) {
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $dql = "SELECT a FROM ViciousAmateurBundle:Post a WHERE a.is_active = true";
+            $country = $filters->getCountry();
+            $city = $filters->getCity();
+            $gender = $filters->getGender();
+            $sexualOrientation = $filters->getSexualOrientation();
+
+            if (isset($country)) {
+                $dql .= " AND a.country = '" . $filters->getCountry() . "'";
+            }
+            if (isset($city)) {
+                $dql .= " AND a.city = '" . $filters->getCity() . "'";
+            }
+            if (isset($gender)) {
+                $dql .= " AND a.gender = '" . $filters->getGender() . "'";
+            }
+            if (isset($sexualOrientation)) {
+                $dql .= " AND a.sexual_orientation = '" . $filters->getSexualOrientation() . "'";
+            }
+
+            $session->set('dql', $dql);
+        }
+    }
+
+  */

@@ -53,11 +53,30 @@ class EproduitNotesController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationEservicesBundle:EproduitNotes')->findAll();
-
-        return $this->render('ApplicationEservicesBundle:EproduitNotes:index.html.twig', array(
+        //$query = $em->getRepository('ApplicationEservicesBundle:EproduitNotes')->findAll();
+        $query = $em->getRepository('ApplicationEservicesBundle:EproduitNotes')->myFindAll();
+        
+        //$query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
+       /* return $this->render('ApplicationEservicesBundle:EproduitNotes:index.html.twig', array(
                     'entities' => $entities,
                 ));
+        
+         */
+        
+      
+        $paginator = $this->get('knp_paginator');
+        $pagename1 = 'page1'; // Set custom page variable name
+        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
+        $paginationa = $paginator->paginate(
+                $query, $page1, 10, array('pageParameterName' => $pagename1)
+        );
+
+
+        $paginationa->setTemplate('ApplicationEservicesBundle:pagination:twitter_bootstrap_pagination.html.twig');
+        return $this->render('ApplicationEservicesBundle:EproduitNotes:index.html.twig', array(
+                    'paginationa' => $paginationa,
+                ));
+        
     }
 
     /**

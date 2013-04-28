@@ -98,13 +98,7 @@ class EproduitController extends Controller {
 
         */
         
-        
-        
-        
-        
-        
-        
-        $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
+          $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
         $query_other = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id,$group_id);
         $paginator = $this->get('knp_paginator');
         //   $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->findAll();

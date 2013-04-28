@@ -64,12 +64,18 @@ class EproduitRepository extends EntityRepository {
 
         $query = $this->createQueryBuilder('a')
                 ->where('a.proprietaire <> :proprietaire')
-                ->setParameter('proprietaire', $user_id)
+             ->setParameter('proprietaire', $user_id)
                 //  ->where('a.proprietaire.getId = :idproprietaire')
                  //       ->setParameter('idproprietaire', '2')
                    ->leftJoin('a.proprietaire', 'b')
                  ->andWhere('b.idgroup = :groupid')
                  ->setParameter('groupid', $group_id)
+            /*    
+                  ->leftJoin('a.notes', 'e')
+                 ->andWhere('e.user  <> :proprietaire')
+                  ->setParameter('proprietaire', $user_id)
+           */ 
+                
                 ->leftJoin('a.categorie', 'c')
                 ->leftJoin('a.idStatus', 'd')
              

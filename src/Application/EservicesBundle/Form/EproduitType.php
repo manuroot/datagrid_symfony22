@@ -35,13 +35,13 @@ class EproduitType extends AbstractType {
                     'required' => false,
                 ));
         
-        $builder->add('soccer_player', 'genemu_jqueryautocomplete_text', array(
+        /*$builder->add('soccer_player', 'genemu_jqueryautocomplete_text', array(
             'suggestions' => array(
                 'Ozil',
                 'Van Persie'
             ),
             'mapped'=>false,
-            ));
+            ));*/
         /* ->add('image', 'sonata_media_type', array(
           'provider' => 'sonata.media.provider.image',
           'context'  => 'default'

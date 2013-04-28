@@ -5,12 +5,15 @@ namespace Application\EservicesBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+
+
 /**
- * CertificatsProjet
+ * EproduitNotes
  *
  * @ORM\Table(name="eproduits_notes")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Application\EservicesBundle\Repository\EproduitNotesRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class EproduitNotes {
 
@@ -50,10 +53,20 @@ class EproduitNotes {
      */
     
     /**
-     * @ORM\ManyToOne(targetEntity="Eproduit")
+     * @ORM\ManyToOne(targetEntity="Eproduit", inversedBy="notes", cascade={"persist"})
      * @ORM\JoinColumn(name="produit_id", referencedColumnName="id")
      */
     protected $produit;
+    
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $created;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updated;
     
     public function getId() {
         return $this->id;
@@ -61,9 +74,27 @@ class EproduitNotes {
 
     public function __construct() {
       //  $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
-       
+           $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+     
     }
-
+ /**
+     * @ORM\preUpdate()
+     */
+    public function UpdatedValue()
+    {
+       $this->setUpdated(new \DateTime());
+    }
+    
+    /**
+ * @ORM\PrePersist()
+ */
+public function setCreatedValue()
+{
+    $this->created = new \DateTime();
+}
+    
+    
       public function __toString() {
         return $this->getId();
     }
@@ -137,5 +168,51 @@ class EproduitNotes {
     public function getProduit()
     {
         return $this->produit;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return EproduitNotes
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return EproduitNotes
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 }
