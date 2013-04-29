@@ -15,25 +15,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  */
 class EproduitNotesController extends Controller {
 
-    
-     public function ajaxAction(Request $request)
-    {
+    public function ajaxAction(Request $request) {
         //$value = $request->get('term');
-
         // .... (Search values)
-        $search = array('Bar', 'Foo','toto','truc');
+        $search = array('Bar', 'Foo', 'toto', 'truc');
 
         $response = new Response();
         $response->setContent(json_encode($search));
 
         return $response;
     }
+
     /*
      * Recuperer l'id du user et verifie que $user est authentifié
      */
+
     private function getuserid() {
 
-          $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -55,15 +54,15 @@ class EproduitNotesController extends Controller {
 
         //$query = $em->getRepository('ApplicationEservicesBundle:EproduitNotes')->findAll();
         $query = $em->getRepository('ApplicationEservicesBundle:EproduitNotes')->myFindAll();
-        
+
         //$query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
-       /* return $this->render('ApplicationEservicesBundle:EproduitNotes:index.html.twig', array(
-                    'entities' => $entities,
-                ));
-        
+        /* return $this->render('ApplicationEservicesBundle:EproduitNotes:index.html.twig', array(
+          'entities' => $entities,
+          ));
+
          */
-        
-      
+
+
         $paginator = $this->get('knp_paginator');
         $pagename1 = 'page1'; // Set custom page variable name
         $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
@@ -76,7 +75,6 @@ class EproduitNotesController extends Controller {
         return $this->render('ApplicationEservicesBundle:EproduitNotes:index.html.twig', array(
                     'paginationa' => $paginationa,
                 ));
-        
     }
 
     /**
@@ -84,35 +82,35 @@ class EproduitNotesController extends Controller {
      *
      */
     public function createAction(Request $request) {
-              $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $entity = new EproduitNotes();
-        
+
         $form = $this->createForm(new EproduitNotesType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
-           $postData = $request->request->get('application_eservicesbundle_eproduitnotestype');
+            $postData = $request->request->get('application_eservicesbundle_eproduitnotestype');
 
-          //  var_dump($postData);
-           //  $data = $form->getData();
-         /*   print_r($postData);
-            exit(1);*/
-           /* if (!isset($postData->user)){
-                 $user_id=$this->getuserid();
-          $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-            $entity->setUser($current_user);
-             }*/
-             /*  if (!isset($postData->user)){
-           
-        $entity_produit = $em->getRepository('ApplicationEservicesBundle:Eproduit')->findOneById($id);
-        if (!$entity_produit) {
-            throw $this->createNotFoundException('Ce produit n\'existe pas.');
-        } $user_id=$this->getuserid();
-          $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-            $entity->setUser($current_user);
-             }*/
-             
-          //  $em = $this->getDoctrine()->getManager();
+            //  var_dump($postData);
+            //  $data = $form->getData();
+            /*   print_r($postData);
+              exit(1); */
+            /* if (!isset($postData->user)){
+              $user_id=$this->getuserid();
+              $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+              $entity->setUser($current_user);
+              } */
+            /*  if (!isset($postData->user)){
+
+              $entity_produit = $em->getRepository('ApplicationEservicesBundle:Eproduit')->findOneById($id);
+              if (!$entity_produit) {
+              throw $this->createNotFoundException('Ce produit n\'existe pas.');
+              } $user_id=$this->getuserid();
+              $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+              $entity->setUser($current_user);
+              } */
+
+            //  $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -202,14 +200,14 @@ class EproduitNotesController extends Controller {
         // test si note existe ($iser_id et $id_produit)
 
         $em = $this->getDoctrine()->getManager();
-        
-       $user_id=$this->getuserid();
-       
-       /* $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $user_id = $user->getId();
-        }*/
+
+        $user_id = $this->getuserid();
+
+        /* $user = $this->get('security.context')->getToken()->getUser();
+          $user_security = $this->container->get('security.context');
+          if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+          $user_id = $user->getId();
+          } */
 
 
         $em = $this->getDoctrine()->getManager();
@@ -221,12 +219,12 @@ class EproduitNotesController extends Controller {
         $entity_note = $em->getRepository('ApplicationEservicesBundle:EproduitNotes')->findOneBy(array(
             'user' => $user_id,
             'produit' => $id));
-         // produit deja noté
+        // produit deja noté
         if ($entity_note) {
             return $this->redirect($this->generateUrl('enotes_edit', array(
                                 'id' => $entity_note->getId()))
             );
-                 throw $this->createNotFoundException('Vous avez deja noté ce produit.');
+            throw $this->createNotFoundException('Vous avez deja noté ce produit.');
         } else {
 
             $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
@@ -235,7 +233,7 @@ class EproduitNotesController extends Controller {
             $entity->setProduit($entity_produit);
             $entity->setUser($current_user);
 
-            $newForm = $this->createForm(new EproduitNotesType($user_id,$id), $entity);
+            $newForm = $this->createForm(new EproduitNotesType($user_id, $id), $entity);
 
             return $this->render('ApplicationEservicesBundle:EproduitNotes:addnote.html.twig', array(
                         'entity' => $entity,
@@ -268,7 +266,7 @@ class EproduitNotesController extends Controller {
                 ));
     }
 
-     public function editadminAction($id) {
+    public function editadminAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationEservicesBundle:EproduitNotes')->find($id);
@@ -286,6 +284,7 @@ class EproduitNotesController extends Controller {
                     'delete_form' => $deleteForm->createView(),
                 ));
     }
+
     /**
      * Edits an existing EproduitNotes entity.
      *
@@ -294,7 +293,7 @@ class EproduitNotesController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationEservicesBundle:EproduitNotes')->find($id);
-
+        $session = $this->getRequest()->getSession();
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find EproduitNotes entity.');
         }
@@ -306,9 +305,16 @@ class EproduitNotesController extends Controller {
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('enotes_edit', array('id' => $id)));
+            $id_produit=$entity->getId();
+            $session->getFlashBag()->add('warning', "Enregistrement $id_produit (notes id=$id) update successfull");
+            $route_back = $session->get('buttonretour');
+           if (isset($route_back))
+                return $this->redirect($this->generateUrl($route_back, array('id' => $id)));
+            else
+             return $this->redirect($this->generateUrl('enotes'));
         }
+        //return $this->redirect($this->generateUrl('enotes_edit'));
+        //}
 
         return $this->render('ApplicationEservicesBundle:EproduitNotes:edit.html.twig', array(
                     'entity' => $entity,

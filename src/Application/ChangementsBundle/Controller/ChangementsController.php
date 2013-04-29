@@ -75,6 +75,7 @@ class ChangementsController extends Controller {
             $current_yearmonth = $current_date->format('Y-m');
             $current_year = $current_date->format('Y');
             $current_month = $current_date->format('m');
+            
         }
         //   $postData = $request->request->get('contact');
 //$name_value = $postData['name'];
