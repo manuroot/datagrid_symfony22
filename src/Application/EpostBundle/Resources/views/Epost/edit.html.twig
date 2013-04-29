@@ -1,0 +1,60 @@
+{% extends "ApplicationEpostBundle::layout.html.twig" %}
+
+          
+{% block javascripts %}
+{{ parent() }}
+{{ tinymce_init() }}
+{% endblock %}
+
+
+{% block content_header '' %}
+{% block title %}
+POST: {{ entity.name }}
+{% endblock %}
+{% block content %}
+
+<br><br>
+
+ <form action="{{ path('epost_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+     <table class="table table-bordered">
+    <tbody>      
+        <tr><td>
+                 <div>
+                  {{ form_row(edit_form.name) }}
+                           {{ form_row(edit_form.idStatus) }}
+        
+                 {#    {{ form_row(edit_form.services) }}#}
+              </div>
+                              <div>
+
+             {% if entity.image is not null %}               
+                                      <p>Image Actuelle</p>
+         <img width="150px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
+         {% else %}
+           <p>Pas d'Image</p>
+         {% endif %}
+           </div>
+              
+                   </td>
+ <td>
+ {{ form_row(edit_form.description) }}
+{{ form_rest(edit_form) }} </td>
+                                 </tr>
+                                     
+<tr><td colspan="2">
+                                   
+  <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+  
+    <a href="{{ path(btnretour)  }}" class="btn btn-small btn-success">Retour</a>
+   </form>       
+                                    
+                                       
+                                </td></tr>
+                        </tbody>
+                    </table>
+ 
+
+      
+
+       
+{% endblock %}

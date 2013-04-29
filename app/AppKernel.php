@@ -61,6 +61,7 @@ class AppKernel extends Kernel {
             new Application\ChangementsBundle\ApplicationChangementsBundle(),
             new Application\RelationsBundle\ApplicationRelationsBundle(),
             //new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
+            new Application\EpostBundle\ApplicationEpostBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

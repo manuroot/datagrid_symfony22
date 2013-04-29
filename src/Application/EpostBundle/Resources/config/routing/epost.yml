@@ -1,0 +1,48 @@
+epost:
+    pattern:  /
+    defaults: { _controller: "ApplicationEpostBundle:Epost:index" }
+
+epost_indexserch:
+    pattern:  /search
+    defaults: { _controller: "ApplicationEpostBundle:Epost:indexsearch" }
+
+epost_indexadmin:
+    pattern:  /indexadmin
+    defaults: { _controller: "ApplicationEpostBundle:Epost:indexAll" }
+
+epost_mesposts:
+    pattern:  /mesposts
+    defaults: { _controller: "ApplicationEpostBundle:Epost:indexmesposts" }
+
+epost_propositions:
+    pattern:  /propositions
+    defaults: { _controller: "ApplicationEpostBundle:Epost:indexpropositions" }
+
+
+
+epost_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationEpostBundle:Epost:show" }
+
+epost_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationEpostBundle:Epost:new" }
+
+epost_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationEpostBundle:Epost:create" }
+    requirements: { _method: post }
+
+epost_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationEpostBundle:Epost:edit" }
+
+epost_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationEpostBundle:Epost:update" }
+    requirements: { _method: post|put }
+
+epost_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationEpostBundle:Epost:delete" }
+    requirements: { _method: post|delete }

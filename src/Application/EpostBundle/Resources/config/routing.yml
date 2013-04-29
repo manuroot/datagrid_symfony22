@@ -1,0 +1,12 @@
+_epost:
+    resource: "@ApplicationEpostBundle/Resources/config/routing/epost.yml"
+    prefix:   /epost
+    
+_epost_comments:
+    resource: "@ApplicationEpostBundle/Resources/config/routing/epostcomments.yml"
+    prefix:   /epostcomments
+
+
+_epost_notes:
+    resource: "@ApplicationEpostBundle/Resources/config/routing/epostnotes.yml"
+    prefix:   /epostnotes  

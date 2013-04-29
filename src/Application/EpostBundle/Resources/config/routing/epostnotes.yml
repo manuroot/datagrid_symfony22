@@ -1,0 +1,40 @@
+epostnotes:
+    pattern:  /
+    defaults: { _controller: "ApplicationEpostBundle:EpostNotes:index" }
+
+epostnotes_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ApplicationEpostBundle:EpostNotes:show" }
+
+epostnotes_new:
+    pattern:  /new
+    defaults: { _controller: "ApplicationEpostBundle:EpostNotes:new" }
+
+ajax:
+    pattern:  /ajax
+    defaults: { _controller: "ApplicationEpostBundle:EpostNotes:ajax" }
+
+
+
+epostnotes_create:
+    pattern:  /create
+    defaults: { _controller: "ApplicationEpostBundle:EpostNotes:create" }
+    requirements: { _method: post }
+
+epostnotes_addfrompost:
+    pattern:  /{id}/addnote
+    defaults: { _controller: "ApplicationEpostBundle:EpostNotes:addnote" }
+
+epostnotes_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ApplicationEpostBundle:EpostNotes:edit" }
+
+epostnotes_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ApplicationEpostBundle:EpostNotes:update" }
+    requirements: { _method: post|put }
+
+epostnotes_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ApplicationEpostBundle:EpostNotes:delete" }
+    requirements: { _method: post|delete }

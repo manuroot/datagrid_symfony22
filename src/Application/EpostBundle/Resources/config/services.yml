@@ -1,0 +1,7 @@
+parameters:
+#    application_epost.example.class: Application\EpostBundle\Example
+
+services:
+#    application_epost.example:
+#        class: %application_epost.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

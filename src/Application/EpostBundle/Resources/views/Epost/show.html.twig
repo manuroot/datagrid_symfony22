@@ -1,0 +1,156 @@
+{% extends "ApplicationEpostBundle::layout.html.twig" %}
+
+{% block javascripts %}
+{{ parent() }}
+{#
+<script type="text/javascript">
+tinyMCE.init({
+    mode : "textareas"
+});
+/* This selects all textareas. */
+</script>
+#}
+ {{ tinymce_init() }}
+  {#{{ tinymce_init({ theme : "simple", mode : "textareas" }) }}#}
+ 
+{% endblock %}
+
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationepost/css/sliding.css') }}" type="text/css" media="all"/>
+     
+ {% endblock %}
+
+{% block content_header '' %}
+{% block title %}
+POST: {{ entity.name }}
+{% endblock %}
+
+{% block content %}
+     <br>  
+{#{ path }#}
+             
+     <a href="{{ path(btnretour)  }}" class="btn btn-small btn-success">Retour</a>
+<a href="{{ path('epost_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning">Editer</a>
+<br><br>
+<a href="{{ path('epostnotes_addfrompost', { 'id': entity.id }) }}" class="btn btn-large btn-warning">Noter</a>
+<br> <br> 
+
+  <table class="table table-striped table-bordered table-hover">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+           
+            <tr>
+                <th>Name</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                 {% if entity.categorie is not null %}               
+               <td> {{ entity.categorie.nom }}</td>
+                 {% else %}
+                  <td>---</td>
+                  {% endif %}
+            </tr>
+            
+             <tr>
+                <th>Proprietaire</th>
+                 {% if entity.proprietaire is not null %}               
+                    <td>{{ entity.proprietaire.username }}</td>
+                     {% else %}
+                  <td>---</td>
+                  {% endif %}
+                  </tr>
+                   <tr>
+                <th>Email</th>
+                 {% if entity.proprietaire is not null %}               
+                    <td>{{ entity.proprietaire.email }}</td>
+                     {% else %}
+                  <td>---</td>
+                  {% endif %}
+                  </tr>
+                  <tr>
+            <th>Groupe</th>
+            <td>{{ entity.proprietaire.idGroup }}</td>
+        </tr>
+                <tr>
+                <th>Description</th>
+                <td>{{ entity.description|raw }}</td>
+            </tr>
+                       
+            <tr>
+                <th>Image</th>
+         <td> {% if entity.imageName is not null %}               
+           
+         
+         <img width="220px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
+         {% else %}
+           ---
+         {% endif %}
+                {#   <td> <img src="{{ asset('uploads/eposts/51603dde20000.png') }}"/></td> #}
+        
+      </td>
+       </tr>
+            
+        </tbody>
+    </table>
+
+
+ <h2><center>Commentaires</center></h2>
+ 
+{% if comments|length > 0 %}
+    <section class="comments" id="comments">
+        <section class="previous-comments">
+           
+      
+            
+            <table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr class="title"> 
+                 <th>Id</th>
+                 <th>User</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Commentaire</th>
+                
+        </tr>
+    </thead>
+      
+        <tbody>
+{% for comment in comments %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>{{ comment.user }}</td>
+                
+                <td>{{ comment.created|date('l, F j, Y') }}</td>
+                {% if comment.isComment == 0 %}
+                 <td> <p>C</p></td>
+                {% else %}
+                 <td> <p>D</p></td>
+                {% endif %}
+            {#    <td> <p>{{ comment.isComment }}</p></td>#}
+                <td> <p>{{ comment.comment|raw }}</p></td>
+
+    </tr>
+  {% endfor %}
+    
+            </tbody>
+        </table>
+{% else %}
+    <p>Il n'y a pas de commentaires pour ce POST...</p>
+{% endif %}
+        </section>
+    </section>
+   <br><br>
+   
+   <section class="comments" id="comments">
+        {# .. #}
+
+        <h3>Laisser un message au Proprietaire de ce POST</h3>
+        {% render controller('ApplicationEpostBundle:EpostComments:new', { 'epost_id': entity.id }) %}
+
+    </section>
+{% endblock %}

@@ -1,0 +1,7 @@
+epost_comment_create:
+    pattern:  /epostcomment/{epost_id}
+    defaults: { _controller: ApplicationEpostBundle:EpostComments:create }
+    requirements:
+        _method:  POST
+        epost_id: \d+
+   
