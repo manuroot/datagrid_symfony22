@@ -70,6 +70,12 @@ class Epost {
      */
     private $description;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="resume", type="text", nullable=false)
+     */
+    private $resume;
   
     /**
      * @Assert\File(
@@ -144,6 +150,12 @@ private $comments;
  */
 private $notes;
 
+/**
+* @ORM\OneToOne(targetEntity="EpostGlobalNotes", cascade={"persist", "merge", "remove"})
+* @ORM\JoinColumn(name="globalnotes_id", referencedColumnName="id")
+*/
+private $globalnote;
+ 
 
      // @ORM\Column(type="text")
    
@@ -209,6 +221,27 @@ private $notes;
         return $this->description;
     }
 
+     /**
+     * Set description
+     *
+     * @param string $resume
+     * @return Epost
+     */
+    public function setResume($resume) {
+        $this->resume = $resume;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getResume() {
+        return $this->resume;
+    }
+    
   
 
    
@@ -437,4 +470,20 @@ private $notes;
     {
         return $this->notes;
     }
+    
+    /**
+* @param Waldo\RelationBundle\Entity\Carte $carte
+*/
+public function setGlobalnote(\Application\EpostBundle\Entity\EpostGlobalNotes $globalnote)
+{
+$this->carte = $globalnote;
+}
+ 
+/**
+* @return Application\EpostBundle\Entity\EpostGlobalNotes
+*/
+public function getGlobalnote()
+{
+return $this->globalnote;
+}
 }

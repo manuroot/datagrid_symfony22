@@ -38,9 +38,10 @@ POSTS DE MON GROUPE
 {{ knp_pagination_sortable(paginationa, 'S', 'd.idStatus.nom') }}
                    <i class="icon-flag"></i></th>
                    
-                   <th>Description</th>
+                  <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
                 
                  <th>Image</th>
+                   <th>Commentaires</th>
                  <th colspan="1">Actions</th>
             </tr>
         </thead>
@@ -77,7 +78,7 @@ POSTS DE MON GROUPE
      
 {% endif %} 
                                    </td> 
-                <td>{{ entity.description|raw }}</td>
+                <td>{{ entity.resume|raw }}</td>
                        <td>
                 {% if entity.image is not null %}               
            
@@ -88,7 +89,11 @@ POSTS DE MON GROUPE
          {% endif %}
            </td>
            
-                  
+                {% if entity.comments is not null %}
+                  <td>{{ entity.comments|length }}</td>
+                  {% else %}
+                  <td>---</td>
+                  {% endif %}     
                      <td>
                     <a href="{{ path('epost_show', { 'id': entity.id }) }}">
                         <img src="{{ asset('bundles/applicationepost/images/detail.png') }}" alt="show" width="15" height="15" />

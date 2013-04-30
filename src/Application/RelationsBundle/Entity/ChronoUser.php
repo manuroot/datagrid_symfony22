@@ -34,7 +34,15 @@ class ChronoUser
      *      limit=3,
      *      message="Au moins {{ limit }} caracteres."
      * )
-     * @Assert\MaxLength(20)
+      * @Assert\Length(
+     *      min = "4",
+     *      max = "30",
+     *      minMessage = "the name must be at least {{ limit }} characters length |
+     *  Au minimum {{ limit }} caracteres",
+     *  maxMessage = "Your first name cannot be longer than than {{ limit }} characters length |
+     *  Au maximum {{ limit }} caracteres"
+     * )
+     *
      * @ORM\Column(name="nom_user", type="string", length=20, nullable=false,unique=true)
      */
     private $nomUser;

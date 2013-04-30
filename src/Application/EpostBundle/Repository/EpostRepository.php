@@ -42,7 +42,7 @@ class EpostRepository extends EntityRepository {
                 ->leftJoin('a.proprietaire', 'b')
                 ->leftJoin('a.categorie', 'c')
                 ->leftJoin('a.idStatus', 'd')
-                 ->setParameter('proprietaire', $user_id)
+                ->setParameter('proprietaire', $user_id)
                 ->getQuery();
 
         return $query;
@@ -60,36 +60,35 @@ class EpostRepository extends EntityRepository {
         return $query;
     }
 
-    public function myFindOtherAll($user_id,$group_id) {
+    public function myFindOtherAll($user_id, $group_id) {
 
         $query = $this->createQueryBuilder('a')
                 ->where('a.proprietaire <> :proprietaire')
-             ->setParameter('proprietaire', $user_id)
+                ->setParameter('proprietaire', $user_id)
                 //  ->where('a.proprietaire.getId = :idproprietaire')
-                 //       ->setParameter('idproprietaire', '2')
-                   ->leftJoin('a.proprietaire', 'b')
-                 ->andWhere('b.idgroup = :groupid')
-                 ->setParameter('groupid', $group_id)
-            /*    
+                //       ->setParameter('idproprietaire', '2')
+                ->leftJoin('a.proprietaire', 'b')
+                ->andWhere('b.idgroup = :groupid')
+                ->setParameter('groupid', $group_id)
+                /*
                   ->leftJoin('a.notes', 'e')
-                 ->andWhere('e.user  <> :proprietaire')
+                  ->andWhere('e.user  <> :proprietaire')
                   ->setParameter('proprietaire', $user_id)
-           */ 
-                
+                 */
                 ->leftJoin('a.categorie', 'c')
                 ->leftJoin('a.idStatus', 'd')
-             
                 ->add('orderBy', 'a.id DESC')
                 ->getQuery();
         return $query;
     }
-/*
- * 
- *        //    ->leftJoin('u.produit', 'a')
-                       //  ->leftJoin('a.proprietaire', 'v')
-                    ->where('u.proprietaire = :proprietaire')
-                ->setParameter('proprietaire', $user_id)
- */
+
+    /*
+     * 
+     *        //    ->leftJoin('u.produit', 'a')
+      //  ->leftJoin('a.proprietaire', 'v')
+      ->where('u.proprietaire = :proprietaire')
+      ->setParameter('proprietaire', $user_id)
+     */
     /* public function myFindAll($user_id) {
 
       $query = $this->createQueryBuilder('a')
@@ -100,4 +99,19 @@ class EpostRepository extends EntityRepository {
       return $query;
 
       } */
-}
+
+    public function findaByYear($year) {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p.id,p.createdAt');
+        $arr = array();
+
+        foreach ($qb->getQuery()->getResult() as $d) {
+            $year = $d['createdAt']->format('Y');
+            //  $cat=$d['category'];
+            if (!(isset($arr["$year"])))
+                $arr["$year"] = 0;
+            $arr["$year"] = $arr["$year"] + 1;
+       return ($arr);
+        }
+    }
+    }

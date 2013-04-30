@@ -1,14 +1,16 @@
-epost:
+epost_indexadmin:
     pattern:  /
+    defaults: { _controller: "ApplicationEpostBundle:Epost:indexAll" }
+    
+epost:
+    pattern:  /postdashboard
     defaults: { _controller: "ApplicationEpostBundle:Epost:index" }
 
 epost_indexserch:
     pattern:  /search
     defaults: { _controller: "ApplicationEpostBundle:Epost:indexsearch" }
 
-epost_indexadmin:
-    pattern:  /indexadmin
-    defaults: { _controller: "ApplicationEpostBundle:Epost:indexAll" }
+
 
 epost_mesposts:
     pattern:  /mesposts

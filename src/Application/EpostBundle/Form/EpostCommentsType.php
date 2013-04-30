@@ -19,7 +19,7 @@ class EpostCommentsType extends AbstractType {
                    ->add('comment', 'textarea', array(
                        'label'=>'Message',
                     'attr' => array(
-                        'cols' => "30",
+                        'cols' => "60",
                        
                         'class' => 'tinymce',
                     'data-theme' => 'simple'

@@ -91,6 +91,16 @@ public function getCommentsForProduit($produitId, $approved = true)
         return $query;
     }
 
+       public function FindLastComments($limit=20) {
+        return $this->createQueryBuilder('p')
+                
+                //  ->add('orderBy', 'p.id DESC')
+                 ->where('p.approved = 1')
+                 ->orderby('p.updated', 'DESC')
+                  ->setMaxResults($limit)
+                        ->getQuery()
+                 ->getResult();
+       }
     /* public function myFindAll($user_id) {
 
       $query = $this->createQueryBuilder('a')

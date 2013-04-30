@@ -21,6 +21,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class EpostController extends Controller {
 
+    private function sidebar_years() {
+        $em = $this->container->get('doctrine')->getManager();
+        $myarr = array();
+        $myarr['current_year'] = date('Y');
+        $arr_years = $em->getRepository('ApplicationEpostBundle:Epost')->findaByYear($myarr['current_year']);
+        return ($arr_years);
+   
+    }
+    
+    
      private function createpaginator($query, $num_perpage = 5) {
 
         $paginator = $this->get('knp_paginator');
@@ -60,7 +70,7 @@ class EpostController extends Controller {
         list($user_id, $group_id) = $this->getuserid();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost');
-
+ $all_years = $this->sidebar_years();
 
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
         $query_other = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
@@ -89,6 +99,7 @@ class EpostController extends Controller {
         return $this->render('ApplicationEpostBundle:Epost:index.html.twig', array(
                     'paginationa' => $paginationa,
                     'paginationb' => $paginationb,
+             'all_years' => $all_years,
                 ));
     }
 

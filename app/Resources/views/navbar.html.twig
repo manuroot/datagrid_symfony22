@@ -137,12 +137,15 @@
                                                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white  icon-shopping-cart"></i>
                                                                         Blog<b class="caret"></b> </a>
                                                                     <ul class="dropdown-menu">
+                                                       {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                                                            
                                                                         <li><a href="{{ path('epost') }}"><i class="icon-plus-sign"></i> {{ 'DashBoard Posts'|trans }}</a></li>
                                                                         <li><a href="{{ path('epost_mesposts') }}"><i class="icon-plus-sign"></i> {{ 'Mes Posts'|trans }}</a></li>
                                                                         <li><a href="{{ path('epost_propositions') }}"><i class="icon-plus-sign"></i> {{ 'Groupe-Posts'|trans }}</a></li>
                                                                            <li><a href="{{ path('epostnotes') }}"><i class="icon-camera"></i> {{ 'Notes-Posts'|trans }}</a></li>
                                                                         <li><a href="{{ path('epost_indexserch') }}"><i class="icon-camera"></i> {{ 'Recherche Posts'|trans }}</a></li>
-                                                                        <li><a href="{{ path('epost_indexadmin') }}"><i class="icon-camera"></i> {{ 'Tous les Posts'|trans }}</a></li>
+                                                            {% endif %}
+                                                          <li><a href="{{ path('epost_indexadmin') }}"><i class="icon-camera"></i> {{ 'Tous les Posts'|trans }}</a></li>
 
                                                                     </ul>
                                                                 </li>
@@ -165,7 +168,7 @@
                                                                 Groupes<b class="caret"></b> </a>
                                                             <ul class="dropdown-menu">
                                                                 <li><a href="{{ path('egroup_groupes') }}"><i class="icon-camera"></i> {{ 'Dashboard Groupes'|trans }}</a></li>
-                                                              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                                              {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                                                                      <li><a href="{{ path('egroup_groupes_showmygroup') }}"><i class="icon-camera"></i> {{ 'Mon Groupe'|trans }}</a></li>
                                                            
                                                                 {% endif %}

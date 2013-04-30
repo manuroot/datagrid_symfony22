@@ -106,23 +106,14 @@ collapsible: true
        
     <div class="viewpost">
      
-    <div class="sonata-blog-post-date-container">
-      
         {{ entity.createdAt|created_ago }}
-    </div>
-
+   
     <h1 class="sonata-blog-post-title">
     {{ entity.name }} Par
         <span class="sonata-blog-post-author">
 {{ entity.proprietaire.username }}</span>
     </h1>
-
-    <div class="sonata-blog-post-information">
-
-        <div class="sonata-blog-post-tag-container">
-           
-             
-                 <table class="table table-bordered table-hover">
+               <table>
         
             <tr>
                 <td>
@@ -139,11 +130,11 @@ collapsible: true
         <td>{{ entity.description|raw }}</td>
         </tr>
        </table>
-         </div>
-        </div>
+       
+       
         
     </div></div>   
-     
+     <br><br>
  <h2><center>Commentaires</center></h2>
  
 {% if comments|length > 0 %}

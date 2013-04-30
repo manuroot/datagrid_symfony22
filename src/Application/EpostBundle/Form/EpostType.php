@@ -12,6 +12,11 @@ class EpostType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
+               ->add('resume', 'textarea', array(
+                    'label' => 'Resumé du Post',
+                    'attr' => array(
+                        'cols' => "60",
+                         )))
                 ->add('name', 'genemu_jqueryautocomplete_entity', array(
                     'class' => 'Application\EpostBundle\Entity\Epost',
                     'property' => 'name',
@@ -20,6 +25,8 @@ class EpostType extends AbstractType {
                     ),
                 ))
                 //  ->add('name',null,array('label'=>'Nom du Post'))
+               
+                
                 ->add('description', 'textarea', array(
                     'label' => 'Description du Post',
                     'attr' => array(

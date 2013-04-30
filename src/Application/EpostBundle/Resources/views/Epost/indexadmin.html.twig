@@ -39,8 +39,7 @@ POSTS DISPONIBLES
 {{ knp_pagination_sortable(paginationa, 'S', 'd.idStatus.nom') }}<i class="icon-flag"></i></th> 
  <th{% if paginationa.isSorted('a.createdAt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Date', 'a.createdAt') }}</th>
         
-        
- <th{% if paginationa.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Description', 'a.description') }}</th>
+<th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
    <th>Image</th>
     <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
@@ -87,7 +86,7 @@ POSTS DISPONIBLES
                                    </td> 
   <td>{{ entity.createdAt|created_ago }}</td>
  
-                <td>{{ entity.description|raw }}</td>
+                <td>{{ entity.resume|raw }}</td>
                        <td>
                 {% if entity.image is not null %}               
            

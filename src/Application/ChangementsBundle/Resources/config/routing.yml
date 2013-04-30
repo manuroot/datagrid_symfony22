@@ -1,6 +1,6 @@
 _changements:
     resource: "@ApplicationChangementsBundle/Resources/config/routing/changements.yml"
-    prefix:   /
+    prefix:   /changements
     
 _changements_comments:
     resource: "@ApplicationChangementsBundle/Resources/config/routing/changementscomments.yml"

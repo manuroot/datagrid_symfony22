@@ -66,7 +66,11 @@ MES POSTS
 {% endblock %}
 {% block content %}
 
-
+ {% for key,value in all_years %}
+          {#  <ul> <a href="{{ url('sonata_news_archive_yearly', {'year': year} ) }}">{{ year }}</a>#}
+                <ul> <a href="{{ url('epost', {'year': key} ) }}">{{ key }}({{ value }})</a>
+                </ul>
+{% endfor %}
 {#
   <p id="load-webbies">
             <a href="#">Webbies</a>: 
@@ -113,7 +117,7 @@ MES POSTS
                    <i class="icon-flag"></i></th> 
       <th{% if paginationa.isSorted('a.createdAt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Date', 'a.createdAt') }}</th>
  
- <th{% if paginationa.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Description', 'a.description') }}</th>
+ <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
    <th>Image</th>
     <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
@@ -140,7 +144,7 @@ MES POSTS
                   
                   <td>
                                    {% if entity.idStatus is not null %}
-                               {% if entity.idStatus.nom == 'open' %}
+                               {% if entity.idStatus.nom == 'OPEN' %}
 
                                             <img src="{{ asset('bundles/applicationepost/images/cadenas-souvert.png') }}" alt="show" width="15" height="15" />
 
@@ -155,7 +159,8 @@ MES POSTS
 {% endif %} 
                                    </td> 
        <td>{{ entity.createdAt|created_ago }}</td>
-                <td>{{ entity.description|raw }}</td>
+     
+              <td>{{ entity.resume }}</td>
                        <td>
                 {% if entity.image is not null %}               
            
@@ -199,7 +204,7 @@ MES POSTS
 
 
 
-<br><br>
+<br>
 
 {#-----------------------------------------------#}
 
@@ -229,7 +234,7 @@ MES POSTS
 {{ knp_pagination_sortable(paginationb, 'S', 'd.idStatus.nom') }}
                    <i class="icon-flag"></i></th>
                    
-                   <th>Description</th>
+                 <th{% if paginationb.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationb, 'Résumé', 'a.resume') }}</th>
                 
                  <th>Image</th>
                    <th>Commentaires</th>
@@ -269,7 +274,7 @@ MES POSTS
      
 {% endif %} 
                                    </td> 
-                <td>{{ entity.description|raw }}</td>
+                <td>{{ entity.resume|raw }}</td>
                        <td>
                 {% if entity.image is not null %}               
            

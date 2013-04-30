@@ -40,11 +40,12 @@ MES POSTS
 {{ knp_pagination_sortable(paginationa, 'S', 'd.idStatus.nom') }}
                    <i class="icon-flag"></i></th> 
         <th{% if paginationa.isSorted('a.createdAt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Date', 'a.createdAt') }}</th>
- 
+ <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
  {#
 <th{% if paginationa.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Description', 'a.description') }}</th>
 #}
      <th>Image</th>
+     <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
  <th colspan="3"><center>Actions</center></th>
 {% else %}
@@ -70,7 +71,7 @@ MES POSTS
                   {% endif %}
                   <td>
                                    {% if entity.idStatus is not null %}
-                               {% if entity.idStatus.nom == 'open' %}
+                               {% if entity.idStatus.nom == 'OPEN' %}
 
                                             <img src="{{ asset('bundles/applicationepost/images/cadenas-souvert.png') }}" alt="show" width="15" height="15" />
 
@@ -87,7 +88,8 @@ MES POSTS
   <td>{{ entity.createdAt|created_ago }}</td>
                            {# <td>           {{  entity.description|raw|slice(0, 20)|raw }}</td>#}
       {#  <td>{{ entity.description|raw|length > 30 ? entity.description|slice(0, 30)|raw  : entity.description|raw  }}</td>
-        #}    {#  <td>{{ entity.description|raw }}</td>#}
+#}
+  <td>{{ entity.resume|raw }}</td>
                        <td>
                 {% if entity.image is not null %}               
            
@@ -97,7 +99,11 @@ MES POSTS
            ---
          {% endif %}
            </td>
-           
+              {% if entity.comments is not null %}
+                  <td>{{ entity.comments|length }}</td>
+                  {% else %}
+                  <td>---</td>
+                  {% endif %}  
                   
                      <td>
                     <a href="{{ path('epost_show', { 'id': entity.id }) }}">

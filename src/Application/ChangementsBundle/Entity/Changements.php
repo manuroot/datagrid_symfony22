@@ -49,19 +49,17 @@ class Changements extends AbstractEvent
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=50, nullable=false)
-     /**
-     * @Assert\MinLength(
-     *      limit=5,
-     *     message="At least {{ limit }} characters.|
-      Au moins {{ limit }} caracteres."
-      )
-     * @Assert\MaxLength(
-     *      limit=35,
-     *      message="Less than {{ limit }} characters.|
-      Au max {{ limit }} caracteres."
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "30",
+     *      minMessage = "Your name must be at least {{ limit }} characters length |
+     *  Au minimum {{ limit }} caracteres",
+     *      maxMessage = "Your first name cannot be longer than than {{ limit }} characters length |
+     *  Au maximum {{ limit }} caracteres"
      * )
+     *
      * @GRID\Column(field="nom", title="Nom",size="55")
-    */
+     */
   
     private $nom;
 

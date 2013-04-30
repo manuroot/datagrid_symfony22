@@ -1,6 +1,6 @@
 _epost:
     resource: "@ApplicationEpostBundle/Resources/config/routing/epost.yml"
-    prefix:   /epost
+    prefix:   /
     
 _epost_comments:
     resource: "@ApplicationEpostBundle/Resources/config/routing/epostcomments.yml"

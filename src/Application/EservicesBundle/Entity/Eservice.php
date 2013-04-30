@@ -78,16 +78,15 @@ class Eservice {
     /**
      * @var string
      * @Assert\NotBlank(message="Title must not be empty")
-     * @Assert\MinLength(
-     *      limit=5,
-     *     message="At least {{ limit }} characters.|
-      Au moins {{ limit }} caracteres."
-      )
-     * @Assert\MaxLength(
-     *      limit=30,
-     *      message="Less than {{ limit }} characters.|
-      Au max {{ limit }} caracteres."
+     * @Assert\Length(
+     *      min = "5",
+     *      max = "30",
+     *      minMessage = "the name must be at least {{ limit }} characters length |
+     *  Au minimum {{ limit }} caracteres",
+     *  maxMessage = "Your first name cannot be longer than than {{ limit }} characters length |
+     *  Au maximum {{ limit }} caracteres"
      * )
+     *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
     private $name;
