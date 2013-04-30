@@ -134,10 +134,13 @@ collapsible: true
        
         
     </div></div>   
-     <br><br>
+         <hr>
+         
  <h2><center>Commentaires</center></h2>
  
 {% if comments|length > 0 %}
+
+    
     <section class="comments" id="comments">
         <section class="previous-comments">
            
@@ -180,12 +183,13 @@ collapsible: true
 {% endif %}
         </section>
     </section>
-   <br><br>
    
+     
    <section class="comments" id="comments">
         {# .. #}
 
-        <h3>Laisser un message au Proprietaire de ce POST</h3>
+           <hr>
+        <h3>Laisser un commentaire</h3>
         {% render controller('ApplicationEpostBundle:EpostComments:new', { 'epost_id': entity.id }) %}
 
     </section>

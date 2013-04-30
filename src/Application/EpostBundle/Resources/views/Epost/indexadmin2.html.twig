@@ -1,0 +1,91 @@
+{% extends "ApplicationEpostBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+      <link rel="stylesheet" href="{{ asset('bundles/applicationepost/css/sliding.css') }}" type="text/css" media="all"/>
+     
+ {% endblock %}
+
+{% block content_header '' %}
+{% block title %}
+POSTS DISPONIBLES
+{% endblock %}
+{% block content %}
+
+
+{% for type, flashMessages in app.session.flashbag.all() %}
+    {% for flashMessage in flashMessages %}
+        <div class="alert alert-{{ type }}">
+            {{ flashMessage|trans }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{% if is_granted("ROLE_USER") %}   
+<a href="{{ path('epost_new') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Ajouter un Post</a>
+{% endif %}
+<br><br>
+    
+
+  {#{% for post in pager.getResults() %}#}
+      {% for entity in paginationa %}
+      
+
+ <div class="mypost">
+            <div class="sonata-blog-post-date-container">
+           {{ entity.createdAt|created_ago }}     
+            </div>
+             <!--   <h2 class="entry-title">-->
+            <h2 class="sonata-blog-post-title">
+            {% if entity.image is not null %}               
+           
+         
+         <img width="100px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
+         {% else %}
+           ---
+         {% endif %}
+           
+                <span class="sonata-blog-post-author"> 
+    {% if entity.proprietaire is not null %}               
+                    {{ entity.proprietaire.username }}
+                 {% else %}
+                 ---
+                     {% endif %}</span>
+            </h2>
+               <div class="sonata-blog-post-tag-list">
+                           {% if entity.categorie is not null %}               
+                          <span class="label">
+                  {{ entity.categorie.nom }}
+                      
+                        </span>
+                  {% else %}
+                  pas de catégorie
+                  {% endif %}
+
+
+                       
+                    </div>
+         
+            <div class="sonata-blog-post-abtract">
+              Extrait:  {{ entity.resume|raw }}
+            </div>
+              {% if entity.comments is not null %}
+                <span class="badge badge-warning">{{ entity.comments|length }}</span>
+                
+                  {% else %}
+                 ---
+                  {% endif %}   
+                   
+                    <a href="{{ path('epost_show', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationepost/images/detail.png') }}" alt="show" width="15" height="15" />
+                    </a>
+                             
+                             
+            
+       <!-- </div>-->
+       </div>
+   
+    {% endfor %}
+ {{ knp_pagination_render(paginationa) }}
+
+{% endblock %}

@@ -66,11 +66,13 @@ MES POSTS
 {% endblock %}
 {% block content %}
 
+{#
  {% for key,value in all_years %}
-          {#  <ul> <a href="{{ url('sonata_news_archive_yearly', {'year': year} ) }}">{{ year }}</a>#}
-                <ul> <a href="{{ url('epost', {'year': key} ) }}">{{ key }}({{ value }})</a>
+               <ul> <a href="{{ url('epost', {'year': key} ) }}">{{ key }}({{ value }})</a>
                 </ul>
 {% endfor %}
+#}
+
 {#
   <p id="load-webbies">
             <a href="#">Webbies</a>: 
@@ -202,9 +204,7 @@ MES POSTS
     </table>
   {{ knp_pagination_render(paginationa) }}
 
-
-
-<br>
+<hr>
 
 {#-----------------------------------------------#}
 
