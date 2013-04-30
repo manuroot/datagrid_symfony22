@@ -111,6 +111,8 @@ MES POSTS
  <th{% if paginationa.isSorted('d.idStatus.nom') %} class="sorted"{% endif %}>
 {{ knp_pagination_sortable(paginationa, 'S', 'd.idStatus.nom') }}
                    <i class="icon-flag"></i></th> 
+      <th{% if paginationa.isSorted('a.createdAt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Date', 'a.createdAt') }}</th>
+ 
  <th{% if paginationa.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Description', 'a.description') }}</th>
    <th>Image</th>
     <th>Commentaires</th>
@@ -152,7 +154,7 @@ MES POSTS
      
 {% endif %} 
                                    </td> 
- 
+       <td>{{ entity.createdAt|created_ago }}</td>
                 <td>{{ entity.description|raw }}</td>
                        <td>
                 {% if entity.image is not null %}               

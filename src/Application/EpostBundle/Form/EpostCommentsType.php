@@ -11,14 +11,15 @@ use Doctrine\ORM\EntityRepository;
 class EpostCommentsType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        
            $builder
            ->add('user',null,array( 'disabled' => true,'label'=>'Utilisateur'))
-                     ->add('isComment',null,array('label'=>"Demande de Pret",'required' => false))
+                   //  ->add('isComment',null,array('label'=>"Demande de Pret",'required' => false))
            // ->add('comment')
                    ->add('comment', 'textarea', array(
                        'label'=>'Message',
                     'attr' => array(
-                        'cols' => "20",
+                        'cols' => "30",
                        
                         'class' => 'tinymce',
                     'data-theme' => 'simple'

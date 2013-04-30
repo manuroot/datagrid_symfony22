@@ -1,89 +1,133 @@
 {% extends "ApplicationEpostBundle::layout.html.twig" %}
 
-{% block javascripts %}
-{{ parent() }}
-{#
-<script type="text/javascript">
-tinyMCE.init({
-    mode : "textareas"
-});
-/* This selects all textareas. */
-</script>
-#}
- {{ tinymce_init() }}
-  {#{{ tinymce_init({ theme : "simple", mode : "textareas" }) }}#}
- 
-{% endblock %}
-
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationepost/css/sliding.css') }}" type="text/css" media="all"/>
      
- {% endblock %}
+<style>
+   
+        .mytext {
+           
+            background-color: #f1f1f1;
+            width:100px;
 
+        }
+            
+div.viewpost
+{
+border:1px solid;
+border-radius:10px;
+-moz-border-radius:10px; 
+/* Old Firefox */
+padding-bottom:10px;
+padding-left:5px;
+margin-bottom:10px;
+box-shadow: 7px 7px 5px #888888;
+background-color:  #e3e3e3;
+/*background-color: rgb(249, 249, 249);*/
+} 
+
+div#accordion{
+padding-right:10px;}
+
+ #button {
+padding: .5em 1em;
+text-decoration: none;
+}
+#effect {
+position: relative;
+width: 100%;
+height: 135px;
+padding: 0.1em;
+}
+
+.sidebar .section { margin-bottom: 20px; }
+.sidebar h3 { line-height: 1.2em; font-size: 20px; margin-bottom: 10px; font-weight: normal; background: #eee; padding: 5px;  }
+.sidebar p { line-height: 1.5em; margin-bottom: 20px; }
+.sidebar ul { list-style: none }
+.sidebar ul li { line-height: 1.5em }
+.sidebar .small { font-size: 12px; }
+.sidebar .comment p { margin-bottom: 5px; }
+.sidebar .comment { margin-bottom: 10px; padding-bottom: 10px; }
+.sidebar .tags { font-weight: bold; }
+.sidebar .tags span { color: #000; font-size: 12px; }
+.weight-1 { font-size: 12px; }
+.weight-2 { font-size: 15px; }
+.weight-3 { font-size: 18px; }
+.weight-4 { font-size: 21px; }
+.weight-5 { font-size: 24px; }
+</style> 
+  {% endblock %}
+     
+{% block javascripts %}
+      {{ parent() }}
+{{ tinymce_init() }}
+ <script>
+$(function() {
+     // most effect types need no options passed by default
+var options = {};
+   
+     $( "#button" ).click(function() {
+ $( "#effect" ).toggle( 'slide', { direction: "right" }, 500 );
+return false;
+});
+$( "#accordion" ).accordion({
+collapsible: true
+});
+});
+</script>
+
+     {#{ tinymce_init() }#}
+  {% endblock %}
+      
+   
 {% block content_header '' %}
 {% block title %}
-POST: {{ entity.name }}
+ 
 {% endblock %}
 
-{% block content %}
-     <br>  
-{#{ path }#}
-             
-     <a href="{{ path(btnretour)  }}" class="btn btn-small btn-success">Retour</a>
-<a href="{{ path('epost_edit', { 'id': entity.id }) }}" class="btn btn-small btn-warning">Editer</a>
-<br><br>
-<a href="{{ path('epostnotes_addfrompost', { 'id': entity.id }) }}" class="btn btn-large btn-warning">Noter</a>
-<br> <br> 
 
-  <table class="table table-striped table-bordered table-hover">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
+{% block content %}
+
+{#
+
+/*
+ * This file is part of the Sonata package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+#}
+ <br>
+<div class="sonata-blog-post-container">
+       
+    <div class="viewpost">
+     
+    <div class="sonata-blog-post-date-container">
+      
+        {{ entity.createdAt|created_ago }}
+    </div>
+
+    <h1 class="sonata-blog-post-title">
+    {{ entity.name }} Par
+        <span class="sonata-blog-post-author">
+{{ entity.proprietaire.username }}</span>
+    </h1>
+
+    <div class="sonata-blog-post-information">
+
+        <div class="sonata-blog-post-tag-container">
            
+             
+                 <table class="table table-bordered table-hover">
+        
             <tr>
-                <th>Name</th>
-                <td>{{ entity.name }}</td>
-            </tr>
-            <tr>
-                <th>Categorie</th>
-                 {% if entity.categorie is not null %}               
-               <td> {{ entity.categorie.nom }}</td>
-                 {% else %}
-                  <td>---</td>
-                  {% endif %}
-            </tr>
-            
-             <tr>
-                <th>Proprietaire</th>
-                 {% if entity.proprietaire is not null %}               
-                    <td>{{ entity.proprietaire.username }}</td>
-                     {% else %}
-                  <td>---</td>
-                  {% endif %}
-                  </tr>
-                   <tr>
-                <th>Email</th>
-                 {% if entity.proprietaire is not null %}               
-                    <td>{{ entity.proprietaire.email }}</td>
-                     {% else %}
-                  <td>---</td>
-                  {% endif %}
-                  </tr>
-                  <tr>
-            <th>Groupe</th>
-            <td>{{ entity.proprietaire.idGroup }}</td>
-        </tr>
-                <tr>
-                <th>Description</th>
-                <td>{{ entity.description|raw }}</td>
-            </tr>
-                       
-            <tr>
-                <th>Image</th>
-         <td> {% if entity.imageName is not null %}               
+                <td>
+        
+        {% if entity.imageName is not null %}               
            
          
          <img width="220px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
@@ -91,14 +135,15 @@ POST: {{ entity.name }}
            ---
          {% endif %}
                 {#   <td> <img src="{{ asset('uploads/eposts/51603dde20000.png') }}"/></td> #}
+        </td>
+        <td>{{ entity.description|raw }}</td>
+        </tr>
+       </table>
+         </div>
+        </div>
         
-      </td>
-       </tr>
-            
-        </tbody>
-    </table>
-
-
+    </div></div>   
+     
  <h2><center>Commentaires</center></h2>
  
 {% if comments|length > 0 %}
@@ -153,4 +198,5 @@ POST: {{ entity.name }}
         {% render controller('ApplicationEpostBundle:EpostComments:new', { 'epost_id': entity.id }) %}
 
     </section>
-{% endblock %}
+  
+         {% endblock %}

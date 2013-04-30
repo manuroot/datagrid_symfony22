@@ -21,6 +21,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class EpostController extends Controller {
 
+     private function createpaginator($query, $num_perpage = 5) {
+
+        $paginator = $this->get('knp_paginator');
+        $pagename = 'page'; // Set custom page variable name
+        $page = $this->get('request')->query->get($pagename, 1); // Get custom page variable
+        $pagination = $paginator->paginate(
+                $query, $page, $num_perpage, array('pageParameterName' => $pagename,
+            "sortDirectionParameterName" => "dir",
+            'sortFieldParameterName' => "sort")
+        );
+        return $pagination;
+    }
     private function getuserid() {
 
 
@@ -111,18 +123,7 @@ class EpostController extends Controller {
                 ));
     }
 
-    private function createpaginator($query, $num_perpage = 5) {
-
-        $paginator = $this->get('knp_paginator');
-        $pagename = 'page'; // Set custom page variable name
-        $page = $this->get('request')->query->get($pagename, 1); // Get custom page variable
-        $pagination = $paginator->paginate(
-                $query, $page, $num_perpage, array('pageParameterName' => $pagename,
-            "sortDirectionParameterName" => "dir",
-            'sortFieldParameterName' => "sort")
-        );
-        return $pagination;
-    }
+   
 
     public function indexpropositionsAction() {
 
@@ -147,15 +148,6 @@ class EpostController extends Controller {
         $form = $this->createForm(new EpostType(), $entity);
         $form->bind($request);
         list($user_id, $group_id) = $this->getuserid();
-        /*$user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        if ($user_security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            //  if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-        } else {
-            $user_id = 0;
-        }*/
         $session = $this->getRequest()->getSession();
         //  $session->get('buttonretour', 'eproduit');
         $myretour = $session->get('buttonretour');
