@@ -26,17 +26,16 @@ class EpostController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $user_security = $this->container->get('security.context');
+         // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-        $user = $this->get('security.context')->getToken()->getUser();
-            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
+            $user = $this->get('security.context')->getToken()->getUser();
+             $user_id = $user->getId();
             $group_id = $user->getIdgroup()->getId();
         } else {
             $user_id = 0;
-            $group_id= 0;
+            $group_id = 0;
         }
-        return array($user_id,$group_id);
+        return array($user_id, $group_id);
     }
 
     /**
@@ -46,13 +45,13 @@ class EpostController extends Controller {
     public function indexAction() {
 
         $em = $this->getDoctrine()->getManager();
-        list($user_id,$group_id)=$this->getuserid();
+        list($user_id, $group_id) = $this->getuserid();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost');
 
-        
-          $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
-        $query_other = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id,$group_id);
+
+        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
+        $query_other = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
         $paginator = $this->get('knp_paginator');
         //   $query = $em->getRepository('ApplicationEpostBundle:Epost')->findAll();
         $pagename1 = 'page1'; // Set custom page variable name
@@ -74,31 +73,21 @@ class EpostController extends Controller {
 
         $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         $paginationb->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
-       
+
         return $this->render('ApplicationEpostBundle:Epost:index.html.twig', array(
                     'paginationa' => $paginationa,
                     'paginationb' => $paginationb,
                 ));
     }
 
-   
     // @Secure(roles="ROLE_ADMIN")
-    
+
     public function indexAllAction() {
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_indexadmin');
-
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFind();
-
-        $paginator = $this->get('knp_paginator');
-        $pagename1 = 'page1'; // Set custom page variable name
-        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
-        $paginationa = $paginator->paginate(
-                $query, $page1, 5, array('pageParameterName' => $pagename1)
-        );
-
-
+        $paginationa = $this->createpaginator($query, 5);
         $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         return $this->render('ApplicationEpostBundle:Epost:indexadmin.html.twig', array(
                     'paginationa' => $paginationa,
@@ -111,42 +100,38 @@ class EpostController extends Controller {
     public function indexmespostsAction() {
 
         $em = $this->getDoctrine()->getManager();
-        list($user_id,$group_id)=$this->getuserid();
-       
+        list($user_id, $group_id) = $this->getuserid();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_mesposts');
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
-
-        $paginator = $this->get('knp_paginator');
-        $pagename1 = 'page1'; // Set custom page variable name
-        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
-        $paginationa = $paginator->paginate(
-                $query, $page1, 5, array('pageParameterName' => $pagename1)
-        );
-
-
+        $paginationa = $this->createpaginator($query, 5);
         $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         return $this->render('ApplicationEpostBundle:Epost:indexmesposts.html.twig', array(
                     'paginationa' => $paginationa,
                 ));
     }
 
+    private function createpaginator($query, $num_perpage = 5) {
+
+        $paginator = $this->get('knp_paginator');
+        $pagename = 'page'; // Set custom page variable name
+        $page = $this->get('request')->query->get($pagename, 1); // Get custom page variable
+        $pagination = $paginator->paginate(
+                $query, $page, $num_perpage, array('pageParameterName' => $pagename,
+            "sortDirectionParameterName" => "dir",
+            'sortFieldParameterName' => "sort")
+        );
+        return $pagination;
+    }
+
     public function indexpropositionsAction() {
 
         $em = $this->getDoctrine()->getManager();
-         list($user_id,$group_id)=$this->getuserid();
-         $session = $this->getRequest()->getSession();
+        list($user_id, $group_id) = $this->getuserid();
+        $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_propositions');
-        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id,$group_id);
-
-        $paginator = $this->get('knp_paginator');
-        $pagename1 = 'page1'; // Set custom page variable name
-        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
-        $paginationa = $paginator->paginate(
-                $query, $page1, 5, array('pageParameterName' => $pagename1)
-        );
-
-
+        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
+        $paginationa = $this->createpaginator($query, 5);
         $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         return $this->render('ApplicationEpostBundle:Epost:indexpropositions.html.twig', array(
                     'paginationa' => $paginationa,
@@ -161,7 +146,8 @@ class EpostController extends Controller {
         $entity = new Epost();
         $form = $this->createForm(new EpostType(), $entity);
         $form->bind($request);
-        $user = $this->get('security.context')->getToken()->getUser();
+        list($user_id, $group_id) = $this->getuserid();
+        /*$user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
         if ($user_security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             //  if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -169,10 +155,10 @@ class EpostController extends Controller {
             $user_id = $user->getId();
         } else {
             $user_id = 0;
-        }
-          $session = $this->getRequest()->getSession();
-      //  $session->get('buttonretour', 'eproduit');
-         $myretour = $session->get('buttonretour');
+        }*/
+        $session = $this->getRequest()->getSession();
+        //  $session->get('buttonretour', 'eproduit');
+        $myretour = $session->get('buttonretour');
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -191,7 +177,7 @@ class EpostController extends Controller {
 
         return $this->render('ApplicationEpostBundle:Epost:new.html.twig', array(
                     'entity' => $entity,
-             'btnretour' => $myretour,
+                    'btnretour' => $myretour,
                     'form' => $form->createView(),
                 ));
     }
@@ -215,8 +201,6 @@ class EpostController extends Controller {
                 ));
     }
 
-    
-    
     /**
      * Finds and displays a Epost entity.
      *
@@ -230,11 +214,11 @@ class EpostController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Epost entity.');
         }
-        
+
         $comments = $em->getRepository('ApplicationEpostBundle:EpostComments')
-                   ->getCommentsForPost($entity->getId());
-        
-        
+                ->getCommentsForPost($entity->getId());
+
+
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
 
@@ -243,7 +227,7 @@ class EpostController extends Controller {
         return $this->render('ApplicationEpostBundle:Epost:show.html.twig', array(
                     'entity' => $entity,
                     'btnretour' => $myretour,
-                    'comments'  => $comments,
+                    'comments' => $comments,
                     //   'path' => $path,
                     'delete_form' => $deleteForm->createView(),));
     }
@@ -262,9 +246,11 @@ class EpostController extends Controller {
         }
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
-             
-        $user_id = $this->getuserid();
+
+        list($user_id,$group_id) = $this->getuserid();
         $proprietaire = $entity->getProprietaire()->getId();
+        //echo "u=$user_id  p=$proprietaire<br>";
+        //    exit(1);
         if ($user_id != $proprietaire) {
             return $this->render('ApplicationEpostBundle:Epost:deny.html.twig', array(
                     ));
@@ -297,15 +283,15 @@ class EpostController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new EpostType(), $entity);
         $editForm->bind($request);
-            $session = $this->getRequest()->getSession();
-            $myretour = $session->get('buttonretour');
-            if (!isset($myretour))
-                $myretour='epost';
+        $session = $this->getRequest()->getSession();
+        $myretour = $session->get('buttonretour');
+        if (!isset($myretour))
+            $myretour = 'epost';
         if ($editForm->isValid()) {
             $entity->setUpdatedAt(new \DateTime());
             $em->persist($entity);
             $em->flush();
-           
+
             $session->getFlashBag()->add('warning', "Enregistrement $id update successfull");
             $route_back = $session->get('buttonretour');
             if (isset($route_back))
@@ -316,7 +302,7 @@ class EpostController extends Controller {
 
         return $this->render('ApplicationEpostBundle:Epost:edit.html.twig', array(
                     'entity' => $entity,
-            'btnretour' => $myretour,
+                    'btnretour' => $myretour,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
                 ));
@@ -398,13 +384,13 @@ class EpostController extends Controller {
     public function indexsearchAction() {
 
         $em = $this->getDoctrine()->getManager();
-       list($user_id,$group_id)=$this->getuserid();
-    
+        list($user_id, $group_id) = $this->getuserid();
+
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_indexserch');
 
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
-        $query_other = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id,$group_id);
+        $query_other = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
         $paginator = $this->get('knp_paginator');
         //   $query = $em->getRepository('ApplicationEpostBundle:Epost')->findAll();
         $pagename1 = 'page1'; // Set custom page variable name
@@ -430,48 +416,46 @@ class EpostController extends Controller {
         ;
     }
 
-    
-     public function mediaAction(Request $request)
-{
+    public function mediaAction(Request $request) {
 // preset a default value
-$media = $this->get('sonata.media.manager.media')->create();
-$media->setBinaryContent('http://www.youtube.com/watch?v=qTVfFmENgPU');
- 
+        $media = $this->get('sonata.media.manager.media')->create();
+        $media->setBinaryContent('http://www.youtube.com/watch?v=qTVfFmENgPU');
+
 // create the target object
-$mediaPreview = new MediaPreview();
-$mediaPreview->setMedia($media);
- 
+        $mediaPreview = new MediaPreview();
+        $mediaPreview->setMedia($media);
+
 // create the form
-$builder = $this->createFormBuilder($mediaPreview);
-$builder->add('media', 'sonata_media_type', array(
-'provider' => 'sonata.media.provider.youtube',
-'context' => 'default'
-));
- 
-$form = $builder->getForm();
- 
+        $builder = $this->createFormBuilder($mediaPreview);
+        $builder->add('media', 'sonata_media_type', array(
+            'provider' => 'sonata.media.provider.youtube',
+            'context' => 'default'
+        ));
+
+        $form = $builder->getForm();
+
 // bind and transform the media's binary content into real content
-if ($request->getMethod() == 'POST') {
-$form->bindRequest($request);
- 
-$this->getSeoPage()
-->setTitle($media->getName())
-->addMeta('property', 'og:description', $media->getDescription())
-->addMeta('property', 'og:type', 'video')
-;
-}
- 
-return $this->render('SonataDemoBundle:Demo:media.html.twig', array(
-'form' => $form->createView(),
-'media' => $mediaPreview->getMedia()
-));
-}
- 
-/**
-* @return \Sonata\SeoBundle\Seo\SeoPageInterface
-*/
-public function getSeoPage()
-{
-return $this->get('sonata.seo.page');
-}
+        if ($request->getMethod() == 'POST') {
+            $form->bindRequest($request);
+
+            $this->getSeoPage()
+                    ->setTitle($media->getName())
+                    ->addMeta('property', 'og:description', $media->getDescription())
+                    ->addMeta('property', 'og:type', 'video')
+            ;
+        }
+
+        return $this->render('SonataDemoBundle:Demo:media.html.twig', array(
+                    'form' => $form->createView(),
+                    'media' => $mediaPreview->getMedia()
+                ));
+    }
+
+    /**
+     * @return \Sonata\SeoBundle\Seo\SeoPageInterface
+     */
+    public function getSeoPage() {
+        return $this->get('sonata.seo.page');
+    }
+
 }
