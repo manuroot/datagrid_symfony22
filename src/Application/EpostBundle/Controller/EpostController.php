@@ -25,16 +25,18 @@ class EpostController extends Controller {
 
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+        $user = $this->get('security.context')->getToken()->getUser();
             //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
             // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
             $user_id = $user->getId();
+            $group_id = $user->getIdgroup()->getId();
         } else {
             $user_id = 0;
+            $group_id= 0;
         }
-        return ($user_id);
+        return array($user_id,$group_id);
     }
 
     /**
@@ -44,17 +46,7 @@ class EpostController extends Controller {
     public function indexAction() {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-             $user_id = $user->getId();
-            $group_id = $user->getIdgroup()->getId();
-        } else {
-             $user_id = 0;
-            $group_id=0;
-        }
+        list($user_id,$group_id)=$this->getuserid();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost');
 
@@ -82,26 +74,18 @@ class EpostController extends Controller {
 
         $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         $paginationb->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
-        //  $pagination->setTemplate('ApplicationEpostBundle:pagination:sliding.html.twig');
+       
         return $this->render('ApplicationEpostBundle:Epost:index.html.twig', array(
                     'paginationa' => $paginationa,
                     'paginationb' => $paginationb,
                 ));
     }
 
-    /**
-     * @Secure(roles="ROLE_ADMIN")
-     */
+   
+    // @Secure(roles="ROLE_ADMIN")
+    
     public function indexAllAction() {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-        } else {
-            $user_id = 0;
-        }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_indexadmin');
 
@@ -127,15 +111,8 @@ class EpostController extends Controller {
     public function indexmespostsAction() {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-        } else {
-            $user_id = 0;
-        }
+        list($user_id,$group_id)=$this->getuserid();
+       
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_mesposts');
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
@@ -157,18 +134,8 @@ class EpostController extends Controller {
     public function indexpropositionsAction() {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-      if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-             $user_id = $user->getId();
-            $group_id = $user->getIdgroup()->getId();
-        } else {
-             $user_id = 0;
-            $group_id=0;
-        }
-        $session = $this->getRequest()->getSession();
+         list($user_id,$group_id)=$this->getuserid();
+         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_propositions');
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id,$group_id);
 
@@ -429,18 +396,8 @@ class EpostController extends Controller {
     public function indexsearchAction() {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-            $group_id = $user->getIdgroup();
-        } else {
-            $user_id = 0;
-            $group_id=0;
-            
-        }
+       list($user_id,$group_id)=$this->getuserid();
+    
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_indexserch');
 

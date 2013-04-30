@@ -145,6 +145,10 @@ private $comments;
 private $notes;
 
 
+     // @ORM\Column(type="text")
+   
+ //protected $tags;
+
     public function getId() {
         return $this->id;
     }

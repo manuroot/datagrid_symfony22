@@ -45,7 +45,7 @@ class Group extends BaseGroup
      * @param \Application\Sonata\MediaBundle\Entity\Media $image
      * @return Post
      */
-    public function setServicegroup(\Application\EServicessBundle\Entity\EserviceGroup $servicegroup = null)
+    public function setServicegroup(\Application\EservicesBundle\Entity\EserviceGroup $servicegroup = null)
     {
         $this->servicegroup = $servicegroup;
     

@@ -2,6 +2,8 @@ parameters:
 #    application_epost.example.class: Application\EpostBundle\Example
 
 services:
-#    application_epost.example:
-#        class: %application_epost.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    application_epost_twig_extension:
+        class: Application\EpostBundle\Twig\Extensions\ApplicationEpostExtension
+        tags:
+            - { name: twig.extension }
+
