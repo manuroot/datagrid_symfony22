@@ -72,7 +72,7 @@ class Epost {
 
     /**
      * @var string
-     *
+     /* @Assert\Length(min = 10,max=200) 
      * @ORM\Column(name="resume", type="text", nullable=false)
      */
     private $resume;
@@ -168,7 +168,7 @@ class Epost {
     private $commentsEnabled;
 
     /**
-     * @var datetime $updatedAt
+     * @var datetime $commentsCloseAt
      *
      * @ORM\Column(name="comments_closeat", type="datetime",nullable=true)
      */

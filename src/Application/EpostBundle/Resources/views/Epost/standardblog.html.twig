@@ -69,10 +69,7 @@ POSTS DISPONIBLES
 
                        
                     </div>
-         
-            <div class="sonata-blog-post-abtract">
-              Extrait:  {{ entity.resume|raw }}
-            </div>
+             
               {% if entity.comments is not null %}
                 <span class="badge badge-warning">{{ entity.comments|length }}</span>
                 
@@ -91,7 +88,11 @@ POSTS DISPONIBLES
                             {% if not loop.last%}, {%endif%}
                              </span>
                         {% endfor %}
-                    </div>           
+                    </div>   
+                 <br>
+                  <div class="sonata-blog-post-abtract">
+              Extrait:  {{ entity.resume|raw }}
+            </div>
             
        <!-- </div>-->
        </div>

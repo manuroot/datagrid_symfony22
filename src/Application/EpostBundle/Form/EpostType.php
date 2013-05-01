@@ -13,10 +13,12 @@ class EpostType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('resume', 'textarea', array(
+                    'help_label' => '(Max: 200 car.)',
                     'label' => 'Resumé du Post',
-                    'attr' => array(
+                    /*'attr' => array(
                         'cols' => "60",
-                        )))
+                        )*/
+                    ))
                 ->add('name', 'genemu_jqueryautocomplete_entity', array(
                     'widget_addon' => array(
                         'icon' => 'pencil',
@@ -33,10 +35,12 @@ class EpostType extends AbstractType {
                 ->add('description', 'textarea', array(
                     'label' => 'Description du Post',
                     'attr' => array(
-                        'cols' => "80",
+                        'cols' => "60",
+                        'rows' => "20",
                         'class' => 'tinymce',
                         )))
 
+               
                 // ->add('services')
                 //->add('image')
                 ->add('image', 'file', array(

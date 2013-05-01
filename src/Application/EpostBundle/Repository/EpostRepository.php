@@ -35,9 +35,10 @@ class EpostRepository extends EntityRepository {
     }
     
        public function myFindActif() {
-
+//true ==>1 post actif (form case cochéé)
+           // false ==> 0 case decochée
         $query = $this->createQueryBuilder('a')
-                ->where('a.commentsEnabled = false')
+                ->where('a.isvisible = true')
                 ->leftJoin('a.proprietaire', 'b')
                 ->leftJoin('a.categorie', 'c')
                 ->leftJoin('a.idStatus', 'd')

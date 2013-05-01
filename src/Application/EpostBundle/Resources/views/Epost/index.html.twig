@@ -162,7 +162,7 @@ MES POSTS
                                    </td> 
        <td>{{ entity.createdAt|created_ago }}</td>
      
-              <td>{{ entity.resume }}</td>
+              <td>{{ entity.resume|raw }}</td>
                        <td>
                 {% if entity.image is not null %}               
            
