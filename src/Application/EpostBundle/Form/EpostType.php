@@ -12,25 +12,28 @@ class EpostType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-               ->add('resume', 'textarea', array(
+                ->add('resume', 'textarea', array(
                     'label' => 'Resumé du Post',
                     'attr' => array(
                         'cols' => "60",
-                         )))
+                        )))
                 ->add('name', 'genemu_jqueryautocomplete_entity', array(
+                    'widget_addon' => array(
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    ),
                     'class' => 'Application\EpostBundle\Entity\Epost',
                     'property' => 'name',
                     'configs' => array(
                         'minLength' => 0,
                     ),
                 ))
+                ->add('tags')
                 //  ->add('name',null,array('label'=>'Nom du Post'))
-               
-                
                 ->add('description', 'textarea', array(
                     'label' => 'Description du Post',
                     'attr' => array(
-                        'cols' => "60",
+                        'cols' => "80",
                         'class' => 'tinymce',
                         )))
 
@@ -40,9 +43,10 @@ class EpostType extends AbstractType {
                     'data_class' => 'Symfony\Component\HttpFoundation\File\File',
                     'property_path' => 'image',
                     'required' => false,
-                ));
-        
-        
+                ))
+                ->add('isvisible', null, array('label' => "Post Actif"))
+                ->add('commentsEnabled', null, array('label' => "Fermer les Commentaires"));
+
         $builder->add('categorie', 'entity', array(
                     //'class' => 'Application\EpostBundle\Entity\CertificatsProjet',
                     'class' => 'ApplicationEpostBundle:EpostCategories',
@@ -57,7 +61,16 @@ class EpostType extends AbstractType {
                     'empty_value' => '--- Choisir une option ---'
                 ))
                 ->add('idStatus', null, array('label' => 'Status'))
-       
+                ->add('commentsCloseAt', 'datetime', array(
+                    'label' => 'Date Fermeture des Commentaires',
+                    'widget' => 'single_text',
+                    'input' => 'datetime',
+                    'format' => 'yyyy-MM-dd HH:mm',
+                    'widget_addon' => array(
+                        'icon' => 'time',
+                        'type' => 'prepend'
+                    ),
+                ))
         ;
     }
 
@@ -68,7 +81,7 @@ class EpostType extends AbstractType {
     }
 
     public function getName() {
-        return 'application_certificatsbundle_eposttype';
+        return 'application_eposttype';
     }
 
 }

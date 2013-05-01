@@ -59,6 +59,58 @@ class EpostController extends Controller {
         }
         return array($user_id, $group_id);
     }
+ /**
+     * @param string $tag
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function tagAction($tag)
+    {
+        
+          $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
+      
+        $tag = $this->get('sonata.news.manager.tag')->findOneBy(array(
+            'slug' => $tag,
+            'enabled' => true
+        ));
+
+        if (!$tag) {
+            throw new NotFoundHttpException('Unable to find the tag');
+        }
+
+        if (!$tag->getEnabled()) {
+            throw new NotFoundHttpException('Unable to find the tag');
+        }
+
+        return $this->renderArchive(array('tag' => $tag), array('tag' => $tag));
+    }
+
+    /**
+     * @param $category
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function categoryAction($category)
+    {
+        $category = $this->get('sonata.news.manager.category')->findOneBy(array(
+            'slug' => $category,
+            'enabled' => true
+        ));
+
+        if (!$category) {
+            throw new NotFoundHttpException('Unable to find the category');
+        }
+
+        if (!$category->getEnabled()) {
+            throw new NotFoundHttpException('Unable to find the category');
+        }
+
+        return $this->renderArchive(array('category' => $category), array('category' => $category));
+    }
 
     /**
      * Lists all Epost entities.
@@ -117,6 +169,17 @@ class EpostController extends Controller {
                 ));
     }
 
+     public function standardblogAction() {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->getRequest()->getSession();
+        $session->set('buttonretour', 'epost_indexstandard');
+        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindActif();
+        $paginationa = $this->createpaginator($query, 5);
+        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
+        return $this->render('ApplicationEpostBundle:Epost:standardblog.html.twig', array(
+                    'paginationa' => $paginationa,
+                ));
+    }
     /**
      *
      */

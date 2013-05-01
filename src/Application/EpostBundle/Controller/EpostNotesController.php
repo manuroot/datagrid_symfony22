@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\EpostBundle\Entity\EpostNotes;
 use Application\EpostBundle\Form\EpostNotesType;
+use Application\EpostBundle\Form\EpostNotesAdminType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
@@ -110,7 +111,7 @@ class EpostNotesController extends Controller {
      */
     public function newAction() {
         $entity = new EpostNotes();
-        $form = $this->createForm(new EpostNotesType(), $entity);
+        $form = $this->createForm(new EpostNotesAdminType(), $entity);
 
         return $this->render('ApplicationEpostBundle:EpostNotes:new.html.twig', array(
                     'entity' => $entity,
@@ -176,7 +177,7 @@ class EpostNotesController extends Controller {
             $entity->setEpost($entity_epost);
             $entity->setUser($current_user);
 
-            $newForm = $this->createForm(new EpostNotesType($user_id, $id), $entity);
+            $newForm = $this->createForm(new EpostNotesAdminType($user_id, $id), $entity);
 
             return $this->render('ApplicationEpostBundle:EpostNotes:addnote.html.twig', array(
                         'entity' => $entity,

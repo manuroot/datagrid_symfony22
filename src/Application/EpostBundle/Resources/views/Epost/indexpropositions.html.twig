@@ -39,7 +39,7 @@ POSTS DE MON GROUPE
                    <i class="icon-flag"></i></th>
                    
                   <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
-                
+                  <th>Tags</th> 
                  <th>Image</th>
                    <th>Commentaires</th>
                  <th colspan="1">Actions</th>
@@ -79,6 +79,8 @@ POSTS DE MON GROUPE
 {% endif %} 
                                    </td> 
                 <td>{{ entity.resume|raw }}</td>
+                    <td>{{ entity.tags|join(', ') }}   </td>
+   
                        <td>
                 {% if entity.image is not null %}               
            

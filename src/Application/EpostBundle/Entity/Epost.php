@@ -40,7 +40,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Epost {
 
-  //  protected $comments = array();
+    //  protected $comments = array();
     /**
      * @var integer
      *
@@ -76,7 +76,7 @@ class Epost {
      * @ORM\Column(name="resume", type="text", nullable=false)
      */
     private $resume;
-  
+
     /**
      * @Assert\File(
      * maxSize="5M",
@@ -95,12 +95,13 @@ class Epost {
      */
     protected $imageName;
 
-      /**
+    /**
      * @var datetime $updatedAt
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
     protected $createdAt;
+
     /**
      * @var datetime $updatedAt
      *
@@ -141,25 +142,57 @@ class Epost {
     private $idStatus;
 
     /**
-    * @ORM\OneToMany(targetEntity="EpostComments", mappedBy="epost",cascade={"persist"})
- */
-private $comments;
+     * @ORM\OneToMany(targetEntity="EpostComments", mappedBy="epost",cascade={"persist"})
+     */
+    private $comments;
 
- /**
-    * @ORM\OneToMany(targetEntity="EpostNotes", mappedBy="epost",cascade={"persist"})
- */
-private $notes;
+    /**
+     * @ORM\OneToMany(targetEntity="EpostNotes", mappedBy="epost",cascade={"persist"})
+     */
+    private $notes;
 
-/**
-* @ORM\OneToOne(targetEntity="EpostGlobalNotes", cascade={"persist", "merge", "remove"})
-* @ORM\JoinColumn(name="globalnotes_id", referencedColumnName="id")
-*/
-private $globalnote;
- 
+    /**
+     * @ORM\OneToOne(targetEntity="EpostGlobalNotes", cascade={"persist", "merge", "remove"})
+     * @ORM\JoinColumn(name="globalnotes_id", referencedColumnName="id")
+     */
+    private $globalnote;
 
-     // @ORM\Column(type="text")
-   
- //protected $tags;
+    /**
+     * @orm\Column(type="boolean", name="is_visible",nullable=true))
+     */
+    private $isvisible;
+
+    /**
+    * @orm\Column(name="comments_enabled",type="boolean",nullable=true)
+     */
+    private $commentsEnabled;
+
+    /**
+     * @var datetime $updatedAt
+     *
+     * @ORM\Column(name="comments_closeat", type="datetime",nullable=true)
+     */
+    protected $commentsCloseAt;
+
+    //protected $commentsEnabled = true;
+    //  protected $commentsCloseAt;
+
+
+    /**
+     * Tags for post
+     *
+     * @var ArrayCollection
+     * @Assert\NotBlank()
+     * @ORM\ManyToMany(targetEntity="Application\EpostBundle\Entity\EpostTags",inversedBy="posts")
+     * @ORM\JoinTable(name="epost_posts_tags",
+     * joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+     * inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     * )
+     */
+    private $tags;
+
+    // @ORM\Column(type="text")
+    //protected $tags;
 
     public function getId() {
         return $this->id;
@@ -194,10 +227,13 @@ private $globalnote;
      * Constructor
      */
     public function __construct() {
-     //   $this->history = new \Doctrine\Common\Collections\ArrayCollection();
+        //   $this->history = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
+        $this->tags = new ArrayCollection();
+        $this->isvisible = true; // Default value for column is_visible
+        $this->commentsEnabled=true;
     }
 
     /**
@@ -221,7 +257,7 @@ private $globalnote;
         return $this->description;
     }
 
-     /**
+    /**
      * Set description
      *
      * @param string $resume
@@ -241,10 +277,6 @@ private $globalnote;
     public function getResume() {
         return $this->resume;
     }
-    
-  
-
-   
 
     /**
      * Set image
@@ -313,10 +345,27 @@ private $globalnote;
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedAtValue()
-    {
-       $this->setUpdatedAt(new \DateTime());
+    public function setUpdatedAtValue() {
+        $this->setUpdatedAt(new \DateTime());
     }
+
+    public function prePersist() {
+        /*   if (!$this->getPublicationDateStart()) {
+          $this->setPublicationDateStart(new \DateTime);
+          } */
+
+        $this->setCreatedAt(new \DateTime);
+        $this->setUpdatedAt(new \DateTime);
+        /* if (null == $this->getGlobalnote()){
+
+
+          } */
+    }
+
+    /* public function preUpdate()
+      {
+      $this->setUpdatedAt(new \DateTime);
+      } */
 
     /**
      * Set proprietaire
@@ -381,17 +430,15 @@ private $globalnote;
         return $this->idStatus;
     }
 
-   
     /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
      * @return Epost
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
@@ -400,8 +447,7 @@ private $globalnote;
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -410,8 +456,7 @@ private $globalnote;
      *
      * @param \Application\EpostBundle\Entity\EpostComments $comments
      */
-    public function removeComment(\Application\EpostBundle\Entity\EpostComments $comments)
-    {
+    public function removeComment(\Application\EpostBundle\Entity\EpostComments $comments) {
         $this->comments->removeElement($comments);
     }
 
@@ -421,10 +466,9 @@ private $globalnote;
      * @param \Application\EpostBundle\Entity\EpostComments $comments
      * @return Epost
      */
-    public function addComment(\Application\EpostBundle\Entity\EpostComments $comments)
-    {
+    public function addComment(\Application\EpostBundle\Entity\EpostComments $comments) {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -433,8 +477,7 @@ private $globalnote;
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getComments()
-    {
+    public function getComments() {
         return $this->comments;
     }
 
@@ -444,10 +487,9 @@ private $globalnote;
      * @param \Application\EpostBundle\Entity\EpostNotes $notes
      * @return Epost
      */
-    public function addNote(\Application\EpostBundle\Entity\EpostNotes $notes)
-    {
+    public function addNote(\Application\EpostBundle\Entity\EpostNotes $notes) {
         $this->notes[] = $notes;
-    
+
         return $this;
     }
 
@@ -456,8 +498,7 @@ private $globalnote;
      *
      * @param \Application\EpostBundle\Entity\EpostNotes $notes
      */
-    public function removeNote(\Application\EpostBundle\Entity\EpostNotes $notes)
-    {
+    public function removeNote(\Application\EpostBundle\Entity\EpostNotes $notes) {
         $this->notes->removeElement($notes);
     }
 
@@ -466,24 +507,133 @@ private $globalnote;
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getNotes()
-    {
+    public function getNotes() {
         return $this->notes;
     }
-    
+
     /**
-* @param Waldo\RelationBundle\Entity\Carte $carte
-*/
-public function setGlobalnote(\Application\EpostBundle\Entity\EpostGlobalNotes $globalnote)
-{
-$this->carte = $globalnote;
-}
- 
-/**
-* @return Application\EpostBundle\Entity\EpostGlobalNotes
-*/
-public function getGlobalnote()
-{
-return $this->globalnote;
-}
+     * Set tags to post
+     *
+     * @param $tags Tags collection
+     *
+     * @return void
+     */
+    public function setTags($tags) {
+        $this->tags = $tags;
+    }
+
+    /**
+     * Get all tags
+     *
+     * @return ArrayCollection
+     */
+    public function getTags() {
+        return $this->tags;
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \Application\EpostBundle\Entity\EpostTags $tags
+     * @return Epost
+     */
+    public function addTag(\Application\EpostBundle\Entity\EpostTags $tags) {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \Application\EpostBundle\Entity\EpostTags $tags
+     */
+    public function removeTag(\Application\EpostBundle\Entity\EpostTags $tags) {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Set globalnote
+     *
+     * @param \Application\EpostBundle\Entity\EpostGlobalNotes $globalnote
+     * @return Epost
+     */
+    public function setGlobalnote(\Application\EpostBundle\Entity\EpostGlobalNotes $globalnote = null) {
+        $this->globalnote = $globalnote;
+
+        return $this;
+    }
+
+    /**
+     * Get globalnote
+     *
+     * @return \Application\EpostBundle\Entity\EpostGlobalNotes 
+     */
+    public function getGlobalnote() {
+        return $this->globalnote;
+    }
+
+    /**
+     * Set isvisible
+     *
+     * @param boolean $isvisible
+     * @return Epost
+     */
+    public function setIsvisible($isvisible) {
+        $this->isvisible = $isvisible;
+
+        return $this;
+    }
+
+    /**
+     * Get isvisible
+     *
+     * @return boolean 
+     */
+    public function getIsvisible() {
+        return $this->isvisible;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCommentsEnabled($commentsEnabled) {
+        $this->commentsEnabled = $commentsEnabled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCommentsEnabled() {
+        return $this->commentsEnabled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCommentsCloseAt(\DateTime $commentsCloseAt = null) {
+        $this->commentsCloseAt = $commentsCloseAt;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCommentsCloseAt() {
+        return $this->commentsCloseAt;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCommentsDefaultStatus($commentsDefaultStatus) {
+        $this->commentsDefaultStatus = $commentsDefaultStatus;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCommentsDefaultStatus() {
+        return $this->commentsDefaultStatus;
+    }
+
 }

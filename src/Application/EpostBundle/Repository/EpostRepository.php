@@ -33,6 +33,19 @@ class EpostRepository extends EntityRepository {
                 ->getQuery();
         return $query;
     }
+    
+       public function myFindActif() {
+
+        $query = $this->createQueryBuilder('a')
+                ->where('a.commentsEnabled = false')
+                ->leftJoin('a.proprietaire', 'b')
+                ->leftJoin('a.categorie', 'c')
+                ->leftJoin('a.idStatus', 'd')
+                ->add('orderBy', 'a.id DESC')
+                 
+                ->getQuery();
+        return $query;
+    }
 
     public function myFindAll($user_id) {
 

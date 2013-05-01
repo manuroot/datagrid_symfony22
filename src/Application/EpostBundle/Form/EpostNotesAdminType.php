@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EpostNotesType extends AbstractType
+class EpostNotesAdminType extends AbstractType
 {
       private $UserId;
     private $EpostId;
@@ -36,8 +36,8 @@ class EpostNotesType extends AbstractType
         ))
         
      
-            ->add('user',null,array(  'disabled' => true,'label'=>'Utilisateur'))
-            ->add('epost',null,array(  'disabled' => true,'label'=>'Post'))
+            ->add('user',null,array( 'label'=>'Utilisateur'))
+            ->add('epost',null,array( 'label'=>'Post'))
     
         ;
     }

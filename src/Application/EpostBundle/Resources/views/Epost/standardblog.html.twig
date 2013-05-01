@@ -3,7 +3,7 @@
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationepost/css/sliding.css') }}" type="text/css" media="all"/>
-     
+       <link rel="stylesheet" href="{{ asset('css/news.css') }}" type="text/css" media="all"/>
  {% endblock %}
 
 {% block content_header '' %}
@@ -21,9 +21,10 @@ POSTS DISPONIBLES
     {% endfor %}
 {% endfor %}
 
+{#
 {% if is_granted("ROLE_USER") %}   
 <a href="{{ path('epost_new') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Ajouter un Post</a>
-{% endif %}
+{% endif %}#}
 <br><br>
     
 
@@ -42,14 +43,17 @@ POSTS DISPONIBLES
          
          <img width="100px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
          {% else %}
-           ---
+           
          {% endif %}
            
                 <span class="sonata-blog-post-author"> 
+                  
+                        <a href="{{ path('epost_show', { 'id': entity.id }) }}">
+                          {{ entity.name }}</a>
     {% if entity.proprietaire is not null %}               
-                    {{ entity.proprietaire.username }}
+                    Par {{ entity.proprietaire.username }}
                  {% else %}
-                 ---
+                 xxx
                      {% endif %}</span>
             </h2>
                <div class="sonata-blog-post-tag-list">
@@ -80,7 +84,14 @@ POSTS DISPONIBLES
                         <img src="{{ asset('bundles/applicationepost/images/detail.png') }}" alt="show" width="15" height="15" />
                     </a>
                              
-                             
+                    <div class="sonata-blog-post-tag-list">
+                        {% for tag in entity.tags %}
+                             <span class="label label-inverse">
+                            <a href="{{ url('epost', {'tag': tag.slug} ) }}">{{ tag.name }}</a>
+                            {% if not loop.last%}, {%endif%}
+                             </span>
+                        {% endfor %}
+                    </div>           
             
        <!-- </div>-->
        </div>

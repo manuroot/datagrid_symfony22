@@ -2,7 +2,7 @@
 
 {% if validation == 1 %}
 <form action="{{ path('epost_comment_create', { 'epost_id' : comment.epost.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
-        <table class="table table-bordered">
+        <table class="table">
         <tbody>         <tr><td>
                     <div>
                   {#{{ form_row(form.user) }}#}

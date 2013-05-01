@@ -44,7 +44,8 @@ MES POSTS
  {#
 <th{% if paginationa.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Description', 'a.description') }}</th>
 #}
-     <th>Image</th>
+    <th>Tags</th> 
+    <th>Image</th>
      <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
  <th colspan="3"><center>Actions</center></th>
@@ -90,6 +91,8 @@ MES POSTS
       {#  <td>{{ entity.description|raw|length > 30 ? entity.description|slice(0, 30)|raw  : entity.description|raw  }}</td>
 #}
   <td>{{ entity.resume|raw }}</td>
+      <td>{{ entity.tags|join(', ') }}   </td>
+            
                        <td>
                 {% if entity.image is not null %}               
            

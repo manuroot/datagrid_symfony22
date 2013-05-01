@@ -40,7 +40,8 @@ POSTS DISPONIBLES
  <th{% if paginationa.isSorted('a.createdAt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Date', 'a.createdAt') }}</th>
         
 <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
-   <th>Image</th>
+<th>Tags</th>   
+<th>Image</th>
     <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
  <th colspan="3"><center>Actions</center></th>
@@ -87,6 +88,7 @@ POSTS DISPONIBLES
   <td>{{ entity.createdAt|created_ago }}</td>
  
                 <td>{{ entity.resume|raw }}</td>
+                <td>{{ entity.tags|join(', ') }}   </td>
                        <td>
                 {% if entity.image is not null %}               
            

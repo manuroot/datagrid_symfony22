@@ -4,6 +4,30 @@
 {% block javascripts %}
 {{ parent() }}
 {{ tinymce_init() }}
+<script type="text/javascript">
+          
+$(document).ready(function() {
+ $( "#application_eposttype_commentsCloseAt" ).datepicker({
+maxDate: "+3M +10D",
+changeMonth: true,
+changeYeat: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd 18:00",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+  
+});
+
+
+
+</script>
+
+
+
+
+
 {% endblock %}
 
 
@@ -22,27 +46,45 @@ POST: {{ entity.name }}
                  <div>
                   {{ form_row(edit_form.name) }}
                            {{ form_row(edit_form.idStatus) }}
+                        {{ form_errors(edit_form.isvisible) }}
+                        {{ form_widget(edit_form.isvisible) }}
+                         
+                
+                            {{ form_row(edit_form.tags) }}
+                             {{ form_row(edit_form.categorie) }}
+                         
+                              {{ form_errors(edit_form.commentsEnabled) }}
+                         {{ form_widget(edit_form.commentsEnabled) }}
+                            {{ form_errors(edit_form.commentsCloseAt) }}
+                         {{ form_widget(edit_form.commentsCloseAt) }}
+                         
+                 {#   {{ form_row(edit_form.commentsCloseAt) }}#}
         
                  {#    {{ form_row(edit_form.services) }}#}
               </div>
-                              <div>
-
-             {% if entity.image is not null %}               
+                        <hr>
+                            
+              
+                   </td>
+ <td>
+         
+ {{ form_row(edit_form.description) }}
+     {{ form_row(edit_form.resume) }}
+ </td>
+ 
+ <td>{% if entity.image is not null %}               
                                       <p>Image Actuelle</p>
          <img width="150px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
          {% else %}
            <p>Pas d'Image</p>
          {% endif %}
-           </div>
-              
-                   </td>
- <td>
- {{ form_row(edit_form.description) }}
-{{ form_rest(edit_form) }} </td>
+ {{ form_row(edit_form.image) }}</td>
+ 
+   
                                  </tr>
                                      
 <tr><td colspan="2">
-                                   
+ {{ form_rest(edit_form) }}                                  
   <button type="submit" class="btn btn-small btn-warning">Modifier</button>
   
     <a href="{{ path(btnretour)  }}" class="btn btn-small btn-success">Retour</a>

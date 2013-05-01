@@ -43,7 +43,7 @@ class EpostGlobalNotes {
 
     public function __construct() {
       //  $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
-        
+             $this->globalnote = 0;
     }
     
     
@@ -60,7 +60,7 @@ class EpostGlobalNotes {
      */
     public function setGlobalnote($note)
     {
-        $this->globalnote = $note;
+           $this->globalnote = $note;
     
         return $this;
     }
