@@ -61,7 +61,7 @@ class User extends BaseUser
      * @param \Application\EservicesBundle\Entity\ChronoUsergroup $idgroup
      * @return ChronoUser
      */
-    public function setIdgroup(\Application\EservicesBundle\Entity\Eservicegroup $idgroup)
+    public function setIdgroup(\Application\EservicesBundle\Entity\Eservicegroup $idgroup=null)
     {
         $this->idgroup = $idgroup;
     

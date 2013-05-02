@@ -27,11 +27,9 @@ class EpostController extends Controller {
         $myarr['current_year'] = date('Y');
         $arr_years = $em->getRepository('ApplicationEpostBundle:Epost')->findaByYear($myarr['current_year']);
         return ($arr_years);
-   
     }
-    
-    
-     private function createpaginator($query, $num_perpage = 5) {
+
+    private function createpaginator($query, $num_perpage = 5) {
 
         $paginator = $this->get('knp_paginator');
         $pagename = 'page'; // Set custom page variable name
@@ -43,38 +41,49 @@ class EpostController extends Controller {
         );
         return $pagination;
     }
+
     private function getuserid() {
 
 
         $em = $this->getDoctrine()->getManager();
         $user_security = $this->container->get('security.context');
-         // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+        // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
             $user = $this->get('security.context')->getToken()->getUser();
-             $user_id = $user->getId();
-            $group_id = $user->getIdgroup()->getId();
+            $user_id = $user->getId();
+            $group = $user->getIdgroup();
+            if (isset($group)){
+                  $group_id=$group->getId();
+            }
+            else {
+                $group_id=0;
+            }
         } else {
             $user_id = 0;
             $group_id = 0;
         }
+            
+            
+     // }else {
         return array($user_id, $group_id);
+     //   }
     }
- /**
+
+    /**
      * @param string $tag
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function tagAction($tag)
-    {
-        
-          $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
-      
+    public function tagAction($tag) {
+
+        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
+
         $tag = $this->get('sonata.news.manager.tag')->findOneBy(array(
             'slug' => $tag,
             'enabled' => true
-        ));
+                ));
 
         if (!$tag) {
             throw new NotFoundHttpException('Unable to find the tag');
@@ -94,12 +103,11 @@ class EpostController extends Controller {
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function categoryAction($category)
-    {
+    public function categoryAction($category) {
         $category = $this->get('sonata.news.manager.category')->findOneBy(array(
             'slug' => $category,
             'enabled' => true
-        ));
+                ));
 
         if (!$category) {
             throw new NotFoundHttpException('Unable to find the category');
@@ -122,7 +130,7 @@ class EpostController extends Controller {
         list($user_id, $group_id) = $this->getuserid();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost');
- $all_years = $this->sidebar_years();
+        $all_years = $this->sidebar_years();
 
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
         $query_other = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
@@ -151,12 +159,14 @@ class EpostController extends Controller {
         return $this->render('ApplicationEpostBundle:Epost:index.html.twig', array(
                     'paginationa' => $paginationa,
                     'paginationb' => $paginationb,
-             'all_years' => $all_years,
+                    'all_years' => $all_years,
                 ));
     }
 
     // @Secure(roles="ROLE_ADMIN")
-
+    //====================================================================
+    // BLOG ADMIN
+    //====================================================================
     public function indexAllAction() {
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
@@ -169,7 +179,11 @@ class EpostController extends Controller {
                 ));
     }
 
-     public function standardblogAction() {
+    //====================================================================
+    // BLOG STANDARD
+    //====================================================================
+
+    public function standardblogAction() {
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_indexstandard');
@@ -180,13 +194,18 @@ class EpostController extends Controller {
                     'paginationa' => $paginationa,
                 ));
     }
-    /**
-     *
-     */
+
+    //====================================================================
+    // BLOG POST DU USER CONNECTE
+    //====================================================================
+
     public function indexmespostsAction() {
 
         $em = $this->getDoctrine()->getManager();
         list($user_id, $group_id) = $this->getuserid();
+        if ($group_id==0){
+             return $this->render('ApplicationEpostBundle:Epost:choosegroup.html.twig');
+        }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_mesposts');
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
@@ -197,12 +216,18 @@ class EpostController extends Controller {
                 ));
     }
 
-   
+    //====================================================================
+    // BLOG POST LIE AU GROUP DU USER CONNECTE
+    //====================================================================
+
 
     public function indexpropositionsAction() {
 
         $em = $this->getDoctrine()->getManager();
         list($user_id, $group_id) = $this->getuserid();
+        if ($group_id==0){
+             return $this->render('ApplicationEpostBundle:Epost:choosegroup.html.twig');
+        }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_propositions');
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
@@ -313,7 +338,7 @@ class EpostController extends Controller {
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
 
-        list($user_id,$group_id) = $this->getuserid();
+        list($user_id, $group_id) = $this->getuserid();
         $proprietaire = $entity->getProprietaire()->getId();
         //echo "u=$user_id  p=$proprietaire<br>";
         //    exit(1);
