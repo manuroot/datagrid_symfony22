@@ -64,6 +64,8 @@ class EpostType extends AbstractType {
                     'label' => 'Categorie',
                     'empty_value' => '--- Choisir une option ---'
                 ))
+          
+                            
                 ->add('idStatus', null, array('label' => 'Status'))
                 ->add('commentsCloseAt', 'datetime', array(
                     'label' => 'Date Fermeture des Commentaires',
@@ -73,7 +75,7 @@ class EpostType extends AbstractType {
                     'widget_addon' => array(
                         'icon' => 'time',
                         'type' => 'prepend'
-                    ),
+                    ),  'required' => false,
                 ))
         ;
     }

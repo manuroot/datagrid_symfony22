@@ -635,5 +635,29 @@ class Epost {
     public function getCommentsDefaultStatus() {
         return $this->commentsDefaultStatus;
     }
+    
+     /**
+     * {@inheritdoc}
+     */
+    public function getYear()
+    {
+        return $this->getgetcreatedAt()->format('Y');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMonth()
+    {
+        return $this->getcreatedAt()->format('m');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDay()
+    {
+        return $this->getcreatedAt()->format('d');
+    }
 
 }

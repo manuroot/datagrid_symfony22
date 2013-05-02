@@ -98,8 +98,11 @@ POST: {{ entity.name }}
                              {{ form_row(edit_form.categorie) }}
                          
                               {{ form_errors(edit_form.commentsEnabled) }}
+                         {{ form_label(edit_form.commentsEnabled) }}
                          {{ form_widget(edit_form.commentsEnabled) }}
+                         
                             {{ form_errors(edit_form.commentsCloseAt) }}
+                          {{ form_label(edit_form.commentsCloseAt) }}
                          {{ form_widget(edit_form.commentsCloseAt) }}
                          
                  {#   {{ form_row(edit_form.commentsCloseAt) }}#}
