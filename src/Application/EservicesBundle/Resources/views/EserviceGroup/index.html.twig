@@ -76,7 +76,13 @@ DASHBOARD - GROUPES
                 </td>
     {% endif %}
                  
-                
+                  
+{% if is_granted("ROLE_USER") %}  
+                <td>
+                    <a href="{{ path('groupedemande_newdemande', { 'id': entity.id }) }}">++</a>
+                </td>
+                 
+    {% endif %}
             </tr>
         {% endfor %}
         </tbody>

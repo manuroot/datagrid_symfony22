@@ -170,9 +170,10 @@
                                                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-white icon-user"></i>
                                                                 Groupes<b class="caret"></b> </a>
                                                             <ul class="dropdown-menu">
-                                                                <li><a href="{{ path('egroup_groupes') }}"><i class="icon-camera"></i> {{ 'Dashboard Groupes'|trans }}</a></li>
+                                                                <li><a href="{{ path('egroup_groupes') }}"><i class="icon-user"></i> {{ 'Dashboard Groupes'|trans }}</a></li>
                                                               {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-                                                                     <li><a href="{{ path('egroup_groupes_showmygroup') }}"><i class="icon-camera"></i> {{ 'Mon Groupe'|trans }}</a></li>
+                                                                     <li><a href="{{ path('egroup_groupes_showmygroup') }}"><i class="icon-user"></i> {{ 'Mon Groupe'|trans }}</a></li>
+                                                                     <li><a href="{{ path('groupedemande') }}"><i class="icon-user"></i> {{ 'Demandes de Groupe'|trans }}</a></li>
                                                            
                                                                 {% endif %}
 

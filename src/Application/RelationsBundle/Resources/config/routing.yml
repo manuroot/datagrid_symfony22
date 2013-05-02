@@ -6,6 +6,10 @@ application_relations_projets:
     resource: "@ApplicationRelationsBundle/Resources/config/routing/projet.yml"
     prefix:   /projets
 
+application_relations_demandegroup:
+    resource: "@ApplicationRelationsBundle/Resources/config/routing/demandeusergroup.yml"
+    prefix:   /groupdemande
+    
 _chronousers:
     resource: "@ApplicationRelationsBundle/Resources/config/routing/chronouser.yml"
     prefix:   /chronousers
