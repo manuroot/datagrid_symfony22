@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\RelationsBundle\Entity\DemandeUsergroup;
 use Application\RelationsBundle\Form\DemandeUsergroupType;
+use Application\RelationsBundle\Form\DemandeUsergroupAdminType;
 use Application\EservicesBundle\Entity\EserviceGroup;
 use Application\EservicesBundle\Form\EserviceGroupType;
 
@@ -73,22 +74,22 @@ class DemandeUsergroupController extends Controller {
          $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
         if (!$entity_group) {
             throw $this->createNotFoundException('Unable to find EserviceGroup entity.');
-        }
+        }*/
         list($user_id, $group_id) = $this->getuserid();
          $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
        if (!$current_user) {
             throw $this->createNotFoundException('Unable to find user entity.');
         }
-        */
+       
           /* echo "test id=$user_id";
        exit(1);*/
-        //  $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
+       $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
 
-       /* if ($entity_user) {
+        if ($entity_user) {
             throw $this->createNotFoundException('Demande existe deja.');
         }
-                $entity->setIdgroup($entity_group);
-        $entity->setIduser($current_user);*/
+       //$entity->setIdgroup($entity_group);
+        $entity->setIduser($current_user);
             $em->persist($entity);
             $em->flush();
 
@@ -102,7 +103,7 @@ class DemandeUsergroupController extends Controller {
     }
  public function createAdminAction(Request $request) {
         $entity = new DemandeUsergroup();
-        $form = $this->createForm(new DemandeUsergroupType(), $entity);
+        $form = $this->createForm(new DemandeUsergroupAdminType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -113,7 +114,7 @@ class DemandeUsergroupController extends Controller {
             return $this->redirect($this->generateUrl('groupedemande_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('ApplicationRelationsBundle:DemandeUsergroup:new.html.twig', array(
+        return $this->render('ApplicationRelationsBundle:DemandeUsergroup:newadmin.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                 ));
@@ -124,9 +125,9 @@ class DemandeUsergroupController extends Controller {
      */
     public function newAction() {
         $entity = new DemandeUsergroup();
-        $form = $this->createForm(new DemandeUsergroupType(), $entity);
+        $form = $this->createForm(new DemandeUsergroupAdminType(), $entity);
 
-        return $this->render('ApplicationRelationsBundle:DemandeUsergroup:new.html.twig', array(
+        return $this->render('ApplicationRelationsBundle:DemandeUsergroup:newadmin.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                 ));
@@ -148,12 +149,14 @@ class DemandeUsergroupController extends Controller {
             throw $this->createNotFoundException('Unable to find user entity.');
         }
         
-          /* echo "test id=$user_id";
+          /* echo "test id=$user_id ";
        exit(1);*/
           $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
 
         if ($entity_user) {
-            throw $this->createNotFoundException('Demande existe deja.');
+            $message="Cette demande existe deja";
+            return $this->render('ApplicationRelationsBundle:DemandeUsergroup:deny.html.twig', array(
+                'mymessage'=>$message));
         }
        
         //Creation entity EproduitComments

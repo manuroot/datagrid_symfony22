@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="eservices_group")
  * @ORM\Entity(repositoryClass="Application\EservicesBundle\Repository\EserviceGroupRepository")
+ * @UniqueEntity(fields="nomGroup", message="Ce nom de groupe existe déjà...")
  * @ORM\Entity
  */
 class EserviceGroup

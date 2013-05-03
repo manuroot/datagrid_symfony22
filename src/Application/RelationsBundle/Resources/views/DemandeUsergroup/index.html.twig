@@ -50,10 +50,14 @@
                 <td>{{ entity.description|raw }}</td>
                   <td>{{ entity.iduser.username }}</td>
                        <td>{{ entity.idgroup.nomGroup }}</td>
-                     <td>{{ entity.createdAt|created_ago }}</td>
+                     
  
-                <td>{{ entity.isaccepted }}</td>
-                
+                <td>
+                {% if entity.isaccepted is not null %}
+                        NON
+                {% else %} OUI
+                {% endif %}</td>
+                <td>{{ entity.createdAt|created_ago }}</td>
                    <td>
                     <a href="{{ path('groupedemande_show', { 'id': entity.id }) }}">
                         <img src="{{ asset('bundles/applicationrelations/images/detail.png') }}" alt="show" width="15" height="15" />

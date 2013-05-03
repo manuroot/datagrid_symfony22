@@ -15,7 +15,11 @@ groupedemande_create:
     defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:create" }
     requirements: { _method: post }
 
-
+groupedemande_createadmin:
+    pattern:  /createadmin
+    defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:createAdmin" }
+    requirements: { _method: post }
+    
 groupedemande_newdemande:
     pattern:  /{id}/creerdemande
     defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:newDemandegroup" }

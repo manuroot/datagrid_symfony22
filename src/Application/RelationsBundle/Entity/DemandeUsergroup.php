@@ -53,7 +53,7 @@ class DemandeUsergroup
   
    
     /**
-     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", cascade={"persist", "merge", "remove"})
+     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      */
     private $iduser;
