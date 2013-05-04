@@ -101,4 +101,18 @@ public function getCommentsForPost($postId, $approved = true)
       return $query;
 
       } */
+       public function FindGroupLastComments($limit=20,$group=null) {
+        return $this->createQueryBuilder('p')
+                
+                //  ->add('orderBy', 'p.id DESC')
+                 ->where('p.status = 1')
+                  ->leftJoin('p.epost', 'b')
+                     ->leftJoin('b.proprietaire', 'c')
+                 ->andWhere('c.idgroup = :groupid')
+                 ->setParameter('groupid', $group)
+                 ->orderby('p.$updated', 'DESC')
+                  ->setMaxResults($limit)
+                        ->getQuery()
+                 ->getResult();
+     }
 }

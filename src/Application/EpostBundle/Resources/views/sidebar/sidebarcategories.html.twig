@@ -1,0 +1,27 @@
+<div><p>
+{% for category in allcategories %}
+       <span class="label">
+       <!--Catégorie: -->
+           
+{{ category.nom }}</a>
+       </span>
+
+{% endfor %}</p>
+</div>
+{#
+<div><p>
+{% for category in allcategories %}
+ <span class="weight-{{ catweight[category.slug] }}">
+    <!--Catégorie: -->
+    <a href="{{ url('sonata_news_category', {'category': category.slug} ) }}">
+          
+{{ category.name }}({{ category.posts|length }})</a>
+       </span>
+      
+              {% for mypost in category.posts %}
+             {{ mypost.name }}
+              {% endfor %}
+   
+{% endfor %}</p>
+</div>
+#}

@@ -14,11 +14,11 @@ class DemandeUsergroupType extends AbstractType
         ->add('name')
             ->add('description')
            // ->add('isaccepted')
-            ->add('idgroup')
+        ->add('idgroup',null,array(  'read_only' => true,'label'=>'Group'))
            // ->add('iduser')
       
         //->add('idgroup',null,array(  'disabled' => true,'label'=>'Group'))
-          ->add('iduser',null,array(  'disabled' => true,'label'=>'Utilisateur'))
+          ->add('iduser',null,array(  'read_only' => true,'label'=>'Utilisateur'))
         ;
     }
 

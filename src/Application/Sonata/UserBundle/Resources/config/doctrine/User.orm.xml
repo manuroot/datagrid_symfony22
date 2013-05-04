@@ -9,14 +9,18 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-   <many-to-one
-    field="idgroup"
-    target-entity="Application\EservicesBundle\Entity\EserviceGroup"
-    >
+   <many-to-one field="idgroup" target-entity="Application\EservicesBundle\Entity\EserviceGroup"  inversed-by="users" />
+    
+    <one-to-many
+    field="epost"
+    target-entity="Application\EpostBundle\Entity\Epost" mapped-by="proprietaire" >
     <cascade>
         <cascade-all/>
     </cascade>
-</many-to-one>
+</one-to-many>
+      
     </entity>
 
 </doctrine-mapping>
+   
+  

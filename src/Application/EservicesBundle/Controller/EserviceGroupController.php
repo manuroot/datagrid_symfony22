@@ -7,12 +7,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\EservicesBundle\Entity\EserviceGroup;
 use Application\EservicesBundle\Form\EserviceGroupType;
 
-
 /**
  * EserviceGroup controller.
  *
  */
 class EserviceGroupController extends Controller {
+
+    private function getuserid() {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $user_security = $this->container->get('security.context');
+        // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $user = $this->get('security.context')->getToken()->getUser();
+            $user_id = $user->getId();
+            $group = $user->getIdgroup();
+            if (isset($group)) {
+                $group_id = $group->getId();
+            } else {
+                $group_id = 0;
+            }
+        } else {
+            $user_id = 0;
+            $group_id = 0;
+        }
+
+
+        // }else {
+        return array($user_id, $group_id);
+        //   }
+    }
 
     /**
      * Lists all EserviceGroup entities.
@@ -20,11 +45,13 @@ class EserviceGroupController extends Controller {
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-
+        list($user_id, $group_id) = $this->getuserid();
+        
         $entities = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->findAll();
 
         return $this->render('ApplicationEservicesBundle:EserviceGroup:index.html.twig', array(
                     'entities' => $entities,
+            'idgroup'=>$group_id,
                 ));
     }
 
@@ -67,31 +94,30 @@ class EserviceGroupController extends Controller {
 
     public function showmygroupAction() {
 
-        
+
         $em = $this->getDoctrine()->getManager();
-    
-          $user_id = $this->getuserid();
-         $group_id=$this->getgroupid();
-      /*
-         echo "group=$group_id";
-         exit(1);
-        */ 
-         
-        if ($user_id == 0){
-            $mymessage="Vous n'estes pas connecté";
-        return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
-                    'mymessage' => $mymessage,
-                ));
+
+        list($user_id, $group_id) = $this->getuserid();
+
+        /*
+          echo "group=$group_id";
+          exit(1);
+         */
+
+        if ($user_id == 0) {
+            $mymessage = "Vous n'estes pas connecté";
+            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+                        'mymessage' => $mymessage,
+                    ));
         }
-       if ($group_id == 0){
-                      $mymessage="Vous n'appartenez a aucun groupe";
-                       return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
-                    'mymessage' => $mymessage,
-                ));
-       }
-       
-         return $this->redirect($this->generateUrl('egroup_groupes_show', array('id' => $group_id)));
-     
+        if ($group_id == 0) {
+            $mymessage = "Vous n'appartenez a aucun groupe";
+            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+                        'mymessage' => $mymessage,
+                    ));
+        }
+
+        return $this->redirect($this->generateUrl('egroup_groupes_show', array('id' => $group_id)));
     }
 
     /**
@@ -100,17 +126,34 @@ class EserviceGroupController extends Controller {
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find EserviceGroup entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        list($user_id, $group_id) = $this->getuserid();
 
+        /*
+          echo "group=$group_id";
+          exit(1);
+         */
+        $status_group = false;
+        if ($user_id == 0) {
+            $mymessage = "Vous n'estes pas connecté";
+            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+                        'mymessage' => $mymessage,
+                    ));
+        }
+        // si usergroup == id du groupe en cours
+        if ($group_id == $id) {
+            $status_group = true;
+        }
+
+
+        $deleteForm = $this->createDeleteForm($id);
         return $this->render('ApplicationEservicesBundle:EserviceGroup:show.html.twig', array(
                     'entity' => $entity,
+                    'status_group' => $status_group,
                     'delete_form' => $deleteForm->createView(),));
     }
 
@@ -208,36 +251,44 @@ class EserviceGroupController extends Controller {
         ;
     }
 
-    private function getuserid() {
+    public function quittergroupeAction() {
 
-
+        list($user_id, $group_id) = $this->getuserid();
+        if ($user_id == 0) {
+            $mymessage = "Vous n'estes pas connecté";
+            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+                        'mymessage' => $mymessage,
+                    ));
+        }
+        if ($group_id == 0) {
+            $mymessage = "Vous n'appartenez a aucun groupe";
+            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+                        'mymessage' => $mymessage,
+                    ));
+        }
+        // user->group a null
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-        } else {
-            $user_id = 0;
+        $entity_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+         if ($entity_user) {
+        $em->persist($entity_user);
+        $entity_user->setIdgroup();
+        $em->flush();
+         }
+        // Supprimer les demandes de group du user
+        $em = $this->getDoctrine()->getManager();
+        $entity_demandegroupe = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findOneBy(
+                array('iduser' => $user_id)
+        );
+        if ($entity_demandegroupe) {
+
+            $em->remove($entity_demandegroupe);
+            $em->flush();
         }
-        return ($user_id);
-    }
+        /* $em->persist($entity_demandegroupe);
+          $entity_user->setIdgroup();
+          $em->flush(); */
 
-    private function getgroupid() {
-
-
-       $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-           $group_id = $user->getIdgroup()->getId();
-        } else {
-            $group_id = 0;
-        }
-        
-        return ($group_id);
+        return $this->redirect($this->generateUrl('egroup_groupes'));
     }
 
 }

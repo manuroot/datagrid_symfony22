@@ -72,7 +72,7 @@ class Epost {
 
     /**
      * @var string
-     /* @Assert\Length(min = 10,max=200) 
+      /* @Assert\Length(min = 10,max=200)
      * @ORM\Column(name="resume", type="text", nullable=false)
      */
     private $resume;
@@ -112,7 +112,7 @@ class Epost {
     /**
      * @var \Application\Sonata\UserBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User",inversedBy="epost")))
      * @ORM\OrderBy({"username" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="proprietaire", referencedColumnName="id")
@@ -163,7 +163,7 @@ class Epost {
     private $isvisible;
 
     /**
-    * @orm\Column(name="comments_enabled",type="boolean",nullable=true)
+     * @orm\Column(name="comments_enabled",type="boolean",nullable=true)
      */
     private $commentsEnabled;
 
@@ -177,6 +177,10 @@ class Epost {
     //protected $commentsEnabled = true;
     //  protected $commentsCloseAt;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $slug;
 
     /**
      * Tags for post
@@ -210,7 +214,7 @@ class Epost {
      */
     public function setName($name) {
         $this->name = $name;
-
+        $this->setSlug($this->name);
         return $this;
     }
 
@@ -233,7 +237,7 @@ class Epost {
         $this->setUpdatedAt(new \DateTime());
         $this->tags = new ArrayCollection();
         $this->isvisible = true; // Default value for column is_visible
-        $this->commentsEnabled=true;
+        $this->commentsEnabled = true;
     }
 
     /**
@@ -347,6 +351,8 @@ class Epost {
      */
     public function setUpdatedAtValue() {
         $this->setUpdatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->setSlug($this->getName());
     }
 
     public function prePersist() {
@@ -635,29 +641,74 @@ class Epost {
     public function getCommentsDefaultStatus() {
         return $this->commentsDefaultStatus;
     }
-    
-     /**
+
+    /**
      * {@inheritdoc}
      */
-    public function getYear()
-    {
+    public function getYear() {
         return $this->getgetcreatedAt()->format('Y');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getMonth()
-    {
+    public function getMonth() {
         return $this->getcreatedAt()->format('m');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDay()
-    {
+    public function getDay() {
         return $this->getcreatedAt()->format('d');
     }
 
+    public function slugify($text) {
+        // replace non letter or digits by -
+        $text = preg_replace('#[^\\pL\d]+#u', '-', $text);
+
+        // trim
+        $text = trim($text, '-');
+
+        // transliterate
+        if (function_exists('iconv')) {
+            $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        }
+
+        // lowercase
+        $text = strtolower($text);
+
+        // remove unwanted characters
+        $text = preg_replace('#[^-\w]+#', '', $text);
+
+        if (empty($text)) {
+            return 'n-a';
+        }
+
+        return $text;
+    }
+
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Epost
+     */
+    public function setSlug($slug)
+    {
+         $this->slug = $this->slugify($slug);
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 }

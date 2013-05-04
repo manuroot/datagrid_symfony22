@@ -1,0 +1,10 @@
+<section class="section">
+    <header>
+        <h3>Latest Comments</h3>
+    </header>
+    {% for comment in latestComments %}
+        {# .. #}
+        <em><time datetime="{{ comment.created|date('c') }}">{{ comment.created|created_ago }}</time></em>
+        {# .. #}
+    {% endfor %}
+</section>

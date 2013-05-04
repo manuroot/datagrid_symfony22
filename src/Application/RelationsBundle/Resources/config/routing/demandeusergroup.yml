@@ -27,12 +27,13 @@ groupedemande_newdemande:
 
 groupedemande_edit:
     pattern:  /{id}/edit
-    defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:edit" }
-
+    defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:edit", id: 0 }
+    requirements: {  id: \d+ }
+          
 groupedemande_update:
     pattern:  /{id}/update
     defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:update" }
-    requirements: { _method: post|put }
+    requirements: { _method: post }
 
 groupedemande_delete:
     pattern:  /{id}/delete

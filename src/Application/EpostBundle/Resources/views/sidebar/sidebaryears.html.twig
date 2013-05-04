@@ -1,0 +1,38 @@
+<div><p>
+ {# 
+{% for year in years %}
+#}
+    <!--<span class="badge badge-warning">-->
+      
+    <!--Catégorie: -->
+       {#
+ <a href="{{ url('sonata_news_tag', {'tag': tag.slug} ) }}">{{ tag.name }}({{ tag.posts|length }})</a>
+#}
+    
+    {% for key,value in all_years %}
+          {#  <ul> <a href="{{ url('sonata_news_archive_yearly', {'year': year} ) }}">{{ year }}</a>#}
+                <ul> <a href="{{ url('sonata_news_archive_yearly', {'year': key} ) }}">{{ key }}({{ value }})</a>
+                </ul>
+{% endfor %}
+  
+     
+    {#
+{% endfor %}
+    #}        
+            </p>
+</div>
+
+ 
+
+{#
+<div>
+    <p>
+{% for tag in alltags %}
+    <span class="badge badge-warning">
+    <!--Catégorie: -->
+        <a href="{{ url('sonata_news_tag', {'tag': tag.slug} ) }}">{{ tag.name }}({{ tag.posts|length }})</a>
+    </span>
+{% endfor %}
+</p>
+</div>
+#}

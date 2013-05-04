@@ -26,6 +26,7 @@ epost_propositions:
 
 
 
+        
 epost_show:
     pattern:  /{id}/show
     defaults: { _controller: "ApplicationEpostBundle:Epost:show" }
@@ -52,3 +53,10 @@ epost_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ApplicationEpostBundle:Epost:delete" }
     requirements: { _method: post|delete }
+
+epost_showstandard:
+    pattern:  /{blog_id}/{slug}
+    defaults: { _controller: ApplicationEpostBundle:Epost:show }
+    requirements:
+        _method:  GET
+        blog_id: \d+

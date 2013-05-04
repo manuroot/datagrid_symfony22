@@ -12,13 +12,14 @@ class EproduitType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('name', 'genemu_jqueryautocomplete_entity', array(
+                ->add('name')
+        /*, 'genemu_jqueryautocomplete_entity', array(
                     'class' => 'Application\EservicesBundle\Entity\Eproduit',
                     'property' => 'name',
                     'configs' => array(
                         'minLength' => 0,
                     ),
-                ))
+                ))*/
                 //  ->add('name',null,array('label'=>'Nom du Produit'))
                 ->add('description', 'textarea', array(
                     'label' => 'Description du Produit',

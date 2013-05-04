@@ -3,7 +3,6 @@
 namespace Application\RelationsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\RelationsBundle\Entity\DemandeUsergroup;
 use Application\RelationsBundle\Form\DemandeUsergroupType;
@@ -27,21 +26,23 @@ class DemandeUsergroupController extends Controller {
             $user = $this->get('security.context')->getToken()->getUser();
             $user_id = $user->getId();
             $group = $user->getIdgroup();
-            if (isset($group)) {
-                $group_id = $group->getId();
-            } else {
-                $group_id = 0;
+            if (isset($group)){
+                  $group_id=$group->getId();
+            }
+            else {
+                $group_id=0;
             }
         } else {
             $user_id = 0;
             $group_id = 0;
         }
-
-
-        // }else {
+            
+            
+     // }else {
         return array($user_id, $group_id);
-        //   }
+     //   }
     }
+
 
     /**
      * Lists all DemandeUsergroup entities.
@@ -62,49 +63,37 @@ class DemandeUsergroupController extends Controller {
      *
      */
     public function createAction(Request $request) {
-        // echo "creation here";
-        //  exit(1);
+        echo "creation here";exit(1);
         $entity = new DemandeUsergroup();
         $form = $this->createForm(new DemandeUsergroupType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
-            $postData = $request->request->get('application_relationsbundle_demandeusergrouptype');
-            $iduser = $postData['iduser'];
             $em = $this->getDoctrine()->getManager();
+            
+       /*
+         $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
+        if (!$entity_group) {
+            throw $this->createNotFoundException('Unable to find EserviceGroup entity.');
+        }*/
+        list($user_id, $group_id) = $this->getuserid();
+         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+       if (!$current_user) {
+            throw $this->createNotFoundException('Unable to find user entity.');
+        }
+       
+          /* echo "test id=$user_id";
+       exit(1);*/
+       $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
 
-            list($user_id, $group_id) = $this->getuserid();
-            $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-            if (!$current_user) {
-                throw $this->createNotFoundException('Unable to find user entity.');
-            }
-
-
-         //  print_r($postData);
-        //    exit(1);
-            // Valider demande
-            // ==> user group a idgroup
-            $idgroup = $postData['idgroup'];
-
-             /* echo "test id=$user_id";
-              exit(1); */
-            $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
-
-            if ($entity_user) {
-                throw $this->createNotFoundException('Demande existe deja.');
-            }
-            //$entity->setIdgroup($entity_group);
-            //   $entity->setIduser($current_user);
+        if ($entity_user) {
+            throw $this->createNotFoundException('Demande existe deja.');
+        }
+       //$entity->setIdgroup($entity_group);
+     //   $entity->setIduser($current_user);
             $em->persist($entity);
             $em->flush();
 
-              $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($idgroup);
-
-            $em->persist($current_user);
-            $current_user->setIdgroup($entity_group);
-            $em->flush();
-            
-            
             return $this->redirect($this->generateUrl('groupedemande_show', array('id' => $entity->getId())));
         }
 
@@ -113,9 +102,8 @@ class DemandeUsergroupController extends Controller {
                     'form' => $form->createView(),
                 ));
     }
-
-    public function createAdminAction(Request $request) {
-        $securityContext = $this->container->get('security.context');
+ public function createAdminAction(Request $request) {
+       $securityContext = $this->container->get('security.context');
         $entity = new DemandeUsergroup();
         $form = $this->createForm(new DemandeUsergroupAdminType($securityContext), $entity);
         $form->bind($request);
@@ -133,22 +121,25 @@ class DemandeUsergroupController extends Controller {
                     'form' => $form->createView(),
                 ));
     }
-
     /**
      * Displays a form to create a new DemandeUsergroup entity.
      *
      */
     public function newAction() {
         $securityContext = $this->container->get('security.context');
-        list($user_id, $group_id) = $this->getuserid();
-        $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-        if (!$current_user) {
+          list($user_id, $group_id) = $this->getuserid();
+         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+       if (!$current_user) {
             throw $this->createNotFoundException('Unable to find user entity.');
         }
+        
+          /* echo "test id=$user_id ";
+       exit(1);*/
+          $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
 
-        /* echo "test id=$user_id ";
-          exit(1); */
-        $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
+          
+          
+          
         $entity = new DemandeUsergroup();
         $form = $this->createForm(new DemandeUsergroupAdminType($securityContext), $entity);
 
@@ -159,33 +150,39 @@ class DemandeUsergroupController extends Controller {
     }
 
     public function newDemandegroupAction($id) {
-        //  echo "test id=$id";
-        //  exit(1);
+        
+
+      //  echo "test id=$id";
+      //  exit(1);
         $em = $this->getDoctrine()->getManager();
-        $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
+         $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
         if (!$entity_group) {
             throw $this->createNotFoundException('Unable to find EserviceGroup entity.');
         }
         list($user_id, $group_id) = $this->getuserid();
-        $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-        if (!$current_user) {
+         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+       if (!$current_user) {
             throw $this->createNotFoundException('Unable to find user entity.');
         }
-
-        /* echo "test id=$user_id ";
-          exit(1); */
-        $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
+        
+          /* echo "test id=$user_id ";
+       exit(1);*/
+          $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
 
         if ($entity_user) {
-            $message = "Vous avez deja effectuer une demande de groupe";
+            $message="Cette demande existe deja";
             return $this->render('ApplicationRelationsBundle:DemandeUsergroup:deny.html.twig', array(
-                        'mymessage' => $message));
+                'mymessage'=>$message));
         }
+       
         //Creation entity EproduitComments
         $entity = new DemandeUsergroup();
         $entity->setIdgroup($entity_group);
         $entity->setIduser($current_user);
         $form = $this->createForm(new DemandeUsergroupType(), $entity);
+   // $entity = new DemandeUsergroup();
+   //     $form = $this->createForm(new DemandeUsergroupType(), $entity);
+
         return $this->render('ApplicationRelationsBundle:DemandeUsergroup:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -216,46 +213,18 @@ class DemandeUsergroupController extends Controller {
      * Displays a form to edit an existing DemandeUsergroup entity.
      *
      */
-    public function editAction(Request $request, $id) {
-
-        $session = $this->getRequest()->getSession();
-        if (!$id) {
-            throw $this->createNotFoundException('Missing paramter id = ' . $id);
-        }
-
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
+
         $entity = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->find($id);
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find DemandeUsergroup entity.');
         }
-        $proprietaire = $entity->getIduser()->getId();
-        list($user_id, $group_id) = $this->getuserid();
-        $user_security = $this->container->get('security.context');
 
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            if (!$this->get('security.context')->isGranted('ROLE_ADMIN') && $user_id != $proprietaire) {
-                $message = "Vous n'etes pas le proprietaire de cette demande";
-                return $this->render('ApplicationRelationsBundle:DemandeUsergroup:deny.html.twig', array(
-                            'mymessage' => $message));
-            }
-        }
-        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            $session->getFlashBag()->add('warning', "ADMINISTRATEUR MODE");
-        }
         $editForm = $this->createForm(new DemandeUsergroupType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-        //  print_r($request->getMethod());
-        //    exit(1);
-        if ($request->getMethod() == 'POST') {
-            $editForm->bind($request);
-            if ($editForm->isValid()) {
 
-                $em->persist($entity);
-                $em->flush();
-                return $this->redirect($this->generateUrl('groupedemande'));
-            }
-        }
         return $this->render('ApplicationRelationsBundle:DemandeUsergroup:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
@@ -267,33 +236,32 @@ class DemandeUsergroupController extends Controller {
      * Edits an existing DemandeUsergroup entity.
      *
      */
-    /* public function updateAction(Request $request, $id) {
+    public function updateAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
 
-      $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->find($id);
 
-      $entity = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find DemandeUsergroup entity.');
+        }
 
-      if (!$entity) {
-      throw $this->createNotFoundException('Unable to find DemandeUsergroup entity.');
-      }
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new DemandeUsergroupType(), $entity);
+        $editForm->bind($request);
 
-      $deleteForm = $this->createDeleteForm($id);
-      $editForm = $this->createForm(new DemandeUsergroupType(), $entity);
-      $editForm->bind($request);
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
 
-      if ($editForm->isValid()) {
-      $em->persist($entity);
-      $em->flush();
+            return $this->redirect($this->generateUrl('groupedemande_edit', array('id' => $id)));
+        }
 
-      return $this->redirect($this->generateUrl('groupedemande'));
-      }
-
-      return $this->render('ApplicationRelationsBundle:DemandeUsergroup:edit.html.twig', array(
-      'entity' => $entity,
-      'edit_form' => $editForm->createView(),
-      'delete_form' => $deleteForm->createView(),
-      ));
-      } */
+        return $this->render('ApplicationRelationsBundle:DemandeUsergroup:edit.html.twig', array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                ));
+    }
 
     /**
      * Deletes a DemandeUsergroup entity.
@@ -311,16 +279,8 @@ class DemandeUsergroupController extends Controller {
                 throw $this->createNotFoundException('Unable to find DemandeUsergroup entity.');
             }
 
-            $proprietaire = $entity->getIduser()->getId();
-            $entity_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($proprietaire);
-            $empty_entity_group = new EserviceGroup();
-
-            $em->persist($entity_user);
-            $entity_user->setIdgroup();
-            $em->flush();
             $em->remove($entity);
             $em->flush();
-            //supprimer le groupe dans le user
         }
 
         return $this->redirect($this->generateUrl('groupedemande'));

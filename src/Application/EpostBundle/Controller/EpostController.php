@@ -5,6 +5,10 @@ namespace Application\EpostBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\EpostBundle\Entity\Epost;
+use Application\EpostBundle\Entity\EpostTags;
+use Application\EpostBundle\Entity\EpostComments;
+use Application\EpostBundle\Entity\EpostCategories;
+
 use Application\EpostBundle\Form\EpostType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -20,6 +24,44 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  */
 class EpostController extends Controller {
+
+     /* ====================================================================
+     * 
+     *  SIDEBAR : TAGS, COMMENTS, CATEGORIES
+     * 
+      =================================================================== */
+
+    private function sidebar_tags() {
+
+        $em = $this->container->get('doctrine')->getManager();
+        $alltags = $em->getRepository('ApplicationEpostBundle:EpostTags')->findAll();
+        //$alltags = $em->getRepository('ApplicationEpostBundle:EpostTags')->findByEnabled(1);
+        $tagWeights = $em->getRepository('ApplicationEpostBundle:EpostTags')->getTagWeights($alltags);
+     //   print_r($tagWeights);
+      //  exit(1);
+        return array($alltags, $tagWeights);
+    }
+
+    private function sidebar_comments() {
+        $em = $this->container->get('doctrine')->getManager();
+        list($user_id, $group_id) = $this->getuserid();
+        if ($user_id != 0 && $group_id != 0) {
+            $lastcomments = $em->getRepository('ApplicationSonataNewsBundle:Comment')->FindGroupLastComments(10, $group_id);
+        } else {
+            $lastcomments = $em->getRepository('ApplicationEpostBundle:EpostComments')->FindLastComments();
+        }
+
+        return ($lastcomments);
+    }
+
+    private function sidebar_categories() {
+        $em = $this->container->get('doctrine')->getManager();
+         $allcategories = $em->getRepository('ApplicationEpostBundle:EpostCategories')->findAll();
+        //$allcategories = $em->getRepository('ApplicationEpostBundle:EpostCategories')->findByEnabled(1);
+         return ($allcategories);
+    }
+
+   
 
     private function sidebar_years() {
         $em = $this->container->get('doctrine')->getManager();
@@ -187,11 +229,21 @@ class EpostController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_indexstandard');
+        list($alltags, $tagWeights) = $this->sidebar_tags();
+        $allcategories = $this->sidebar_categories();
+       // $lastcomments = $this->sidebar_comments();
+    
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindActif();
         $paginationa = $this->createpaginator($query, 5);
         $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         return $this->render('ApplicationEpostBundle:Epost:standardblog.html.twig', array(
                     'paginationa' => $paginationa,
+              'allcategories' => $allcategories,
+            // 'catweight' => $catWeights,
+            'alltags' => $alltags,
+            /*'lastcomments' => $lastcomments,*/
+            'tagweight' => $tagWeights,
+       
                 ));
     }
 
@@ -296,10 +348,12 @@ class EpostController extends Controller {
      * Finds and displays a Epost entity.
      *
      */
-    public function showAction($id) {
+   // showAction($id, $slug)
+             public function showAction($blog_id,$slug) {
+    //public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationEpostBundle:Epost')->find($id);
+        $entity = $em->getRepository('ApplicationEpostBundle:Epost')->find($blog_id);
         $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
 //$path = $helper->asset($entity, 'image');
         if (!$entity) {
@@ -313,7 +367,7 @@ class EpostController extends Controller {
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
 
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($blog_id);
 
         return $this->render('ApplicationEpostBundle:Epost:show.html.twig', array(
                     'entity' => $entity,

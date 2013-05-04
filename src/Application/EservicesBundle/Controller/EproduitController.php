@@ -21,21 +21,32 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class EproduitController extends Controller {
 
+  
     private function getuserid() {
-
-
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
+       $em = $this->getDoctrine()->getManager();
         $user_security = $this->container->get('security.context');
+        // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user = $this->get('security.context')->getToken()->getUser();
             $user_id = $user->getId();
+            $group = $user->getIdgroup();
+            if (isset($group)) {
+                $group_id = $group->getId();
+            } else {
+                $group_id = 0;
+            }
         } else {
             $user_id = 0;
+            $group_id = 0;
         }
-        return ($user_id);
+
+
+        // }else {
+        return array($user_id, $group_id);
+        //   }
     }
+
+  
 
     /**
      * Lists all Eproduit entities.
@@ -44,59 +55,10 @@ class EproduitController extends Controller {
     public function indexAction() {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-             $user_id = $user->getId();
-            $group_id = $user->getIdgroup()->getId();
-        } else {
-             $user_id = 0;
-            $group_id=0;
-        }
-        $session = $this->getRequest()->getSession();
+        list($user_id,$group_id) = $this->getuserid();
+         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit');
 
- /*       
- echo "group=" . $group_id . "<br>";
- exit(1);*/
-     /*      
-          if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-            $group_id = $user->getIdgroup();
-        } else {
-            $user_id = 0;
-            $group_id=0;
-            
-        }
-        $session = $this->getRequest()->getSession();
-        $session->set('buttonretour', 'eproduit_indexserch');
-
-        $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
-        $query_other = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id,$group_id);
-
-        
-         $paginator1 = $this->get('knp_paginator');
-        $pagename1 = 'page1'; // Set custom page variable name
-        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
-        $paginationa = $paginator1->paginate(
-                $query_s, $page1, 3, array('pageParameterName' => $pagename1,
-            "sortDirectionParameterName" => "dir1",
-            'sortFieldParameterName' => "sort1")
-        );
-
-        $paginator2 = $this->get('knp_paginator');
-        $pagename2 = 'page2'; // Set another custom page variable name
-        $page2 = $this->get('request')->query->get($pagename2, 1); // Get another custom page variable
-        $paginationb = $paginator2->paginate(
-                $query_other, $page2, 3, array('pageParameterName' => $pagename2,
-            "sortDirectionParameterName" => "dir2",
-            'sortFieldParameterName' => "sort2")
-        );
-
-        */
         
           $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
         $query_other = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id,$group_id);
@@ -133,15 +95,8 @@ class EproduitController extends Controller {
      */
     public function indexAllAction() {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-        } else {
-            $user_id = 0;
-        }
-        $session = $this->getRequest()->getSession();
+             list($user_id,$group_id) = $this->getuserid();
+           $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit_indexadmin');
 
         $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFind();
@@ -166,16 +121,8 @@ class EproduitController extends Controller {
     public function indexmesproduitsAction() {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-        } else {
-            $user_id = 0;
-        }
-        $session = $this->getRequest()->getSession();
+             list($user_id,$group_id) = $this->getuserid();
+         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit_mesproduits');
         $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);
 
@@ -196,18 +143,8 @@ class EproduitController extends Controller {
     public function indexpropositionsAction() {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-      if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-             $user_id = $user->getId();
-            $group_id = $user->getIdgroup()->getId();
-        } else {
-             $user_id = 0;
-            $group_id=0;
-        }
-        $session = $this->getRequest()->getSession();
+             list($user_id,$group_id) = $this->getuserid();
+           $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit_propositions');
         $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindOtherAll($user_id,$group_id);
 
@@ -233,16 +170,8 @@ class EproduitController extends Controller {
         $entity = new Eproduit();
         $form = $this->createForm(new EproduitType(), $entity);
         $form->bind($request);
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        if ($user_security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            //  if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-        } else {
-            $user_id = 0;
-        }
-          $session = $this->getRequest()->getSession();
+             list($user_id,$group_id) = $this->getuserid();
+            $session = $this->getRequest()->getSession();
       //  $session->get('buttonretour', 'eproduit');
          $myretour = $session->get('buttonretour');
 
@@ -333,7 +262,7 @@ class EproduitController extends Controller {
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
              
-        $user_id = $this->getuserid();
+        list($user_id,$group_id) = $this->getuserid();
         $proprietaire = $entity->getProprietaire()->getId();
         if ($user_id != $proprietaire) {
             return $this->render('ApplicationEservicesBundle:Eservice:deny.html.twig', array(
@@ -468,19 +397,8 @@ class EproduitController extends Controller {
     public function indexsearchAction() {
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        //if( $user_security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
-            $group_id = $user->getIdgroup();
-        } else {
-            $user_id = 0;
-            $group_id=0;
-            
-        }
-        $session = $this->getRequest()->getSession();
+             list($user_id,$group_id) = $this->getuserid();
+            $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'eproduit_indexserch');
 
         $query = $em->getRepository('ApplicationEservicesBundle:Eproduit')->myFindAll($user_id);

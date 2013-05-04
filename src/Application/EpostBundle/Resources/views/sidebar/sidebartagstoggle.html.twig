@@ -1,0 +1,16 @@
+<a href="#" id="button" class="ui-state-default ui-corner-all">Tags</a>
+<br>
+<div class="toggler">
+<div id="effect" class="ui-widget-content ui-corner-all">
+<h4 class="ui-widget-header ui-corner-all">Tags</h4>
+
+{% for tag in alltags %}
+    <!--<span class="badge badge-warning">-->
+        <span class="weight-{{ tagweight[tag.name] }}">
+    <!--Catégorie: -->
+        <a href="{{ url('sonata_news_tag', {'tag': tag.slug} ) }}">{{ tag.name }}({{ tag.posts|length }})</a>
+    </span>
+{% endfor %}
+  
+</div>
+</div>

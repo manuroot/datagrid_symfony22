@@ -2,6 +2,12 @@ egroup_groupes:
     pattern:  /
     defaults: { _controller: "ApplicationEservicesBundle:EserviceGroup:index" }
 
+egroup_quitter:
+    pattern:  /quittergroupe
+    defaults: { _controller: "ApplicationEservicesBundle:EserviceGroup:quittergroupe" }
+
+
+
 egroup_groupes_show:
     pattern:  /{id}/show
     defaults: { _controller: "ApplicationEservicesBundle:EserviceGroup:show" }

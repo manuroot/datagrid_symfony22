@@ -13,13 +13,14 @@ class EpostType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('resume', 'textarea', array(
-                    'help_label' => '(Max: 200 car.)',
+                   // 'help_label' => '(Max: 200 car.)',
                     'label' => 'Resumé du Post',
                     /*'attr' => array(
                         'cols' => "60",
                         )*/
                     ))
-                ->add('name', 'genemu_jqueryautocomplete_entity', array(
+               // cyclic dependance ??
+               /*  ->add('name', 'genemu_jqueryautocomplete_entity', array(
                     'widget_addon' => array(
                         'icon' => 'pencil',
                         'type' => 'prepend'
@@ -29,7 +30,14 @@ class EpostType extends AbstractType {
                     'configs' => array(
                         'minLength' => 0,
                     ),
-                ))
+                ))*/
+                
+                 ->add('name', null, array('label'=>'Nom',
+                    'widget_addon' => array(
+                        'icon' => 'pencil',
+                        'type' => 'prepend'
+                    )))
+                
                 ->add('tags')
                 //  ->add('name',null,array('label'=>'Nom du Post'))
                 ->add('description', 'textarea', array(
