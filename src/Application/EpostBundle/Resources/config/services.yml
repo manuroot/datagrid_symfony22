@@ -7,3 +7,8 @@ services:
         tags:
             - { name: twig.extension }
 
+    appli.epost.admin.epost:
+        class: Application\EpostBundle\Admin\EpostAdmin
+        tags:
+        - { name: sonata.admin, manager_type: orm, group: EBlog, label: Articles}
+        arguments: [null, Application\EpostBundle\Entity\Epost,SonataAdminBundle:CRUD]

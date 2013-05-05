@@ -110,7 +110,9 @@ class EpostCategories {
        
     }
 
-     
+      public function __toString() {
+        return $this->getName();
+    }
     
       public function slugify($text) {
         // replace non letter or digits by -

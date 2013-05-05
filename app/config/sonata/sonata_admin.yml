@@ -6,6 +6,8 @@
 # more information can be found here http://sonata-project.org/bundles/admin
 #
 sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.role
     templates:
         # default global templates
         layout:  SonataAdminBundle::standard_layout.html.twig
