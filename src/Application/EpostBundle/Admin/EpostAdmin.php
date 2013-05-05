@@ -65,7 +65,9 @@ public function getTemplate($name)
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
                 ->addIdentifier('id')
-                ->add('name',null,array('label'=>'Nom'))
+                ->addIdentifier('name',null,array('label'=>'Nom'))
+             //   ->add('name',null,array('label'=>'Nom'))
+                 ->add('slug',null,array('label'=>'Slug'))
                 ->add('resume')
                 ->add('createdAt')
                 ->add('updatedAt')
