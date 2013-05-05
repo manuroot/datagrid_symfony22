@@ -139,7 +139,7 @@ MES POSTS
                 <td>{{ entity.id }}</td>
                 <td><a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                  {% if entity.categorie is not null %}               
-                  <td>{{ entity.categorie.nom }}</td>
+                  <td>{{ entity.categorie.name }}</td>
                   {% else %}
                   <td>---</td>
                   {% endif %}
@@ -253,7 +253,7 @@ MES POSTS
                    <td><a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
             
                  {% if entity.categorie is not null %}               
-                  <td>{{ entity.categorie.nom }}</td>
+                  <td>{{ entity.categorie.name }}</td>
                   {% else %}
                   <td>---</td>
                   {% endif %}

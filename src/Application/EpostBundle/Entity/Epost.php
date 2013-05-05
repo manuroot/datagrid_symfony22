@@ -124,7 +124,7 @@ class Epost {
      * @var \EpostCategories
      *
      * @ORM\ManyToOne(targetEntity="EpostCategories")
-     * @ORM\OrderBy({"nom" = "ASC"})
+     * @ORM\OrderBy({"name" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="categorie", referencedColumnName="id")
      * })
@@ -232,10 +232,12 @@ class Epost {
      */
     public function __construct() {
         //   $this->history = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->tags = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
-        $this->tags = new ArrayCollection();
+
         $this->isvisible = true; // Default value for column is_visible
         $this->commentsEnabled = true;
     }
@@ -688,17 +690,15 @@ class Epost {
         return $text;
     }
 
-
     /**
      * Set slug
      *
      * @param string $slug
      * @return Epost
      */
-    public function setSlug($slug)
-    {
-         $this->slug = $this->slugify($slug);
-    
+    public function setSlug($slug) {
+        $this->slug = $this->slugify($slug);
+
         return $this;
     }
 
@@ -707,8 +707,8 @@ class Epost {
      *
      * @return string 
      */
-    public function getSlug()
-    {
+    public function getSlug() {
         return $this->slug;
     }
+
 }

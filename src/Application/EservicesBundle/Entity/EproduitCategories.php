@@ -26,9 +26,9 @@ class EproduitCategories {
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=40, nullable=false)
+     * @ORM\Column(name="name", type="string", length=40, nullable=false)
      */
-    private $nom;
+    private $name;
 
     /**
      * @var string
@@ -48,24 +48,24 @@ class EproduitCategories {
     }
 
     /**
-     * Set nomProjet
+     * Set nameCategorie
      *
-     * @param string $nom
+     * @param string $name
      * @return EproduitCategories
      */
-    public function setNom($nom) {
-        $this->nom = $nom;
+    public function setName($name) {
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get nomproduit
+     * Get nameproduit
      *
      * @return string 
      */
-    public function getNom() {
-        return $this->nom;
+    public function getName() {
+        return $this->name;
     }
 
     /**
@@ -95,6 +95,8 @@ class EproduitCategories {
     }
 
      
-    
+     public function __toString() {
+        return $this->getName();
+    }
     
 }

@@ -4,17 +4,16 @@
         <title>{% block headtitle %}I-CHANGE MROOT{% endblock %}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" />
+           <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" />
+     
         <link rel="stylesheet" href="{{ asset('css/jquery-ui-1.9.2.custom.css') }}" type="text/css" media="all"/>
-           <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" media="all" />
-      {% stylesheets 
- '@ApplicationCertificatsBundle/Resources/public/css/certificatscenter.css' 
- output='css/compiled/main.css' filter='yui_css' %}
-<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
-{% endstylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" media="all" />
+   
 
-   <style>
+  <style type="text/css">
+ 
+  
 .main-col { width: 70%; display: inline-block; float: left; border-right: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }
 .sidebar {  padding: 10px; display: inline-block; }
  #footer {
@@ -31,25 +30,31 @@
     height:30px;   /* Height of the footer */
     background:#eaeaea;
 }         
-/*
-body {
-background-image:url(images/ravenna.png);
-}*/
-
-    </style> 
- {% endblock %}
-        
+  /*@media (max-width: 1024px) {
+    body {
+      padding-top: 0;
+    }
+  }*/
+  </style>
+{% stylesheets 
+ '@ApplicationCertificatsBundle/Resources/public/css/certificatscenter.css' 
+ output='css/compiled/main.css' filter='yui_css' %}
+<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+{#
+<link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/certificatscenter.css') }}" type="text/css" media="all"/>
+#}
+        {% endblock %}
     </head>
     <body>
-       
-            <div class="page-header">
+        
+        <div class="container">
+           <div class="page-header">
                       {{ block('NAVIGATION_BAR') }}
                    
                 </div>
-           <center><h1>   {% block title %}CERTIFICATS{% endblock %}</h1></center>
-        
-           
-               <div class="container-fluid">
+                
+                   <div class="container-fluid">
     <div class="row-fluid">
   
     <div class="span10">
@@ -59,30 +64,48 @@ background-image:url(images/ravenna.png);
           <div class="span2">
     <!--Sidebar content-->
     sidebar: todo
-    <br>last comments
-    <br>tag clouds 
+    {% block tags %}
+    {% endblock %}
+    <br>
+    {% block categories %}
+    {% endblock %}
+    <br>
+     {% block comments %}
+  {% endblock %}
     </div>
     </div>
-                     <div id="footer">
-                    <p align="center">{{ 'copyright MROOT'|trans }} © 2013</p>
+                      <div id="footer">
+                    <p align="center">{{ 'copyright mroot72000@yahoo.fr'|trans }} © 2012-2013</p>
                      
-                </div>
+                </div>        
     </div>
+              
                
+                </div>
+        
+        
                 <!-- Le javascript ================================================== -->
                 <!-- Placed at the end of the document so the pages load faster -->
 
        {% block javascripts %}
-                <script src="{{ asset('jquery/jquery-1.8.3.js') }}" type="text/javascript"></script>
+                  <script src="{{ asset('jquery/jquery-1.9.1.js') }}" type="text/javascript"></script>
+                {#<script src="{{ asset('jquery/jquery-1.8.3.js') }}" type="text/javascript"></script>#}
                 <script type="text/javascript" src="{{ asset('jquery/jquery-ui-1.9.2.custom.min.js') }}"></script>
-                <script type="text/javascript" src="{{ asset('jquery/jquery.ui.datepicker.js') }}"></script>
+              <script type="text/javascript" src="{{ asset('jquery/jquery.ui.datepicker.js') }}"></script>
+               {#
+   <script type="text/javascript" src="{{ asset('jquery/jquery.ui.datepicker-fr.js') }}"></script>
+#}
                 <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+            
+ {#
+       <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap-dropdown.js') }}"></script>
+#}
    {#{ tinymce_init('advanced') }#}
         <!-- <script type="text/javascript" src="{#{ asset('bundles/staflcontinymce/vendor/tiny_mce/tiny_mce.js') }#}"></script>
             -->         
     
  {% endblock %}
-                </body>
-
-    </html>
     
+        
+           
+            

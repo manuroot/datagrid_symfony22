@@ -1,9 +1,9 @@
 epost_indexadmin:
-    pattern:  /
+    pattern:  /epostall
     defaults: { _controller: "ApplicationEpostBundle:Epost:indexAll" }
 
 epost_indexstandard:
-    pattern:  /blog
+    pattern:  /
     defaults: { _controller: "ApplicationEpostBundle:Epost:standardblog" }
     
 epost:
@@ -55,8 +55,8 @@ epost_delete:
     requirements: { _method: post|delete }
 
 epost_showstandard:
-    pattern:  /{blog_id}/{slug}
-    defaults: { _controller: ApplicationEpostBundle:Epost:show }
+    pattern:  /{blog_id}/{slug}/{comments}
+    defaults: { _controller: ApplicationEpostBundle:Epost:show, comments: true }
     requirements:
         _method:  GET
         blog_id: \d+

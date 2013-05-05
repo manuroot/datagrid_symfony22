@@ -26,9 +26,9 @@ class EpostCategories {
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=40, nullable=false)
+     * @ORM\Column(name="name", type="string", length=40, nullable=false)
      */
-    private $nom;
+    private $name;
 
     /**
      * @var string
@@ -37,7 +37,23 @@ class EpostCategories {
      */
      private $description;
    
+      /**
+     * @ORM\Column(type="string")
+     */
+    protected $slug;
 
+      /**
+     * @var \EpostCategories
+     *
+     * @ORM\ManyToOne(targetEntity="Application\EservicesBundle\Entity\EserviceGroup"))
+     * @ORM\OrderBy({"nomGroup" = "ASC"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_group", referencedColumnName="id",nullable=true)
+     * })
+     * @ORM\OrderBy({"nom_group" = "ASC"})
+    */
+    private $idgroup;
+    
     /**
      * Get id
      *
@@ -48,24 +64,24 @@ class EpostCategories {
     }
 
     /**
-     * Set nomProjet
+     * Set nameProjet
      *
      * @param string $nom
      * @return EpostCategories
      */
-    public function setNom($nom) {
-        $this->nom = $nom;
-
+    public function setName($name) {
+        $this->name = $name;
+    $this->setSlug($this->name);
         return $this;
     }
 
     /**
-     * Get nompost
+     * Get namepost
      *
      * @return string 
      */
-    public function getNom() {
-        return $this->nom;
+    public function getName() {
+        return $this->name;
     }
 
     /**
@@ -96,5 +112,75 @@ class EpostCategories {
 
      
     
+      public function slugify($text) {
+        // replace non letter or digits by -
+        $text = preg_replace('#[^\\pL\d]+#u', '-', $text);
+
+        // trim
+        $text = trim($text, '-');
+
+        // transliterate
+        if (function_exists('iconv')) {
+            $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        }
+
+        // lowercase
+        $text = strtolower($text);
+
+        // remove unwanted characters
+        $text = preg_replace('#[^-\w]+#', '', $text);
+
+        if (empty($text)) {
+            return 'n-a';
+        }
+
+        return $text;
+    }
+
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return EpostCategories
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $this->slugify($slug);
     
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set idgroup
+     *
+     * @param \Application\EservicesBundle\Entity\EserviceGroup $idgroup
+     * @return EpostCategories
+     */
+    public function setIdgroup(\Application\EservicesBundle\Entity\EserviceGroup $idgroup = null)
+    {
+        $this->idgroup = $idgroup;
+    
+        return $this;
+    }
+
+    /**
+     * Get idgroup
+     *
+     * @return \Application\EservicesBundle\Entity\EserviceGroup 
+     */
+    public function getIdgroup()
+    {
+        return $this->idgroup;
+    }
 }

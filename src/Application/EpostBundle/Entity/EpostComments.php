@@ -90,6 +90,8 @@ class EpostComments {
      */
     protected $updated;
 
+    
+    
     public function __construct()
     {
         $this->setCreated(new \DateTime());
@@ -286,4 +288,6 @@ class EpostComments {
             
         //    }
     }
+
+    
 }

@@ -24,18 +24,31 @@ class EpostCommentsController extends Controller {
 
      private function getuserid() {
 
-          $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
+
+        $em = $this->getDoctrine()->getManager();
         $user_security = $this->container->get('security.context');
+        // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user = $this->get('security.context')->getToken()->getUser();
             $user_id = $user->getId();
+            $group = $user->getIdgroup();
+            if (isset($group)){
+                  $group_id=$group->getId();
+            }
+            else {
+                $group_id=0;
+            }
         } else {
             $user_id = 0;
+            $group_id = 0;
         }
-        return ($user_id);
+            
+            
+     // }else {
+        return array($user_id, $group_id);
+     //   }
     }
+
   public function newAction($epost_id)
     {
       

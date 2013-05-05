@@ -1,0 +1,3 @@
+epost_categories_index:
+    pattern:  /ecategories/index
+    defaults: { _controller: "ApplicationEpostBundle:Epost:indexAll" }

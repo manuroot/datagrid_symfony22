@@ -16,7 +16,15 @@ class ChangementsType extends AbstractType
       $builder->setAttribute('show_legend', false); // no legend for main form
    // $child = $builder->create('user', new SomeSubFormType(), array('show_child_legend' => true)); // but legend for this subform
   //  $builder->add($child);
-        $builder
+       $builder
+         //   ->add('nom')
+                 ->add('nom', null, array(
+                      'widget_addon' => array(
+            'icon' => 'pencil',
+            'type' => 'prepend'
+        )))
+                     
+          /*           $builder
          //   ->add('nom')
                  ->add('nom', 'genemu_jqueryautocomplete_entity', array(
                       'widget_addon' => array(
@@ -28,7 +36,7 @@ class ChangementsType extends AbstractType
                     'configs' => array(
                         'minLength' => 0,
                     ),
-                ))
+                ))*/
        /*   ->add('nom', 'text',  array(
                 "help_inline"=>"Please specify some understandable title",*/
       /*  'widget_addon' => array(

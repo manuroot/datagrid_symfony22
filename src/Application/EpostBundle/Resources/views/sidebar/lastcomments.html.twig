@@ -4,14 +4,16 @@
   <!-- <h4 class="ui-widget-header ui-corner-all">Commentaires Recents</h4>-->
 {% for comment in lastcomments %}
     <!--Catégorie: -->
- {{ comment.updatedAt | created_ago  }}
+ {{ comment.created | created_ago  }}
    <span class="badge badge-info">
       
-   {{ comment.post.title }}:</span><br>
-    <a href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(comment.post) }) }}">
-{{ comment.name }}</a> 
+   {{ comment.epost.name }}:</span><br>
+   {# <a href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(comment.post) }) }}">#}
  
-  {{  comment.message|length > 30 ? comment.message|slice(0, 30) ~ ' ...' : comment.message  }}
+   {{  comment.comment|raw }}
+ {#
+ {{  comment.comment|length > 100 ? comment.comment|slice(0, 30)|raw ~ ' ...' : comment.comment|raw  }}
+#}
 <br>
 {% endfor %}
 </p>

@@ -64,9 +64,9 @@ class EpostType extends AbstractType {
                     'class' => 'ApplicationEpostBundle:EpostCategories',
                     'query_builder' => function(EntityRepository $em) {
                         return $em->createQueryBuilder('u')
-                                ->orderBy('u.nom', 'ASC');
+                                ->orderBy('u.name', 'ASC');
                     },
-                    'property' => 'nom',
+                    'property' => 'name',
                     'multiple' => false,
                     'required' => true,
                     'label' => 'Categorie',

@@ -82,7 +82,17 @@ class EpostTags {
 */
     
    protected $slug;
-
+  /**
+     * @var \EpostTags
+     *
+     * @ORM\ManyToOne(targetEntity="Application\EservicesBundle\Entity\EserviceGroup"))
+     * @ORM\OrderBy({"nomGroup" = "ASC"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_group", referencedColumnName="id",nullable=true)
+     * })
+     * @ORM\OrderBy({"nom_group" = "ASC"})
+    */
+    private $idgroup;
    
 public function __construct($text = null)
     {
@@ -105,7 +115,7 @@ public function __construct($text = null)
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+      $this->slug = $this->slugify($slug);
     }
 
     /**
@@ -160,7 +170,8 @@ public function __construct($text = null)
     public function setName($name)
     {
         $this->name = $name;
-         $this->setSlug(self::slugify($name));
+        $this->setSlug($this->name);
+       //  $this->setSlug(self::slugify($name));
  
     }
 
@@ -192,5 +203,51 @@ public function __construct($text = null)
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Add posts
+     *
+     * @param \Application\EpostBundle\Entity\Epost $posts
+     * @return EpostTags
+     */
+    public function addPost(\Application\EpostBundle\Entity\Epost $posts)
+    {
+        $this->posts[] = $posts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove posts
+     *
+     * @param \Application\EpostBundle\Entity\Epost $posts
+     */
+    public function removePost(\Application\EpostBundle\Entity\Epost $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * Set idgroup
+     *
+     * @param \Application\EservicesBundle\Entity\EserviceGroup $idgroup
+     * @return EpostTags
+     */
+    public function setIdgroup(\Application\EservicesBundle\Entity\EserviceGroup $idgroup = null)
+    {
+        $this->idgroup = $idgroup;
+    
+        return $this;
+    }
+
+    /**
+     * Get idgroup
+     *
+     * @return \Application\EservicesBundle\Entity\EserviceGroup 
+     */
+    public function getIdgroup()
+    {
+        return $this->idgroup;
     }
 }

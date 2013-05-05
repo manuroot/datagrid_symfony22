@@ -46,7 +46,7 @@ class EpostController extends Controller {
         $em = $this->container->get('doctrine')->getManager();
         list($user_id, $group_id) = $this->getuserid();
         if ($user_id != 0 && $group_id != 0) {
-            $lastcomments = $em->getRepository('ApplicationSonataNewsBundle:Comment')->FindGroupLastComments(10, $group_id);
+            $lastcomments = $em->getRepository('ApplicationEpostBundle:EpostComments')->FindGroupLastComments(10, $group_id);
         } else {
             $lastcomments = $em->getRepository('ApplicationEpostBundle:EpostComments')->FindLastComments();
         }
@@ -231,7 +231,7 @@ class EpostController extends Controller {
         $session->set('buttonretour', 'epost_indexstandard');
         list($alltags, $tagWeights) = $this->sidebar_tags();
         $allcategories = $this->sidebar_categories();
-       // $lastcomments = $this->sidebar_comments();
+        $lastcomments = $this->sidebar_comments();
     
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindActif();
         $paginationa = $this->createpaginator($query, 5);
@@ -241,7 +241,7 @@ class EpostController extends Controller {
               'allcategories' => $allcategories,
             // 'catweight' => $catWeights,
             'alltags' => $alltags,
-            /*'lastcomments' => $lastcomments,*/
+            'lastcomments' => $lastcomments,
             'tagweight' => $tagWeights,
        
                 ));
@@ -349,7 +349,7 @@ class EpostController extends Controller {
      *
      */
    // showAction($id, $slug)
-             public function showAction($blog_id,$slug) {
+             public function showAction($blog_id,$slug,$comments) {
     //public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 

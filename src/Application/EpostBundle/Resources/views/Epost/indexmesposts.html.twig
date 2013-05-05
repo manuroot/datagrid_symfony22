@@ -66,7 +66,7 @@ MES POSTS
                 <td><a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.name }}</td>
                  {% if entity.categorie is not null %}               
-                  <td>{{ entity.categorie.nom }}</td>
+                  <td>{{ entity.categorie.name }}</td>
                   {% else %}
                   <td>---</td>
                   {% endif %}

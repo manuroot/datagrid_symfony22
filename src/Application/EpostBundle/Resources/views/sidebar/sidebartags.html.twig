@@ -3,6 +3,7 @@
 {% for tag in alltags %}
     <!--<span class="badge badge-warning">-->
         <span class="weight-{{ tagweight[tag.name] }}">
+       {#      <a href="{{ url('sonata_news_tag', {'tag': tag.slug} ) }}">{{ tag.name }}({{ tag.posts|length }})</a>#}
             {{ tag.name }}({{ tag.posts|length }})
     <!--Catégorie: -->
        {#

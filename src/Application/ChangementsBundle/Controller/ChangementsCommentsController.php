@@ -22,54 +22,52 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class ChangementsCommentsController extends Controller {
 
-     private function getuserid() {
+      private function getuserid() {
+
 
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
+        // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getuserid();
+            $user = $this->get('security.context')->getToken()->getUser();
+            $user_id = $user->getId();
+            $group = $user->getIdgroup();
+            if (isset($group)){
+                  $group_id=$group->getId();
+            }
+            else {
+                $group_id=0;
+            }
         } else {
             $user_id = 0;
+            $group_id = 0;
         }
-        return ($user_id);
+         return array($user_id, $group_id);
+ 
     }
   public function newAction($changement_id)
     {
       
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
+        list($user_id, $group_id) = $this->getuserid();
+       $validation=0;
+       $comment=null;
+        if ($user_id !=0) {
         $validation=1;
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-               $user_id = $user->getId();
-        
-      
         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
         $changement = $this->getChangement($changement_id);
-        //Creation entity EproduitComments
-        
         $comment = new ChangementsComments();
         $comment->setChangement($changement);
        $comment->setUser($current_user);
         $form   = $this->createForm(new ChangementsCommentsType(), $comment);
-
+        $formview=$form->createView();
+        }
+       
         return $this->render('ApplicationChangementsBundle:ChangementsComments:form.html.twig', array(
             'comment' => $comment,
-            'form'   => $form->createView(),
+            'form'   => $formview,
             'validation' => $validation,
         ));
-    
-    } else {
-          // throw $this->createNotFoundException('User not connected.');
-           $validation=0;
-           return $this->render('ApplicationChangementsBundle:ChangementsComments:form.html.twig', array(
-                'validation' => $validation,
-            
-        ));
-        }
     }
     
     
@@ -77,14 +75,11 @@ class ChangementsCommentsController extends Controller {
     {
       
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
+        list($user_id, $group_id) = $this->getuserid();
+  
         $validation=1;
-          $changement = $this->getChangement($id);
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-               $user_id = $user->getId();
-        
-      
+        $changement = $this->getChangement($id);
+        if ($user_id !=0) {
         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
       
         //Creation entity EproduitComments

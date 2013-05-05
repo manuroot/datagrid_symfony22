@@ -121,7 +121,7 @@ class Eproduit {
      * @var \EproduitCategories
      *
      * @ORM\ManyToOne(targetEntity="EproduitCategories")
-     * @ORM\OrderBy({"nom" = "ASC"})
+     * @ORM\OrderBy({"name" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="categorie", referencedColumnName="id")
      * })

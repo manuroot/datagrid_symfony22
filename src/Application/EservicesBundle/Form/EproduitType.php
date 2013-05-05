@@ -68,9 +68,9 @@ class EproduitType extends AbstractType {
                     'class' => 'ApplicationEservicesBundle:EproduitCategories',
                     'query_builder' => function(EntityRepository $em) {
                         return $em->createQueryBuilder('u')
-                                ->orderBy('u.nom', 'ASC');
+                                ->orderBy('u.name', 'ASC');
                     },
-                    'property' => 'nom',
+                    'property' => 'name',
                     'multiple' => false,
                     'required' => true,
                     'label' => 'Categorie',

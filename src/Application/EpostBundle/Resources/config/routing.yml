@@ -6,6 +6,9 @@ _epost_comments:
     resource: "@ApplicationEpostBundle/Resources/config/routing/epostcomments.yml"
     prefix:   /epostcomments
 
+_epost_categories:
+    resource: "@ApplicationEpostBundle/Resources/config/routing/epostcategories.yml"
+    prefix:   /ecategories
 
 _epost_notes:
     resource: "@ApplicationEpostBundle/Resources/config/routing/epostnotes.yml"

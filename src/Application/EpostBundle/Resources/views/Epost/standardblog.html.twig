@@ -1,4 +1,4 @@
-{% extends "ApplicationEpostBundle::layout.html.twig" %}
+{% extends "ApplicationEpostBundle::layoutn.html.twig" %}
 
   {% block stylesheets %}
 {{ parent() }}
@@ -12,20 +12,6 @@ POSTS DISPONIBLES
 {% endblock %}
 {% block content %}
 
-
-
-
-{% block categories %}
-{{ parent() }}
-{% include 'ApplicationEpostBundle:sidebar:sidebarcategories.html.twig' %}
-{% endblock %}
-
-  
-    
-{% block tags %}
-{{ parent() }}
-{% include 'ApplicationEpostBundle:sidebar:sidebartags.html.twig' %}
-{% endblock %}
 
 {% for type, flashMessages in app.session.flashbag.all() %}
     {% for flashMessage in flashMessages %}
@@ -73,7 +59,7 @@ POSTS DISPONIBLES
                <div class="sonata-blog-post-tag-list">
                            {% if entity.categorie is not null %}               
                           <span class="label">
-                  {{ entity.categorie.nom }}
+                  {{ entity.categorie.name }}
                       
                         </span>
                   {% else %}
@@ -117,11 +103,26 @@ POSTS DISPONIBLES
 {% endblock %}
 
 
- {#
-{% block comments %}
-{% include 'ApplicationSonataNewsBundle:sidebar:lastcomments.html.twig' %}
+
+
+{% block categories %}
+{{ parent() }}
+{% include 'ApplicationEpostBundle:sidebar:sidebarcategories.html.twig' %}
 {% endblock %}
 
+  
+    
+{% block tags %}
+{{ parent() }}
+{% include 'ApplicationEpostBundle:sidebar:sidebartags.html.twig' %}
+{% endblock %}
+
+
+
+{% block comments %}
+{% include 'ApplicationEpostBundle:sidebar:lastcomments.html.twig' %}
+{% endblock %}
+{#
 
 {% block archives %}
 {{ parent() }}
