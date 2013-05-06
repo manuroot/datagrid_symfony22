@@ -55,7 +55,13 @@ public function getTemplate($name)
 
         $showMapper
                 ->add('name')
-                ->add('resume')
+                ->add('tags')
+                ->add('notes')
+                ->add('proprietaire',null,array('label'=>'User'))
+                  ->add('slug')
+                ->add('categorie')
+                ->add('image')
+                ->add('resume',null,array('label'=>'Résumé'))
                 ->add('description')
                 ->add('createdAt')
                 ->add('updatedAt')
@@ -161,10 +167,13 @@ public function getTemplate($name)
         $datagridMapper
                 ->add('name')
                 ->add('resume')
+                   ->add('idStatus')
+                ->add('isvisible')
+             
                  ->add('proprietaire', null, array('field_options' => array('expanded' => false, 'multiple' => false)))
                          
-                ->add('createdAt')
-                ->add('updatedAt')
+               /* ->add('createdAt')
+                ->add('updatedAt')*/
         ;
     }
 

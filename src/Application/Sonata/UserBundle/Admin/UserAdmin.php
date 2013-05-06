@@ -32,7 +32,7 @@ class UserAdmin extends SonataUserAdmin
     {
             parent::configureListFields($listMapper);
         $listMapper
-        ->add('idgroup');
+        ->add('idgroup',null,array('label'=>'Group-applis'));
         
     }
 
