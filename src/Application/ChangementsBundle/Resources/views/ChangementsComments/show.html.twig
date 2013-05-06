@@ -155,7 +155,7 @@ CHANGEMENT: {{ entity.nom }}
                 <td>{{ comment.user }}</td>
                 
                 <td>{{ comment.created|date('l, F j, Y') }}</td>
-                <td> <p>{{ comment.comment }}</p></td>
+                <td> <p>{{ comment.comment|raw }}</p></td>
 
     </tr>
   {% endfor %}

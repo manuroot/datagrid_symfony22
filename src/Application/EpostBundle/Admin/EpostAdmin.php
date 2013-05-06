@@ -151,7 +151,12 @@ public function getTemplate($name)
 
                   // simple, advanced, bbcode
                   ))) */
-                ->end();
+                ->end()
+                ->with('ImageMedia')
+            ->add('imageMedia', 'sonata_type_model_list', array('required' => false),
+                array('link_parameters'=>array('context'=>'default',
+               'provider'=>'sonata.media.provider.image')))
+                  ->end();
 
         /* $formMapper->with('ImagePost')
           ->add('image', 'sonata_type_model_list', array('required' => false), array('link_parameters' => array('context' => 'default',

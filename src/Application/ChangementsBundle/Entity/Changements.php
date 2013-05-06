@@ -182,6 +182,23 @@ class Changements extends AbstractEvent
  */
 private $comments;
 
+
+
+  /**
+     * @ORM\Column(type="integer", length=5, name="ticket_ext", nullable=true)
+     *
+     * @var integer $ticket_ext
+     */
+    private $ticketExt;
+
+    
+     /**
+     * @ORM\Column(type="integer", length=5, name="ticket_int", nullable=true)
+     *
+     * @var integer $ticket_int
+     */
+    private $ticketInt;
+    
   /*//**
  //* @Assert\File(
  *     maxSize="1M",
@@ -221,6 +238,7 @@ private $comments;
         return $this->id;
     }
 
+  
     /**
      * Set nom
      *
@@ -687,5 +705,51 @@ private $comments;
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set ticketExt
+     *
+     * @param integer $ticketExt
+     * @return Changements
+     */
+    public function setTicketExt($ticketExt)
+    {
+        $this->ticketExt = $ticketExt;
+    
+        return $this;
+    }
+
+    /**
+     * Get ticketExt
+     *
+     * @return integer 
+     */
+    public function getTicketExt()
+    {
+        return $this->ticketExt;
+    }
+
+    /**
+     * Set ticketInt
+     *
+     * @param integer $ticketInt
+     * @return Changements
+     */
+    public function setTicketInt($ticketInt)
+    {
+        $this->ticketInt = $ticketInt;
+    
+        return $this;
+    }
+
+    /**
+     * Get ticketInt
+     *
+     * @return integer 
+     */
+    public function getTicketInt()
+    {
+        return $this->ticketInt;
     }
 }

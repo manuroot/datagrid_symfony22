@@ -18,12 +18,25 @@ class ChangementsStepsType extends AbstractType {
             case 1:
                 $builder
                         ->add('nom', 'text', array(
-                            
-                            'widget_addon' => array(
+                             'widget_addon' => array(
                                 'icon' => 'pencil',
                                 'type' => 'prepend'
                             ),
                         ))
+                       ->add('ticketExt',null,array(
+                           'label'=>'Ticket Externe',
+                             'widget_addon' => array(
+                                'icon' => 'tag',
+                                'type' => 'prepend'
+                            ),
+                           ))
+               ->add('ticketInt',null,array(
+                   'label'=>'Ticket Interne',
+                             'widget_addon' => array(
+                                'icon' => 'tag',
+                                'type' => 'prepend'
+                            ),))
+        
                         ->add('dateDebut', 'date', array(
                             'label' => 'Date début',
                             'widget' => 'single_text',

@@ -1,5 +1,5 @@
 changements_comment_create:
-    pattern:  /comment/{changement_id}
+    pattern:  /{changement_id}
     defaults: { _controller: ApplicationChangementsBundle:ChangementsComments:create }
     requirements:
         _method:  POST

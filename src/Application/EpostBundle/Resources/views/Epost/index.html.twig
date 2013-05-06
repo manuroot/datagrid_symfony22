@@ -121,6 +121,7 @@ MES POSTS
  
  <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
    <th>Image</th>
+    <th>ImageMedia</th>
     <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
  <th colspan="3"><center>Actions</center></th>
@@ -137,7 +138,11 @@ MES POSTS
                 
                 
                 <td>{{ entity.id }}</td>
-                <td><a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                <td>
+                      <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
+                          {{ entity.name }}
+                    {#<a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.name }}#}
+                    </a></td>
                  {% if entity.categorie is not null %}               
                   <td>{{ entity.categorie.name }}</td>
                   {% else %}
@@ -174,12 +179,16 @@ MES POSTS
            ---
          {% endif %}
            </td>
+             <td>
+{#<img src="/sf1/{% path post.image, 'small' %}" width="50" /> #}
+<img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
+          </td>
             {% if entity.comments is not null %}
                   <td>{{ entity.comments|length }}</td>
                   {% else %}
                   <td>---</td>
                   {% endif %}
-           
+            
                   
                      <td>
                                <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
@@ -188,6 +197,7 @@ MES POSTS
                         <img src="{{ asset('bundles/applicationepost/images/detail.png') }}" alt="show" width="15" height="15" />
                     </a>
                 </td>
+               
                 <td>
                     <a href="{{ path('epost_edit', { 'id': entity.id }) }}">
                         <img src="{{ asset('bundles/applicationepost/images/edit.png') }}" alt="edit" width="15" height="15" />
@@ -239,6 +249,7 @@ MES POSTS
                  <th{% if paginationb.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationb, 'Résumé', 'a.resume') }}</th>
                 
                  <th>Image</th>
+                 <th>ImageMedia</th>
                    <th>Commentaires</th>
                  <th colspan="1">Actions</th>
             </tr>
@@ -249,9 +260,11 @@ MES POSTS
                 
                 
                 <td>{{ entity.id }}</td>
-             
-                   <td><a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-            
+                 <td><a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
+                          {{ entity.name }}
+               </a> </td>
+                  {# <td><a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+            #}
                  {% if entity.categorie is not null %}               
                   <td>{{ entity.categorie.name }}</td>
                   {% else %}
@@ -288,6 +301,10 @@ MES POSTS
            ---
          {% endif %}
            </td>
+            <td>
+{#<img src="/sf1/{% path post.image, 'small' %}" width="50" /> #}
+<img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
+          </td>
            
                     {% if entity.comments is not null %}
                   <td>{{ entity.comments|length }}</td>

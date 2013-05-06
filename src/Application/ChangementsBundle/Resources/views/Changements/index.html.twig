@@ -70,6 +70,12 @@ Changements
                             {#
       <th>{{ knp_pagination_sortable(pagination, 'kind', 'k.type') }}</th>
 <th class="{{ bootstrap.icon_class(heading) }}">{{ heading }}</th>#}
+                              <th{% if pagination.isSorted('a.ticketExt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'T_Ext', 'a.ticketExt') }}
+                              <i class="icon-tag"></i></th>
+                         
+                                  <th{% if pagination.isSorted('a.ticketInt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'T_Int', 'a.ticketInt') }}
+                              <i class="icon-tag"></i></th>
+                         
                             <th> Env <i class="icon-wrench"></i></th>
                             <!--<th>Avatar</th>-->
                             <th colspan="3">Actions</th>
@@ -119,7 +125,10 @@ Changements
 
                                             <img src="{{ asset('bundles/applicationcertificats/images/cadenas-sferme.png') }}" alt="show" width="15" height="15" />
         {% endif %}   </td> 
-                                        <td>
+                                     
+                                        <td> {{ entity.ticketExt }}   </td>
+                                        <td> {{ entity.ticketInt }}   </td>
+                                    <td>
                                     {{ entity.idEnvironnement|join(', ') }}   
 
                  {#{ entity.idEnvironnement|join(', ') }}   

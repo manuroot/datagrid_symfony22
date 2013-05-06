@@ -4,9 +4,9 @@ _changements:
     
 _changements_comments:
     resource: "@ApplicationChangementsBundle/Resources/config/routing/changementscomments.yml"
-    prefix:   /comments
+    prefix:   /changements/comments
     
 _docchangements:
     resource: "@ApplicationChangementsBundle/Resources/config/routing/docchangements.yml"
-    prefix:   /docchangements
+    prefix:   /changements/docchangements
     #prefix:   /admin/tag

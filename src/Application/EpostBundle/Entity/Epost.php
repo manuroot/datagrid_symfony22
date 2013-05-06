@@ -89,6 +89,17 @@ class Epost {
     protected $image;
 
     /**
+     * @var Application\Sonata\MediaBundle\Entity\Media
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")))
+     * @ORM\OrderBy({"name" = "ASC"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="imageMedia", referencedColumnName="id")
+     * })
+     */
+     protected $imageMedia;
+  
+    /**
      * @ORM\Column(type="string", length=255, name="image_name", nullable=true)
      *
      * @var string $imageName
@@ -711,4 +722,29 @@ class Epost {
         return $this->slug;
     }
 
+    
+      /**
+     * Set image
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $image
+     * @return Post
+     */
+    public function setImageMedia(\Application\Sonata\MediaBundle\Entity\Media $imageMedia = null)
+    {
+        $this->imageMedia = $imageMedia;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getImageMedia()
+    {
+        return $this->imageMedia;
+    }
+
+   
 }
