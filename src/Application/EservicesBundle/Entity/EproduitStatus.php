@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Environnement
  *
- * @ORM\Table(name="eproduit_status")
+ * @ORM\Table(name="eproduits_status")
  * @ORM\Entity
  */
 class EproduitStatus

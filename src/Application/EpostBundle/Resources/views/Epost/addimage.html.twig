@@ -1,0 +1,31 @@
+{% extends "ApplicationEpostBundle::layout.html.twig" %}
+
+         
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}
+
+
+{% block content_header '' %}
+{% block title %}
+
+{% endblock %}
+{% block content %}
+
+<br><br>
+
+Image Actuelle:<br><br>
+<img src="{% path entity.imageMedia, 'big' %}" width="250" /> 
+<br><br>
+<form action="{{ path('epost_addmyimage', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+               
+                            
+{{ form_rest(form) }} 
+         
+                            <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+   </form>       
+
+
+
+{% endblock %}
+

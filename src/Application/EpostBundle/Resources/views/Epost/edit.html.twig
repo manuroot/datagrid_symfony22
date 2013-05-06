@@ -119,9 +119,7 @@ POST: {{ entity.name }}
      <hr>
     {# {{ form_row(edit_form.resume) }}#}
        {{ form_errors(edit_form.resume) }}
-      
      {{ form_label(edit_form.resume) }}
-      
      {{ form_widget(edit_form.resume, { 'attr': {'class': 'myresume'} }) }}
  </td>
  
@@ -131,25 +129,23 @@ POST: {{ entity.name }}
          {% else %}
            <p>Pas d'Image</p>
          {% endif %}
- {{ form_row(edit_form.image) }}</td>
+ {{ form_row(edit_form.image) }}
  
-   
+           <br><br>
+        Image Media<br>          
+   <img src="{% path entity.imageMedia, 'big' %}" width="150" /> 
+                </td>
+  
                                  </tr>
                                      
  <tr class="single"><td colspan="3">
  {{ form_rest(edit_form) }}                                  
   <button type="submit" class="btn btn-small btn-warning">Modifier</button>
-  
-    <a href="{{ path(btnretour)  }}" class="btn btn-small btn-success">Retour</a>
+     <a href="{{ path(btnretour)  }}" class="btn btn-small btn-success">Retour</a>
    </form>       
-                                    
                                        
                                 </td></tr>
                         </tbody>
                     </table>
- 
-
       
-
-       
 {% endblock %}

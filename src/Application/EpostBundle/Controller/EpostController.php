@@ -8,7 +8,6 @@ use Application\EpostBundle\Entity\Epost;
 use Application\EpostBundle\Entity\EpostTags;
 use Application\EpostBundle\Entity\EpostComments;
 use Application\EpostBundle\Entity\EpostCategories;
-
 use Application\EpostBundle\Form\EpostType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -24,8 +23,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  *
  */
 class EpostController extends Controller {
-
-     /* ====================================================================
+    /* ====================================================================
      * 
      *  SIDEBAR : TAGS, COMMENTS, CATEGORIES
      * 
@@ -37,8 +35,8 @@ class EpostController extends Controller {
         $alltags = $em->getRepository('ApplicationEpostBundle:EpostTags')->findAll();
         //$alltags = $em->getRepository('ApplicationEpostBundle:EpostTags')->findByEnabled(1);
         $tagWeights = $em->getRepository('ApplicationEpostBundle:EpostTags')->getTagWeights($alltags);
-     //   print_r($tagWeights);
-      //  exit(1);
+        //   print_r($tagWeights);
+        //  exit(1);
         return array($alltags, $tagWeights);
     }
 
@@ -56,12 +54,10 @@ class EpostController extends Controller {
 
     private function sidebar_categories() {
         $em = $this->container->get('doctrine')->getManager();
-         $allcategories = $em->getRepository('ApplicationEpostBundle:EpostCategories')->findAll();
+        $allcategories = $em->getRepository('ApplicationEpostBundle:EpostCategories')->findAll();
         //$allcategories = $em->getRepository('ApplicationEpostBundle:EpostCategories')->findByEnabled(1);
-         return ($allcategories);
+        return ($allcategories);
     }
-
-   
 
     private function sidebar_years() {
         $em = $this->container->get('doctrine')->getManager();
@@ -94,21 +90,20 @@ class EpostController extends Controller {
             $user = $this->get('security.context')->getToken()->getUser();
             $user_id = $user->getId();
             $group = $user->getIdgroup();
-            if (isset($group)){
-                  $group_id=$group->getId();
-            }
-            else {
-                $group_id=0;
+            if (isset($group)) {
+                $group_id = $group->getId();
+            } else {
+                $group_id = 0;
             }
         } else {
             $user_id = 0;
             $group_id = 0;
         }
-            
-            
-     // }else {
+
+
+        // }else {
         return array($user_id, $group_id);
-     //   }
+        //   }
     }
 
     /**
@@ -232,18 +227,17 @@ class EpostController extends Controller {
         list($alltags, $tagWeights) = $this->sidebar_tags();
         $allcategories = $this->sidebar_categories();
         $lastcomments = $this->sidebar_comments();
-    
+
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindActif();
         $paginationa = $this->createpaginator($query, 5);
         $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         return $this->render('ApplicationEpostBundle:Epost:standardblog.html.twig', array(
                     'paginationa' => $paginationa,
-              'allcategories' => $allcategories,
-            // 'catweight' => $catWeights,
-            'alltags' => $alltags,
-            'lastcomments' => $lastcomments,
-            'tagweight' => $tagWeights,
-       
+                    'allcategories' => $allcategories,
+                    // 'catweight' => $catWeights,
+                    'alltags' => $alltags,
+                    'lastcomments' => $lastcomments,
+                    'tagweight' => $tagWeights,
                 ));
     }
 
@@ -255,8 +249,8 @@ class EpostController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         list($user_id, $group_id) = $this->getuserid();
-        if ($group_id==0){
-             return $this->render('ApplicationEpostBundle:Epost:choosegroup.html.twig');
+        if ($group_id == 0) {
+            return $this->render('ApplicationEpostBundle:Epost:choosegroup.html.twig');
         }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_mesposts');
@@ -277,8 +271,8 @@ class EpostController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         list($user_id, $group_id) = $this->getuserid();
-        if ($group_id==0){
-             return $this->render('ApplicationEpostBundle:Epost:choosegroup.html.twig');
+        if ($group_id == 0) {
+            return $this->render('ApplicationEpostBundle:Epost:choosegroup.html.twig');
         }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_propositions');
@@ -348,9 +342,9 @@ class EpostController extends Controller {
      * Finds and displays a Epost entity.
      *
      */
-   // showAction($id, $slug)
-             public function showAction($blog_id,$slug,$comments) {
-    //public function showAction($id) {
+    // showAction($id, $slug)
+    public function showAction($blog_id, $slug, $comments) {
+        //public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationEpostBundle:Epost')->find($blog_id);
@@ -383,15 +377,12 @@ class EpostController extends Controller {
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('ApplicationEpostBundle:Epost')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Epost entity.');
         }
         $session = $this->getRequest()->getSession();
         $myretour = $session->get('buttonretour');
-
         list($user_id, $group_id) = $this->getuserid();
         $proprietaire = $entity->getProprietaire()->getId();
         //echo "u=$user_id  p=$proprietaire<br>";
@@ -601,6 +592,54 @@ class EpostController extends Controller {
      */
     public function getSeoPage() {
         return $this->get('sonata.seo.page');
+    }
+
+    public function addmyimageAction(Request $request, $id) {
+        $form = $this->createFormBuilder()
+                ->add('binarycontent', 'file', array('label' => 'Fichier'))
+                //  ->add('description', 'text')
+                ->getForm();
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationEpostBundle:Epost')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Epost entity.');
+        }
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $binarycontent = $data['binarycontent'];
+                $em = $this->getDoctrine()->getManager();
+                $mediaManager = $this->get('sonata.media.manager.media');
+                $photo = $mediaManager->create();
+                $photo->setBinaryContent($binarycontent);
+                $photo->setContext('default');
+                /*
+                  if (isset($data['description'])) {
+                  $description = $data['binarycontent'];
+                  $photo->setDescription($description);
+                  }
+                 * 
+                 */
+                $photo->setProviderName('sonata.media.provider.image');
+                $mediaManager->save($photo);
+
+                $entity->setImageMedia($photo);
+                $em->flush();
+                return $this->render('ApplicationEpostBundle:Epost:addimage.html.twig', array(
+                            'form' => $form->createView(),
+                            'entity' => $entity,
+                                // 'delete_form' => $deleteForm->createView(),
+                        ));
+            }
+        }
+        return $this->render('ApplicationEpostBundle:Epost:addimage.html.twig', array(
+                    'form' => $form->createView(),
+                    'entity' => $entity,
+                        // 'delete_form' => $deleteForm->createView(),
+                ));
     }
 
 }

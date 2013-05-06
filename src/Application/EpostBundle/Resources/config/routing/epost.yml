@@ -54,9 +54,17 @@ epost_delete:
     defaults: { _controller: "ApplicationEpostBundle:Epost:delete" }
     requirements: { _method: post|delete }
 
+
+       
+epost_addmyimage:
+    pattern:  /{id}/addmyimage
+    defaults: { _controller: "ApplicationEpostBundle:Epost:addmyimage" }
+
 epost_showstandard:
     pattern:  /{blog_id}/{slug}/{comments}
     defaults: { _controller: ApplicationEpostBundle:Epost:show, comments: true }
     requirements:
         _method:  GET
         blog_id: \d+
+        
+    

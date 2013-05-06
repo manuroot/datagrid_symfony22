@@ -8,6 +8,20 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\EntityRepository;
 
+
+
+
+use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\FormatterBundle\Formatter\Pool as FormatterPool;
+use Sonata\NewsBundle\Model\CommentManagerInterface;
+use Knp\Menu\ItemInterface as MenuItemInterface;
+
+
 class EpostType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -50,7 +64,14 @@ class EpostType extends AbstractType {
 
                
                 // ->add('services')
-                //->add('image')
+            //   ->add('image')
+               ->add('imageMedia', 'sonata_media_type', array('required' => false,
+'cascade_validation' => true,
+'context' => 'default',
+'provider'=>'sonata.media.provider.image'
+))
+                 //  ->add('imageMedia')
+                
                 ->add('image', 'file', array(
                     'data_class' => 'Symfony\Component\HttpFoundation\File\File',
                     'property_path' => 'image',
