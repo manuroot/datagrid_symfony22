@@ -14,10 +14,10 @@ use Application\RelationsBundle\Entity\CertificatsProjet;
 
 class ProjetAdmin extends Admin {
 
-  public function getTemplate($name)
+ /* public function getTemplate($name)
  
 {
- 
+
 switch ($name) {
  
 case 'edit':
@@ -34,7 +34,7 @@ break;
  
 }
  
-}
+}*/
     /**
      * @param \Sonata\AdminBundle\Show\ShowMapper $showMapper
      *
