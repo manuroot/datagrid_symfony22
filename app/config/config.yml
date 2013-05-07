@@ -105,6 +105,8 @@ doctrine:
         dql:
             string_functions:
                         GroupConcat: DoctrineExtensions\Query\Mysql\GroupConcat
+                        concat_ws: DoctrineExtensions\Query\Mysql\ConcatWs
+                        #GroupConcat: Application\ChangementsBundle\Query\Mysql\GroupConcat
 
 
 #==================================================

@@ -64,7 +64,8 @@
         "braincrafted/bootstrap-bundle": "dev-master",
          "egeloen/google-map-bundle": "*",
            "willdurand/geocoder": "*",
-           "kriswallsmith/buzz": "*"
+           "kriswallsmith/buzz": "*",
+           "stof/doctrine-extensions-bundle": "1.1.*@dev"
          
         
     },

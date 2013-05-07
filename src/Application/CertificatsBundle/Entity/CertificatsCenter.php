@@ -18,11 +18,10 @@ use Application\RelationsBundle\Entity\FileType;
  * CertificatsCenter
  *
  * @ORM\Table(name="certificats_center")
- * @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType")
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\CertificatsCenterRepository")
+* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis") 
 */
-// @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType") 
-
+//* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:GroupConcat",groupBy={"idapplis.id"}) 
 class CertificatsCenter
 {
     /**
@@ -145,9 +144,11 @@ class CertificatsCenter
     private $typeCert;
 
      /**
+      * @var string
      * @ORM\ManyToMany(targetEntity="\Application\RelationsBundle\Entity\Applis", inversedBy="idprojets",cascade={"persist"})
      * @ORM\OrderBy({"nomapplis" = "ASC"})
      * @ORM\JoinTable(name="certificats_xapplis")
+     * @Grid\Column(field="idapplis.nomapplis:GroupConcat", title="Cities",filter="select",selectFrom="query")
      */
     private $idapplis;
     
