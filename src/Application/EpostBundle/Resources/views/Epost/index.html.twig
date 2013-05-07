@@ -120,7 +120,7 @@ MES POSTS
       <th{% if paginationa.isSorted('a.createdAt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Date', 'a.createdAt') }}</th>
  
  <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
-   <th>Image</th>
+   {#<th>Image</th>#}
     <th>ImageMedia</th>
     <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
@@ -168,17 +168,17 @@ MES POSTS
        <td>{{ entity.createdAt|created_ago }}</td>
      
               <td>{{ entity.resume|raw }}</td>
-                       <td>
+                  {#     <td>
                 {% if entity.image is not null %}               
-           
+           #}
       {#   {{ app.request.basePath }} {{ vich_uploader_asset(message, 'image') }}#}
         {#   <img width="60px" src=" {{ app.request.basePath }} {{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
 #}
-    <img width="40px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
+   {# <img width="40px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
          {% else %}
            ---
          {% endif %}
-           </td>
+           </td>#}
              <td>
 {#<img src="/sf1/{% path post.image, 'small' %}" width="50" /> #}
 <img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
@@ -248,7 +248,7 @@ MES POSTS
                    
                  <th{% if paginationb.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationb, 'Résumé', 'a.resume') }}</th>
                 
-                 <th>Image</th>
+                {# <th>Image</th>#}
                  <th>ImageMedia</th>
                    <th>Commentaires</th>
                  <th colspan="1">Actions</th>
@@ -292,7 +292,7 @@ MES POSTS
 {% endif %} 
                                    </td> 
                 <td>{{ entity.resume|raw }}</td>
-                       <td>
+             {#          <td>
                 {% if entity.image is not null %}               
            
          
@@ -300,7 +300,7 @@ MES POSTS
          {% else %}
            ---
          {% endif %}
-           </td>
+           </td>#}
             <td>
 {#<img src="/sf1/{% path post.image, 'small' %}" width="50" /> #}
 <img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
