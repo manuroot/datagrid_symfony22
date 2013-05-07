@@ -127,7 +127,8 @@ collapsible: true
         
             <tr>
                 <td>
-        
+        <img src="{% path entity.imageMedia, 'big' %}" width="150" /> 
+                    {#
         {% if entity.imageName is not null %}               
            
          
@@ -135,7 +136,7 @@ collapsible: true
          {% else %}
            ---
          {% endif %}
-                {#   <td> <img src="{{ asset('uploads/eposts/51603dde20000.png') }}"/></td> #}
+         #}
         </td>
         <td>{{ entity.description|raw }}</td>
         </tr>

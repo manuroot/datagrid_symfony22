@@ -122,18 +122,24 @@ POST: {{ entity.name }}
      {{ form_label(edit_form.resume) }}
      {{ form_widget(edit_form.resume, { 'attr': {'class': 'myresume'} }) }}
  </td>
- 
+ <td>
+ {#
  <td>{% if entity.image is not null %}               
                                       <p>Image Actuelle</p>
          <img width="150px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
          {% else %}
            <p>Pas d'Image</p>
          {% endif %}
- {{ form_row(edit_form.image) }}
+#}
  
+     {% if entity.imageMedia is not null %}    
+ <img src="{% path entity.imageMedia, 'big' %}" width="150" /> 
+ {% else %}
+           <p>Pas d'Image</p>
+         {% endif %}
+           {{ form_row(edit_form.imageMedia) }}
            <br><br>
-        Image Media<br>          
-   <img src="{% path entity.imageMedia, 'big' %}" width="150" /> 
+   
                 </td>
   
                                  </tr>

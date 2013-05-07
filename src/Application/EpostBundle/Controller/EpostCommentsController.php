@@ -6,15 +6,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\EpostBundle\Entity\Epost;
 use Application\EpostBundle\Entity\EpostComments;
-
 use Application\EpostBundle\Form\EpostCommentsType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 
 /**
  * Epost controller.
@@ -22,7 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class EpostCommentsController extends Controller {
 
-     private function getuserid() {
+    private function getuserid() {
 
 
         $em = $this->getDoctrine()->getManager();
@@ -32,109 +29,80 @@ class EpostCommentsController extends Controller {
             $user = $this->get('security.context')->getToken()->getUser();
             $user_id = $user->getId();
             $group = $user->getIdgroup();
-            if (isset($group)){
-                  $group_id=$group->getId();
-            }
-            else {
-                $group_id=0;
+            if (isset($group)) {
+                $group_id = $group->getId();
+            } else {
+                $group_id = 0;
             }
         } else {
             $user_id = 0;
             $group_id = 0;
         }
-            
-            
-     // }else {
+
+
+        // }else {
         return array($user_id, $group_id);
-     //   }
+        //   }
     }
 
-  public function newAction($epost_id)
-    {
-      
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        $validation=1;
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-               $user_id = $user->getId();
-        
-      
-        $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-         $epost = $this->getEpost($epost_id);
-        $comment = new EpostComments();
-        $comment->setEpost($epost);
-        
-        //Creation entity EpostComments
-        
-       $comment->setUser($current_user);
-        $form   = $this->createForm(new EpostCommentsType(), $comment);
+    public function newAction($epost_id) {
 
-        return $this->render('ApplicationEpostBundle:EpostComments:form.html.twig', array(
-            'comment' => $comment,
-            'form'   => $form->createView(),
-            'validation' => $validation,
-        ));
-    
-    } else {
-          // throw $this->createNotFoundException('User not connected.');
-           $validation=0;
-           return $this->render('ApplicationEpostBundle:EpostComments:form.html.twig', array(
-                'validation' => $validation,
-            
-        ));
-        }
-    }
-    public function createAction($epost_id)
-    {
-        
-        
-        
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
-        $user_security = $this->container->get('security.context');
-        if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            //  if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
-            $user_id = $user->getId();
+         $validation = 1;
+        list($user_id, $group_id) = $this->getuserid();
+        if ($user_id != 0 && $group_id != 0) {
+            $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+            $epost = $this->getEpost($epost_id);
+            $comment = new EpostComments();
+            $comment->setEpost($epost);
+            $comment->setUser($current_user);
+            $form = $this->createForm(new EpostCommentsType(), $comment);
+
+            return $this->render('ApplicationEpostBundle:EpostComments:form.html.twig', array(
+                        'comment' => $comment,
+                        'form' => $form->createView(),
+                        'validation' => $validation,
+                    ));
         } else {
-           throw $this->createNotFoundException('User not connected.');
+             $validation = 0;
+            return $this->render('ApplicationEpostBundle:EpostComments:form.html.twig', array(
+                        'validation' => $validation,
+                    ));
+        }
+    }
+
+    public function createAction($epost_id) {
+        $em = $this->getDoctrine()->getManager();
+        //  $em = $this->container->get('doctrine')->getManager();
+        list($user_id, $group_id) = $this->getuserid();
+        if ($user_id == 0) {
+            throw $this->createNotFoundException('User not connected.');
+        }
+        if ($group_id == 0) {
+            throw $this->createNotFoundException('User has no group.');
         }
         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-           
-       
-       
-       $epost = $this->getEpost($epost_id);
+        $epost = $this->getEpost($epost_id);
         $comment = new EpostComments();
         $comment->setEpost($epost);
-     $comment->setUser($current_user);
+        $comment->setUser($current_user);
         $request = $this->getRequest();
-         $form   = $this->createForm(new EpostCommentsType(), $comment);
+        $form = $this->createForm(new EpostCommentsType(), $comment);
         $form->bindRequest($request);
-       
-       
-     
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($comment);
             $em->flush();
             return $this->redirect($this->generateUrl('epost_show', array(
-                'id' => $comment->getEpost()->getId()))              
+                                'id' => $comment->getEpost()->getId()))
             );
         }
-       // $produit = $this->getComments($produit_id);
-
-      
-      
-      
-   
-        
+        // $produit = $this->getComments($produit_id);
     }
 
-    protected function getEpost($epost_id)
-    {
+    protected function getEpost($epost_id) {
         $em = $this->getDoctrine()
-                    ->getEntityManager();
+                ->getEntityManager();
 
         $epost = $em->getRepository('ApplicationEpostBundle:Epost')->find($epost_id);
 

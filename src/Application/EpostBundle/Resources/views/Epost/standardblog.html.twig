@@ -38,14 +38,16 @@ POSTS DISPONIBLES
             </div>
              <!--   <h2 class="entry-title">-->
             <h2 class="sonata-blog-post-title">
-            {% if entity.image is not null %}               
+                      <img src="{% path entity.imageMedia, 'big' %}" width="100" /> 
+   
+   {#         {% if entity.image is not null %}               
            
          
          <img width="100px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
          {% else %}
            
          {% endif %}
-           
+     #}      
                 <span class="sonata-blog-post-author"> 
                   
                          <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">

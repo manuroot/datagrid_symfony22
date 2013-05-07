@@ -76,3 +76,7 @@ notes:
 news:
     resource: '@SonataNewsBundle/Resources/config/routing/news.xml'
     prefix: /news
+    
+usermedia:
+    resource: '@ApplicationSonataMediaBundle/Resources/config/routing.yml'
+    prefix: /

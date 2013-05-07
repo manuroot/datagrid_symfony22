@@ -12,20 +12,21 @@
 {% endblock %}
 {% block content %}
 
+<h1><center>News: {{ entity.name }}</center></h1>
+<a href="{{ path('epost')  }}" class="btn btn-large btn-success">Retour</a>
 <br><br>
-
+<table><tr><td>
 Image Actuelle:<br><br>
 <img src="{% path entity.imageMedia, 'big' %}" width="250" /> 
-<br><br>
+</td><td>
 <form action="{{ path('epost_addmyimage', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
-               
-                            
 {{ form_rest(form) }} 
-         
-                            <button type="submit" class="btn btn-small btn-warning">Modifier</button>
+            <button type="submit" class="btn btn-large btn-warning">Ajouter</button>
    </form>       
+        </td>
+                        
+    </tr></table>
 
-
-
+  <br><br>
 {% endblock %}
 

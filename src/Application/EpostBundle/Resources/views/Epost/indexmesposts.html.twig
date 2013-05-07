@@ -46,6 +46,7 @@ MES POSTS
 #}
     <th>Tags</th> 
     <th>Image</th>
+     <th>ImageMedia</th>
      <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
  <th colspan="3"><center>Actions</center></th>
@@ -91,9 +92,11 @@ MES POSTS
       {#  <td>{{ entity.description|raw|length > 30 ? entity.description|slice(0, 30)|raw  : entity.description|raw  }}</td>
 #}
   <td>{{ entity.resume|raw }}</td>
+ 
+  
       <td>{{ entity.tags|join(', ') }}   </td>
             
-                       <td>
+                 {#     <td>
                 {% if entity.image is not null %}               
            
          
@@ -101,7 +104,11 @@ MES POSTS
          {% else %}
            ---
          {% endif %}
-           </td>
+           </td>#}
+            <td>
+{#<img src="/sf1/{% path post.image, 'small' %}" width="50" /> #}
+<img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
+          </td>
               {% if entity.comments is not null %}
                   <td>{{ entity.comments|length }}</td>
                   {% else %}
@@ -120,17 +127,18 @@ MES POSTS
                         <img src="{{ asset('bundles/applicationepost/images/edit.png') }}" alt="edit" width="15" height="15" />
                     </a>
                 </td>
-                   <td>
-     <a href="{{ path('epost_delete', { 'id': entity.id }) }}">
-                        <img src="{{ asset('bundles/applicationepost/images/delete.png') }}" alt="delete" width="15" height="15" />
-                    </a>
-                </td>
-                <td>
+                  <td>
                         <a href="{{ path('epost_addmyimage', { 'id': entity.id }) }}">
                <img src="{{ asset('bundles/applicationepost/images/down2.jpg') }}" alt="delete" width="15" height="15" />
                    </a>
    
                 </td>
+                   <td>
+     <a href="{{ path('epost_delete', { 'id': entity.id }) }}">
+                        <img src="{{ asset('bundles/applicationepost/images/delete.png') }}" alt="delete" width="15" height="15" />
+                    </a>
+                </td>
+              
             </tr>
         {% endfor %}
         </tbody>

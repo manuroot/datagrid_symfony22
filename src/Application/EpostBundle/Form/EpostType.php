@@ -7,10 +7,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\EntityRepository;
-
-
-
-
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -21,37 +17,34 @@ use Sonata\FormatterBundle\Formatter\Pool as FormatterPool;
 use Sonata\NewsBundle\Model\CommentManagerInterface;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
-
 class EpostType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('resume', 'textarea', array(
-                   // 'help_label' => '(Max: 200 car.)',
+                    // 'help_label' => '(Max: 200 car.)',
                     'label' => 'Resumé du Post',
-                    /*'attr' => array(
-                        'cols' => "60",
-                        )*/
-                    ))
-               // cyclic dependance ??
-               /*  ->add('name', 'genemu_jqueryautocomplete_entity', array(
+                        /* 'attr' => array(
+                          'cols' => "60",
+                          ) */
+                ))
+                // cyclic dependance ??
+                /*  ->add('name', 'genemu_jqueryautocomplete_entity', array(
+                  'widget_addon' => array(
+                  'icon' => 'pencil',
+                  'type' => 'prepend'
+                  ),
+                  'class' => 'Application\EpostBundle\Entity\Epost',
+                  'property' => 'name',
+                  'configs' => array(
+                  'minLength' => 0,
+                  ),
+                  )) */
+                ->add('name', null, array('label' => 'Nom',
                     'widget_addon' => array(
                         'icon' => 'pencil',
                         'type' => 'prepend'
-                    ),
-                    'class' => 'Application\EpostBundle\Entity\Epost',
-                    'property' => 'name',
-                    'configs' => array(
-                        'minLength' => 0,
-                    ),
-                ))*/
-                
-                 ->add('name', null, array('label'=>'Nom',
-                    'widget_addon' => array(
-                        'icon' => 'pencil',
-                        'type' => 'prepend'
-                    )))
-                
+                        )))
                 ->add('tags')
                 //  ->add('name',null,array('label'=>'Nom du Post'))
                 ->add('description', 'textarea', array(
@@ -62,21 +55,25 @@ class EpostType extends AbstractType {
                         'class' => 'tinymce',
                         )))
 
-               
+
                 // ->add('services')
-            //   ->add('image')
-               ->add('imageMedia', 'sonata_media_type', array('required' => false,
-'cascade_validation' => true,
-'context' => 'default',
-'provider'=>'sonata.media.provider.image'
-))
-                 //  ->add('imageMedia')
+                  ->add('imageMedia')
+             /*   ->add('imageMedia', 'sonata_type_model_list', array('required' => false),
+                    array('link_parameters'=>array('context'=>'default',
+                   'provider'=>'sonata.media.provider.image')))
+           */
                 
-                ->add('image', 'file', array(
+         /*       ->add('imageMedia', 'sonata_media_type', array('required' => false,
+                    'cascade_validation' => true,
+                    'context' => 'default',
+                    'provider' => 'sonata.media.provider.image'
+                ))*/
+                //  ->add('imageMedia')
+             /*   ->add('image', 'file', array(
                     'data_class' => 'Symfony\Component\HttpFoundation\File\File',
                     'property_path' => 'image',
                     'required' => false,
-                ))
+                ))*/
                 ->add('isvisible', null, array('label' => "Post Actif"))
                 ->add('commentsEnabled', null, array('label' => "Fermer les Commentaires"));
 
@@ -93,8 +90,6 @@ class EpostType extends AbstractType {
                     'label' => 'Categorie',
                     'empty_value' => '--- Choisir une option ---'
                 ))
-          
-                            
                 ->add('idStatus', null, array('label' => 'Status'))
                 ->add('commentsCloseAt', 'datetime', array(
                     'label' => 'Date Fermeture des Commentaires',
@@ -104,7 +99,7 @@ class EpostType extends AbstractType {
                     'widget_addon' => array(
                         'icon' => 'time',
                         'type' => 'prepend'
-                    ),  'required' => false,
+                    ), 'required' => false,
                 ))
         ;
     }

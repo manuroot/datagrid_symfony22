@@ -595,12 +595,22 @@ class EpostController extends Controller {
     }
 
     public function addmyimageAction(Request $request, $id) {
+             $em = $this->getDoctrine()->getManager();
+             list($user_id, $group_id) = $this->getuserid();
+        if ($user_id == 0) {
+            throw $this->createNotFoundException('User not connected.');
+        }
+        if ($group_id == 0) {
+            throw $this->createNotFoundException('User has no group.');
+        }
+       $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+  
         $form = $this->createFormBuilder()
                 ->add('binarycontent', 'file', array('label' => 'Fichier'))
                 //  ->add('description', 'text')
                 ->getForm();
 
-        $em = $this->getDoctrine()->getManager();
+     
         $entity = $em->getRepository('ApplicationEpostBundle:Epost')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Epost entity.');
@@ -616,6 +626,8 @@ class EpostController extends Controller {
                 $photo = $mediaManager->create();
                 $photo->setBinaryContent($binarycontent);
                 $photo->setContext('default');
+                $username=$current_user->getUsername();
+                $photo->setAuthorName($username);
                 /*
                   if (isset($data['description'])) {
                   $description = $data['binarycontent'];
