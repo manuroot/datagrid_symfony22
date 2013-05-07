@@ -4,4 +4,12 @@ epost_comment_create:
     requirements:
         _method:  POST
         epost_id: \d+
-   
+
+epost_comment_ownerview:
+    pattern:  /epostcomment/view
+    defaults: { _controller: ApplicationEpostBundle:EpostComments:indexowner }
+    
+epost_comment_ownerblogview:
+    pattern:  /epostcomment/blog
+    defaults: { _controller: ApplicationEpostBundle:EpostComments:indexownerblog }
+     

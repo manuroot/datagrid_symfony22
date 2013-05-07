@@ -71,7 +71,7 @@ class EpostRepository extends EntityRepository {
 
           }
           ->getQuery(); */
-        return $query;
+     
     }
 
     public function myFindOtherAll($user_id, $group_id) {

@@ -34,31 +34,31 @@ class EpostCommentsRepository extends EntityRepository {
         return $query;
     }
 
+    /* Les commentaires du user=$user_id*/
     public function myFindAll($user_id) {
 
         $query = $this->createQueryBuilder('a')
                 ->add('orderBy', 'a.id DESC')
-                ->where('a.proprietaire = :proprietaire')
-                ->leftJoin('a.proprietaire', 'b')
-                ->leftJoin('a.categorie', 'c')
-                ->leftJoin('a.idStatus', 'd')
-                 ->setParameter('proprietaire', $user_id)
+                ->where('a.user = :proprietaire')
+               ->setParameter('proprietaire', $user_id)
                 ->getQuery();
 
         return $query;
+    }
+    
+     /* Les commentaires des posts du user=$user_id*/
+    public function myFindBlogComments($user_id) {
 
-        /* $query = $this->createQueryBuilder('a')
-          ->add('orderBy', 'a.id DESC');
+        $query = $this->createQueryBuilder('a')
+                ->add('orderBy', 'a.id DESC')
+                  ->leftJoin('a.epost', 'b')
+                     ->Where('b.proprietaire = :proprietaire')
+               ->setParameter('proprietaire', $user_id)
+                ->getQuery();
 
-          if (isset($user_id)){
-          $query=$query->where('a.proprietaire = :proprietaire')
-          ->setParameter('proprietaire', $user_id);
-
-
-          }
-          ->getQuery(); */
         return $query;
     }
+     
 public function getCommentsForPost($postId, $approved = true)
     {
         $qb = $this->createQueryBuilder('c')

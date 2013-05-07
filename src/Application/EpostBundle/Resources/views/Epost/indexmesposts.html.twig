@@ -45,7 +45,7 @@ MES POSTS
 <th{% if paginationa.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Description', 'a.description') }}</th>
 #}
     <th>Tags</th> 
-    <th>Image</th>
+   {# <th>Image</th>#}
      <th>ImageMedia</th>
      <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}

@@ -1,0 +1,67 @@
+{% extends "ApplicationEpostBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/applicationepost/css/sliding.css') }}" type="text/css" media="all"/>
+
+ {% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+ {% endblock %}
+
+
+{% block content_header '' %}
+{% block title %}
+COMMENTAIRES SUR MES POSTS
+{% endblock %}
+{% block content %}
+
+{% for type, flashMessages in app.session.flashbag.all() %}
+    {% for flashMessage in flashMessages %}
+<div class="alert alert-{{ type }}">
+            {{ flashMessage|trans }}
+    </div>
+    {% endfor %}
+{% endfor %}
+
+<br><br>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr class="title">
+
+                <th>{{ knp_pagination_sortable(paginationa, 'Id', 'a.id') }}</th>
+                <th>Post</th>
+                <th>Proprietaire</th>
+                <th>Utilisateur</th>
+                 <th{% if paginationa.isSorted('a.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Created', 'a.created') }}</th>
+                <th{% if paginationa.isSorted('a.updated') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Updated', 'a.updated') }}</th>
+                <th{% if paginationa.isSorted('a.approved') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Approuved', 'a.approved') }}</th>
+                       
+                      <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in paginationa %}
+                <tr>
+
+          
+
+                        <td>{{ entity.id }}</td>
+                           <td>{{ entity.epost.name }}</td>
+                             <td>{{ entity.epost.proprietaire.username }}</td>
+                          <td>{{ entity.user.username }}</td>
+           <td>{{ entity.updated|date }}</td>
+           <td>{{ entity.created|date }}</td>
+               <td>{{ entity.approved }}</td>
+
+                    </tr>
+        {% endfor %}
+                </tbody>
+            </table>
+
+  {{ knp_pagination_render(paginationa) }}
+
+    {% endblock %}

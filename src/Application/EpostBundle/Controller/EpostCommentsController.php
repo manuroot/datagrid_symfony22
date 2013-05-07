@@ -112,5 +112,58 @@ class EpostCommentsController extends Controller {
 
         return $epost;
     }
+     //myFindBlogComments($user_id) {
+    
+ //====================================================================
+    // BLOG ADMIN
+    //====================================================================
+    public function indexownerblogAction() {
+        $em = $this->getDoctrine()->getManager();
+          list($user_id, $group_id) = $this->getuserid();
+        $session = $this->getRequest()->getSession();
+        $session->set('buttonretour', 'epost_indexadmin');
+        
+        if ($user_id !=0 ){
+        $query = $em->getRepository('ApplicationEpostBundle:EpostComments')->myFindBlogComments($user_id);
+        $paginationa = $this->createpaginator($query, 5);
+        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
+        return $this->render('ApplicationEpostBundle:EpostComments:indexownerblog.html.twig', array(
+                    'paginationa' => $paginationa,
+                ));
+        }else {
+              throw $this->createNotFoundException('User not connected.');
+        }
+    }
+ //====================================================================
+    // BLOG ADMIN
+    //====================================================================
+    public function indexownerAction() {
+        $em = $this->getDoctrine()->getManager();
+          list($user_id, $group_id) = $this->getuserid();
+        $session = $this->getRequest()->getSession();
+        $session->set('buttonretour', 'epost_indexadmin');
+        
+        if ($user_id !=0 ){
+        $query = $em->getRepository('ApplicationEpostBundle:EpostComments')->myFindAll($user_id);
+        $paginationa = $this->createpaginator($query, 5);
+        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
+        return $this->render('ApplicationEpostBundle:EpostComments:indexowner.html.twig', array(
+                    'paginationa' => $paginationa,
+                ));
+        }else {
+              throw $this->createNotFoundException('User not connected.');
+        }
+    }
+      private function createpaginator($query, $num_perpage = 5) {
 
+        $paginator = $this->get('knp_paginator');
+        $pagename = 'page'; // Set custom page variable name
+        $page = $this->get('request')->query->get($pagename, 1); // Get custom page variable
+        $pagination = $paginator->paginate(
+                $query, $page, $num_perpage, array('pageParameterName' => $pagename,
+            "sortDirectionParameterName" => "dir",
+            'sortFieldParameterName' => "sort")
+        );
+        return $pagination;
+    }
 }
