@@ -86,12 +86,12 @@ class ApplisController extends Controller {
 
             return $this->redirect($this->generateUrl('applications_show', array('id' => $entity->getId())));
         }
-/*
-         foreach ($entity->getIdprojets() AS $projet) {
-                //$projet->addIdappli($entity);
-                 $projet->addIdappli($entity);
-              //   var_dump($projet);
-            }*/
+        /*
+          foreach ($entity->getIdprojets() AS $projet) {
+          //$projet->addIdappli($entity);
+          $projet->addIdappli($entity);
+          //   var_dump($projet);
+          } */
         return $this->render('ApplicationRelationsBundle:Applis:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -136,65 +136,63 @@ class ApplisController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Applis entity.');
         }
- $projets = $entity->getIdprojets();
+        $projets = $entity->getIdprojets();
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new ApplisType(), $entity);
-        
+
         $request = $this->getRequest();
-         if ($request->getMethod() === 'POST') {
-        $editForm->bind($request);
+        if ($request->getMethod() === 'POST') {
+            $editForm->bind($request);
 
-        if ($editForm->isValid()) {
-
-
+            if ($editForm->isValid()) {
             foreach ($entity->getIdprojets() AS $projet) {
-                //$projet->addIdappli($entity);
-                 $projet->addIdappli($entity);
-              //   var_dump($projet);
+                    //$projet->addIdappli($entity);
+                    $projet->addIdappli($entity);
+                    //   var_dump($projet);
+                }
+                //   $projets= $em->getRepository('ApplicationRelationsBundle:CertificatsProjet')->findByIdapplis($id);
+                // $projets=$entity->getIdprojets();
+                //    $projets->addIdappli($entity);
+                //      $em->persist($projets);
+                // $em->flush();
+                // foreach ($projets as $projet) {
+                //    $projets->addIdapplis($entity);
+                //      $em->persist($projet);
+                // $em->flush();
+                // }
+                /*   foreach ($entity as $list) {
+                  $alist = $em->getRepository('ApplicationRelationsBundle:CertificatsProjet')
+                  ->findOneById($list->getId());
+
+                  $agent->addAgentList($aList);
+                  $em->persist($agent);
+                  $em->flush();
+
+                  $aList->addAgent($agent);
+                  $em->persist($aList);
+                  $em->flush();
+                  }
+                 */
+
+
+
+                $em->persist($entity);
+                /*    $projets = $em->getRepository('ApplicationRelationsBundle:CertificatsProjet')->findByIdapplis($id);
+                  if ($projets)
+                  $projets->addIdappli($entity); */
+
+                $em->flush();
+
+                //  return $this->redirect($this->generateUrl('applications_edit', array('id' => $id)));
             }
-            //   $projets= $em->getRepository('ApplicationRelationsBundle:CertificatsProjet')->findByIdapplis($id);
-            // $projets=$entity->getIdprojets();
-            //    $projets->addIdappli($entity);
-            //      $em->persist($projets);
-            // $em->flush();
-            // foreach ($projets as $projet) {
-            //    $projets->addIdapplis($entity);
-            //      $em->persist($projet);
-            // $em->flush();
-            // }
-            /*   foreach ($entity as $list) {
-              $alist = $em->getRepository('ApplicationRelationsBundle:CertificatsProjet')
-              ->findOneById($list->getId());
-
-              $agent->addAgentList($aList);
-              $em->persist($agent);
-              $em->flush();
-
-              $aList->addAgent($agent);
-              $em->persist($aList);
-              $em->flush();
-              }
-             */
-
-
-
-            $em->persist($entity);
-            /*    $projets = $em->getRepository('ApplicationRelationsBundle:CertificatsProjet')->findByIdapplis($id);
-              if ($projets)
-              $projets->addIdappli($entity); */
-
-            $em->flush();
-       
-          //  return $this->redirect($this->generateUrl('applications_edit', array('id' => $id)));
         }
-         }
 
         return $this->render('ApplicationRelationsBundle:Applis:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
-             'projets' => $projets,
+                    'projets' => $projets,
                 ));
     }
 

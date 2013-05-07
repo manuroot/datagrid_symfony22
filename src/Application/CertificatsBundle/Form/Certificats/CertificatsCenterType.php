@@ -80,7 +80,7 @@ class CertificatsCenterType extends AbstractType {
             ),
         ));
         $builder->add('endTime', 'datetime', array(
-            'label' => 'Date d\'ajout',
+            'label' => 'Date de fin',
             'widget' => 'single_text',
             'input' => 'datetime',
             'format' => 'yyyy-MM-dd',

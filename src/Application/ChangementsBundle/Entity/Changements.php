@@ -22,7 +22,7 @@ use CalendR\Event\AbstractEvent;
  * @ORM\Table(name="changements")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Application\ChangementsBundle\Entity\ChangementsRepository")
- * @GRID\Source(columns="id,idusers.nomUser,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom,idusers.nomUser:GroupConcat",groupBy={"id"}))
+ * @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"}))
   * @Vich\Uploadable
  */
 

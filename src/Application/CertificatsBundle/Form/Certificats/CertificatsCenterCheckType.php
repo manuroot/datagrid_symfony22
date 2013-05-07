@@ -9,6 +9,13 @@ use Doctrine\ORM\EntityRepository;
 
 class CertificatsCenterCheckType extends AbstractType {
 
+    private $type_certificats;
+
+    public function __construct()
+  {
+    $this->type_certificats = $this->mycert();
+  }
+
     public function buildForm(FormBuilderInterface $builder, array $options) {
          /* ->add('contenu', 'textarea', array(
                  //    'attr' => array('rows' => 20,'cols' => 20)
@@ -41,7 +48,7 @@ class CertificatsCenterCheckType extends AbstractType {
                 ))
                 ->add('typecert', 'choice', array('label' => 'Opération',
                     'multiple' => false,
-                    'choices' => $this->mycert(),
+                    'choices' => $this->type_certificats,
                 //   'attr' => array('style' => 'width:100px', 'customattr' => 'customdata')
                 ));
      

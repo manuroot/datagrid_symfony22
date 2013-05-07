@@ -62,6 +62,12 @@ class AppKernel extends Kernel {
             new Application\RelationsBundle\ApplicationRelationsBundle(),
             //new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             new Application\EpostBundle\ApplicationEpostBundle(),
+            //====================================================
+            // FORM FILTER
+            //====================================================
+            new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
+            new Savvy\FilterNatorBundle\SavvyFilterNatorBundle()
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

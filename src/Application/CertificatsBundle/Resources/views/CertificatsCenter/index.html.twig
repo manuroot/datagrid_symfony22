@@ -1,9 +1,51 @@
 {% extends "ApplicationCertificatsBundle::layout.html.twig" %}
 
+
+
+{% block javascripts %}
+{{ parent() }}
+   <!--<script type="text/javascript" src="{{ asset('bundles/applicationcertificats/js/selectapplis.js') }}"></script>
+    -->
+<script type="text/javascript">
+          
+$(document).ready(function() {
+//$(function() {
+  $( "#certificats_filter_endTime_left_date" ).datepicker({
+minDate: "-1Y",
+maxDate: "+10Y",
+changeMonth: true,
+changeYear: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+    $( "#certificats_filter_endTime_right_date" ).datepicker({
+maxDate: "+10Y",
+minDate: "-1Y",
+changeMonth: true,
+changeYear: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+}); //Eof:: ready
+    </script>
+
+{% endblock %}
+
+    
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationcertificats/css/sliding.css') }}" type="text/css" media="all"/>
-     
+      <style>
+      tr.single {
+         background-color: #f1f1f1;
+        } 
+        </style>
  {% endblock %}
 
 {% block content_header '' %}
@@ -24,7 +66,48 @@ LISTE DES {{ parent() }}
 <a href="{{ path('certificatscenter_new') }}" class="btn btn-medium btn-primary">Ajouter Certificat</a>
 {% endif %}
 <br> <br>  
+
+
 {#
+{% block javascripts %}
+{{ parent() }}
+   <!--<script type="text/javascript" src="{{ asset('bundles/applicationcertificats/js/selectapplis.js') }}"></script>
+    -->
+<script type="text/javascript">
+          
+$(document).ready(function() {
+//$(function() {
+  $( "#certificats_filter_endTime_left_date" ).datepicker({
+maxDate: "+30M +10D",
+changeMonth: true,
+changeYear: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+  
+  $( "#certificats_filter_endTime_right_date" ).datepicker({
+maxDate: "+3M +10D",
+changeMonth: true,
+changeYear: true,
+numberOfMonths: 1,
+dateFormat: "yy-mm-dd",
+onClose: function( selectedDate ) {
+$( "#form_bis" ).datepicker( "option", "minDate", selectedDate );
+}
+});
+}); //Eof:: ready
+</script>
+
+{% endblock %}
+
+#}
+
+{% include 'ApplicationCertificatsBundle:CertificatsCenter:indexsearch_form.html.twig' %}
+ 
+ {#
 <form  class="form-horizontal" action="{{ path('certificatscenter') }}" method="post" {{ form_enctype(search_form) }}>
     {{ form_widget(search_form) }}
     <p>

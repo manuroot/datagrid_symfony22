@@ -54,15 +54,21 @@
             <th>Startdate</th>
             <td>{{ entity.startDate|date('Y-m-d') }}</td>
         </tr>
-        <tr>
+        <tr class="error">
                     <!--<td>{{ entity.endTime|date('Y-m-d H:i:s') }}</td>-->
-            <th>Endtime</th>
+            <th class="warning">Endtime</th>
             <td>{{ entity.endTime|date('Y-m-d') }}</td>
         </tr>
         <tr>
-            <th>Addeddate</th>
-            <td>{{ entity.addedDate|date('Y-m-d') }}</td>
+            <th>Date d'Ajout</th>
+            <td>{{ entity.addedDate|date('Y-m-d H:i:s') }}</td>
         </tr>
+        
+        <tr>
+            <th>Date de modification</th>
+            <td>{{ entity.updatedDate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        
         <tr>
             <th>Servername</th>
             <td>{{ entity.serverName }}</td>

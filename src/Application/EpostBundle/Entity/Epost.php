@@ -364,7 +364,7 @@ class Epost {
      */
     public function setUpdatedAtValue() {
         $this->setUpdatedAt(new \DateTime());
-        $this->setUpdatedAt(new \DateTime());
+       // $this->setUpdatedAt(new \DateTime());
         $this->setSlug($this->getName());
     }
 

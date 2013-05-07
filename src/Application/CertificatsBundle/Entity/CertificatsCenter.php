@@ -19,6 +19,7 @@ use Application\RelationsBundle\Entity\FileType;
  *
  * @ORM\Table(name="certificats_center")
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\CertificatsCenterRepository")
+ * @ORM\HasLifecycleCallbacks()
 * @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis") 
 */
 //* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:GroupConcat",groupBy={"idapplis.id"}) 
@@ -54,6 +55,7 @@ class CertificatsCenter
      * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date", nullable=false)
+     * @GRID\Column(title="Début", size="30",format="Y-m-d",type="datetime")
      */
     private $startDate;
 
@@ -61,7 +63,7 @@ class CertificatsCenter
      * @var \DateTime
      *
      * @ORM\Column(name="end_time", type="date", nullable=false)
-     * @GRID\Column(title="Fin Validité", size="50",format="Y-m-d",type="datetime")
+     * @GRID\Column(title="Fin", size="50",format="Y-m-d",type="datetime")
      */
  
     
@@ -75,6 +77,14 @@ class CertificatsCenter
      */
     private $addedDate;
 
+      /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_date", type="date", nullable=false)
+     */
+    private $updatedDate;
+
+    
     /**
      * @var string
      *
@@ -155,6 +165,7 @@ class CertificatsCenter
    public function __construct()
   {
     $this->addedDate = new \DateTime('now');
+    $this->updatedDate = new \DateTime('now');
     $this->statusFile = true;
     
   }
@@ -288,6 +299,28 @@ class CertificatsCenter
         return $this->addedDate;
     }
 
+    /**
+     * Set addedDate
+     *
+     * @param \DateTime $addedDate
+     * @return CertificatsCenter
+     */
+    public function setUpdatedDate($updatedDate)
+    {
+        $this->updatedDate = $updatedDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get addedDate
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedDate()
+    {
+        return $this->updatedDate;
+    }
     /**
      * Set serverName
      *
@@ -526,5 +559,23 @@ class CertificatsCenter
     public function getPicture()
     {
         return $this->picture;
+    }
+    
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue() {
+       
+        $this->setUpdatedDate(new \DateTime());
+     
+    }
+
+    public function prePersist() {
+          $this->setAddedDate(new \DateTime);
+        $this->setUpdatedDate(new \DateTime);
+        /* if (null == $this->getGlobalnote()){
+
+
+          } */
     }
 }
