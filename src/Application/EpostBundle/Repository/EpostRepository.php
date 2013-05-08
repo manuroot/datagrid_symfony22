@@ -147,49 +147,57 @@ class EpostRepository extends EntityRepository {
 
     public function getMyPager(array $criteria) {
 
+        /* $query = $this->createQueryBuilder('a')
+          ->add('orderBy', 'a.id DESC')
+          ->where('a.proprietaire = :proprietaire')
+          ->leftJoin('a.proprietaire', 'b')
+          ->leftJoin('a.categorie', 'c')
+          ->leftJoin('a.idStatus', 'd')
+          ->setParameter('proprietaire', $criteria['author'])
+          ->getQuery();
+
+          return $query; */
+
         $parameters = array();
         $query = $this->createQueryBuilder('a')
+                ->add('orderBy', 'a.id DESC')
+                //->where('a.proprietaire = :proprietaire')
                 ->leftJoin('a.proprietaire', 'b')
                 ->leftJoin('a.categorie', 'c')
                 ->leftJoin('a.idStatus', 'd')
-                ->leftJoin('a.globalnote', 'e')
-                ->leftJoin('a.tags', 't');
-                
-        // ->add('orderBy', 'a.id DESC');
-
-
-
+         ->leftJoin('a.globalnote', 'e');
+               // ->setParameter('proprietaire', $criteria['author']);
+                /*->getQuery();*/
+       // $parameters['proprietaire'] = $criteria['author'];
         if (isset($criteria['author'])) {
-            //  print_r($criteria);exit(1);
-            $query->andwhere('a.proprietaire = :proprietaire');
-            $parameters['proprietaire'] = $criteria['author'];
-        }
+          //  print_r($criteria);exit(1);
+          $query->andwhere('a.proprietaire = :proprietaire');
+          $parameters['proprietaire'] = $criteria['author'];
+          } 
+       
 
         if (isset($criteria['non-author'])) {
-            //  print_r($criteria);exit(1);
-            $query->andWhere('a.proprietaire <> :user_id');
-            $parameters['user_id'] = $criteria['non-author'];
-        }
+          //  print_r($criteria);exit(1);
+          $query->andWhere('a.proprietaire <> :user_id');
+          $parameters['user_id'] = $criteria['non-author'];
+          }
 
 
-        if (isset($criteria['group'])) {
-            $query->andWhere('b.idgroup = :group_id');
-            $parameters['group_id'] = $criteria['group'];
-        }
+          if (isset($criteria['group'])) {
+          $query->andWhere('b.idgroup = :group_id');
+          $parameters['group_id'] = $criteria['group'];
+          }
 
-        if (isset($criteria['categorie']) && $criteria['categorie'] instanceof EpostCategories) {
-            $query->andWhere('a.categorie = :categoryid');
-            $parameters['categoryid'] = $criteria['categorie']->getId();
-        }
-        if (isset($criteria['tag'])) {
-            $query->andWhere('t.id =:tag');
-            $parameters['tag'] = (string) $criteria['tag'];
-        }
-        $query->setParameters($parameters);
-   
-        $query->getQuery();
+          if (isset($criteria['categorie']) && $criteria['categorie'] instanceof EpostCategories) {
+          $query->andWhere('a.categorie = :categoryid');
+          $parameters['categoryid'] = $criteria['categorie']->getId();
+          }
+          if (isset($criteria['tag'])) {
+          $query->andWhere('t.id =:tag');
+          $parameters['tag'] = (string) $criteria['tag'];
+          }
+          $query->setParameters($parameters);
         return $query;
-     
     }
 
     public function getPager(array $criteria) {
