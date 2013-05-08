@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\EpostBundle\Entity\EpostNotes;
+use Application\EpostBundle\Entity\EpostGlobalNotes;
 use Application\EpostBundle\Form\EpostNotesType;
 use Application\EpostBundle\Form\EpostNotesAdminType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -33,47 +34,53 @@ class EpostNotesController extends Controller {
 
     private function getuserid() {
 
+
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.context')->getToken()->getUser();
         $user_security = $this->container->get('security.context');
+        // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            //if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+            $user = $this->get('security.context')->getToken()->getUser();
             $user_id = $user->getId();
+            $group = $user->getIdgroup();
+            if (isset($group)) {
+                $group_id = $group->getId();
+            } else {
+                $group_id = 0;
+            }
         } else {
             $user_id = 0;
+            $group_id = 0;
         }
-        return ($user_id);
+
+
+        // }else {
+        return array($user_id, $group_id);
+        //   }
     }
 
+     private function createpaginator($query, $num_perpage = 5) {
+
+        $paginator = $this->get('knp_paginator');
+        $pagename = 'page'; // Set custom page variable name
+        $page = $this->get('request')->query->get($pagename, 1); // Get custom page variable
+        $pagination = $paginator->paginate(
+                $query, $page, $num_perpage, array('pageParameterName' => $pagename,
+            "sortDirectionParameterName" => "dir",
+            'sortFieldParameterName' => "sort")
+        );
+       $pagination->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
+     
+        return $pagination;
+    }
     /**
      * Lists all EpostNotes entities.
      *
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-
-        //$query = $em->getRepository('ApplicationEpostBundle:EpostNotes')->findAll();
         $query = $em->getRepository('ApplicationEpostBundle:EpostNotes')->myFindAll();
-
-        //$query = $em->getRepository('ApplicationEpostBundle:Eproduit')->myFindAll($user_id);
-        /* return $this->render('ApplicationEpostBundle:EpostNotes:index.html.twig', array(
-          'entities' => $entities,
-          ));
-
-         */
-
-
-        $paginator = $this->get('knp_paginator');
-        $pagename1 = 'page1'; // Set custom page variable name
-        $page1 = $this->get('request')->query->get($pagename1, 1); // Get custom page variable
-        $paginationa = $paginator->paginate(
-                $query, $page1, 10, array('pageParameterName' => $pagename1)
-        );
-
-
-        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
-        return $this->render('ApplicationEpostBundle:EpostNotes:index.html.twig', array(
+        $paginationa=$this->createpaginator($query, 10);
+         return $this->render('ApplicationEpostBundle:EpostNotes:index.html.twig', array(
                     'paginationa' => $paginationa,
                 ));
     }
@@ -92,7 +99,7 @@ class EpostNotesController extends Controller {
         if ($form->isValid()) {
             $postData = $request->request->get('application_epostbundle_epostnotestype');
 
-            
+
             $em->persist($entity);
             $em->flush();
 
@@ -142,18 +149,10 @@ class EpostNotesController extends Controller {
     public function addnoteAction($id) {
 
         // recup du user id
-     
+
         $em = $this->getDoctrine()->getManager();
 
-        $user_id = $this->getuserid();
-
-        /* $user = $this->get('security.context')->getToken()->getUser();
-          $user_security = $this->container->get('security.context');
-          if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
-          $user_id = $user->getId();
-          } */
-
-
+        list($user_id, $group_id) = $this->getuserid();
         $em = $this->getDoctrine()->getManager();
         $entity_epost = $em->getRepository('ApplicationEpostBundle:Epost')->findOneById($id);
         if (!$entity_epost) {
@@ -170,10 +169,9 @@ class EpostNotesController extends Controller {
             );
             throw $this->createNotFoundException('Vous avez deja noté ce post.');
         } else {
-
+            // nouvelle note sur le post pour user
             $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-
-            $entity = new EpostNotes();
+           $entity = new EpostNotes();
             $entity->setEpost($entity_epost);
             $entity->setUser($current_user);
 
@@ -247,15 +245,16 @@ class EpostNotesController extends Controller {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            // Ajout de la note du user pour ce post
             $em->persist($entity);
             $em->flush();
-            $id_post=$entity->getId();
+            $id_post = $entity->getId();
             $session->getFlashBag()->add('warning', "Enregistrement $id_post (notes id=$id) update successfull");
             $route_back = $session->get('buttonretour');
-           if (isset($route_back))
+            if (isset($route_back))
                 return $this->redirect($this->generateUrl($route_back, array('id' => $id)));
             else
-             return $this->redirect($this->generateUrl('enotes'));
+                return $this->redirect($this->generateUrl('enotes'));
         }
         //return $this->redirect($this->generateUrl('enotes_edit'));
         //}

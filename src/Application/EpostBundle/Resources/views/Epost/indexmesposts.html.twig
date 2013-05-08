@@ -35,7 +35,7 @@ MES POSTS
               <th>{{ knp_pagination_sortable(paginationa, 'Id', 'a.id') }}</th>
     
  <th{% if paginationa.isSorted('a.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Nom', 'a.name') }}</th>
- <th{% if paginationa.isSorted('c.nom') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Categorie', 'c.nom') }}</th>
+ <th{% if paginationa.isSorted('c.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Categorie', 'c.name') }}</th>
  <th{% if paginationa.isSorted('d.idStatus.nom') %} class="sorted"{% endif %}>
 {{ knp_pagination_sortable(paginationa, 'S', 'd.idStatus.nom') }}
                    <i class="icon-flag"></i></th> 
@@ -45,6 +45,8 @@ MES POSTS
 <th{% if paginationa.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Description', 'a.description') }}</th>
 #}
     <th>Tags</th> 
+    <th{% if paginationa.isSorted('e.globalnote') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Note', 'e.globalnote') }}</th>
+
    {# <th>Image</th>#}
      <th>ImageMedia</th>
      <th>Commentaires</th>
@@ -63,8 +65,9 @@ MES POSTS
               {{  entity.description|slice(0, 25)|replace({"\n":"--"})|raw }}#}
             <tr>
                 
-             
-                <td><a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+           <td>  <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
+           {{ entity.id }}</td>
+           {#    <td><a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>#}
                 <td>{{ entity.name }}</td>
                  {% if entity.categorie is not null %}               
                   <td>{{ entity.categorie.name }}</td>
@@ -88,14 +91,19 @@ MES POSTS
 {% endif %} 
                                    </td> 
   <td>{{ entity.createdAt|created_ago }}</td>
-                           {# <td>           {{  entity.description|raw|slice(0, 20)|raw }}</td>#}
+                           {# 
+<td>           {{  entity.description|raw|slice(0, 20)|raw }}</td>#}
       {#  <td>{{ entity.description|raw|length > 30 ? entity.description|slice(0, 30)|raw  : entity.description|raw  }}</td>
 #}
   <td>{{ entity.resume|raw }}</td>
  
   
       <td>{{ entity.tags|join(', ') }}   </td>
-            
+      {% if entity.globalnote is not null %}
+         <td>{{ entity.globalnote }}</td>
+         {% else %}
+         <td>--</td>
+         {% endif %}
                  {#     <td>
                 {% if entity.image is not null %}               
            
@@ -118,7 +126,7 @@ MES POSTS
                      <td>
 
                     <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
-{#                    <a href="{{ path('epost_show', { 'id': entity.id }) }}">#}
+
                         <img src="{{ asset('bundles/applicationepost/images/detail.png') }}" alt="show" width="15" height="15" />
                     </a>
                 </td>

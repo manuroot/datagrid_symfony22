@@ -33,7 +33,7 @@ POSTS DISPONIBLES
               <th>{{ knp_pagination_sortable(paginationa, 'Id', 'a.id') }}</th>
     
  <th{% if paginationa.isSorted('a.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Nom', 'a.name') }}</th>
- <th{% if paginationa.isSorted('c.nom') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Categorie', 'c.nom') }}</th>
+ <th{% if paginationa.isSorted('c.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Categorie', 'c.name') }}</th>
  <th{% if paginationa.isSorted('b.username') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Proprietaire', 'b.username') }}</th>
        <th{% if paginationa.isSorted('d.idStatus.nom') %} class="sorted"{% endif %}>
 {{ knp_pagination_sortable(paginationa, 'S', 'd.idStatus.nom') }}<i class="icon-flag"></i></th> 
@@ -56,7 +56,11 @@ POSTS DISPONIBLES
             <tr>
                 
                 
-                <td><a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>
+                    <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
+                        {{ entity.id }}
+                  {#  <a href="{{ path('epost_show', { 'id': entity.id }) }}">{{ entity.id }}#}
+                    </a></td>
                 <td>{{ entity.name }}</td>
                    {% if entity.categorie is not null %}               
                   <td>{{ entity.categorie.name }}</td>

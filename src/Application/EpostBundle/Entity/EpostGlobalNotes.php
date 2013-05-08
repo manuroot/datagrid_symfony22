@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * EpostNotes
  *
@@ -26,9 +25,9 @@ class EpostGlobalNotes {
      */
     private $id;
 
-/**
+    /**
      * @var integer
-     /**
+      /**
      * @var integer
      * @Assert\Min(limit = "1", message = "Note minimum: 1")
      * @Assert\Max(limit = "10", message = "Note maximum: 10")
@@ -36,32 +35,34 @@ class EpostGlobalNotes {
      */
     private $globalnote;
 
-   
+    /**
+    * @ORM\OneToOne(targetEntity="Epost", mappedBy="globalnote")
+    */
+    private $epostnote;
+
     public function getId() {
         return $this->id;
     }
 
     public function __construct() {
-      //  $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
-             $this->globalnote = 0;
+        //  $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->globalnote = 0;
     }
-    
-    
-      public function __toString() {
-        return $this->getGlobalnote();
+
+    public function __toString() {
+        $note=   $this->globalnote;
+        return  "$note";
     }
-    
-   
+
     /**
      * Set globalnote
      *
      * @param integer $note
      * @return EpostNotes
      */
-    public function setGlobalnote($note)
-    {
-           $this->globalnote = $note;
-    
+    public function setGlobalnote($note) {
+        $this->globalnote = $note;
+
         return $this;
     }
 
@@ -70,10 +71,33 @@ class EpostGlobalNotes {
      *
      * @return integer 
      */
-    public function getGlobalnote()
-    {
+    public function getGlobalnote() {
         return $this->globalnote;
     }
 
+
     
+
+    /**
+     * Set epostnote
+     *
+     * @param \Application\EpostBundle\Entity\Epost $epostnote
+     * @return EpostGlobalNotes
+     */
+    public function setEpostnote(\Application\EpostBundle\Entity\Epost $epostnote = null)
+    {
+        $this->epostnote = $epostnote;
+    
+        return $this;
+    }
+
+    /**
+     * Get epostnote
+     *
+     * @return \Application\EpostBundle\Entity\Epost 
+     */
+    public function getEpostnote()
+    {
+        return $this->epostnote;
+    }
 }

@@ -113,7 +113,7 @@ MES POSTS
               <th>{{ knp_pagination_sortable(paginationa, 'Id', 'a.id') }}</th>
     
  <th{% if paginationa.isSorted('a.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Nom', 'a.name') }}</th>
- <th{% if paginationa.isSorted('c.nom') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Categorie', 'c.nom') }}</th>
+ <th{% if paginationa.isSorted('c.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Categorie', 'c.name') }}</th>
  <th{% if paginationa.isSorted('d.idStatus.nom') %} class="sorted"{% endif %}>
 {{ knp_pagination_sortable(paginationa, 'S', 'd.idStatus.nom') }}
                    <i class="icon-flag"></i></th> 

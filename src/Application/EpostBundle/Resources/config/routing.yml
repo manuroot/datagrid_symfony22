@@ -10,6 +10,10 @@ _epost_categories:
     resource: "@ApplicationEpostBundle/Resources/config/routing/epostcategories.yml"
     prefix:   /ecategories
 
+_epost_tags:
+    resource: "@ApplicationEpostBundle/Resources/config/routing/eposttags.yml"
+    prefix:   /etags
+    
 _epost_notes:
     resource: "@ApplicationEpostBundle/Resources/config/routing/epostnotes.yml"
     prefix:   /epostnotes  

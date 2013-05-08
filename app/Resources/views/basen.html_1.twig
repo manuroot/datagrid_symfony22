@@ -12,7 +12,8 @@
    
 
   <style type="text/css">
-   
+ 
+  
 .main-col { width: 70%; display: inline-block; float: left; border-right: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }
 .sidebar {  padding: 10px; display: inline-block; }
  #footer {
@@ -34,7 +35,6 @@
       padding-top: 0;
     }
   }*/
-  
   </style>
 {% stylesheets 
  '@ApplicationCertificatsBundle/Resources/public/css/certificatscenter.css' 
@@ -53,6 +53,7 @@
                       {{ block('NAVIGATION_BAR') }}
                    
                 </div>
+                
                    <div class="container-fluid">
     <div class="row-fluid">
   
@@ -63,9 +64,7 @@
   
                 {% endblock %}
     </div>
-        
-        
- <div class="span2">
+          <div class="span2">
                          <div class="accordion" id="accordion2">
                   <div class="accordion-group">
 <div class="accordion-heading">
@@ -122,32 +121,28 @@
 </div>
 </div>
             
-    
+        {#      {% include '::accordion.html.twig' with {'categories': 'categories'} %} #}
+  {#  <!--Sidebar content-->
+    sidebar: todo
+    {% block tags %}
+    {% endblock %}
+    <br>
+    {% block categories %}
+    {% endblock %}
+    <br>
+     {% block comments %}
+  {% endblock %}
+#}
     </div>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-                 <div id="footer">
+    </div>
+                      <div id="footer">
                     <p align="center">{{ 'copyright mroot72000@yahoo.fr'|trans }} © 2012-2013</p>
                      
                 </div>        
+    </div>
               
-        
+               
+                </div>
         
         
                 <!-- Le javascript ================================================== -->
@@ -172,7 +167,6 @@
     
  {% endblock %}
     
+        
            
-        </body>
-
-    </html>
+            

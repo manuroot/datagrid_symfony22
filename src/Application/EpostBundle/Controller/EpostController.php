@@ -10,6 +10,7 @@ use Application\EpostBundle\Entity\EpostComments;
 use Application\EpostBundle\Entity\EpostCategories;
 use Application\EpostBundle\Form\EpostType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
@@ -33,7 +34,6 @@ class EpostController extends Controller {
 
         $em = $this->container->get('doctrine')->getManager();
         $alltags = $em->getRepository('ApplicationEpostBundle:EpostTags')->findAll();
-        //$alltags = $em->getRepository('ApplicationEpostBundle:EpostTags')->findByEnabled(1);
         $tagWeights = $em->getRepository('ApplicationEpostBundle:EpostTags')->getTagWeights($alltags);
         //   print_r($tagWeights);
         //  exit(1);
@@ -67,18 +67,32 @@ class EpostController extends Controller {
         return ($arr_years);
     }
 
+    /* ====================================================================
+     * 
+     *  CREATION DU PAGINATOR
+     * 
+      =================================================================== */
+
     private function createpaginator($query, $num_perpage = 5) {
 
         $paginator = $this->get('knp_paginator');
         $pagename = 'page'; // Set custom page variable name
         $page = $this->get('request')->query->get($pagename, 1); // Get custom page variable
+
         $pagination = $paginator->paginate(
                 $query, $page, $num_perpage, array('pageParameterName' => $pagename,
             "sortDirectionParameterName" => "dir",
             'sortFieldParameterName' => "sort")
         );
+        $pagination->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         return $pagination;
     }
+
+    /* ====================================================================
+     * 
+     *  RECUP USER_ID ET GROUP_ID
+     * 
+     * =================================================================== */
 
     private function getuserid() {
 
@@ -106,61 +120,13 @@ class EpostController extends Controller {
         //   }
     }
 
-    /**
-     * @param string $tag
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
-    public function tagAction($tag) {
+  
+    /* ====================================================================
+     * 
+     *  DASHBOARS NEWS
+     * 
+      =================================================================== */
 
-        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
-
-        $tag = $this->get('sonata.news.manager.tag')->findOneBy(array(
-            'slug' => $tag,
-            'enabled' => true
-                ));
-
-        if (!$tag) {
-            throw new NotFoundHttpException('Unable to find the tag');
-        }
-
-        if (!$tag->getEnabled()) {
-            throw new NotFoundHttpException('Unable to find the tag');
-        }
-
-        return $this->renderArchive(array('tag' => $tag), array('tag' => $tag));
-    }
-
-    /**
-     * @param $category
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
-    public function categoryAction($category) {
-        $category = $this->get('sonata.news.manager.category')->findOneBy(array(
-            'slug' => $category,
-            'enabled' => true
-                ));
-
-        if (!$category) {
-            throw new NotFoundHttpException('Unable to find the category');
-        }
-
-        if (!$category->getEnabled()) {
-            throw new NotFoundHttpException('Unable to find the category');
-        }
-
-        return $this->renderArchive(array('category' => $category), array('category' => $category));
-    }
-
-    /**
-     * Lists all Epost entities.
-     *
-     */
     public function indexAction() {
 
         $em = $this->getDoctrine()->getManager();
@@ -169,8 +135,13 @@ class EpostController extends Controller {
         $session->set('buttonretour', 'epost');
         $all_years = $this->sidebar_years();
 
-        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
-        $query_other = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
+        $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
+            'author'=>$user_id,
+        ));
+        $query_other = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
+               'non-author'=> $user_id,
+                'group'=> $group_id
+            ));
         $paginator = $this->get('knp_paginator');
         //   $query = $em->getRepository('ApplicationEpostBundle:Epost')->findAll();
         $pagename1 = 'page1'; // Set custom page variable name
@@ -200,9 +171,41 @@ class EpostController extends Controller {
                 ));
     }
 
+    //====================================================================
+    // BLOG STANDARD: ALL
+    //====================================================================
+
+    private function renderBlog(array $criteria = array()) {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->getRequest()->getSession();
+        $session->set('buttonretour', 'epost_indexstandard');
+        list($alltags, $tagWeights) = $this->sidebar_tags();
+        $allcategories = $this->sidebar_categories();
+        $lastcomments = $this->sidebar_comments();
+        $page = $criteria['page'];
+        $query = $criteria['query'];
+        // $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindActif();
+        $paginationa = $this->createpaginator($query, 5);
+       $parameters = array(
+                    'paginationa' => $paginationa,
+                    'allcategories' => $allcategories,
+                    'alltags' => $alltags,
+                    'lastcomments' => $lastcomments,
+                    'tagweight' => $tagWeights,
+          // 'route' => $this->getRequest()->get('_route'),
+         //   'route_parameters' => $this->getRequest()->get('_route_params')
+               );
+   
+        $response = $this->render($page,$parameters);
+
+        
+
+        return $response;
+    }
+
     // @Secure(roles="ROLE_ADMIN")
     //====================================================================
-    // BLOG ADMIN
+    // BLOG ALL
     //====================================================================
     public function indexAllAction() {
         $em = $this->getDoctrine()->getManager();
@@ -210,34 +213,57 @@ class EpostController extends Controller {
         $session->set('buttonretour', 'epost_indexadmin');
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFind();
         $paginationa = $this->createpaginator($query, 5);
-        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         return $this->render('ApplicationEpostBundle:Epost:indexadmin.html.twig', array(
                     'paginationa' => $paginationa,
                 ));
     }
 
     //====================================================================
-    // BLOG STANDARD
+    // BLOG STANDARD: ALL
     //====================================================================
 
     public function standardblogAction() {
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_indexstandard');
-        list($alltags, $tagWeights) = $this->sidebar_tags();
-        $allcategories = $this->sidebar_categories();
-        $lastcomments = $this->sidebar_comments();
+        $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array());
+        return $this->renderBlog(array(
+                    'page' => 'ApplicationEpostBundle:Epost:standardblog.html.twig',
+                    'query' => $query,
+                ));
+    }
+   public function indexbycategoryAction($categorie) {
+        $em = $this->getDoctrine()->getManager();
+          $category = $em->getRepository('ApplicationEpostBundle:EpostCategories')->findOneBy(array(
+            'slug' => $categorie,
+                ));
 
-        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindActif();
-        $paginationa = $this->createpaginator($query, 5);
-        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
-        return $this->render('ApplicationEpostBundle:Epost:standardblog.html.twig', array(
-                    'paginationa' => $paginationa,
-                    'allcategories' => $allcategories,
-                    // 'catweight' => $catWeights,
-                    'alltags' => $alltags,
-                    'lastcomments' => $lastcomments,
-                    'tagweight' => $tagWeights,
+        if (!$category) {
+            throw new NotFoundHttpException('Unable to find the category');
+        }
+          $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
+            'categorie'=>$category,
+        ));
+          return $this->renderBlog(array(
+                    'page' => 'ApplicationEpostBundle:Epost:standardblog.html.twig',
+                    'query' => $query,
+                ));
+          
+    }
+
+    public function indexbytagAction($tag) {
+
+        $em = $this->getDoctrine()->getManager();
+           $entity_tag = $em->getRepository('ApplicationEpostBundle:EpostTags')->findOneBy(array(
+            'slug' => $tag,
+            ));
+           $id_tag=$entity_tag->getId();
+          $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
+            'tag'=>$id_tag,
+        ));
+        return $this->renderBlog(array(
+                    'page' => 'ApplicationEpostBundle:Epost:standardblog.html.twig',
+                    'query' => $query,
                 ));
     }
 
@@ -254,11 +280,27 @@ class EpostController extends Controller {
         }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_mesposts');
-        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
-        $paginationa = $this->createpaginator($query, 5);
-        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
+        $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
+            'author'=>$user_id,
+        ));
+     
+     //  $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindAll($user_id);
+        $pagination = $this->createpaginator($query, 5);
+        /* $paginator = $this->get('knp_paginator');
+        $pagename = 'page'; // Set custom page variable name
+        $page = $this->get('request')->query->get($pagename, 1); // Get custom page variable
+
+        $pagination = $paginator->paginate(
+                $query, $page, 5, array('pageParameterName' => $pagename,
+            "sortDirectionParameterName" => "dir",
+            'sortFieldParameterName' => "sort")
+        );*/
+        $pagination->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
+ 
+        
+        //$paginationa = $this->createpaginator($query, 5);
         return $this->render('ApplicationEpostBundle:Epost:indexmesposts.html.twig', array(
-                    'paginationa' => $paginationa,
+                    'paginationa' => $pagination,
                 ));
     }
 
@@ -278,7 +320,6 @@ class EpostController extends Controller {
         $session->set('buttonretour', 'epost_propositions');
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
         $paginationa = $this->createpaginator($query, 5);
-        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         return $this->render('ApplicationEpostBundle:Epost:indexpropositions.html.twig', array(
                     'paginationa' => $paginationa,
                 ));
@@ -309,7 +350,7 @@ class EpostController extends Controller {
             $nom_modif = $entity->getName();
             $id = $entity->getId();
             $session->getFlashBag()->add('warning', "Enregistrement $nom_modif ($id) ajouté");
-            return $this->redirect($this->generateUrl('epost_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('epost_show', array('blog_id' => $entity->getId())));
         }
 
         return $this->render('ApplicationEpostBundle:Epost:new.html.twig', array(
@@ -392,7 +433,9 @@ class EpostController extends Controller {
                     ));
         }
 
-        $editForm = $this->createForm(new EpostType(), $entity);
+        $username = $entity->getProprietaire()->getUsername();
+        //echo "username=$username";exit(1);
+        $editForm = $this->createForm(new EpostType($username), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ApplicationEpostBundle:Epost:edit.html.twig', array(
@@ -595,22 +638,22 @@ class EpostController extends Controller {
     }
 
     public function addmyimageAction(Request $request, $id) {
-             $em = $this->getDoctrine()->getManager();
-             list($user_id, $group_id) = $this->getuserid();
+        $em = $this->getDoctrine()->getManager();
+        list($user_id, $group_id) = $this->getuserid();
         if ($user_id == 0) {
             throw $this->createNotFoundException('User not connected.');
         }
         if ($group_id == 0) {
             throw $this->createNotFoundException('User has no group.');
         }
-       $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-  
+        $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+
         $form = $this->createFormBuilder()
                 ->add('binarycontent', 'file', array('label' => 'Fichier'))
                 //  ->add('description', 'text')
                 ->getForm();
 
-     
+
         $entity = $em->getRepository('ApplicationEpostBundle:Epost')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Epost entity.');
@@ -626,7 +669,7 @@ class EpostController extends Controller {
                 $photo = $mediaManager->create();
                 $photo->setBinaryContent($binarycontent);
                 $photo->setContext('default');
-                $username=$current_user->getUsername();
+                $username = $current_user->getUsername();
                 $photo->setAuthorName($username);
                 /*
                   if (isset($data['description'])) {

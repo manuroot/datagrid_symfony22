@@ -2,7 +2,7 @@
 {% for category in allcategories %}
        <span class="label">
        <!--Catégorie: -->
-             <a href="{{ url('sonata_news_category', {'category': category.slug} ) }}">
+             <a href="{{ url('epost_categories_show', {'categorie': category.slug} ) }}">
 {{ category.name }}</a>
        </span>
 

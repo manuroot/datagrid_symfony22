@@ -11,6 +11,7 @@
 
 namespace Application\EpostBundle\Repository;
 
+use Application\EpostBundle\Entity\EpostCategories;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -33,17 +34,16 @@ class EpostRepository extends EntityRepository {
                 ->getQuery();
         return $query;
     }
-    
-       public function myFindActif() {
+
+    public function myFindActif() {
 //true ==>1 post actif (form case cochéé)
-           // false ==> 0 case decochée
+        // false ==> 0 case decochée
         $query = $this->createQueryBuilder('a')
                 ->where('a.isvisible = true')
                 ->leftJoin('a.proprietaire', 'b')
                 ->leftJoin('a.categorie', 'c')
                 ->leftJoin('a.idStatus', 'd')
                 ->add('orderBy', 'a.id DESC')
-                 
                 ->getQuery();
         return $query;
     }
@@ -71,7 +71,6 @@ class EpostRepository extends EntityRepository {
 
           }
           ->getQuery(); */
-     
     }
 
     public function myFindOtherAll($user_id, $group_id) {
@@ -79,16 +78,9 @@ class EpostRepository extends EntityRepository {
         $query = $this->createQueryBuilder('a')
                 ->where('a.proprietaire <> :proprietaire')
                 ->setParameter('proprietaire', $user_id)
-                //  ->where('a.proprietaire.getId = :idproprietaire')
-                //       ->setParameter('idproprietaire', '2')
                 ->leftJoin('a.proprietaire', 'b')
                 ->andWhere('b.idgroup = :groupid')
                 ->setParameter('groupid', $group_id)
-                /*
-                  ->leftJoin('a.notes', 'e')
-                  ->andWhere('e.user  <> :proprietaire')
-                  ->setParameter('proprietaire', $user_id)
-                 */
                 ->leftJoin('a.categorie', 'c')
                 ->leftJoin('a.idStatus', 'd')
                 ->add('orderBy', 'a.id DESC')
@@ -125,20 +117,119 @@ class EpostRepository extends EntityRepository {
             if (!(isset($arr["$year"])))
                 $arr["$year"] = 0;
             $arr["$year"] = $arr["$year"] + 1;
-       return ($arr);
+            return ($arr);
         }
     }
-    
-    public function getLatestBlogs($limit = null)
-    {
+
+    public function getLatestBlogs($limit = null) {
         $qb = $this->createQueryBuilder('b')
-                   ->select('b')
-                   ->addOrderBy('b.createdAt', 'DESC');
+                ->select('b')
+                ->addOrderBy('b.createdAt', 'DESC');
 
         if (false === is_null($limit))
             $qb->setMaxResults($limit);
 
         return $qb->getQuery()
-                  ->getResult();
+                        ->getResult();
     }
+
+    /* criteres a passer:
+     * array(
+     *  'proprietaire'=>
+     *  'categorie' =>
+     *  'tag'=>
+     *     * 
+     * )
+     * 
+     * ex:
+     * $criteria=array('author'=>$idauthor)
+     */
+
+    public function getMyPager(array $criteria) {
+
+        $parameters = array();
+        $query = $this->createQueryBuilder('a')
+                ->leftJoin('a.proprietaire', 'b')
+                ->leftJoin('a.categorie', 'c')
+                ->leftJoin('a.idStatus', 'd')
+                ->leftJoin('a.globalnote', 'e')
+                ->leftJoin('a.tags', 't');
+                
+        // ->add('orderBy', 'a.id DESC');
+
+
+
+        if (isset($criteria['author'])) {
+            //  print_r($criteria);exit(1);
+            $query->andwhere('a.proprietaire = :proprietaire');
+            $parameters['proprietaire'] = $criteria['author'];
+        }
+
+        if (isset($criteria['non-author'])) {
+            //  print_r($criteria);exit(1);
+            $query->andWhere('a.proprietaire <> :user_id');
+            $parameters['user_id'] = $criteria['non-author'];
+        }
+
+
+        if (isset($criteria['group'])) {
+            $query->andWhere('b.idgroup = :group_id');
+            $parameters['group_id'] = $criteria['group'];
+        }
+
+        if (isset($criteria['categorie']) && $criteria['categorie'] instanceof EpostCategories) {
+            $query->andWhere('a.categorie = :categoryid');
+            $parameters['categoryid'] = $criteria['categorie']->getId();
+        }
+        if (isset($criteria['tag'])) {
+            $query->andWhere('t.id =:tag');
+            $parameters['tag'] = (string) $criteria['tag'];
+        }
+        $query->setParameters($parameters);
+   
+        $query->getQuery();
+        return $query;
+     
     }
+
+    public function getPager(array $criteria) {
+        $parameters = array();
+        $query = $this->createQueryBuilder('p')
+                ->select('p, t')
+                ->leftJoin('p.tags', 't', Expr\Join::WITH, 't.enabled = true')
+                ->leftJoin('p.author', 'a', Expr\Join::WITH, 'a.enabled = true')
+                ->orderby('p.publicationDateStart', 'DESC');
+
+        // enabled
+        $criteria['enabled'] = isset($criteria['enabled']) ? $criteria['enabled'] : true;
+        $query->andWhere('p.enabled = :enabled');
+        $parameters['enabled'] = $criteria['enabled'];
+
+        if (isset($criteria['date'])) {
+            $query->andWhere($criteria['date']['query']);
+            $parameters = array_merge($parameters, $criteria['date']['params']);
+        }
+
+        if (isset($criteria['tag'])) {
+            $query->andWhere('t.slug LIKE :tag');
+            $parameters['tag'] = (string) $criteria['tag'];
+        }
+
+        if (isset($criteria['author'])) {
+            if (!is_array($criteria['author']) && stristr($criteria['author'], 'NULL')) {
+                $query->andWhere('p.author IS ' . $criteria['author']);
+            } else {
+                $query->andWhere(sprintf('p.author IN (%s)', implode((array) $criteria['author'], ',')));
+            }
+        }
+
+        if (isset($criteria['category']) && $criteria['category'] instanceof CategoryInterface) {
+            $query->andWhere('p.category = :categoryid');
+            $parameters['categoryid'] = $criteria['category']->getId();
+        }
+
+        $query->setParameters($parameters);
+        return $query;
+    }
+
+}

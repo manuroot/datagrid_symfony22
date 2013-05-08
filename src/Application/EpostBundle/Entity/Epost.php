@@ -163,7 +163,7 @@ class Epost {
     private $notes;
 
     /**
-     * @ORM\OneToOne(targetEntity="EpostGlobalNotes", cascade={"persist", "merge", "remove"})
+     * @ORM\OneToOne(targetEntity="EpostGlobalNotes", cascade={"persist", "merge", "remove"}, inversedBy="epostnote")
      * @ORM\JoinColumn(name="globalnotes_id", referencedColumnName="id")
      */
     private $globalnote;
@@ -248,7 +248,7 @@ class Epost {
         $this->tags = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
-
+        $this->globalnote=new \Application\EpostBundle\Entity\EpostGlobalNotes();
         $this->isvisible = true; // Default value for column is_visible
         $this->commentsEnabled = true;
     }
@@ -366,6 +366,7 @@ class Epost {
         $this->setUpdatedAt(new \DateTime());
        // $this->setUpdatedAt(new \DateTime());
         $this->setSlug($this->getName());
+        // reclaculer la note globale ??
     }
 
     public function prePersist() {
@@ -375,10 +376,8 @@ class Epost {
 
         $this->setCreatedAt(new \DateTime);
         $this->setUpdatedAt(new \DateTime);
-        /* if (null == $this->getGlobalnote()){
-
-
-          } */
+        // note globale a 0 dans table epostglobalnote
+        
     }
 
     /* public function preUpdate()

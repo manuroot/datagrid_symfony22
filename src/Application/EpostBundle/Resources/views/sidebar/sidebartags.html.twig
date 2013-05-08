@@ -3,28 +3,8 @@
 {% for tag in alltags %}
     <!--<span class="badge badge-warning">-->
         <span class="weight-{{ tagweight[tag.name] }}">
-       {#      <a href="{{ url('sonata_news_tag', {'tag': tag.slug} ) }}">{{ tag.name }}({{ tag.posts|length }})</a>#}
-            {{ tag.name }}({{ tag.posts|length }})
-    <!--Catégorie: -->
-       {#
- <a href="{{ url('sonata_news_tag', {'tag': tag.slug} ) }}">{{ tag.name }}({{ tag.posts|length }})</a>
-#}
-     {#<a href="{{ url('sonata_news_tag', {'tag': tag.slug} ) }}">{{ tag.name }}({{ tag.posts|length }})</a>#}
+             <a href="{{ url('epost_tags_show', {'tag': tag.slug} ) }}">{{ tag.name }}
+                 {#({{ tag.posts|length }})#}</a>
     </span>
 {% endfor %}</p>
 </div>
-
-
-
-{#
-<div>
-    <p>
-{% for tag in alltags %}
-    <span class="badge badge-warning">
-    <!--Catégorie: -->
-        <a href="{{ url('sonata_news_tag', {'tag': tag.slug} ) }}">{{ tag.name }}({{ tag.posts|length }})</a>
-    </span>
-{% endfor %}
-</p>
-</div>
-#}

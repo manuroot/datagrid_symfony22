@@ -58,7 +58,12 @@ POSTS DISPONIBLES
                  xxx
                      {% endif %}</span>
             </h2>
+              <br>
+                  <div class="sonata-blog-post-abtract">
+              Extrait:  {{ entity.resume|raw }}
+            </div><br>
                <div class="sonata-blog-post-tag-list">
+                   
                            {% if entity.categorie is not null %}               
                           <span class="label">
                   {{ entity.categorie.name }}
@@ -73,8 +78,11 @@ POSTS DISPONIBLES
                     </div>
              
               {% if entity.comments is not null %}
-                <span class="badge badge-warning">{{ entity.comments|length }}</span>
-                
+              {% if entity.comments|length > 1 %}
+                <span class="badge badge-warning">{{ entity.comments|length }} commentaires</span>
+                {% else %}
+                <span class="badge badge-warning">{{ entity.comments|length }} commentaire</span>
+                {% endif %}
                   {% else %}
                  ---
                   {% endif %}   
@@ -89,12 +97,11 @@ POSTS DISPONIBLES
                             <a href="{{ url('epost', {'tag': tag.slug} ) }}">{{ tag.name }}</a>
                             {% if not loop.last%}, {%endif%}
                              </span>
+                            {% else %}
+                            Pas de Tag
                         {% endfor %}
                     </div>   
-                 <br>
-                  <div class="sonata-blog-post-abtract">
-              Extrait:  {{ entity.resume|raw }}
-            </div>
+                
             
        <!-- </div>-->
        </div>

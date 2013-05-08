@@ -27,10 +27,6 @@ epost_propositions:
 
 
         
-epost_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "ApplicationEpostBundle:Epost:show" }
-
 epost_new:
     pattern:  /new
     defaults: { _controller: "ApplicationEpostBundle:Epost:new" }
@@ -60,6 +56,8 @@ epost_addmyimage:
     pattern:  /{id}/addmyimage
     defaults: { _controller: "ApplicationEpostBundle:Epost:addmyimage" }
 
+        
+
 epost_showstandard:
     pattern:  /{blog_id}/{slug}/{comments}
     defaults: { _controller: ApplicationEpostBundle:Epost:show, comments: true }
@@ -67,4 +65,9 @@ epost_showstandard:
         _method:  GET
         blog_id: \d+
         
-    
+epost_show:
+    pattern:  /{blog_id}/{slug}/{comments}
+    defaults: { _controller: ApplicationEpostBundle:Epost:show, comments: true }
+    requirements:
+        _method:  GET
+        blog_id: \d+

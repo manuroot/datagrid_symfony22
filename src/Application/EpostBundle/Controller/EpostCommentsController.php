@@ -19,6 +19,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class EpostCommentsController extends Controller {
 
+    //====================================================================
+    // FONCTION GENERIQUE RECUP USERID ET GROUPID 
+    //====================================================================
+
     private function getuserid() {
 
 
@@ -45,10 +49,14 @@ class EpostCommentsController extends Controller {
         //   }
     }
 
+    //====================================================================
+    // CREATION COMMENTAIRE : 
+    //====================================================================
+
     public function newAction($epost_id) {
 
         $em = $this->getDoctrine()->getManager();
-         $validation = 1;
+        $validation = 1;
         list($user_id, $group_id) = $this->getuserid();
         if ($user_id != 0 && $group_id != 0) {
             $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
@@ -64,12 +72,16 @@ class EpostCommentsController extends Controller {
                         'validation' => $validation,
                     ));
         } else {
-             $validation = 0;
+            $validation = 0;
             return $this->render('ApplicationEpostBundle:EpostComments:form.html.twig', array(
                         'validation' => $validation,
                     ));
         }
     }
+
+    //====================================================================
+    // CREATION COMMENTAIRE 
+    //====================================================================
 
     public function createAction($epost_id) {
         $em = $this->getDoctrine()->getManager();
@@ -100,6 +112,10 @@ class EpostCommentsController extends Controller {
         // $produit = $this->getComments($produit_id);
     }
 
+    //====================================================================
+    // RECUP DES POSTS (MANAGER ?) 
+    //====================================================================
+
     protected function getEpost($epost_id) {
         $em = $this->getDoctrine()
                 ->getEntityManager();
@@ -112,49 +128,58 @@ class EpostCommentsController extends Controller {
 
         return $epost;
     }
-     //myFindBlogComments($user_id) {
-    
- //====================================================================
-    // BLOG ADMIN
+
+    //====================================================================
+    // COMMENTAIRE SUR BLOG DU USER
+    //====================================================================
+    public function renderComments($criteria = "ownerblog") {
+        $em = $this->getDoctrine()->getManager();
+        list($user_id, $group_id) = $this->getuserid();
+        if ($user_id != 0) {
+            $query = $em->getRepository('ApplicationEpostBundle:EpostComments')->myFindBlogComments($user_id);
+            $paginationa = $this->createpaginator($query, 5);
+            $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
+        } else {
+            throw $this->createNotFoundException('User not connected.');
+        }
+        $session = $this->getRequest()->getSession();
+
+        switch ($criteria) {
+            case 'ownerblog':
+                $session->set('buttonretour', 'epost_comment_ownerblogview');
+                $page = 'ApplicationEpostBundle:EpostComments:indexownerblog.html.twig';
+                break;
+            case 'owner':
+                $session->set('buttonretour', 'epost_comment_ownerview');
+                $page = 'ApplicationEpostBundle:EpostComments:indexowner.html.twig';
+                break;
+            default:
+                throw $this->createNotFoundException('PAs de parametre sur fonction: rendercomments.');
+                break;
+        }
+        return $this->render($page, array(
+                    'paginationa' => $paginationa,
+                ));
+    }
+
+    //====================================================================
+    // COMMENTAIRE SUR BLOG DU USER
     //====================================================================
     public function indexownerblogAction() {
-        $em = $this->getDoctrine()->getManager();
-          list($user_id, $group_id) = $this->getuserid();
-        $session = $this->getRequest()->getSession();
-        $session->set('buttonretour', 'epost_indexadmin');
-        
-        if ($user_id !=0 ){
-        $query = $em->getRepository('ApplicationEpostBundle:EpostComments')->myFindBlogComments($user_id);
-        $paginationa = $this->createpaginator($query, 5);
-        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
-        return $this->render('ApplicationEpostBundle:EpostComments:indexownerblog.html.twig', array(
-                    'paginationa' => $paginationa,
-                ));
-        }else {
-              throw $this->createNotFoundException('User not connected.');
-        }
+        return $this->renderComments("ownerblog");
     }
- //====================================================================
-    // BLOG ADMIN
+
+    //====================================================================
+    // COMMENTAIRE  DU USER
     //====================================================================
     public function indexownerAction() {
-        $em = $this->getDoctrine()->getManager();
-          list($user_id, $group_id) = $this->getuserid();
-        $session = $this->getRequest()->getSession();
-        $session->set('buttonretour', 'epost_indexadmin');
-        
-        if ($user_id !=0 ){
-        $query = $em->getRepository('ApplicationEpostBundle:EpostComments')->myFindAll($user_id);
-        $paginationa = $this->createpaginator($query, 5);
-        $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
-        return $this->render('ApplicationEpostBundle:EpostComments:indexowner.html.twig', array(
-                    'paginationa' => $paginationa,
-                ));
-        }else {
-              throw $this->createNotFoundException('User not connected.');
-        }
+        return $this->renderComments("owner");
     }
-      private function createpaginator($query, $num_perpage = 5) {
+
+    //====================================================================
+    // PAGINATION
+    //====================================================================
+    private function createpaginator($query, $num_perpage = 5) {
 
         $paginator = $this->get('knp_paginator');
         $pagename = 'page'; // Set custom page variable name
@@ -166,4 +191,33 @@ class EpostCommentsController extends Controller {
         );
         return $pagination;
     }
+
+    public function editAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationEpostBundle:EpostComments')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Epost entity.');
+        }
+        $session = $this->getRequest()->getSession();
+        $myretour = $session->get('buttonretour');
+        list($user_id, $group_id) = $this->getuserid();
+        $proprietaire = $entity->getProprietaire()->getId();
+        //echo "u=$user_id  p=$proprietaire<br>";
+        //    exit(1);
+        if ($user_id != $proprietaire) {
+            return $this->render('ApplicationEpostBundle:Epost:deny.html.twig', array(
+                    ));
+        }
+
+        $editForm = $this->createForm(new EpostType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('ApplicationEpostBundle:Epost:edit.html.twig', array(
+                    'entity' => $entity,
+                    'btnretour' => $myretour,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                ));
+    }
+
 }
