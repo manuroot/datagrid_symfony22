@@ -238,12 +238,15 @@ class EpostController extends Controller {
             'slug' => $categorie,
                 ));
 
-        if (!$category) {
-            throw new NotFoundHttpException('Unable to find the category');
-        }
+        if ($category) {
+           // throw new NotFoundHttpException('Unable to find the category');
+       // }
           $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
             'categorie'=>$category,
         ));
+        }else{
+            $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array()); 
+        }
           return $this->renderBlog(array(
                     'page' => 'ApplicationEpostBundle:Epost:standardblog.html.twig',
                     'query' => $query,
@@ -257,10 +260,14 @@ class EpostController extends Controller {
            $entity_tag = $em->getRepository('ApplicationEpostBundle:EpostTags')->findOneBy(array(
             'slug' => $tag,
             ));
+           if ($entity_tag){
            $id_tag=$entity_tag->getId();
           $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
             'tag'=>$id_tag,
         ));
+           }else {
+                $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array());
+           }
         return $this->renderBlog(array(
                     'page' => 'ApplicationEpostBundle:Epost:standardblog.html.twig',
                     'query' => $query,

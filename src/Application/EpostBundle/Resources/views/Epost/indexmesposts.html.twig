@@ -44,7 +44,9 @@ MES POSTS
  {#
 <th{% if paginationa.isSorted('a.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Description', 'a.description') }}</th>
 #}
-    <th>Tags</th> 
+  {# <th>Tags</th> #}
+    
+       <th{% if paginationa.isSorted('t.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Tags', 't.name') }}
     <th{% if paginationa.isSorted('e.globalnote') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Note', 'e.globalnote') }}</th>
 
    {# <th>Image</th>#}

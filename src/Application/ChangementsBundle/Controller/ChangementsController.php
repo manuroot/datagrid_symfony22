@@ -31,6 +31,26 @@ use APY\DataGridBundle\Grid\Export\ExcelExport;
  */
 class ChangementsController extends Controller {
 
+     /* ====================================================================
+     * 
+     *  CREATION DU PAGINATOR
+     * 
+      =================================================================== */
+
+    private function createpaginator($query, $num_perpage = 5) {
+
+        $paginator = $this->get('knp_paginator');
+        $pagename = 'page'; // Set custom page variable name
+        $page = $this->get('request')->query->get($pagename, 1); // Get custom page variable
+
+        $pagination = $paginator->paginate(
+                $query, $page, $num_perpage, array('pageParameterName' => $pagename,
+            "sortDirectionParameterName" => "dir",
+            'sortFieldParameterName' => "sort")
+        );
+        $pagination->setTemplate('ApplicationChangementsBundle:pagination:twitter_bootstrap_pagination.html.twig');
+        return $pagination;
+    }
     /**
      * Lists all Changements entities.
      *
@@ -41,12 +61,9 @@ class ChangementsController extends Controller {
         $session->set('buttonretour', 'changements');
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('ApplicationChangementsBundle:Changements')->myFindAll();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-                $query, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
-        );
-        $pagination->setTemplate('ApplicationChangementsBundle:pagination:sliding.html.twig');
-        return $this->render('ApplicationChangementsBundle:Changements:index.html.twig', array(
+        $pagination = $this->createpaginator($query, 10);
+    
+          return $this->render('ApplicationChangementsBundle:Changements:index.html.twig', array(
                     'pagination' => $pagination,
                 ));
     }

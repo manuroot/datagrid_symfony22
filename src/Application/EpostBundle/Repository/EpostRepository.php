@@ -165,7 +165,11 @@ class EpostRepository extends EntityRepository {
                 ->leftJoin('a.proprietaire', 'b')
                 ->leftJoin('a.categorie', 'c')
                 ->leftJoin('a.idStatus', 'd')
-         ->leftJoin('a.globalnote', 'e');
+         ->leftJoin('a.globalnote', 'e')
+                
+        ->leftJoin('a.tags', 't')
+         ->groupby('a.name');
+     
                // ->setParameter('proprietaire', $criteria['author']);
                 /*->getQuery();*/
        // $parameters['proprietaire'] = $criteria['author'];
@@ -193,7 +197,10 @@ class EpostRepository extends EntityRepository {
           $parameters['categoryid'] = $criteria['categorie']->getId();
           }
           if (isset($criteria['tag'])) {
+            //    $query->leftJoin('a.tags', 't');
           $query->andWhere('t.id =:tag');
+       //   ->groupby('a.name');
+        
           $parameters['tag'] = (string) $criteria['tag'];
           }
           $query->setParameters($parameters);
@@ -220,6 +227,7 @@ class EpostRepository extends EntityRepository {
 
         if (isset($criteria['tag'])) {
             $query->andWhere('t.slug LIKE :tag');
+            
             $parameters['tag'] = (string) $criteria['tag'];
         }
 
