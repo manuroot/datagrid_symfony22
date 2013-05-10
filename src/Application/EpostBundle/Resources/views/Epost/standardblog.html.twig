@@ -34,7 +34,14 @@ POSTS DISPONIBLES
 
  <div class="mypost">
             <div class="sonata-blog-post-date-container">
-           {{ entity.createdAt|created_ago }}     
+           {{ entity.createdAt|created_ago }} -    
+                    
+        {% if entity.globalnote is not null %}
+       Note Globale: <span class="badge badge-inverse">Note = {{ entity.globalnote }}</span>
+        {% else %}
+        <span class="badge badge-inverse">Note = 0</span>
+        
+        {% endif %}
             </div>
              <!--   <h2 class="entry-title">-->
             <h2 class="sonata-blog-post-title">
@@ -66,13 +73,24 @@ POSTS DISPONIBLES
                    
                            {% if entity.categorie is not null %}               
                           <span class="label">
-                  {{ entity.categorie.name }}
-                      
+                 
+    <a href="{{ url('epost_categories_show', {'categorie': entity.categorie.slug} ) }}">
+{{ entity.categorie.name }}</a>
                         </span>
                   {% else %}
                   pas de catégorie
                   {% endif %}
-
+<div class="sonata-blog-post-tag-list">
+                        {% for tag in entity.tags %}
+                             <span class="label label-inverse">
+                                 <a href="{{ url('epost_tags_show', {'tag': tag.slug} ) }}">{{ tag.name }}</a>
+                            {% if not loop.last%}, {%endif%}
+                             </span>
+                            {% else %}
+                            Pas de Tag
+                        {% endfor %}
+                    </div>   
+                
 
                        
                     </div>
@@ -91,17 +109,7 @@ POSTS DISPONIBLES
                         <img src="{{ asset('bundles/applicationepost/images/detail.png') }}" alt="show" width="15" height="15" />
                     </a>
                              
-                    <div class="sonata-blog-post-tag-list">
-                        {% for tag in entity.tags %}
-                             <span class="label label-inverse">
-                            <a href="{{ url('epost', {'tag': tag.slug} ) }}">{{ tag.name }}</a>
-                            {% if not loop.last%}, {%endif%}
-                             </span>
-                            {% else %}
-                            Pas de Tag
-                        {% endfor %}
-                    </div>   
-                
+                    
             
        <!-- </div>-->
        </div>
@@ -131,10 +139,9 @@ POSTS DISPONIBLES
 {% block comments %}
 {% include 'ApplicationEpostBundle:sidebar:lastcomments.html.twig' %}
 {% endblock %}
-{#
+
 
 {% block archives %}
 {{ parent() }}
-{% include 'ApplicationSonataNewsBundle:sidebar:sidebaryears.html.twig' %}
+{% include 'ApplicationEpostBundle:sidebar:sidebaryears.html.twig' %}
 {% endblock %}
-#}

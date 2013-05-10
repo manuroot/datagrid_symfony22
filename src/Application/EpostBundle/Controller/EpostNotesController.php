@@ -58,7 +58,7 @@ class EpostNotesController extends Controller {
         //   }
     }
 
-     private function createpaginator($query, $num_perpage = 5) {
+    private function createpaginator($query, $num_perpage = 5) {
 
         $paginator = $this->get('knp_paginator');
         $pagename = 'page'; // Set custom page variable name
@@ -68,10 +68,11 @@ class EpostNotesController extends Controller {
             "sortDirectionParameterName" => "dir",
             'sortFieldParameterName' => "sort")
         );
-       $pagination->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
-     
+        $pagination->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
+
         return $pagination;
     }
+
     /**
      * Lists all EpostNotes entities.
      *
@@ -79,8 +80,8 @@ class EpostNotesController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository('ApplicationEpostBundle:EpostNotes')->myFindAll();
-        $paginationa=$this->createpaginator($query, 10);
-         return $this->render('ApplicationEpostBundle:EpostNotes:index.html.twig', array(
+        $paginationa = $this->createpaginator($query, 10);
+        return $this->render('ApplicationEpostBundle:EpostNotes:index.html.twig', array(
                     'paginationa' => $paginationa,
                 ));
     }
@@ -171,7 +172,7 @@ class EpostNotesController extends Controller {
         } else {
             // nouvelle note sur le post pour user
             $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-           $entity = new EpostNotes();
+            $entity = new EpostNotes();
             $entity->setEpost($entity_epost);
             $entity->setUser($current_user);
 
@@ -246,19 +247,36 @@ class EpostNotesController extends Controller {
 
         if ($editForm->isValid()) {
             // Ajout de la note du user pour ce post
+            // gestion par em
             $em->persist($entity);
+            // execution de la requete en base
             $em->flush();
-            $id_post = $entity->getId();
+            $id_post = $entity->getEpost()->getId();
+            // MAJ note globale
+            $entity_epost = $em->getRepository('ApplicationEpostBundle:Epost')->find($id_post);
+            $calcul_note = $em->getRepository('ApplicationEpostBundle:EpostNotes')->getNotesForEpost($id_post);
+            $id_globalnote = $entity_epost->getGlobalNote();
+            //si pas de note globale, on l'ajoute
+            if (!isset($id_globalnote)) {
+                $entity_globalnote = new EpostGlobalNotes();
+            } else {
+                $entity_globalnote = $em->getRepository('ApplicationEpostBundle:EpostGlobalNotes')->find($id_globalnote->getId());
+            }
+            $entity_globalnote->setGlobalnote($calcul_note);
+            $em->persist($entity_globalnote);
+            $em->flush();
+            // et on link avec le post
+            $entity_epost->setGlobalnote($entity_globalnote);
+            $em->persist($entity_epost);
+            $em->flush();
+
             $session->getFlashBag()->add('warning', "Enregistrement $id_post (notes id=$id) update successfull");
             $route_back = $session->get('buttonretour');
-            if (isset($route_back))
+           /* if (isset($route_back))
                 return $this->redirect($this->generateUrl($route_back, array('id' => $id)));
-            else
-                return $this->redirect($this->generateUrl('enotes'));
+            else*/
+                return $this->redirect($this->generateUrl('epostnotes'));
         }
-        //return $this->redirect($this->generateUrl('enotes_edit'));
-        //}
-
         return $this->render('ApplicationEpostBundle:EpostNotes:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),

@@ -3,7 +3,13 @@
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationepost/css/sliding.css') }}" type="text/css" media="all"/>
-     
+  
+       <style>
+              .resume {
+  max-width: 300px;
+}
+
+</style>
  {% endblock %}
 
 {% block content_header '' %}
@@ -53,7 +59,7 @@ MES POSTS
      <th>ImageMedia</th>
      <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
- <th colspan="3"><center>Actions</center></th>
+ <th colspan="4"><center>Actions</center></th>
 {% else %}
  <th><center>Actions</center></th>
 {% endif %}
@@ -97,7 +103,7 @@ MES POSTS
 <td>           {{  entity.description|raw|slice(0, 20)|raw }}</td>#}
       {#  <td>{{ entity.description|raw|length > 30 ? entity.description|slice(0, 30)|raw  : entity.description|raw  }}</td>
 #}
-  <td>{{ entity.resume|raw }}</td>
+  <td class="resume">{{ entity.resume|raw }}</td>
  
   
       <td>{{ entity.tags|join(', ') }}   </td>

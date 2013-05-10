@@ -57,7 +57,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ ]
+    bundles:        [ "FOSCommentBundle","ApplicationEpostBundle" ]
     # bundles:        [ ApplicationSonataNewsBundle,SonataNewsBundle ]
     #java: /usr/bin/java
     filters:
@@ -334,3 +334,12 @@ mopa_bootstrap:
 #bc_bootstrap:
 #    assets_dir: %kernel.root_dir%/../vendor/twitter/bootstrap
 #    jquery_path: %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.9.1.js
+
+fos_comment:
+    db_driver: orm
+    class:
+        model:
+            comment: Application\EpostBundle\Entity\EpostCommentsThread
+            thread: Application\EpostBundle\Entity\EpostThread
+            vote: Application\EpostBundle\Entity\EpostVote
+ 

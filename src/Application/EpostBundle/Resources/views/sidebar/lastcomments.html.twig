@@ -1,16 +1,23 @@
+<style>
+a.sidebar {
+color:#000000;
+}
+    </style>
+
 <div>
 <p>
     
   <!-- <h4 class="ui-widget-header ui-corner-all">Commentaires Recents</h4>-->
 {% for comment in lastcomments %}
     <!--Catégorie: -->
- {{ comment.created | created_ago  }}
+ {{ comment.epost.proprietaire}} : {{ comment.created | created_ago  }}
    <span class="badge badge-info">
-      
-   {{ comment.epost.name }}:</span><br>
+             <a class="sidebar" href="{{ path('epost_showstandard', { 'blog_id': comment.epost.id,'slug': comment.epost.slug }) }}">
+               
+  {{ comment.epost.name }}</a></span>
    {# <a href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(comment.post) }) }}">#}
  
-   {{  comment.comment|raw }}
+ 
  {#
  {{  comment.comment|length > 100 ? comment.comment|slice(0, 30)|raw ~ ' ...' : comment.comment|raw  }}
 #}

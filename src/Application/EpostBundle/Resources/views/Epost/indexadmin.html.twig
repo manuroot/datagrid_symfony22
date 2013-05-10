@@ -3,7 +3,10 @@
   {% block stylesheets %}
 {{ parent() }}
       <link rel="stylesheet" href="{{ asset('bundles/applicationepost/css/sliding.css') }}" type="text/css" media="all"/>
-     
+     <style>
+      
+.resume {max-width:300px;}
+</style> 
  {% endblock %}
 
 {% block content_header '' %}
@@ -91,7 +94,7 @@ POSTS DISPONIBLES
                                    </td> 
   <td>{{ entity.createdAt|created_ago }}</td>
  
-                <td>{{ entity.resume|raw }}</td>
+                <td class="resume">{{ entity.resume|raw }}</td>
                 <td>{{ entity.tags|join(', ') }}   </td>
                        <td>
                 {% if entity.image is not null %}               

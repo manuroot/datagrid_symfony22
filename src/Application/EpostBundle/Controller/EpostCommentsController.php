@@ -105,9 +105,11 @@ class EpostCommentsController extends Controller {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($comment);
             $em->flush();
-            return $this->redirect($this->generateUrl('epost_show', array(
-                                'id' => $comment->getEpost()->getId()))
-            );
+            return $this->redirect($this->generateUrl('epost_showstandard', array(
+                'blog_id' => $comment->getEpost()->getId(),
+                'slug'=>$comment->getEpost()->getSlug(),
+            )));
+              //<a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
         }
         // $produit = $this->getComments($produit_id);
     }

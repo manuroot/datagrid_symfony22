@@ -170,6 +170,10 @@ public function setCreatedValue()
         return $this->epost;
     }
 
+     public function getEpostId()
+    {
+        return $this->epost->getId();
+    }
     /**
      * Set created
      *

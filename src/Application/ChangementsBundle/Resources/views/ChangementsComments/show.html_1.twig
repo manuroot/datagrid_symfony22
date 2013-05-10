@@ -139,24 +139,32 @@ CHANGEMENT: {{ entity.nom }}
       
             
             <table class="table table-striped table-bordered table-hover">
-  
+    
       
         <tbody>
-{% for comment in paginationa %}
-    <thead>
-        <tr class="title"><th>{{ comment.created|date('l, F j, Y') }} par {{ comment.user }}</th></tr> 
-                
+              {% for comment in paginationa %}
+    {#
+{% for comment in comments %}#}
+                <thead>
+        <tr class="title"> 
+                 <th>{{ comment.created|date}} Par {{ comment.user }} ({{ comment.id }})
+                 </th>
+                 
         </tr>
-    </thead>
+        
+         </thead>
     
-    <tr>
-               
+            <tr>
+            {#    <td> <p>{{ comment.isComment }}</p></td>#}
                 <td> <p>{{ comment.comment|raw }}</p></td>
 
     </tr>
+        
+{#{% for comment in entity.comments %}#}
+           
   {% endfor %}
     
-     <tr><td>
+    <tr><td>
         {{ knp_pagination_render(paginationa) }}
                 </td></tr>
             </tbody>
@@ -178,7 +186,7 @@ CHANGEMENT: {{ entity.nom }}
     
 <br><br>
 
-<form action="{{ path('changements_comment_create', { 'changement_id' : entity.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
+<form action="{{ path('changements_comment_create', { 'changement_id' : comment.changement.id } ) }}" method="post" {{ form_enctype(form) }} class="blogger">
         <table class="table table-bordered">
         <tbody>         <tr><td>
                     <div>

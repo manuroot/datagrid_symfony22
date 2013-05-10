@@ -11,7 +11,7 @@
     
     {% for key,value in all_years %}
           {#  <ul> <a href="{{ url('sonata_news_archive_yearly', {'year': year} ) }}">{{ year }}</a>#}
-                <ul> <a href="{{ url('sonata_news_archive_yearly', {'year': key} ) }}">{{ key }}({{ value }})</a>
+                <ul> <a href="{{ url('epost_byyear_show', {'year': key} ) }}">{{ key }}({{ value }})</a>
                 </ul>
 {% endfor %}
   

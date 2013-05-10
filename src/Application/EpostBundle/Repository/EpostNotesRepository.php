@@ -19,23 +19,49 @@ class EpostNotesRepository extends EntityRepository {
         //->getResult();
     }
 
-    public function getUserNotesForEpost($user_id,$epost_id)
-    {
+    public function getUserNotesForEpost($user_id, $epost_id) {
         $qb = $this->createQueryBuilder('c')
-                   ->select('c')
-                   ->where('c.user = :userId')
-                
-                   ->addOrderBy('c.isComment')
-                   ->addOrderBy('c.created')
-                   ->setParameter('produit_id', $epost_id);
+                ->select('c')
+                ->where('c.user = :userId')
+                ->addOrderBy('c.isComment')
+                ->addOrderBy('c.created')
+                ->setParameter('produit_id', $epost_id);
 
         if (false === is_null($approved))
             $qb->andWhere('c.approved = :approved')
-               ->setParameter('approved', $approved);
+                    ->setParameter('approved', $approved);
 
         return $qb->getQuery()
-                  ->getResult();
+                        ->getResult();
     }
-   
+
+    public function getNotesForEpost($epost_id) {
+
+        $count = 0;
+        $note_globale = 0;
+        $query = $this->createQueryBuilder('a')
+                ->select('a.id,a.note')
+                ->leftJoin('a.epost', 'b')
+                ->where('b.id = :id_post')
+                ->setParameter('id_post', $epost_id);
+
+        //    $nb_result=count($query->getResult());
+        foreach ($query->getQuery()->getResult() as $d) {
+            $count++;
+            $note_globale +=$d['note'];
+            //     echo "postid=$epost_id note=" . $d['note'] . "<br>";
+        }
+        if ($count > 0) {
+            $note_globale = (int) ($note_globale / $count);
+        } else {
+            $note_globale = 0;
+        }
+        //  echo "note globale=$note_globale<br>";
+        return $note_globale;
+        // exit(1);
+        /* return $query > getQuery()
+          ->getResult(); */
+    }
 
 }
+

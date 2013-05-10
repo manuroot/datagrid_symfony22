@@ -113,12 +113,14 @@ class EpostRepository extends EntityRepository {
 
         foreach ($qb->getQuery()->getResult() as $d) {
             $year = $d['createdAt']->format('Y');
+          //  echo "year=$year<br>";
             //  $cat=$d['category'];
             if (!(isset($arr["$year"])))
                 $arr["$year"] = 0;
             $arr["$year"] = $arr["$year"] + 1;
-            return ($arr);
+            
         }
+       return ($arr);
     }
 
     public function getLatestBlogs($limit = null) {
@@ -204,48 +206,21 @@ class EpostRepository extends EntityRepository {
           $parameters['tag'] = (string) $criteria['tag'];
           }
           $query->setParameters($parameters);
-        return $query;
+          //>getQuery();
+        //  print_r($query->getQuery());
+        //  exit(1);
+        return $query->getQuery();
     }
 
-    public function getPager(array $criteria) {
-        $parameters = array();
-        $query = $this->createQueryBuilder('p')
-                ->select('p, t')
-                ->leftJoin('p.tags', 't', Expr\Join::WITH, 't.enabled = true')
-                ->leftJoin('p.author', 'a', Expr\Join::WITH, 'a.enabled = true')
-                ->orderby('p.publicationDateStart', 'DESC');
-
-        // enabled
-        $criteria['enabled'] = isset($criteria['enabled']) ? $criteria['enabled'] : true;
-        $query->andWhere('p.enabled = :enabled');
-        $parameters['enabled'] = $criteria['enabled'];
-
-        if (isset($criteria['date'])) {
-            $query->andWhere($criteria['date']['query']);
-            $parameters = array_merge($parameters, $criteria['date']['params']);
-        }
-
-        if (isset($criteria['tag'])) {
-            $query->andWhere('t.slug LIKE :tag');
-            
-            $parameters['tag'] = (string) $criteria['tag'];
-        }
-
-        if (isset($criteria['author'])) {
-            if (!is_array($criteria['author']) && stristr($criteria['author'], 'NULL')) {
-                $query->andWhere('p.author IS ' . $criteria['author']);
-            } else {
-                $query->andWhere(sprintf('p.author IN (%s)', implode((array) $criteria['author'], ',')));
-            }
-        }
-
-        if (isset($criteria['category']) && $criteria['category'] instanceof CategoryInterface) {
-            $query->andWhere('p.category = :categoryid');
-            $parameters['categoryid'] = $criteria['category']->getId();
-        }
-
-        $query->setParameters($parameters);
-        return $query;
+   public function getPublicationDateQueryParts($date, $step, $alias = 'p')
+    {
+        return array(
+            'query'  => sprintf('%s.createdAt >= :startDate AND %s.createdAt < :endDate', $alias, $alias),
+            'params' => array(
+                'startDate' => new \DateTime($date),
+                'endDate'   => new \DateTime($date . '+1 ' . $step)
+            )
+        );
     }
 
 }

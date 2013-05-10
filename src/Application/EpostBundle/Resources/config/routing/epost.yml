@@ -50,7 +50,12 @@ epost_delete:
     defaults: { _controller: "ApplicationEpostBundle:Epost:delete" }
     requirements: { _method: post|delete }
 
-
+epost_byyear_show:
+    pattern:  /index/{year}
+    defaults: { _controller: ApplicationEpostBundle:Epost:indexbyyear }
+    requirements:
+        _method:  GET
+        blog_id: \d+
        
 epost_addmyimage:
     pattern:  /{id}/addmyimage

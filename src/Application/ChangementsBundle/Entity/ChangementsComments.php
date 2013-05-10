@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Changements
  *
  * @ORM\Table(name="changements_comments")
- * @ORM\Entity(repositoryClass="Application\EservicesBundle\Repository\ChangementsCommentsRepository")
+ * @ORM\Entity(repositoryClass="Application\ChangementsBundle\Entity\ChangementsCommentsRepository")
  */
 
 class ChangementsComments {

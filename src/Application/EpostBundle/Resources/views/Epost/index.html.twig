@@ -22,6 +22,7 @@
 .demo .warm {
   display: none;
 }  
+.resume {max-width:300px;}
 </style>
  {% endblock %}
 
@@ -167,7 +168,7 @@ MES POSTS
                                    </td> 
        <td>{{ entity.createdAt|created_ago }}</td>
      
-              <td>{{ entity.resume|raw }}</td>
+              <td class="resume">{{ entity.resume|raw }}</td>
                   {#     <td>
                 {% if entity.image is not null %}               
            #}

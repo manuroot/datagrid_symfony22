@@ -123,7 +123,7 @@ class Epost {
     /**
      * @var \Application\Sonata\UserBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User",inversedBy="epost")))
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User",inversedBy="epost")
      * @ORM\OrderBy({"username" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="proprietaire", referencedColumnName="id")
@@ -157,6 +157,13 @@ class Epost {
      */
     private $comments;
 
+    
+    /**
+     * @ORM\OneToMany(targetEntity="EpostCommentsThread", mappedBy="epost",cascade={"persist"})
+     */
+    private $commentsthread;
+    
+    
     /**
      * @ORM\OneToMany(targetEntity="EpostNotes", mappedBy="epost",cascade={"persist"})
      */
@@ -376,6 +383,7 @@ class Epost {
 
         $this->setCreatedAt(new \DateTime);
         $this->setUpdatedAt(new \DateTime);
+        $this->setGlobalnote(new \Application\EpostBundle\Entity\EpostGlobalNotes);
         // note globale a 0 dans table epostglobalnote
         
     }
@@ -746,4 +754,37 @@ class Epost {
     }
 
    
+
+    /**
+     * Add commentsthread
+     *
+     * @param \Application\EpostBundle\Entity\EpostCommentsThread $commentsthread
+     * @return Epost
+     */
+    public function addCommentsthread(\Application\EpostBundle\Entity\EpostCommentsThread $commentsthread)
+    {
+        $this->commentsthread[] = $commentsthread;
+    
+        return $this;
+    }
+
+    /**
+     * Remove commentsthread
+     *
+     * @param \Application\EpostBundle\Entity\EpostCommentsThread $commentsthread
+     */
+    public function removeCommentsthread(\Application\EpostBundle\Entity\EpostCommentsThread $commentsthread)
+    {
+        $this->commentsthread->removeElement($commentsthread);
+    }
+
+    /**
+     * Get commentsthread
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentsthread()
+    {
+        return $this->commentsthread;
+    }
 }
