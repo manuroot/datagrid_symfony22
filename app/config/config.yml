@@ -109,6 +109,7 @@ doctrine:
                         GroupConcat: DoctrineExtensions\Query\Mysql\GroupConcat
                         concat_ws: DoctrineExtensions\Query\Mysql\ConcatWs
                         XGroupConcat: Application\ChangementsBundle\Query\Mysql\XGroupConcat
+                        AtGroupConcat: Application\CertificatsBundle\doctrine\Extensions\AtGroupConcat
 
 
 #==================================================

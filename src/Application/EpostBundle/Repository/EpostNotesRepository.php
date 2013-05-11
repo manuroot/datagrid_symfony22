@@ -15,6 +15,7 @@ class EpostNotesRepository extends EntityRepository {
     public function myFindAll() {
         return $this->createQueryBuilder('a')
                   ->leftJoin('a.epost', 'b')
+                // ->leftJoin('a.epost', 'b')
                         ->getQuery();
 
         //->getResult();

@@ -9,6 +9,17 @@
 
 {% block javascripts %}
 {{ parent() }}
+ 
+ <script type="text/javascript" src="{{ asset('jquery/jquery.raty.js') }}"></script>
+ <script type="text/javascript">
+    $('.star').raty({
+       /* path: '/images',*/
+        readOnly: true,
+  score: function() {
+    return $(this).attr('data-score');
+  }
+});
+</script>
  {% endblock %}
 
 
@@ -71,8 +82,26 @@ MES NOTES-POSTS
                         </td>
       
                          <td>{{ entity.user }}</td>
-                          <td>{{ entity.note }}</td>
-                            <td>{{ entity.epost.globalnote }}</td>
+                     <td>    {% if entity.note is defined %}
+           <div class="star" data-score="{{ entity.note }}"></div>
+         
+        {% else %}
+   <div class="star" data-score="0"></div>
+        {#({{ entity.globalnote }})#}
+        {% endif %}
+            </td>
+                        {#  <td>{{ entity.note }}</td>#}
+                          <td>         
+                    {% if entity.epost.globalnote is defined %}
+           <div class="star" data-score="{{ entity.epost.globalnote }}"></div>
+         
+        {% else %}
+   <div class="star" data-score="0"></div>
+        {#({{ entity.globalnote }})#}
+        {% endif %}
+            </td>
+            
+            {#               <td>{{ entity.epost.globalnote }}</td>#}
                  {% if entity.updated is defined %}
                         <td>{{ entity.updated|date('Y-m-d') }}</td>
                  {% else %}

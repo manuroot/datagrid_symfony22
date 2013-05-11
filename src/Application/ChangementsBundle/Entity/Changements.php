@@ -22,7 +22,7 @@ use CalendR\Event\AbstractEvent;
  * @ORM\Table(name="changements")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Application\ChangementsBundle\Entity\ChangementsRepository")
- // @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:XGroupConcat",groupBy={"id"})
+ * @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"})
  * @Vich\Uploadable
  */
  
@@ -134,7 +134,7 @@ class Changements extends AbstractEvent
      * @ORM\ManyToMany(targetEntity="Application\RelationsBundle\Entity\Environnements", inversedBy="idchangements",cascade={"persist"})
      * @ORM\OrderBy({"nom" = "ASC"})
      * @ORM\JoinTable(name="changements_environnements")
-     * @GRID\Column(field="idEnvironnement.nom:XGroupConcat:nom", title="Calmtegories", filter="select", selectMulti="true", selectFrom="values")
+     * @GRID\Column(field="idEnvironnement.nom:GroupConcat:nom", title="Env", filter="select", selectMulti="true", selectFrom="values")
      */
            
     private $idEnvironnement;

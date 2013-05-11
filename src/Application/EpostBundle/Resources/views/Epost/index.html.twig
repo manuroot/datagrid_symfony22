@@ -26,13 +26,24 @@
 </style>
  {% endblock %}
 
-      
+     
+
+    
 {% block javascripts %}
 {{ parent() }}
    <!--<script type="text/javascript" src="{{ asset('bundles/applicationepost/js/selectapplis.js') }}"></script>
     -->
  <script type="text/javascript" src="{{ asset('js/jquery.quicksand.js') }}"></script>
-    
+   
+ <script type="text/javascript" src="{{ asset('jquery/jquery.raty.js') }}"></script>
+ <script type="text/javascript">
+    $('.star').raty({
+        readOnly: true,
+  score: function() {
+    return $(this).attr('data-score');
+  }
+});
+    </script> 
      <script type="text/javascript">
      $(function() {
     $('#load-webbies a.button').click(function(e) {
@@ -124,6 +135,7 @@ MES POSTS
    {#<th>Image</th>#}
     <th>ImageMedia</th>
     <th>Commentaires</th>
+     <th>Note Globale</th>
            {% if is_granted("ROLE_ADMIN") %}
  <th colspan="3"><center>Actions</center></th>
 {% else %}
@@ -190,7 +202,15 @@ MES POSTS
                   <td>---</td>
                   {% endif %}
             
-                  
+                  <td>           {% if entity.globalnote is not null %}
+   {#    Note Globale: #}
+           <div class="star" data-score="{{ entity.globalnote }}"></div>
+           {#({{ entity.globalnote }})#}
+        {% else %}
+   <div class="star" data-score="0"></div>
+        {#({{ entity.globalnote }})#}
+        {% endif %}
+            </td>
                      <td>
                                <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
              
@@ -252,7 +272,8 @@ MES POSTS
                 {# <th>Image</th>#}
                  <th>ImageMedia</th>
                    <th>Commentaires</th>
-                 <th colspan="1">Actions</th>
+                   <th>Note Globale</th>
+                 <th colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -292,7 +313,9 @@ MES POSTS
      
 {% endif %} 
                                    </td> 
-                <td>{{ entity.resume|raw }}</td>
+                                     <td class="resume">{{ entity.resume|raw }}</td>
+            
+            
              {#          <td>
                 {% if entity.image is not null %}               
            
@@ -312,6 +335,15 @@ MES POSTS
                   {% else %}
                   <td>---</td>
                   {% endif %}
+       <td>           {% if entity.globalnote is not null %}
+   {#    Note Globale: #}
+           <div class="star" data-score="{{ entity.globalnote }}"></div>
+           {#({{ entity.globalnote }})#}
+        {% else %}
+   <div class="star" data-score="0"></div>
+        {#({{ entity.globalnote }})#}
+        {% endif %}
+            </td>
                      <td>
                              <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
              {#

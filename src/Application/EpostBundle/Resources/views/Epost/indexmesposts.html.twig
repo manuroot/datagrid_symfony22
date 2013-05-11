@@ -12,6 +12,22 @@
 </style>
  {% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+ 
+ <script type="text/javascript" src="{{ asset('jquery/jquery.raty.js') }}"></script>
+ <script type="text/javascript">
+    $('.star').raty({
+       /* path: '/images',*/
+        readOnly: true,
+  score: function() {
+    return $(this).attr('data-score');
+  }
+});
+</script>
+ {% endblock %}
+
+
 {% block content_header '' %}
 {% block title %}
 MES POSTS 

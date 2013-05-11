@@ -10,16 +10,19 @@ use Symfony\Component\Validator\Constraints\MinLength;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Application\RelationsBundle\Entity\Projet;
+use Application\RelationsBundle\Entity\Applis;
+use Application\RelationsBundle\Entity\FileType;
 
 /**
  * CertificatsCenter
  *
  * @ORM\Table(name="certificats_center")
- * @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType")
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\CertificatsCenterRepository")
+ * @ORM\HasLifecycleCallbacks()
+* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:AtGroupConcat",groupBy={"id"}) 
 */
-// @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType") 
-
+//* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:GroupConcat:distinct",groupBy={"id"}) 
 class CertificatsCenter
 {
     /**
@@ -52,6 +55,7 @@ class CertificatsCenter
      * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date", nullable=false)
+     * @GRID\Column(title="Début", size="30",format="Y-m-d",type="datetime")
      */
     private $startDate;
 
@@ -59,7 +63,7 @@ class CertificatsCenter
      * @var \DateTime
      *
      * @ORM\Column(name="end_time", type="date", nullable=false)
-     * @GRID\Column(title="Fin Validité", size="50",format="Y-m-d",type="datetime")
+     * @GRID\Column(title="Fin", size="50",format="Y-m-d",type="datetime")
      */
  
     
@@ -73,6 +77,14 @@ class CertificatsCenter
      */
     private $addedDate;
 
+      /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_date", type="date", nullable=false)
+     */
+    private $updatedDate;
+
+    
     /**
      * @var string
      *
@@ -111,9 +123,9 @@ class CertificatsCenter
     private $statusFile;
 
   /**
-     * @var \CertificatsProjet
+     * @var \Projet
      *
-     * @ORM\ManyToOne(targetEntity="CertificatsProjet")
+     * @ORM\ManyToOne(targetEntity="\Application\RelationsBundle\Entity\Projet")
      * @ORM\OrderBy({"nomprojet" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="project", referencedColumnName="id")
@@ -130,9 +142,9 @@ class CertificatsCenter
     
     //* @OrderBy({"name" = "ASC"})
     /**
-     * @var \CertificatsFiletype
+     * @var \Filetype
      *
-     * @ORM\ManyToOne(targetEntity="CertificatsFiletype")
+     * @ORM\ManyToOne(targetEntity="\Application\RelationsBundle\Entity\Filetype")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="type_cert", referencedColumnName="id")
      * })
@@ -142,15 +154,19 @@ class CertificatsCenter
     private $typeCert;
 
      /**
-     * @ORM\ManyToMany(targetEntity="CertificatsApplis", inversedBy="idprojets",cascade={"persist"})
+      * @var string
+     * @ORM\ManyToMany(targetEntity="\Application\RelationsBundle\Entity\Applis", inversedBy="idprojets",cascade={"persist"})
      * @ORM\OrderBy({"nomapplis" = "ASC"})
-     * @ORM\JoinTable(name="cetificats_xapplis")
+     * @ORM\JoinTable(name="certificats_xapplis")
+     * @Grid\Column(type="extended_text",field="idapplis.nomapplis:AtGroupConcat", title="Cities",filter="select", selectMulti="true", selectFrom="values")
      */
     private $idapplis;
+//@Grid\Column(field="tags.name:count:distinct", title="Tags") 
     
    public function __construct()
   {
     $this->addedDate = new \DateTime('now');
+    $this->updatedDate = new \DateTime('now');
     $this->statusFile = true;
     
   }
@@ -285,6 +301,28 @@ class CertificatsCenter
     }
 
     /**
+     * Set addedDate
+     *
+     * @param \DateTime $addedDate
+     * @return CertificatsCenter
+     */
+    public function setUpdatedDate($updatedDate)
+    {
+        $this->updatedDate = $updatedDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get addedDate
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedDate()
+    {
+        return $this->updatedDate;
+    }
+    /**
      * Set serverName
      *
      * @param string $serverName
@@ -402,10 +440,10 @@ class CertificatsCenter
     /**
      * Set typeCert
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsFiletype $typeCert
+     * @param \Application\RelationsBundle\Entity\Filetype $typeCert
      * @return CertificatsCenter
      */
-    public function setTypeCert(\Application\CertificatsBundle\Entity\CertificatsFiletype $typeCert = null)
+    public function setTypeCert(\Application\RelationsBundle\Entity\Filetype $typeCert = null)
     {
         $this->typeCert = $typeCert;
     
@@ -415,7 +453,7 @@ class CertificatsCenter
     /**
      * Get typeCert
      *
-     * @return \Application\CertificatsBundle\Entity\CertificatsFiletype 
+     * @return \Application\RelationsBundle\Entity\Filetype 
      */
     public function getTypeCert()
     {
@@ -425,10 +463,10 @@ class CertificatsCenter
     /**
      * Set project
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsProjet $project
+     * @param \Application\RelationsBundle\Entity\Projet $project
      * @return CertificatsCenter
      */
-    public function setProject(\Application\CertificatsBundle\Entity\CertificatsProjet $project = null)
+    public function setProject(\Application\RelationsBundle\Entity\Projet $project = null)
     {
         $this->project = $project;
     
@@ -438,7 +476,7 @@ class CertificatsCenter
     /**
      * Get project
      *
-     * @return \Application\CertificatsBundle\Entity\CertificatsProjet 
+     * @return \Application\RelationsBundle\Entity\Projet 
      */
     public function getProject()
     {
@@ -471,10 +509,10 @@ class CertificatsCenter
     /**
      * Add idapplis
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsApplis $idapplis
+     * @param \Application\RelationsBundle\Entity\Applis $idapplis
      * @return CertificatsCenter
      */
-    public function addIdappli(\Application\CertificatsBundle\Entity\CertificatsApplis $idapplis)
+    public function addIdappli(\Application\RelationsBundle\Entity\Applis $idapplis)
     {
         $this->idapplis[] = $idapplis;
     
@@ -484,9 +522,9 @@ class CertificatsCenter
     /**
      * Remove idapplis
      *
-     * @param \Application\CertificatsBundle\Entity\CertificatsApplis $idapplis
+     * @param \Application\RelationsBundle\Entity\Applis $idapplis
      */
-    public function removeIdappli(\Application\CertificatsBundle\Entity\CertificatsApplis $idapplis)
+    public function removeIdappli(\Application\RelationsBundle\Entity\Applis $idapplis)
     {
         $this->idapplis->removeElement($idapplis);
     }
@@ -499,5 +537,46 @@ class CertificatsCenter
     public function getIdapplis()
     {
         return $this->idapplis;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $picture
+     * @return CertificatsCenter
+     */
+    public function setPicture(\Application\Sonata\MediaBundle\Entity\Media $picture = null)
+    {
+        $this->picture = $picture;
+    
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+    
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue() {
+       
+        $this->setUpdatedDate(new \DateTime());
+     
+    }
+
+    public function prePersist() {
+          $this->setAddedDate(new \DateTime);
+        $this->setUpdatedDate(new \DateTime);
+        /* if (null == $this->getGlobalnote()){
+
+
+          } */
     }
 }

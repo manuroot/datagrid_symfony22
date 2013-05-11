@@ -86,6 +86,55 @@ class EpostNotesController extends Controller {
                 ));
     }
 
+    public function addnoteAction($id) {
+
+        //id du post !!!
+        // recup du user id
+        // trop compliqué
+
+        $em = $this->getDoctrine()->getManager();
+        $id_post=$id;
+        list($user_id, $group_id) = $this->getuserid();
+        $em = $this->getDoctrine()->getManager();
+        $entity_epost = $em->getRepository('ApplicationEpostBundle:Epost')->findOneById($id_post);
+        if (!$entity_epost) {
+            throw $this->createNotFoundException('Ce post n\'existe pas.');
+        }
+
+        if ($user_id == 0) {
+            throw $this->createNotFoundException('Ce user n\'est pas connecté.');
+        }
+        $entity_note_user = $em->getRepository('ApplicationEpostBundle:EpostNotes')->findOneBy(array(
+            'user' => $user_id,
+            'epost' => $id_post));
+        // post deja noté on edite la note du user pour maj
+        if ($entity_note_user) {
+            return $this->redirect($this->generateUrl('epostnotes_edit', array(
+                                'id' => $entity_note_user->getId()))
+            );
+            // throw $this->createNotFoundException('Vous avez deja noté ce post.');
+        }
+        // pas de note user pour ce post, on cree la note user et on la relie au post
+        else {
+
+            $entity_note_user = new EpostNotes();
+            $entity_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+
+             $entity_note_user->setNote(0);
+            $entity_note_user->setUser($entity_user);
+            $entity_note_user->setEpost($entity_epost);
+            // Ajout de la note du user pour ce post
+            // gestion par em
+            $em->persist($entity_note_user);
+            // execution de la requete en base
+            $em->flush();
+            // MAJ note globale
+             return $this->redirect($this->generateUrl('epostnotes_edit', array(
+                                'id' => $entity_note_user->getId()))
+            );
+        }
+    }
+
     /**
      * Creates a new EpostNotes entity.
      *
@@ -147,44 +196,6 @@ class EpostNotesController extends Controller {
                     'delete_form' => $deleteForm->createView(),));
     }
 
-    public function addnoteAction($id) {
-
-        // recup du user id
-
-        $em = $this->getDoctrine()->getManager();
-
-        list($user_id, $group_id) = $this->getuserid();
-        $em = $this->getDoctrine()->getManager();
-        $entity_epost = $em->getRepository('ApplicationEpostBundle:Epost')->findOneById($id);
-        if (!$entity_epost) {
-            throw $this->createNotFoundException('Ce post n\'existe pas.');
-        }
-
-        $entity_note = $em->getRepository('ApplicationEpostBundle:EpostNotes')->findOneBy(array(
-            'user' => $user_id,
-            'epost' => $id));
-        // post deja noté
-        if ($entity_note) {
-            return $this->redirect($this->generateUrl('epostnotes_edit', array(
-                                'id' => $entity_note->getId()))
-            );
-            throw $this->createNotFoundException('Vous avez deja noté ce post.');
-        } else {
-            // nouvelle note sur le post pour user
-            $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-            $entity = new EpostNotes();
-            $entity->setEpost($entity_epost);
-            $entity->setUser($current_user);
-
-            $newForm = $this->createForm(new EpostNotesAdminType($user_id, $id), $entity);
-
-            return $this->render('ApplicationEpostBundle:EpostNotes:addnote.html.twig', array(
-                        'entity' => $entity,
-                        'new_form' => $newForm->createView(),
-                    ));
-        }
-    }
-
     /**
      * Displays a form to edit an existing EpostNotes entity.
      * $id correspond a id de la note
@@ -230,11 +241,10 @@ class EpostNotesController extends Controller {
 
     /**
      * Edits an existing EpostNotes entity.
-     *
+     * id de la note
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('ApplicationEpostBundle:EpostNotes')->find($id);
         $session = $this->getRequest()->getSession();
         if (!$entity) {
@@ -272,10 +282,10 @@ class EpostNotesController extends Controller {
 
             $session->getFlashBag()->add('warning', "Enregistrement $id_post (notes id=$id) update successfull");
             $route_back = $session->get('buttonretour');
-           /* if (isset($route_back))
-                return $this->redirect($this->generateUrl($route_back, array('id' => $id)));
-            else*/
-                return $this->redirect($this->generateUrl('epostnotes'));
+            /* if (isset($route_back))
+              return $this->redirect($this->generateUrl($route_back, array('id' => $id)));
+              else */
+            return $this->redirect($this->generateUrl('epostnotes'));
         }
         return $this->render('ApplicationEpostBundle:EpostNotes:edit.html.twig', array(
                     'entity' => $entity,
@@ -323,8 +333,8 @@ class EpostNotesController extends Controller {
 
     protected function getEpost($epost_id) {
         $em = $this->getDoctrine()
-                 ->getManager();
-                //->getEntityManager();
+                ->getManager();
+        //->getEntityManager();
 
         $epost = $em->getRepository('ApplicationEpostBundle:Epost')->find($epost_id);
 

@@ -20,9 +20,9 @@ use Application\RelationsBundle\Entity\FileType;
  * @ORM\Table(name="certificats_center")
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\CertificatsCenterRepository")
  * @ORM\HasLifecycleCallbacks()
-* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:GroupConcat",groupBy={"idapplis.id"}) 
+* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:AtGroupConcat",groupBy={"id"}) 
 */
-//* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:GroupConcat",groupBy={"idapplis.id"}) 
+//* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:GroupConcat:distinct",groupBy={"id"}) 
 class CertificatsCenter
 {
     /**
@@ -158,9 +158,10 @@ class CertificatsCenter
      * @ORM\ManyToMany(targetEntity="\Application\RelationsBundle\Entity\Applis", inversedBy="idprojets",cascade={"persist"})
      * @ORM\OrderBy({"nomapplis" = "ASC"})
      * @ORM\JoinTable(name="certificats_xapplis")
-     * @Grid\Column(field="idapplis.nomapplis:GroupConcat", title="Cities",filter="select",selectFrom="query")
+     * @Grid\Column(type="extended_text",field="idapplis.nomapplis:AtGroupConcat", title="Cities",filter="select", selectMulti="true", selectFrom="values")
      */
     private $idapplis;
+//@Grid\Column(field="tags.name:count:distinct", title="Tags") 
     
    public function __construct()
   {
