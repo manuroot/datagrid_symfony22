@@ -15,7 +15,7 @@ use Doctrine\ORM\Query\AST\Functions\FunctionNode,
     Doctrine\ORM\Query\Lexer;
 
 // limited support for GROUP_CONCAT
-class XXGroupConcat extends FunctionNode
+class XGroupConcat extends FunctionNode
 {
     public $isDistinct = false;
     public $expression = null;

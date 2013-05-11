@@ -56,15 +56,27 @@ padding: 0.1em;
 {% block javascripts %}
       {{ parent() }}
 {{ tinymce_init() }}
+{#
  <link rel="stylesheet" href="{{ asset('css/jquery.rating.css') }}" type="text/css" media="all"/>
-   
+  #} 
 {#
   <script src="{{ asset('js/comments.js') }}" type="text/javascript"></script>
   #}             
  
+ <script type="text/javascript" src="{{ asset('jquery/jquery.raty.js') }}"></script>
+ <script type="text/javascript">
 
- <script>
+ $('.star').raty({
+        readOnly: false,
+        score: function() {
+    return $(this).attr('data-score');
+  },
+   /*   click: function(score, evt) {
+    alert('ID: ' + $(this).attr('id') + "\nscore: " + score + "\nentityid" + $(this).attr('identity')  + "\nevent: " + evt);
+  }*/
+});
 $(function() {
+ 
      // most effect types need no options passed by default
 var options = {};
    
@@ -109,12 +121,21 @@ collapsible: true
      
         {{ entity.createdAt|created_ago }}
    
+           {% if entity.globalnote is not null %}
+   {#    Note Globale: #}
+           <div id="{{entity.id}}" class="star" identity="{{entity.id}}" data-score="{{ entity.globalnote }}"></div>
+           ({{ entity.globalnote }})
+        {% else %}
+   <div class="star" data-score="0"></div>
+        {#({{ entity.globalnote }})#}
+        {% endif %}
+   {#
         {% if entity.globalnote is defined %}
        Note Globale: <span class="badge badge-warning"> {{ entity.globalnote }}</span>
         {% else %}
         <span class="badge badge-warning">0</span>
         
-        {% endif %}
+        {% endif %}#}
     <h1 class="sonata-blog-post-title">
     {{ entity.name }} Par
         <span class="sonata-blog-post-author">
@@ -207,8 +228,9 @@ collapsible: true
     </section>
  
  {# l'id du thread est l'id , ancestor est la reference du thread #}
-
+{#
   {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id':'ghgjh', 'epost':entity.id} %}
+#}
 {#
   
   {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'ghgjh','epost':entity.id} %}

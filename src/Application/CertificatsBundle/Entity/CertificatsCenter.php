@@ -20,7 +20,7 @@ use Application\RelationsBundle\Entity\FileType;
  * @ORM\Table(name="certificats_center")
  * @ORM\Entity(repositoryClass="Application\CertificatsBundle\Entity\CertificatsCenterRepository")
  * @ORM\HasLifecycleCallbacks()
-* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis") 
+* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:GroupConcat",groupBy={"idapplis.id"}) 
 */
 //* @GRID\Source(columns="id,fileName,cnName,endTime,serverName,serviceName,project.nomprojet,typeCert.fileType,idapplis.nomapplis:GroupConcat",groupBy={"idapplis.id"}) 
 class CertificatsCenter

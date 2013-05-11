@@ -100,7 +100,8 @@ class EproduitCommentsController extends Controller {
        
      
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+             $em = $this->getDoctrine()->getManager();
+            //$em = $this->getDoctrine()->getEntityManager();
             $em->persist($comment);
             $em->flush();
             return $this->redirect($this->generateUrl('eproduit_show', array(
@@ -118,8 +119,9 @@ class EproduitCommentsController extends Controller {
 
     protected function getProduit($produit_id)
     {
-        $em = $this->getDoctrine()
-                    ->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
+       /* $em = $this->getDoctrine()
+                    ->getEntityManager();*/
 
         $produit = $em->getRepository('ApplicationEservicesBundle:Eproduit')->find($produit_id);
 

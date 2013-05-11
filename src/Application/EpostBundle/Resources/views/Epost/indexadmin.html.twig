@@ -97,13 +97,14 @@ POSTS DISPONIBLES
                 <td class="resume">{{ entity.resume|raw }}</td>
                 <td>{{ entity.tags|join(', ') }}   </td>
                        <td>
-                {% if entity.image is not null %}               
+                           <img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
+             {#   {% if entity.image is not null %}               
            
          
          <img width="40px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
          {% else %}
            ---
-         {% endif %}
+         {% endif %}#}
            </td>
            
                 {% if entity.comments is not null %}

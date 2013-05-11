@@ -84,14 +84,15 @@ POSTS DE MON GROUPE
                     <td>{{ entity.tags|join(', ') }}   </td>
    
                        <td>
-                {% if entity.image is not null %}               
+              <img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
+{#  {% if entity.image is not null %}               
            
          
          <img width="60px" src="{{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
          {% else %}
            ---
          {% endif %}
-           </td>
+  #}         </td>
            
                 {% if entity.comments is not null %}
                   <td>{{ entity.comments|length }}</td>

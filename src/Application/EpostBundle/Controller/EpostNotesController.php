@@ -323,7 +323,8 @@ class EpostNotesController extends Controller {
 
     protected function getEpost($epost_id) {
         $em = $this->getDoctrine()
-                ->getEntityManager();
+                 ->getManager();
+                //->getEntityManager();
 
         $epost = $em->getRepository('ApplicationEpostBundle:Epost')->find($epost_id);
 

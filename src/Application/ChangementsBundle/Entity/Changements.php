@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\MinLength;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Date;
-
+use Application\RelationsBundle\Entity\Environnements;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -22,10 +22,11 @@ use CalendR\Event\AbstractEvent;
  * @ORM\Table(name="changements")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Application\ChangementsBundle\Entity\ChangementsRepository")
- * @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:concat_ws",groupBy={"id"}))
-  * @Vich\Uploadable
+ // @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:XGroupConcat",groupBy={"id"})
+ * @Vich\Uploadable
  */
- //* @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"}))
+ 
+// @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:concat_ws",groupBy={"id"})
 // @GRID\Source(columns="id,nom,dateDebut,dateFin,idProjet.nomprojet,demandeur.nomUser,idEnvironnement.nom:GroupConcat",groupBy={"id"})
 
 class Changements extends AbstractEvent
@@ -128,14 +129,17 @@ class Changements extends AbstractEvent
     
     
      /**
+     * @var string
+      * 
      * @ORM\ManyToMany(targetEntity="Application\RelationsBundle\Entity\Environnements", inversedBy="idchangements",cascade={"persist"})
      * @ORM\OrderBy({"nom" = "ASC"})
      * @ORM\JoinTable(name="changements_environnements")
-     * @GRID\Column(title="Env", field="idEnvironnement", size="30", visible=true, sortable=true, filtrable="true")
+     * @GRID\Column(field="idEnvironnement.nom:XGroupConcat:nom", title="Calmtegories", filter="select", selectMulti="true", selectFrom="values")
      */
-      
+           
     private $idEnvironnement;
-   // GRID\Column(title="Environnements", field="idEnvironnement.nom:GroupConcat",  visible=true, sortable=true, filter="select",selectFrom="query")
+    // @GRID\Column(title="Env", field="idEnvironnement", size="30", visible=true, sortable=true, filtrable="true")
+   // GRID\Column(title="Environnements", field="idEnvironnement.nom:concat_ws",  visible=true, sortable=true, filter="select",selectFrom="query")
      
      /**
      *  @ORM\ManyToMany(targetEntity="Application\RelationsBundle\Entity\Applis", inversedBy="idprojets",cascade={"persist"})
@@ -457,7 +461,7 @@ private $comments;
         $this->idusers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idapplis = new \Doctrine\Common\Collections\ArrayCollection();
           $this->picture = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idEnvironnement = new \Doctrine\Common\Collections\ArrayCollection();
+       $this->idEnvironnement = new \Doctrine\Common\Collections\ArrayCollection();
      //   $this->idapplis = new \Doctrine\Common\Collections\ArrayCollection();
      /*         $this->uid = $uid;
         $this->begin = clone $start;

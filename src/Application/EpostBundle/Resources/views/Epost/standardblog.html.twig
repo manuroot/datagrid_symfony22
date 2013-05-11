@@ -6,9 +6,28 @@
        <link rel="stylesheet" href="{{ asset('css/news.css') }}" type="text/css" media="all"/>
  {% endblock %}
 
+             
+{% block javascripts %}
+{{ parent() }}
+   <!--<script type="text/javascript" src="{{ asset('bundles/applicationepost/js/selectapplis.js') }}"></script>
+    -->
+ <script type="text/javascript" src="{{ asset('jquery/jquery.raty.js') }}"></script>
+ <script type="text/javascript">
+    $('.star').raty({
+        readOnly: true,
+  score: function() {
+    return $(this).attr('data-score');
+  }
+});
+    </script>
+{% endblock %}
+ 
+ 
 {% block content_header '' %}
 {% block title %}
 POSTS DISPONIBLES
+
+
 {% endblock %}
 {% block content %}
 
@@ -37,10 +56,12 @@ POSTS DISPONIBLES
            {{ entity.createdAt|created_ago }} -    
                     
         {% if entity.globalnote is not null %}
-       Note Globale: <span class="badge badge-inverse">Note = {{ entity.globalnote }}</span>
+   {#    Note Globale: #}
+           <div class="star" data-score="{{ entity.globalnote }}"></div>
+           {#({{ entity.globalnote }})#}
         {% else %}
-        <span class="badge badge-inverse">Note = 0</span>
-        
+   <div class="star" data-score="0"></div>
+        {#({{ entity.globalnote }})#}
         {% endif %}
             </div>
              <!--   <h2 class="entry-title">-->

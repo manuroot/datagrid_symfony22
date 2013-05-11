@@ -549,6 +549,7 @@ class EpostController extends Controller {
 
         if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST') {
             $em = $this->getDoctrine()->getEntityManager();
+             //$em = $this->getDoctrine()->getManager();
             $id = '';
             $applis = array();
             $cert_app = array();

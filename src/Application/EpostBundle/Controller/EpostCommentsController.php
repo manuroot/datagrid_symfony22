@@ -214,7 +214,7 @@ class EpostCommentsController extends Controller {
         $editForm = $this->createForm(new EpostType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('ApplicationEpostBundle:Epost:edit.html.twig', array(
+        return $this->render('ApplicationEpostBundle:EpostComments:edit.html.twig', array(
                     'entity' => $entity,
                     'btnretour' => $myretour,
                     'edit_form' => $editForm->createView(),

@@ -37,8 +37,10 @@ MES NOTES-POSTS
             <tr class="title">
 
                 <th>{{ knp_pagination_sortable(paginationa, 'Id', 'a.id') }}</th>
-                <th>Post</th>
-                <th>Post.Id</th>
+            
+                   <th{% if paginationa.isSorted('b.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Post', 'b.name') }}</th>
+             <th{% if paginationa.isSorted('b.id') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Post', 'b.id') }}</th>
+                
                 <th>Proprietaire</th>
                 <th>Image</th>
                 <th>De</th>
@@ -67,9 +69,7 @@ MES NOTES-POSTS
                             ---
          {% endif %}
                         </td>
-
-
-                       
+      
                          <td>{{ entity.user }}</td>
                           <td>{{ entity.note }}</td>
                             <td>{{ entity.epost.globalnote }}</td>
