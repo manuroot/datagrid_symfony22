@@ -69,17 +69,21 @@ MES NOTES-POSTS
                     <td>{{ entity.epost.name }}</td>
                     <td>{{ entity.epost.id }}</td>
                     <td>{{ entity.epost.proprietaire.username }}</td>
-                    <td>  
-                     {% if entity.epost.image is not null %}               
+                    <td>
+{#<img src="/sf1/{% path post.image, 'small' %}" width="50" /> #}
+<img src="{% path entity.epost.imageMedia, 'small' %}" width="40" /> 
+          </td>
+               {#     <td>  
+                     {% if entity.epost.image is not null %}   #}            
 
       {#   {{ app.request.basePath }} {{ vich_uploader_asset(message, 'image') }}#}
         {#   <img width="60px" src=" {{ app.request.basePath }} {{ vich_uploader_asset(entity, 'image') }}" alt="{{ entity.imageName }}" />
 #}
-                            <img width="40px" src="{{ vich_uploader_asset(entity.epost, 'image') }}" alt="{{ entity.epost.imageName }}" />
+                       {#     <img width="40px" src="{{ vich_uploader_asset(entity.epost, 'image') }}" alt="{{ entity.epost.imageName }}" />
          {% else %}
                             ---
          {% endif %}
-                        </td>
+                        </td>#}
       
                          <td>{{ entity.user }}</td>
                      <td>    {% if entity.note is defined %}

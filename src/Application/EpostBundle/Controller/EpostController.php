@@ -235,7 +235,10 @@ class EpostController extends Controller {
                 ));
     }
 
-    
+    //====================================================================
+    // BLOG STANDARD: index par annee
+    //====================================================================
+
      public function indexbyyearAction($year) {
         $em = $this->getDoctrine()->getManager();
         $entity_year = $em->getRepository('ApplicationEpostBundle:Epost')->findOneBy(array(
@@ -255,6 +258,9 @@ class EpostController extends Controller {
                 ));
     }
     
+  //====================================================================
+    // BLOG STANDARD: index par categorie
+    //====================================================================
     public function indexbycategoryAction($categorie) {
         $em = $this->getDoctrine()->getManager();
         $category = $em->getRepository('ApplicationEpostBundle:EpostCategories')->findOneBy(array(
@@ -274,6 +280,9 @@ class EpostController extends Controller {
                 ));
     }
 
+  //====================================================================
+    // BLOG STANDARD: index par tag
+    //====================================================================
     public function indexbytagAction($tag) {
 
         $em = $this->getDoctrine()->getManager();
