@@ -35,13 +35,22 @@ class ChangementsRepository extends EntityRepository implements ProviderInterfac
       $queryBuilder->groupBy('a.title');
       $queryBuilder->orderBy('a.title', 'DESC'); */
 
+  
     public function myFindAll() {
+        //$fields = array('d.id', 'd.name', 'o.id');
+        //->select($fields)
         return $this->createQueryBuilder('a')
-                        ->leftJoin('a.idProjet', 'b')
-                        ->leftJoin('a.idStatus', 'd')
+                    ->select('a,b,c,d,e,f,g,h')
+            
+                        ->leftJoin('a.idProjet', 'b') 
                         ->leftJoin('a.demandeur', 'c')
+                        ->leftJoin('a.idStatus', 'd')
                         ->leftJoin('a.idusers', 'e')
-                        ->groupby('a.nom')
+                        ->leftJoin('a.picture', 'f')
+                ->leftJoin('a.idEnvironnement','g')
+                ->leftJoin('a.comments','h')
+                ->groupby('a.nom')
+                
                         ->add('orderBy', 'a.id DESC');
 
 

@@ -50,14 +50,16 @@ COMMENTAIRES SUR MES POSTS
           
 
                         <td>{{ entity.id }}</td>
-                           <td>{{ entity.epost.name }}</td>
+                           <td>                 <a href="{{ path('epost_showstandard', { 'blog_id': entity.epost.id,'slug': entity.epost.slug }) }}">
+         
+                          {{ entity.epost.name }}</a></td>
                              <td>{{ entity.epost.proprietaire.username }}</td>
                           <td>{{ entity.user.username }}</td>
            <td>{{ entity.updated|date }}</td>
            <td>{{ entity.created|date }}</td>
                <td>{{ entity.approved }}</td>
    <td>
-                             <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
+                             <a href="{{ path('epost_showstandard', { 'blog_id': entity.epost.id,'slug': entity.epost.slug }) }}">
              {#
                     <a href="{{ path('epost_show', { 'id': entity.id }) }}">#}
                         <img src="{{ asset('bundles/applicationepost/images/detail.png') }}" alt="show" width="15" height="15" />

@@ -272,7 +272,7 @@ MES POSTS
                 {# <th>Image</th>#}
                  <th>ImageMedia</th>
                    <th>Commentaires</th>
-                      <th{% if paginationa.isSorted('a.globalnote.note') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Note Globale', 'a.globalnote.note') }}</th>
+                      <th{% if paginationa.isSorted('e.globalnote') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Note Globale', 'e.globalnote') }}</th>
              
                  <th colspan="2">Actions</th>
             </tr>

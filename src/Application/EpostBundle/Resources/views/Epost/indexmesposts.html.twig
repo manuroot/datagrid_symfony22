@@ -123,11 +123,15 @@ MES POSTS
  
   
       <td>{{ entity.tags|join(', ') }}   </td>
-      {% if entity.globalnote is not null %}
-         <td>{{ entity.globalnote }}</td>
-         {% else %}
-         <td>--</td>
-         {% endif %}
+        <td>           {% if entity.globalnote is not null %}
+   {#    Note Globale: #}
+           <div class="star" data-score="{{ entity.globalnote }}"></div>
+           {#({{ entity.globalnote }})#}
+        {% else %}
+   <div class="star" data-score="0"></div>
+        {#({{ entity.globalnote }})#}
+        {% endif %}
+            </td>
                  {#     <td>
                 {% if entity.image is not null %}               
            
@@ -141,12 +145,12 @@ MES POSTS
 {#<img src="/sf1/{% path post.image, 'small' %}" width="50" /> #}
 <img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
           </td>
-              {% if entity.comments is not null %}
+             {% if entity.comments is not null %}
                   <td>{{ entity.comments|length }}</td>
-                  {% else %}
+                {% else %}
                   <td>---</td>
                   {% endif %}  
-                  
+                
                      <td>
 
                     <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">

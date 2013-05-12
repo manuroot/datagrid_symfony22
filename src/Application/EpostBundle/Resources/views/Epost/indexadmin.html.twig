@@ -5,8 +5,24 @@
       <link rel="stylesheet" href="{{ asset('bundles/applicationepost/css/sliding.css') }}" type="text/css" media="all"/>
      <style>
       
-.resume {max-width:300px;}
+.resume {max-width:250px;}
 </style> 
+ {% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+ 
+ <script type="text/javascript" src="{{ asset('jquery/jquery.raty.js') }}"></script>
+ <script type="text/javascript">
+    $('.star').raty({
+       /* path: '/images',*/
+        readOnly: true,
+  score: function() {
+    return $(this).attr('data-score');
+  }
+});
+</script>
  {% endblock %}
 
 {% block content_header '' %}
@@ -43,7 +59,8 @@ POSTS DISPONIBLES
  <th{% if paginationa.isSorted('a.createdAt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Date', 'a.createdAt') }}</th>
         
 <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
-<th>Tags</th>   
+<th>Tags</th> 
+<th>Notes</th>
 <th>Image</th>
     <th>Commentaires</th>
            {% if is_granted("ROLE_ADMIN") %}
@@ -96,6 +113,15 @@ POSTS DISPONIBLES
  
                 <td class="resume">{{ entity.resume|raw }}</td>
                 <td>{{ entity.tags|join(', ') }}   </td>
+                 <td>           {% if entity.globalnote is not null %}
+   {#    Note Globale: #}
+           <div class="star" data-score="{{ entity.globalnote }}"></div>
+           {#({{ entity.globalnote }})#}
+        {% else %}
+   <div class="star" data-score="0"></div>
+        {#({{ entity.globalnote }})#}
+        {% endif %}
+            </td>
                        <td>
                            <img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
              {#   {% if entity.image is not null %}               

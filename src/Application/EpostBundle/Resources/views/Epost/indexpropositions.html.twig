@@ -6,6 +6,21 @@
      
  {% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+ 
+ <script type="text/javascript" src="{{ asset('jquery/jquery.raty.js') }}"></script>
+ <script type="text/javascript">
+    $('.star').raty({
+       /* path: '/images',*/
+        readOnly: true,
+  score: function() {
+    return $(this).attr('data-score');
+  }
+});
+</script>
+ {% endblock %}
+
 {% block content_header '' %}
 {% block title %}
 POSTS DE MON GROUPE
@@ -39,7 +54,9 @@ POSTS DE MON GROUPE
                    <i class="icon-flag"></i></th>
                    
                   <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
-                  <th>Tags</th> 
+                  <th>Tags</th>
+                     <th{% if paginationa.isSorted('e.globalnote') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Note Globale', 'e.globalnote') }}</th>
+             
                  <th>Image</th>
                    <th>Commentaires</th>
                  <th colspan="1">Actions</th>
@@ -82,7 +99,15 @@ POSTS DE MON GROUPE
                                    </td> 
                 <td>{{ entity.resume|raw }}</td>
                     <td>{{ entity.tags|join(', ') }}   </td>
-   
+      <td>           {% if entity.globalnote is not null %}
+   {#    Note Globale: #}
+           <div class="star" data-score="{{ entity.globalnote }}"></div>
+           {#({{ entity.globalnote }})#}
+        {% else %}
+   <div class="star" data-score="0"></div>
+        {#({{ entity.globalnote }})#}
+        {% endif %}
+            </td>
                        <td>
               <img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
 {#  {% if entity.image is not null %}               

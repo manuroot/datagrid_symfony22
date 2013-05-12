@@ -14,6 +14,7 @@
 
 {% block content_header '' %}
 {% block title %}
+
 MES COMMENTAIRES
 {% endblock %}
 {% block content %}
@@ -25,7 +26,7 @@ MES COMMENTAIRES
     </div>
     {% endfor %}
 {% endfor %}
-
+<br>
 
     <table class="table table-striped table-bordered table-hover">
         <thead>
@@ -42,21 +43,31 @@ MES COMMENTAIRES
             </tr>
         </thead>
         <tbody>
-        {% for entity in paginationa %}
+        {% for pager in paginationa %}
                 <tr>
 
           
 
-                        <td>{{ entity.id }}</td>
-                           <td>{{ entity.epost.name }}</td>
-                            <td>{{ entity.epost.proprietaire.username }}</td>
-                        {#  <td>{{ entity.user.username }}</td>#}
-           <td>{{ entity.updated|date }}</td>
-           <td>{{ entity.created|date }}</td>
-            <td>{{ entity.approved }}</td>
+                        <td>{{ pager.id }}</td>
+                     
+              <td>                 <a href="{{ path('epost_showstandard', { 'blog_id': pager.epost.id,'slug': pager.epost.slug }) }}">
+         
+                          {{ pager.epost.name }}</a></td>
+                            <td>{{ pager.epost.proprietaire.username }}</td>
+                        {#  <td>{{ pager.user.username }}</td>#}
+           <td>{{ pager.updated|date }}</td>
+           <td>{{ pager.created|date }}</td>
+            <td>{{ pager.approved }}</td>
+              <td>
+                             <a href="{{ path('epost_showstandard', { 'blog_id': pager.epost.id,'slug': pager.epost.slug }) }}">
+             {#
+                    <a href="{{ path('epost_show', { 'id': pager.id }) }}">#}
+                        <img src="{{ asset('bundles/applicationepost/images/detail.png') }}" alt="show" width="15" height="15" />
+                    </a>
+                </td>
                 {#
                    <td>
-     <a href="{{ path('epostnotes_delete', { 'id': entity.id }) }}">
+     <a href="{{ path('epostnotes_delete', { 'id': pager.id }) }}">
                         <img src="{{ asset('bundles/applicationepost/images/delete.png') }}" alt="delete" width="15" height="15" />
                     </a>
                 </td>

@@ -14,6 +14,22 @@ class EpostNotesRepository extends EntityRepository {
 
     public function myFindAll() {
         return $this->createQueryBuilder('a')
+                
+                  
+                   ->select('a,b')
+              
+                //->where('a.proprietaire = :proprietaire')
+              /*  ->leftJoin('a.proprietaire', 'b')
+              //  ->leftJoin($join, $alias, $conditionType)
+                ->leftJoin('a.categorie', 'c')
+                ->leftJoin('a.idStatus', 'd')
+                ->leftJoin('a.globalnote', 'e')
+                ->leftJoin('a.imageMedia', 'f')
+                ->leftJoin('a.tags', 't')
+                ->leftJoin('a.comments', 'u')
+                ->groupby('a.name')
+                */
+                
                   ->leftJoin('a.epost', 'b')
                 // ->leftJoin('a.epost', 'b')
                         ->getQuery();

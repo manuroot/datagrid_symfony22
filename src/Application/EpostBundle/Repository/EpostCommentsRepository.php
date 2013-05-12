@@ -50,11 +50,14 @@ class EpostCommentsRepository extends EntityRepository {
     public function myFindBlogComments($user_id) {
 
         $query = $this->createQueryBuilder('a')
+                ->select('a,b')
                 ->add('orderBy', 'a.id DESC')
                   ->leftJoin('a.epost', 'b')
                      ->Where('b.proprietaire = :proprietaire')
                ->setParameter('proprietaire', $user_id)
-                ->getQuery();
+                ->getQuery()
+              // ->getQuery()->getResult()
+                ;
 
         return $query;
     }
