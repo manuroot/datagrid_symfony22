@@ -60,9 +60,11 @@ POSTS DISPONIBLES
         
 <th{% if paginationa.isSorted('a.resume') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Résumé', 'a.resume') }}</th>
 <th>Tags</th> 
-<th>Notes</th>
+  <th{% if paginationa.isSorted('e.globalnote') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Note', 'e.globalnote') }}</th>
+
 <th>Image</th>
-    <th>Commentaires</th>
+          <th{% if paginationa.isSorted('a.commentscount') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Commentaires', 'a.commentscount') }}</th>
+             
            {% if is_granted("ROLE_ADMIN") %}
  <th colspan="3"><center>Actions</center></th>
 {% else %}
