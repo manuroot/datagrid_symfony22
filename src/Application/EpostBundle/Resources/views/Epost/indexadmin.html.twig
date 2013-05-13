@@ -133,11 +133,13 @@ POSTS DISPONIBLES
          {% endif %}#}
            </td>
            
-                {% if entity.comments is not null %}
-                  <td>{{ entity.comments|length }}</td>
-                  {% else %}
-                  <td>---</td>
-                  {% endif %}   
+                <td>
+            {% if entity.commentscount is not null %}
+                  {{ entity.commentscount }}
+              {% else %}
+                ---
+                  {% endif %}
+                </td>
                      <td>
                     <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
              

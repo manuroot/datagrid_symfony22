@@ -40,14 +40,14 @@ class ChangementsRepository extends EntityRepository implements ProviderInterfac
         //$fields = array('d.id', 'd.name', 'o.id');
         //->select($fields)
         return $this->createQueryBuilder('a')
-                    ->select(array('a,b,c,d,e,f,g,h'))
+                    ->select(array('a,b,c,d,f,h'))
             
                         ->leftJoin('a.idProjet', 'b') 
                         ->leftJoin('a.demandeur', 'c')
                         ->leftJoin('a.idStatus', 'd')
-                        ->leftJoin('a.idusers', 'e')
+                     //   ->leftJoin('a.idusers', 'e')
                         ->leftJoin('a.picture', 'f')
-                ->leftJoin('a.idEnvironnement','g')
+            //    ->leftJoin('a.idEnvironnement','g')
                 ->leftJoin('a.comments','h')
                 ->groupby('a.nom')
                 

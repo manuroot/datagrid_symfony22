@@ -158,6 +158,14 @@ class Epost {
     private $comments;
 
     
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="comments_count", type="integer", length=10, nullable=true)
+     */
+    private $commentscount;
+
+    
     /**
      * @ORM\OneToMany(targetEntity="EpostCommentsThread", mappedBy="epost",cascade={"persist"})
      */
@@ -216,6 +224,12 @@ class Epost {
     // @ORM\Column(type="text")
     //protected $tags;
 
+    
+    
+    // @ORM\Column(type="text")
+     // protected $tagstxt;
+    
+    
     public function getId() {
         return $this->id;
     }
@@ -251,6 +265,7 @@ class Epost {
     public function __construct() {
         //   $this->history = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new ArrayCollection();
+         $this->commentscount = 0;
         $this->notes = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
@@ -484,6 +499,11 @@ class Epost {
      */
     public function removeComment(\Application\EpostBundle\Entity\EpostComments $comments) {
         $this->comments->removeElement($comments);
+        if ($this->commentscount > 0)
+        $this->commentscount= $this->commentscount - 1;
+        else 
+           $this->commentscount= 0;
+            
     }
 
     /**
@@ -494,7 +514,10 @@ class Epost {
      */
     public function addComment(\Application\EpostBundle\Entity\EpostComments $comments) {
         $this->comments[] = $comments;
-
+      //  echo 'c=' . count($this->comments) . "<br>";
+       // exit(1);
+        $this->setCommentscount(count($this->comments));
+        //$this->commentscount=  count($this->comments) + 1;
         return $this;
     }
 
@@ -507,6 +530,14 @@ class Epost {
         return $this->comments;
     }
 
+    /**
+     * Get comments count
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentsNobbre() {
+        return count($this->comments);
+    }
     /**
      * Add notes
      *
@@ -666,7 +697,7 @@ class Epost {
      * {@inheritdoc}
      */
     public function getYear() {
-        return $this->getgetcreatedAt()->format('Y');
+        return $this->getcreatedAt()->format('Y');
     }
 
     /**
@@ -786,5 +817,29 @@ class Epost {
     public function getCommentsthread()
     {
         return $this->commentsthread;
+    }
+
+    /**
+     * Set commentscount
+     *
+     * @param integer $commentscount
+     * @return Epost
+     */
+    public function setCommentscount($commentscount)
+    {
+        $this->commentscount = $commentscount;
+
+        return $this;
+    }
+
+    /**
+     * Get commentscount
+     *
+     * @return integer 
+     */
+    public function getCommentscount()
+    {
+      return $this->commentscount;
+      //return (count($this->comments));
     }
 }

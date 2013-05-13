@@ -67,7 +67,7 @@ padding: 0.1em;
  <script type="text/javascript">
 
  $('.star').raty({
-        readOnly: false,
+        readOnly: true,
         score: function() {
     return $(this).attr('data-score');
   },
@@ -124,7 +124,29 @@ collapsible: true
            {% if entity.globalnote is not null %}
    {#    Note Globale: #}
            <div id="{{entity.id}}" class="star" identity="{{entity.id}}" data-score="{{ entity.globalnote }}"></div>
-           ({{ entity.globalnote }})
+           
+<div class="sonata-blog-post-tag-list">
+        {% if entity.categorie is not null %}               
+                          <span class="label">
+                 
+    <a href="{{ url('epost_categories_show', {'categorie': entity.categorie.slug} ) }}">
+{{ entity.categorie.name }}</a>
+                        </span>
+                  {% else %}
+                  pas de catégorie
+                  {% endif %}
+                  <br>
+                        {% for tag in entity.tags %}
+                             <span class="label label-inverse">
+                                 <a href="{{ url('epost_tags_show', {'tag': tag.slug} ) }}">{{ tag.name }}</a>
+                            {% if not loop.last%}, {%endif%}
+                             </span>
+                            {% else %}
+                            Pas de Tag
+                        {% endfor %}
+                    </div>   
+                
+           {#({{ entity.globalnote }})#}
         {% else %}
    <div class="star" data-score="0"></div>
         {#({{ entity.globalnote }})#}
@@ -164,12 +186,12 @@ collapsible: true
         
     </div></div>   
          <hr>
-         
- <h2><center>Commentaires</center></h2>
+
  
 {% if comments|length > 0 %}
 
-    
+             
+ <h2><center>{{ comments|length }} Commentaires</center></h2>
     <section class="comments" id="comments">
         <section class="previous-comments">
            

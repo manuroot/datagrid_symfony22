@@ -73,7 +73,8 @@ MES POSTS
 
    {# <th>Image</th>#}
      <th>ImageMedia</th>
-     <th>Commentaires</th>
+          <th{% if paginationa.isSorted('a.commentscount') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Commentaires', 'a.commentscount') }}</th>
+             
            {% if is_granted("ROLE_ADMIN") %}
  <th colspan="4"><center>Actions</center></th>
 {% else %}
@@ -121,7 +122,7 @@ MES POSTS
 #}
   <td class="resume">{{ entity.resume|raw }}</td>
  
-  
+  {# Marche pas !!!!! #}
       <td>{{ entity.tags|join(', ') }}   </td>
         <td>           {% if entity.globalnote is not null %}
    {#    Note Globale: #}
@@ -145,11 +146,13 @@ MES POSTS
 {#<img src="/sf1/{% path post.image, 'small' %}" width="50" /> #}
 <img src="{% path entity.imageMedia, 'small' %}" width="50" /> 
           </td>
-             {% if entity.comments is not null %}
-                  <td>{{ entity.comments|length }}</td>
-                {% else %}
-                  <td>---</td>
-                  {% endif %}  
+           <td>
+            {% if entity.commentscount is not null %}
+                  {{ entity.commentscount }}
+              {% else %}
+                ---
+                  {% endif %}
+                </td>
                 
                      <td>
 

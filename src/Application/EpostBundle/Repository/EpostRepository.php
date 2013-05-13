@@ -227,6 +227,64 @@ class EpostRepository extends EntityRepository {
         //return $query->getQuery()->getResult();
     }
 
+     public function getMyPagerStandard(array $criteria) {
+
+      
+        
+        $parameters = array();
+        $query = $this->createQueryBuilder('a')
+                ->select('a,b,c,d,e,f')
+                ->add('orderBy', 'a.id DESC')
+                //->where('a.proprietaire = :proprietaire')
+                ->leftJoin('a.proprietaire', 'b')
+              //  ->leftJoin($join, $alias, $conditionType)
+                ->leftJoin('a.categorie', 'c')
+                ->leftJoin('a.idStatus', 'd')
+                ->leftJoin('a.globalnote', 'e')
+                ->leftJoin('a.imageMedia', 'f')
+                //->leftJoin('a.tags', 't')
+             //   ->leftJoin('a.comments', 'u')
+                ->groupby('a.name')
+                ;
+
+       if (isset($criteria['author'])) {
+            //  print_r($criteria);exit(1);
+            $query->andwhere('a.proprietaire = :proprietaire');
+            $parameters['proprietaire'] = $criteria['author'];
+        }
+
+
+        if (isset($criteria['non-author'])) {
+            //  print_r($criteria);exit(1);
+            $query->andWhere('a.proprietaire <> :user_id');
+            $parameters['user_id'] = $criteria['non-author'];
+        }
+
+
+        if (isset($criteria['group'])) {
+            $query->andWhere('b.idgroup = :group_id');
+            $parameters['group_id'] = $criteria['group'];
+        }
+
+        if (isset($criteria['categorie']) && $criteria['categorie'] instanceof EpostCategories) {
+            $query->andWhere('a.categorie = :categoryid');
+            $parameters['categoryid'] = $criteria['categorie']->getId();
+        }
+        if (isset($criteria['tag'])) {
+            //    $query->leftJoin('a.tags', 't');
+            $query->andWhere('t.id =:tag');
+            //   ->groupby('a.name');
+
+            $parameters['tag'] = (string) $criteria['tag'];
+        }
+        $query->setParameters($parameters);
+        //>getQuery();
+        //  print_r($query->getQuery());
+        //  exit(1);
+         return $query->getQuery();
+        //return $query->getQuery()->getResult();
+    }
+
     public function getPublicationDateQueryParts($date, $step, $alias = 'p') {
         return array(
             'query' => sprintf('%s.createdAt >= :startDate AND %s.createdAt < :endDate', $alias, $alias),

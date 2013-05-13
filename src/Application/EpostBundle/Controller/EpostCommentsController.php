@@ -94,16 +94,24 @@ class EpostCommentsController extends Controller {
             throw $this->createNotFoundException('User has no group.');
         }
         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+        // AJOUT COMMENT
         $epost = $this->getEpost($epost_id);
         $comment = new EpostComments();
         $comment->setEpost($epost);
         $comment->setUser($current_user);
+       
         $request = $this->getRequest();
         $form = $this->createForm(new EpostCommentsType(), $comment);
         $form->bindRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($comment);
+         //   $em->flush();
+            // RECUP DES COMMENTS
+           // $nombre=$epost->getCommentsNobbre();
+         //   echo "nombre=$nombre<br>";exit(1);
+            $epost->addComment($comment);
+            $em->persist($epost);
             $em->flush();
             return $this->redirect($this->generateUrl('epost_showstandard', array(
                 'blog_id' => $comment->getEpost()->getId(),
@@ -139,7 +147,7 @@ class EpostCommentsController extends Controller {
         list($user_id, $group_id) = $this->getuserid();
         if ($user_id != 0) {
             $query = $em->getRepository('ApplicationEpostBundle:EpostComments')->myFindBlogComments($user_id);
-            $paginationa = $this->createpaginator($query, 5);
+            $paginationa = $this->createpaginator($query, 20);
             $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
         } else {
             throw $this->createNotFoundException('User not connected.');

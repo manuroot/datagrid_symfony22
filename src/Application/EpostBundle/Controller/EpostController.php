@@ -213,8 +213,11 @@ class EpostController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_indexadmin');
-        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFind();
-        $paginationa = $this->createpaginator($query, 5);
+        
+        
+          $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array());
+          //$query = $em->getRepository('ApplicationEpostBundle:Epost')->myFind();
+        $paginationa = $this->createpaginator($query, 10);
         return $this->render('ApplicationEpostBundle:Epost:indexadmin.html.twig', array(
                     'paginationa' => $paginationa,
                 ));
@@ -228,7 +231,7 @@ class EpostController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_indexstandard');
-        $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array());
+        $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPagerStandard(array());
         return $this->renderBlog(array(
                     'page' => 'ApplicationEpostBundle:Epost:standardblog.html.twig',
                     'query' => $query,
@@ -316,10 +319,12 @@ class EpostController extends Controller {
         }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_mesposts');
-        $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
-            'author' => $user_id,
-                ));
-        $pagination = $this->createpaginator($query, 5);
+           $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
+                'author' => $user_id,
+           ));
+       
+
+        $pagination = $this->createpaginator($query, 10);
         return $this->render('ApplicationEpostBundle:Epost:indexmesposts.html.twig', array(
                     'paginationa' => $pagination,
                 ));
@@ -339,6 +344,9 @@ class EpostController extends Controller {
         }
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_propositions');
+            $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
+                'author' => $user_id,
+           ));
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
         $paginationa = $this->createpaginator($query, 5);
         return $this->render('ApplicationEpostBundle:Epost:indexpropositions.html.twig', array(

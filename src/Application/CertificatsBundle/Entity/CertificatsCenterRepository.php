@@ -21,6 +21,8 @@ class CertificatsCenterRepository extends EntityRepository {
 
     public function myFindaAll() {
         return $this->createQueryBuilder('a')
+                ->select(array('a,b,c'))
+               
                         ->leftJoin('a.project', 'b')
                         ->leftJoin('a.typeCert', 'c')
                         ->orderBy('a.id', 'DESC') 

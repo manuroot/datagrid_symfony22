@@ -116,7 +116,18 @@ POSTS DISPONIBLES
                        
                     </div>
              
-              {% if entity.comments is not null %}
+            {% if entity.commentscount is not null %}
+            {% if entity.commentscount > 1 %}
+                   <span class="badge badge-warning">{{ entity.commentscount }} commentaires</span>
+              {% else %}
+                      <span class="badge badge-warning">{{ entity.commentscount }} commentaire</span>
+                  {% endif %}
+              {% else %}
+                      <span class="badge badge-warning">0 commentaire</span>
+                      
+                      {% endif %}
+                
+         {#{% if entity.comments is not null %}
               {% if entity.comments|length > 1 %}
                 <span class="badge badge-warning">{{ entity.comments|length }} commentaires</span>
                 {% else %}
@@ -124,8 +135,8 @@ POSTS DISPONIBLES
                 {% endif %}
                   {% else %}
                  ---
-                  {% endif %}   
-                   
+                  {% endif %} 
+           #}      
                     <a href="{{ path('epost_showstandard', { 'blog_id': entity.id,'slug': entity.slug }) }}">
                         <img src="{{ asset('bundles/applicationepost/images/detail.png') }}" alt="show" width="15" height="15" />
                     </a>

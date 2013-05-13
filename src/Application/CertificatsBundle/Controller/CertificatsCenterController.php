@@ -89,11 +89,12 @@ class CertificatsCenterController extends Controller {
           if ($this->get('request')->query->has('submit-filter')) {
              // echo "submit filters";exit(1);
             // bind values from the request
-            $searchForm->bindRequest($this->get('request'));
+            $searchForm->bind($this->get('request'));
             $filterBuilder = $this->get('doctrine.orm.entity_manager')
                     ->getRepository('ApplicationCertificatsBundle:CertificatsCenter')
                    // ->createQueryBuilder('e');
              ->createQueryBuilder('a')
+                        ->select('a,b,c')
                         ->leftJoin('a.project', 'b')
                         ->leftJoin('a.typeCert', 'c')
                         ->orderBy('a.id', 'DESC');
