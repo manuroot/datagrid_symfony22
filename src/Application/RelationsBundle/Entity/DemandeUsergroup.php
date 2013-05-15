@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="demande_usergroup")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\RelationsBundle\Repository\DemandeUsergroupRepository")
  */
 class DemandeUsergroup
 {
@@ -58,6 +59,12 @@ class DemandeUsergroup
      */
     private $iduser;
 
+     /**
+     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="id_userparrain", referencedColumnName="id")
+     */
+    private $iduserParrain;
+    
    /**
      * @orm\Column(type="boolean", name="is_accepted",nullable=true))
      */
@@ -238,5 +245,28 @@ class DemandeUsergroup
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * Set iduserParrain
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $iduserParrain
+     * @return DemandeUsergroup
+     */
+    public function setIduserParrain(\Application\Sonata\UserBundle\Entity\User $iduserParrain = null)
+    {
+        $this->iduserParrain = $iduserParrain;
+
+        return $this;
+    }
+
+    /**
+     * Get iduserParrain
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getIduserParrain()
+    {
+        return $this->iduserParrain;
     }
 }

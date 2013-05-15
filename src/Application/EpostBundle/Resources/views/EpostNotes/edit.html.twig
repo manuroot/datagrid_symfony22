@@ -95,8 +95,12 @@ $( "#application_eservicesbundle_eproduitnotestype_note.not-removable" ).val( $(
 
         <tbody>      
             <tr><td>
-
-                   
+ {% if entity.epost.imageMedia is not null %}    
+ <img src="{% path entity.epost.imageMedia, 'big' %}" width="150" /> 
+ {% else %}
+           <p>Pas d'Image</p>
+         {% endif %}
+         {#          
 
              {% if entity.epost.image is not null %}               
                         <p>Image Actuelle</p>
@@ -104,7 +108,7 @@ $( "#application_eservicesbundle_eproduitnotestype_note.not-removable" ).val( $(
          {% else %}
                         <p>Pas d'Image</p>
          {% endif %}
-                   
+     #}              
         </td>
                 <td>
 

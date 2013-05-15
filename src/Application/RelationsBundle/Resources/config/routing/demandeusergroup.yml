@@ -2,10 +2,19 @@ groupedemande:
     pattern:  /
     defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:index" }
 
+groupedemande_mongroupe:
+    pattern:  /demandemongroupe
+    defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:indexMonGroupe" }
+
+
 groupedemande_show:
     pattern:  /{id}/show
     defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:show" }
 
+groupedemande_accept:
+    pattern:  /{id}/accept
+    defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:accept" }
+    
 groupedemande_new:
     pattern:  /new
     defaults: { _controller: "ApplicationRelationsBundle:DemandeUsergroup:new" }

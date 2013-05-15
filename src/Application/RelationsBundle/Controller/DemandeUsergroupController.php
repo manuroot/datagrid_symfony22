@@ -20,7 +20,7 @@ class DemandeUsergroupController extends Controller {
     private function getuserid() {
 
 
-        $em = $this->getDoctrine()->getManager();
+        // $em = $this->getDoctrine()->getManager();
         $user_security = $this->container->get('security.context');
         // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
         if ($user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -58,6 +58,117 @@ class DemandeUsergroupController extends Controller {
     }
 
     /**
+     * Lists all DemandeUsergroup entities.
+     *
+     */
+    public function indexMonGroupeAction() {
+        $em = $this->getDoctrine()->getManager();
+
+        list($user_id, $group_id) = $this->getuserid();
+        $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+
+
+        if (!$current_user) {
+            throw $this->createNotFoundException('Unable to find user entity.');
+        }
+        //echo "groupe=$group_id";
+        //   exit(1);
+        // $entities = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findAll();
+        $entities = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->getMyPager(
+                array('group' => $group_id));
+
+        return $this->render('ApplicationRelationsBundle:DemandeUsergroup:indexmongroupe.html.twig', array(
+                    'entities' => $entities,
+                ));
+    }
+
+    /* ==================================================================
+     * 
+     *  Accepter une demande de groupe
+      ================================================================== */
+
+    public function acceptAction(Request $request, $id) {
+
+        $session = $this->getRequest()->getSession();
+        if (!$id) {
+            throw $this->createNotFoundException('Missing paramter id = ' . $id);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find DemandeUsergroup entity.');
+        }
+        $acceptform = $this->createAcceptForm($id);
+
+        $demandeur_id = $entity->getIduser()->getId();
+        $demandeur_group_id = $entity->getIdgroup()->getId();
+
+
+
+        list($user_parrain_id, $group_parrain_id) = $this->getuserid();
+        $user_security = $this->container->get('security.context');
+
+        if ($user_parrain_id == 0) {
+            $message = "Vous n\etes pas connecté !!";
+            return $this->render('ApplicationRelationsBundle:DemandeUsergroup:deny.html.twig', array(
+                        'mymessage' => $message));
+        }
+
+        if ($group_parrain_id == 0) {
+            $message = "Vous n\appartenez a aucun groupe !!";
+            return $this->render('ApplicationRelationsBundle:DemandeUsergroup:deny.html.twig', array(
+                        'mymessage' => $message));
+        }
+        if (!$user_security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $message = "Vous n\etes pas connecté !!";
+            return $this->render('ApplicationRelationsBundle:DemandeUsergroup:deny.html.twig', array(
+                        'mymessage' => $message));
+        }
+        if ($demandeur_id == $user_parrain_id) {
+            $message = "Vous etes le demandeur !!";
+            return $this->render('ApplicationRelationsBundle:DemandeUsergroup:deny.html.twig', array(
+                        'mymessage' => $message));
+        }
+        if ($demandeur_group_id != $group_parrain_id) {
+            $message = "La demande ne correspond pas a votre groupe";
+            return $this->render('ApplicationRelationsBundle:DemandeUsergroup:deny.html.twig', array(
+                        'mymessage' => $message));
+        }
+
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $session->getFlashBag()->add('warning', "ADMINISTRATEUR MODE");
+        }
+        if ($request->getMethod() == 'POST') {
+
+            $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_parrain_id);
+            if (!$current_user) {
+                throw $this->createNotFoundException('Unable to find user entity.');
+            }
+            $demandeur_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($demandeur_id);
+            if (!$demandeur_user) {
+                throw $this->createNotFoundException('Unable to find user entity.');
+            }
+
+            $entity->setIsaccepted(true);
+            $entity->setIduserParrain($current_user);
+            $em->persist($entity);
+            $em->flush();
+
+            //$idgroup = $postData['idgroup'];
+            $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($demandeur_group_id);
+           
+            
+            $demandeur_user->setIdgroup($entity_group);
+            $em->persist($demandeur_user);
+            $em->flush();
+
+        }
+        return $this->render('ApplicationRelationsBundle:DemandeUsergroup:accept.html.twig', array(
+                    'entity' => $entity, 'form' => $acceptform->createView()));
+    }
+
+    /**
      * Creates a new DemandeUsergroup entity.
      *
      */
@@ -80,13 +191,18 @@ class DemandeUsergroupController extends Controller {
             }
 
 
-         //  print_r($postData);
-        //    exit(1);
+            //  print_r($postData);
+            //    exit(1);
             // Valider demande
             // ==> user group a idgroup
             $idgroup = $postData['idgroup'];
 
-             /* echo "test id=$user_id";
+            /* =====================================================
+             * 
+             *  Creation de la demande user dans table demande_usergroup
+             * 
+              ====================================================== */
+            /* echo "test id=$user_id";
               exit(1); */
             $entity_user = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findByIduser($user_id);
 
@@ -98,13 +214,13 @@ class DemandeUsergroupController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-              $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($idgroup);
+            // Non !! le set du group dans fosuser kan parrain accepte la demande
+            /* $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($idgroup);
+              $em->persist($current_user);
+              $current_user->setIdgroup($entity_group);
+              $em->flush(); */
 
-            $em->persist($current_user);
-            $current_user->setIdgroup($entity_group);
-            $em->flush();
-            
-            
+
             return $this->redirect($this->generateUrl('groupedemande_show', array('id' => $entity->getId())));
         }
 
@@ -139,6 +255,8 @@ class DemandeUsergroupController extends Controller {
      *
      */
     public function newAction() {
+
+        $em = $this->getDoctrine()->getManager();
         $securityContext = $this->container->get('security.context');
         list($user_id, $group_id) = $this->getuserid();
         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
@@ -351,6 +469,13 @@ class DemandeUsergroupController extends Controller {
         }
 
         return $changements;
+    }
+
+    private function createAcceptForm($id) {
+        return $this->createFormBuilder(array('id' => $id))
+                        ->add('id', 'hidden')
+                        ->getForm()
+        ;
     }
 
 }

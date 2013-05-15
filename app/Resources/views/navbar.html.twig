@@ -21,7 +21,7 @@
                         #}
                     <a class="brand" href="#">
                         <i class="icon-white icon-home"></i>
-                                {% block toto %}I-CHANGE(v1.1a){% endblock %}</a>
+                                {% block toto %}I-CHANGE(v1.2a){% endblock %}</a>
  {#                             
  <ul class="nav">
 
@@ -177,7 +177,8 @@
                                                               {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                                                                      <li><a href="{{ path('egroup_groupes_showmygroup') }}"><i class="icon-user"></i> {{ 'Mon Groupe'|trans }}</a></li>
                                                                      <li><a href="{{ path('groupedemande') }}"><i class="icon-user"></i> {{ 'Demandes de Groupe'|trans }}</a></li>
-                                                           
+                                                                     <li><a href="{{ path('groupedemande_mongroupe') }}"><i class="icon-user"></i> {{ 'Demandes MonGroupe'|trans }}</a></li>
+                                                         
                                                                 {% endif %}
 
                                                             </ul>

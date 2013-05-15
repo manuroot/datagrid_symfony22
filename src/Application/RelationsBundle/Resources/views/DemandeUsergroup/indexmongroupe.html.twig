@@ -37,7 +37,7 @@
                  <th>Username</th>
                  <th>Groupe</th>
                    
-                <th>Status</th>
+                <th>Isaccepted</th>
                 <th>Date de Demande</th>
                 <th>Actions</th>
             </tr>
@@ -52,7 +52,7 @@
                        <td>{{ entity.idgroup.nomGroup }}</td>
                      
  
-                <td>
+               <td>
                 {% if entity.isaccepted ==0 %}
                         En Attente
                 {% else %} Acceptée
@@ -70,7 +70,16 @@
                         <img src="{{ asset('bundles/applicationrelations/images/edit.png') }}" alt="edit" width="15" height="15" />
                     </a>
                 </td>
-                
+                <td>
+                      {% if entity.isaccepted ==0 %}
+             
+                    <a href="{{ path('groupedemande_accept', { 'id': entity.id }) }}">
+                     <img src="{{ asset('bundles/applicationrelations/images/poignee.gif') }}" alt="edit" width="15" height="15" />
+                    </a>
+                        {% else %}
+                        ---
+                        {% endif %}
+                </td>
               
             </tr>
         {% endfor %}
