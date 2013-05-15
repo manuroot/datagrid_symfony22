@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Application\EservicesBundle\Repository;
+namespace Application\RelationsBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**

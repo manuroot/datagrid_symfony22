@@ -152,17 +152,21 @@ class EpostController extends Controller {
         $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
             'author' => $user_id,
                 ));
+        $defaut_paginator_a = array('pagename' => 'page1', 'sortdir' => 'dir1', 'sortfield' => 'sort1');
+        $paginationa = $this->createpaginator($query, 5, $defaut_paginator_a);
+
+         if ($group_id != 0) {
         $query_other = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
             'non-author' => $user_id,
             'group' => $group_id
                 ));
 
-        $defaut_paginator_a = array('pagename' => 'page1', 'sortdir' => 'dir1', 'sortfield' => 'sort1');
-        $paginationa = $this->createpaginator($query, 5, $defaut_paginator_a);
-
+        
+        
         $defaut_paginator_b = array('pagename' => 'page2', 'sortdir' => 'dir2', 'sortfield' => 'sort2');
         $paginationb = $this->createpaginator($query_other, 5, $defaut_paginator_b);
-        
+         }
+         else { $paginationb = null;}
         return $this->render('ApplicationEpostBundle:Epost:index.html.twig', array(
                     'paginationa' => $paginationa,
                     'paginationb' => $paginationb,
@@ -345,9 +349,10 @@ class EpostController extends Controller {
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'epost_propositions');
             $query = $em->getRepository('ApplicationEpostBundle:Epost')->getMyPager(array(
-                'author' => $user_id,
+                'non-author' => $user_id,
+                'group' => $group_id,
            ));
-        $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
+      //  $query = $em->getRepository('ApplicationEpostBundle:Epost')->myFindOtherAll($user_id, $group_id);
         $paginationa = $this->createpaginator($query, 5);
         return $this->render('ApplicationEpostBundle:Epost:indexpropositions.html.twig', array(
                     'paginationa' => $paginationa,

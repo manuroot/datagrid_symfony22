@@ -140,26 +140,25 @@ class EpostCommentsController extends Controller {
     }
 
     //====================================================================
-    // COMMENTAIRE SUR BLOG DU USER
+    // COMMENTAIRE SUR BLOG DU USER, par defaut owner blog
     //====================================================================
     public function renderComments($criteria = "ownerblog") {
         $em = $this->getDoctrine()->getManager();
         list($user_id, $group_id) = $this->getuserid();
-        if ($user_id != 0) {
-            $query = $em->getRepository('ApplicationEpostBundle:EpostComments')->myFindBlogComments($user_id);
-            $paginationa = $this->createpaginator($query, 20);
-            $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
-        } else {
-            throw $this->createNotFoundException('User not connected.');
-        }
+        if ($user_id == 0) {
+         } 
+         
         $session = $this->getRequest()->getSession();
 
         switch ($criteria) {
             case 'ownerblog':
+                $query = $em->getRepository('ApplicationEpostBundle:EpostComments')->myFindBlogComments($user_id);
                 $session->set('buttonretour', 'epost_comment_ownerblogview');
                 $page = 'ApplicationEpostBundle:EpostComments:indexownerblog.html.twig';
                 break;
+            // les commentaires du user loggé
             case 'owner':
+                $query = $em->getRepository('ApplicationEpostBundle:EpostComments')->myFindMyComments($user_id);
                 $session->set('buttonretour', 'epost_comment_ownerview');
                 $page = 'ApplicationEpostBundle:EpostComments:indexowner.html.twig';
                 break;
@@ -167,6 +166,9 @@ class EpostCommentsController extends Controller {
                 throw $this->createNotFoundException('PAs de parametre sur fonction: rendercomments.');
                 break;
         }
+               $paginationa = $this->createpaginator($query, 20);
+            $paginationa->setTemplate('ApplicationEpostBundle:pagination:twitter_bootstrap_pagination.html.twig');
+    
         return $this->render($page, array(
                     'paginationa' => $paginationa,
                 ));

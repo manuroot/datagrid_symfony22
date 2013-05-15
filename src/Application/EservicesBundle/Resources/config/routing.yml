@@ -17,7 +17,3 @@ _eproduit_history:
 _eproduit_notes:
     resource: "@ApplicationEservicesBundle/Resources/config/routing/eproduitnotes.yml"
     prefix:   /enotes   
-_egroup:
-    resource: "@ApplicationEservicesBundle/Resources/config/routing/eservicegroup.yml"
-    prefix:   /egroupes    
-    

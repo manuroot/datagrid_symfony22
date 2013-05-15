@@ -45,7 +45,7 @@ class EpostCategories {
       /**
      * @var \EpostCategories
      *
-     * @ORM\ManyToOne(targetEntity="Application\EservicesBundle\Entity\EserviceGroup"))
+     * @ORM\ManyToOne(targetEntity="Application\RelationsBundle\Entity\EserviceGroup"))
      * @ORM\OrderBy({"nomGroup" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_group", referencedColumnName="id",nullable=true)
@@ -166,10 +166,10 @@ class EpostCategories {
     /**
      * Set idgroup
      *
-     * @param \Application\EservicesBundle\Entity\EserviceGroup $idgroup
+     * @param \Application\RelationsBundle\Entity\EserviceGroup $idgroup
      * @return EpostCategories
      */
-    public function setIdgroup(\Application\EservicesBundle\Entity\EserviceGroup $idgroup = null)
+    public function setIdgroup(\Application\RelationsBundle\Entity\EserviceGroup $idgroup = null)
     {
         $this->idgroup = $idgroup;
     
@@ -179,7 +179,7 @@ class EpostCategories {
     /**
      * Get idgroup
      *
-     * @return \Application\EservicesBundle\Entity\EserviceGroup 
+     * @return \Application\RelationsBundle\Entity\EserviceGroup 
      */
     public function getIdgroup()
     {

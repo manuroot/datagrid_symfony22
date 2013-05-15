@@ -9,7 +9,11 @@
   {% block stylesheets %}
 {{ parent() }}
 <link rel="stylesheet" href="{{ asset('bundles/applicationchangements/css/sliding.css') }}" type="text/css" media="all"/>
-
+ <style>
+      tr.single {
+         background-color: #000000;
+        } 
+        </style>
  {% endblock %}
 
 {% block content_header '' %}
@@ -83,7 +87,13 @@ Changements
                     </thead>
                     <tbody>
     {% for entity in pagination %}
-                            <tr>
+                            
+                        
+                              
+                             {% if entity.dateDebut %}
+                             {% if date(entity.dateDebut) > date('-7days')  and date(entity.dateDebut) < date('+15days')%}
+              <tr class="warning">
+                           {% endif %}   {% else %} <tr>{% endif %}   
                                 <td><a href="{{ path('changements_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                                 <td>{{ entity.nom }}</td>
                                 <td>{% if entity.dateDebut %}{{ entity.dateDebut|date('Y-m-d H') ~ 'h' }}{% endif %}</td>

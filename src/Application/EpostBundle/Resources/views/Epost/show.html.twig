@@ -195,13 +195,19 @@ collapsible: true
 {% for comment in comments %}#}
                 <thead>
         <tr class="title"> 
-                 <th>{{ comment.created|date}} Par {{ comment.user }} 
-                     ({{ comment.id }} - 
+            
+            
+<th>
+    <i class="icon-user"></i> {{ comment.user }}
+          {#({{ comment.id }} - 
                  {% if comment.isComment == 0 %}C{% else %}D
                 {% endif %})
-                 </th>
-                 
-        </tr>
+            #}   
+   <i class="icon-time"></i> {{ comment.created|date}}
+                                             
+</th></tr> 
+               
+               
     </thead>
     
             <tr>

@@ -22,3 +22,8 @@ _chronousergroup:
 _environnements:
     resource: "@ApplicationRelationsBundle/Resources/config/routing/environnements.yml"
     prefix:   /environnements
+
+_egroup:
+    resource: "@ApplicationRelationsBundle/Resources/config/routing/eservicegroup.yml"
+    prefix:   /egroupes    
+    

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Application\EservicesBundle\Entity;
+namespace Application\RelationsBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Eservicegroup
  *
  * @ORM\Table(name="eservices_group")
- * @ORM\Entity(repositoryClass="Application\EservicesBundle\Repository\EserviceGroupRepository")
+ * @ORM\Entity(repositoryClass="Application\RelationsBundle\Repository\EserviceGroupRepository")
  * @UniqueEntity(fields="nomGroup", message="Ce nom de groupe existe déjà...")
  * @ORM\Entity
  */

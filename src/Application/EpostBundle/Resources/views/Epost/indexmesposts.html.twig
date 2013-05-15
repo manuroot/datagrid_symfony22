@@ -75,11 +75,11 @@ MES POSTS
      <th>ImageMedia</th>
           <th{% if paginationa.isSorted('a.commentscount') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(paginationa, 'Commentaires', 'a.commentscount') }}</th>
              
-           {% if is_granted("ROLE_ADMIN") %}
+       {#    {% if is_granted("ROLE_ADMIN") %}#}
  <th colspan="4"><center>Actions</center></th>
-{% else %}
+{#{% else %}
  <th><center>Actions</center></th>
-{% endif %}
+{% endif %}#}
         </tr>
     </thead>
  

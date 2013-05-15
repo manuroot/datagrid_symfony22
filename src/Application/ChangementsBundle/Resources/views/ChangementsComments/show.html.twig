@@ -144,9 +144,13 @@ CHANGEMENT: {{ entity.nom }}
         <tbody>
 {% for comment in paginationa %}
     <thead>
-        <tr class="title"><th>{{ comment.created|date('l, F j, Y') }} par {{ comment.user }}</th></tr> 
+        <tr class="title"><th>
+
+                <i class="icon-user"></i> {{ comment.user }}
+   <i class="icon-time"></i> {{ comment.created|date('l, F j, Y') }}
+                                             
+</th></tr> 
                 
-        </tr>
     </thead>
     
     <tr>

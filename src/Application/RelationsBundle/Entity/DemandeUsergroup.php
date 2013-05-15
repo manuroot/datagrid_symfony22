@@ -28,7 +28,7 @@ class DemandeUsergroup
      /**
      * @var \ChronoUserGroup
      *
-     * @ORM\ManyToOne(targetEntity="Application\EservicesBundle\Entity\EserviceGroup",inversedBy="users", cascade={"persist", "merge"}))
+     * @ORM\ManyToOne(targetEntity="Application\RelationsBundle\Entity\EserviceGroup",inversedBy="users", cascade={"persist", "merge"}))
      * @ORM\OrderBy({"nomGroup" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_group", referencedColumnName="id",nullable=false)
@@ -160,10 +160,10 @@ class DemandeUsergroup
     /**
      * Set idgroup
      *
-     * @param \Application\EservicesBundle\Entity\EserviceGroup $idgroup
+     * @param \Application\RelationsBundle\Entity\EserviceGroup $idgroup
      * @return DemandeUsergroup
      */
-    public function setIdgroup(\Application\EservicesBundle\Entity\EserviceGroup $idgroup)
+    public function setIdgroup(\Application\RelationsBundle\Entity\EserviceGroup $idgroup)
     {
         $this->idgroup = $idgroup;
     
@@ -173,7 +173,7 @@ class DemandeUsergroup
     /**
      * Get idgroup
      *
-     * @return \Application\EservicesBundle\Entity\EserviceGroup 
+     * @return \Application\RelationsBundle\Entity\EserviceGroup 
      */
     public function getIdgroup()
     {

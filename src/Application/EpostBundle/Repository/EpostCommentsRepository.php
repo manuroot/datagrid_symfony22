@@ -61,6 +61,22 @@ class EpostCommentsRepository extends EntityRepository {
 
         return $query;
     }
+    
+     public function myFindMyComments($user_id) {
+
+        $query = $this->createQueryBuilder('a')
+                ->select('a,b')
+                ->add('orderBy', 'a.id DESC')
+                  ->Where('a.user = :iduser')
+                  ->leftJoin('a.epost', 'b')
+                ->setParameter('iduser', $user_id)
+                ->getQuery()
+              // ->getQuery()->getResult()
+                ;
+
+        return $query;
+    }
+    
      
 public function getCommentsForPost($postId, $approved = true)
     {

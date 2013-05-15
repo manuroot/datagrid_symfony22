@@ -25,7 +25,7 @@
 
 {% block content_header '' %}
 {% block title %}
-MES NOTES-POSTS 
+ NOTES-POSTS 
 {% endblock %}
 {% block content %}
 
@@ -37,7 +37,7 @@ MES NOTES-POSTS
     {% endfor %}
 {% endfor %}
 
- {% if is_granted("ROLE_USER") %}   
+ {% if is_granted("ROLE_ADMIN") %}   
     <a href="{{ path('epostnotes_new') }}" class="btn btn-medium btn-primary"><i class="icon-plus"></i> Ajouter une note</a>
 {% endif %}
     <br><br>

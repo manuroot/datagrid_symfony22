@@ -37,7 +37,8 @@
                  <th>Username</th>
                  <th>Groupe</th>
                    
-                <th>Isaccepted</th>
+                <th>Status</th>
+                    <th>Parrain</th>
                 <th>Date de Demande</th>
                 <th>Actions</th>
             </tr>
@@ -57,6 +58,12 @@
                         En Attente
                 {% else %} Acceptée
                 {% endif %}</td>
+                    <td>
+                {% if entity.iduserParrain is not null %}
+                     {{ entity.iduserParrain }}
+                {% else %} ---
+                {% endif %}</td>
+                   
                 <td>{{ entity.createdAt|created_ago }}</td>
                    <td>
                     <a href="{{ path('groupedemande_show', { 'id': entity.id }) }}">

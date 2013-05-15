@@ -1,11 +1,11 @@
 <?php
 
-namespace Application\EservicesBundle\Controller;
+namespace Application\RelationsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Application\EservicesBundle\Entity\EserviceGroup;
-use Application\EservicesBundle\Form\EserviceGroupType;
+use Application\RelationsBundle\Entity\EserviceGroup;
+use Application\RelationsBundle\Form\EserviceGroupType;
 
 /**
  * EserviceGroup controller.
@@ -47,10 +47,28 @@ class EserviceGroupController extends Controller {
         $em = $this->getDoctrine()->getManager();
         list($user_id, $group_id) = $this->getuserid();
         
-        $entities = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->findAll();
+        $entities = $em->getRepository('ApplicationRelationsBundle:EserviceGroup')->findAll();
 
-        return $this->render('ApplicationEservicesBundle:EserviceGroup:index.html.twig', array(
+        
+        
+         $em = $this->getDoctrine()->getManager();
+        
+        $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
+        if (!$current_user) {
+            throw $this->createNotFoundException('Unable to find user entity.');
+        }
+        //echo "groupe=$group_id";
+        //   exit(1);
+        // $entities = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->findAll();
+        $entities_mongroupe = $em->getRepository('ApplicationRelationsBundle:DemandeUsergroup')->getMyPager(
+                array('group' => $group_id));
+
+        
+        
+        
+        return $this->render('ApplicationRelationsBundle:EserviceGroup:index.html.twig', array(
                     'entities' => $entities,
+                    'entities_mongroupe' => $entities_mongroupe,
             'idgroup'=>$group_id,
                 ));
     }
@@ -72,7 +90,7 @@ class EserviceGroupController extends Controller {
             return $this->redirect($this->generateUrl('egroup_groupes_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('ApplicationEservicesBundle:EserviceGroup:new.html.twig', array(
+        return $this->render('ApplicationRelationsBundle:EserviceGroup:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                 ));
@@ -86,7 +104,7 @@ class EserviceGroupController extends Controller {
         $entity = new EserviceGroup();
         $form = $this->createForm(new EserviceGroupType(), $entity);
 
-        return $this->render('ApplicationEservicesBundle:EserviceGroup:new.html.twig', array(
+        return $this->render('ApplicationRelationsBundle:EserviceGroup:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                 ));
@@ -106,13 +124,13 @@ class EserviceGroupController extends Controller {
 
         if ($user_id == 0) {
             $mymessage = "Vous n'estes pas connecté";
-            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+            return $this->render('ApplicationRelationsBundle:EserviceGroup:deny.html.twig', array(
                         'mymessage' => $mymessage,
                     ));
         }
         if ($group_id == 0) {
             $mymessage = "Vous n'appartenez a aucun groupe";
-            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+            return $this->render('ApplicationRelationsBundle:EserviceGroup:deny.html.twig', array(
                         'mymessage' => $mymessage,
                     ));
         }
@@ -126,7 +144,7 @@ class EserviceGroupController extends Controller {
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
+        $entity = $em->getRepository('ApplicationRelationsBundle:EserviceGroup')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find EserviceGroup entity.');
         }
@@ -140,7 +158,7 @@ class EserviceGroupController extends Controller {
         $status_group = false;
         if ($user_id == 0) {
             $mymessage = "Vous n'estes pas connecté";
-            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+            return $this->render('ApplicationRelationsBundle:EserviceGroup:deny.html.twig', array(
                         'mymessage' => $mymessage,
                     ));
         }
@@ -151,7 +169,7 @@ class EserviceGroupController extends Controller {
 
 
         $deleteForm = $this->createDeleteForm($id);
-        return $this->render('ApplicationEservicesBundle:EserviceGroup:show.html.twig', array(
+        return $this->render('ApplicationRelationsBundle:EserviceGroup:show.html.twig', array(
                     'entity' => $entity,
                     'status_group' => $status_group,
                     'delete_form' => $deleteForm->createView(),));
@@ -164,7 +182,7 @@ class EserviceGroupController extends Controller {
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
+        $entity = $em->getRepository('ApplicationRelationsBundle:EserviceGroup')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find EserviceGroup entity.');
@@ -173,7 +191,7 @@ class EserviceGroupController extends Controller {
         $editForm = $this->createForm(new EserviceGroupType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('ApplicationEservicesBundle:EserviceGroup:edit.html.twig', array(
+        return $this->render('ApplicationRelationsBundle:EserviceGroup:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -190,7 +208,7 @@ class EserviceGroupController extends Controller {
          */
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
+        $entity = $em->getRepository('ApplicationRelationsBundle:EserviceGroup')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find EserviceGroup entity.');
@@ -207,7 +225,7 @@ class EserviceGroupController extends Controller {
             return $this->redirect($this->generateUrl('egroup_groupes', array('id' => $id)));
         }
 
-        return $this->render('ApplicationEservicesBundle:EserviceGroup:edit.html.twig', array(
+        return $this->render('ApplicationRelationsBundle:EserviceGroup:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -224,7 +242,7 @@ class EserviceGroupController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
+            $entity = $em->getRepository('ApplicationRelationsBundle:EserviceGroup')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find EserviceGroup entity.');
@@ -256,13 +274,13 @@ class EserviceGroupController extends Controller {
         list($user_id, $group_id) = $this->getuserid();
         if ($user_id == 0) {
             $mymessage = "Vous n'estes pas connecté";
-            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+            return $this->render('ApplicationRelationsBundle:EserviceGroup:deny.html.twig', array(
                         'mymessage' => $mymessage,
                     ));
         }
         if ($group_id == 0) {
             $mymessage = "Vous n'appartenez a aucun groupe";
-            return $this->render('ApplicationEservicesBundle:EserviceGroup:deny.html.twig', array(
+            return $this->render('ApplicationRelationsBundle:EserviceGroup:deny.html.twig', array(
                         'mymessage' => $mymessage,
                     ));
         }

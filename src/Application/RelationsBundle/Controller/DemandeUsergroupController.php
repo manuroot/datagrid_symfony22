@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\RelationsBundle\Entity\DemandeUsergroup;
 use Application\RelationsBundle\Form\DemandeUsergroupType;
 use Application\RelationsBundle\Form\DemandeUsergroupAdminType;
-use Application\EservicesBundle\Entity\EserviceGroup;
+use Application\RelationsBundle\Entity\EserviceGroup;
 use Application\EservicesBundle\Form\EserviceGroupType;
 
 /**
@@ -63,11 +63,8 @@ class DemandeUsergroupController extends Controller {
      */
     public function indexMonGroupeAction() {
         $em = $this->getDoctrine()->getManager();
-
         list($user_id, $group_id) = $this->getuserid();
         $current_user = $em->getRepository('ApplicationSonataUserBundle:User')->find($user_id);
-
-
         if (!$current_user) {
             throw $this->createNotFoundException('Unable to find user entity.');
         }
@@ -156,7 +153,7 @@ class DemandeUsergroupController extends Controller {
             $em->flush();
 
             //$idgroup = $postData['idgroup'];
-            $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($demandeur_group_id);
+            $entity_group = $em->getRepository('ApplicationRelationsBundle:EserviceGroup')->find($demandeur_group_id);
            
             
             $demandeur_user->setIdgroup($entity_group);
@@ -215,7 +212,7 @@ class DemandeUsergroupController extends Controller {
             $em->flush();
 
             // Non !! le set du group dans fosuser kan parrain accepte la demande
-            /* $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($idgroup);
+            /* $entity_group = $em->getRepository('ApplicationRelationsBundle:EserviceGroup')->find($idgroup);
               $em->persist($current_user);
               $current_user->setIdgroup($entity_group);
               $em->flush(); */
@@ -280,7 +277,7 @@ class DemandeUsergroupController extends Controller {
         //  echo "test id=$id";
         //  exit(1);
         $em = $this->getDoctrine()->getManager();
-        $entity_group = $em->getRepository('ApplicationEservicesBundle:EserviceGroup')->find($id);
+        $entity_group = $em->getRepository('ApplicationRelationsBundle:EserviceGroup')->find($id);
         if (!$entity_group) {
             throw $this->createNotFoundException('Unable to find EserviceGroup entity.');
         }

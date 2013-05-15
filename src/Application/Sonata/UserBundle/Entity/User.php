@@ -40,7 +40,7 @@ class User extends BaseUser
      /**
      * @var \ChronoUserGroup
      *
-     * @ORM\ManyToOne(targetEntity="Application\EservicesBundle\Entity\EserviceGroup",inversedBy="users", cascade={"persist", "merge"}))
+     * @ORM\ManyToOne(targetEntity="Application\RelationsBundle\Entity\EserviceGroup",inversedBy="users", cascade={"persist", "merge"}))
      * @ORM\OrderBy({"nomGroup" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_group", referencedColumnName="id",nullable=false)
@@ -68,7 +68,7 @@ class User extends BaseUser
      * @param \Application\EservicesBundle\Entity\ChronoUsergroup $idgroup
      * @return ChronoUser
      */
-    public function setIdgroup(\Application\EservicesBundle\Entity\Eservicegroup $idgroup=null)
+    public function setIdgroup(\Application\RelationsBundle\Entity\Eservicegroup $idgroup=null)
     {
         $this->idgroup = $idgroup;
     
@@ -78,7 +78,7 @@ class User extends BaseUser
     /**
      * Get idgroup
      *
-     * @return Application\EservicesBundle\Entity\Eservicegroup
+     * @return Application\RelationsBundle\Entity\Eservicegroup
      */
     public function getIdgroup()
     {

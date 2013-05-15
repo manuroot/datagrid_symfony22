@@ -75,7 +75,7 @@ class EpostNotesController extends Controller {
 
     /**
      * Lists all EpostNotes entities.
-     *
+     * sur les posts du groupe ??
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
@@ -86,6 +86,21 @@ class EpostNotesController extends Controller {
                 ));
     }
 
+    
+      /**
+     * Lists all EpostNotes entities.
+     *
+     */
+    public function indexMyNotesAction() {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('ApplicationEpostBundle:EpostNotes')->myFindAll();
+        $paginationa = $this->createpaginator($query, 10);
+        return $this->render('ApplicationEpostBundle:EpostNotes:index.html.twig', array(
+                    'paginationa' => $paginationa,
+                ));
+    }
+    
+    
     public function addnoteAction($id) {
 
         //id du post !!!
@@ -210,6 +225,35 @@ class EpostNotesController extends Controller {
             throw $this->createNotFoundException('Unable to find EpostNotes entity.');
         }
 
+        
+      
+       /* if ($user_id == 0) {
+            $mymessage = "Vous n'estes pas connecté";
+            return $this->render('ApplicationRelationsBundle:EserviceGroup:deny.html.twig', array(
+                        'mymessage' => $mymessage,
+                    ));
+        }
+        if ($group_id == 0) {
+            $mymessage = "Vous n'appartenez a aucun groupe";
+            return $this->render('ApplicationRelationsBundle:EserviceGroup:deny.html.twig', array(
+                        'mymessage' => $mymessage,
+                    ));
+        }*/
+        
+        
+        
+        
+       list($user_id, $group_id) = $this->getuserid();
+       $user_note_id=$entity->getUser()->getId();
+        if ($user_id != $user_note_id){
+            $mymessage = "Vous n'etes pas le proprietaire de cette note";
+            return $this->render('ApplicationEpostBundle::deny.html.twig', array(
+                        'mymessage' => $mymessage,
+                    ));
+        }
+           
+            
+            
         $editForm = $this->createForm(new EpostNotesType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 

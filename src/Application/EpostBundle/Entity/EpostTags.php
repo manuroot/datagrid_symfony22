@@ -85,7 +85,7 @@ class EpostTags {
   /**
      * @var \EpostTags
      *
-     * @ORM\ManyToOne(targetEntity="Application\EservicesBundle\Entity\EserviceGroup"))
+     * @ORM\ManyToOne(targetEntity="Application\RelationsBundle\Entity\EserviceGroup"))
      * @ORM\OrderBy({"nomGroup" = "ASC"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_group", referencedColumnName="id",nullable=true)
@@ -231,10 +231,10 @@ public function __construct($text = null)
     /**
      * Set idgroup
      *
-     * @param \Application\EservicesBundle\Entity\EserviceGroup $idgroup
+     * @param \Application\RelationsBundle\Entity\EserviceGroup $idgroup
      * @return EpostTags
      */
-    public function setIdgroup(\Application\EservicesBundle\Entity\EserviceGroup $idgroup = null)
+    public function setIdgroup(\Application\RelationsBundle\Entity\EserviceGroup $idgroup = null)
     {
         $this->idgroup = $idgroup;
     
@@ -244,7 +244,7 @@ public function __construct($text = null)
     /**
      * Get idgroup
      *
-     * @return \Application\EservicesBundle\Entity\EserviceGroup 
+     * @return \Application\RelationsBundle\Entity\EserviceGroup 
      */
     public function getIdgroup()
     {

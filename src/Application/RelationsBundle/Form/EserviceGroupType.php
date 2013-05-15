@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\EservicesBundle\Form;
+namespace Application\RelationsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +42,7 @@ class EserviceGroupType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Application\EservicesBundle\Entity\EserviceGroup'
+            'data_class' => 'Application\RelationsBundle\Entity\EserviceGroup'
         ));
     }
 
