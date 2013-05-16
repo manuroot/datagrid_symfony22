@@ -566,6 +566,7 @@ class EpostController extends Controller {
         ;
     }
 
+    // TODO:
     public function searchPostAction() {
         $request = $this->getRequest();
 

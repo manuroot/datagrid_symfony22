@@ -161,7 +161,7 @@
                                                                 
                                                                 
                                                                 
-                                     
+                                        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                                                  {% if foo[0] == 'egroup' %}
                                                 <li class="dropdown active">
                                     {% else %}  
@@ -174,16 +174,16 @@
                                                                 Groupes<b class="caret"></b> </a>
                                                             <ul class="dropdown-menu">
                                                                 <li><a href="{{ path('egroup_groupes') }}"><i class="icon-user"></i> {{ 'Dashboard Groupes'|trans }}</a></li>
-                                                              {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                                           
                                                                      <li><a href="{{ path('egroup_groupes_showmygroup') }}"><i class="icon-user"></i> {{ 'Mon Groupe'|trans }}</a></li>
                                                                      <li><a href="{{ path('groupedemande') }}"><i class="icon-user"></i> {{ 'Demandes de Groupe'|trans }}</a></li>
                                                                      <li><a href="{{ path('groupedemande_mongroupe') }}"><i class="icon-user"></i> {{ 'Demandes MonGroupe'|trans }}</a></li>
                                                          
-                                                                {% endif %}
+                                                             
 
                                                             </ul>
                                                         </li>
-                                                                
+                                                                   {% endif %}
                                    {% if foo[0] == 'certificatscenter' %}
                                                                 <li class="dropdown active">
                                     {% else %}  
