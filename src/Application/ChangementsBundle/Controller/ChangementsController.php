@@ -85,6 +85,9 @@ class ChangementsController extends Controller {
             $current_year = $data['year'];
             $current_month = $data['month'];
             $current_yearmonth = ("$current_year-$current_month");
+                $form = $this->createCalendarForm(array('mois'=>$current_month,'annee'=>$current_year));
+        $form->bindRequest($request);
+
             // print_r($data);
             //    exit(1);
         } else {
@@ -93,6 +96,9 @@ class ChangementsController extends Controller {
             $current_yearmonth = $current_date->format('Y-m');
             $current_year = $current_date->format('Y');
             $current_month = $current_date->format('m');
+                $form = $this->createCalendarForm(array('mois'=>$current_month,'annee'=>$current_year));
+
+
             
         }
         //   $postData = $request->request->get('contact');
@@ -121,9 +127,7 @@ class ChangementsController extends Controller {
         //  $month = $f->getMonth(2012, 6);
 
         
-        $form = $this->createCalendarForm(array('mois'=>$current_month,'annee'=>$current_year));
-
-
+    
         $session = $this->getRequest()->getSession();
         $session->set('buttonretour', 'changements');
         $em = $this->getDoctrine()->getManager();
