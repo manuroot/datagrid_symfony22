@@ -79,6 +79,7 @@ class ChangementsController extends Controller {
         if ($request->getMethod() == 'POST') {
             $dataform = $this->get('request')->get('form');
             $data=$dataform['publishedAt'];
+           // print_r($data);
             // print_r($data['publishedAt']);
            //     exit(1);
             $current_year = $data['year'];
@@ -119,7 +120,8 @@ class ChangementsController extends Controller {
         //  $f=$this->get('booking_repository');
         //  $month = $f->getMonth(2012, 6);
 
-        $form = $this->createCalendarForm();
+        
+        $form = $this->createCalendarForm(array('mois'=>$current_month,'annee'=>$current_year));
 
 
         $session = $this->getRequest()->getSession();
@@ -135,7 +137,7 @@ class ChangementsController extends Controller {
         // $nbtags = $query->getPicture()->count();
         $month = $this->get('calendr')->getMonth($current_year, $current_month);
         $events = $this->get('calendr')->getEvents($month);
-        $paginator = $this->get('knp_paginator');
+      //  $paginator = $this->get('knp_paginator');
 
         return $this->render('ApplicationChangementsBundle:Changements:calendar.html.twig', array(
                     'month' => $this->get('calendr')->getMonth($current_year, $current_month),
@@ -464,12 +466,22 @@ class ChangementsController extends Controller {
         return $response;
     }
 
-    private function createCalendarForm() {
+    private function createCalendarForm($values=array()) {
+      $year=isset($values['annee']) ? $values['annee'] : 'annee' ;
+       $month=isset($values['mois']) ? $values['mois'] : 'mois' ;
         return $this->createFormBuilder()
-                        ->add('publishedAt', 'date', array(
-                            'input' => 'timestamp',
-                            'widget' => 'choice',
-                            'format' => 'yyyy-MM-dd',
+          /*    ->add('publishedAt', 'date', array(
+                 'widget' => 'choice',
+    'empty_value' => array('year' => $year, 'month' => $month, 'day' => '1')
+))*/
+                     ->add('publishedAt', 'date', array(
+                        'widget' => 'choice',
+                                        'format' => 'yyyy-MM-dd',
+                                        'pattern' => '{{ year }}-{{ month }}-{{ day }}',
+                                        'years' => range(Date('Y'), 2009),
+                                        'label' => 'Date de Recherche',
+                                        'input' => 'string',
+                                     //   'data'  => date_create()
                         ))
                         ->getForm()
         ;
