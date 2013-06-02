@@ -8,14 +8,15 @@ use Application\MyNotesBundle\Entity\Notes;
 use Application\MyNotesBundle\Form\NotesType;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
-use  Pagerfanta\Exception\NotValidCurrentPageException;
+use Pagerfanta\Exception\NotValidCurrentPageException;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Grid;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Action\MassAction;
 use APY\DataGridBundle\Grid\Action\DeleteMassAction;
 use APY\DataGridBundle\Grid\Action\RowAction;
- 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Notes controller.
  *
@@ -28,54 +29,195 @@ class NotesController extends Controller {
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-         $entities = $em->getRepository('ApplicationMyNotesBundle:Notes')->myFindaAll();
-     //   $entities = $em->createQuery('SELECT a FROM ApplicationMyNotesBundle:Notes a'); //(2)
-
-
-        /* return $this->render('ApplicationMyNotesBundle:Notes:index.html.twig', array(
-          'entities' => $entities,
-          )); */
-
+        $entities = $em->getRepository('ApplicationMyNotesBundle:Notes')->myFindaAll();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $entities, $this->get('request')->query->get('page', 1)/* page number */, 5/* limit per page */
         );
-      //  $pagination->setSortableTemplate('ApplicationMyNotesBundle:Notes:index.html.twig');
-       $pagination->setTemplate('ApplicationMyNotesBundle:pagination:sliding.html.twig');
-//$pagination->setSortableTemplate('MyBundle:Pagination:sortable.html.twig');
-
-// parameters to template
+        $pagination->setTemplate('ApplicationMyNotesBundle:pagination:sliding.html.twig');
         return $this->render('ApplicationMyNotesBundle:Notes:index.html.twig', array(
                     'pagination' => $pagination,
                 ));
-//return compact('pagination');
     }
-private function mypager($adapter=null,$max=5,$page=1){
-        if (isset($adapter)){
-         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(5);
+
+    public function indexisotopeAction() {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('ApplicationMyNotesBundle:Notes')->myFindaAll();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $entities, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
+        $pagination->setTemplate('ApplicationMyNotesBundle:pagination:sliding.html.twig');
+        return $this->render('ApplicationMyNotesBundle:Notes:indexisotope.html.twig', array(
+                    'pagination' => $pagination,
+                ));
+    }
+
+    public function indexstickyAction() {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('ApplicationMyNotesBundle:Notes')->myFindaAll();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $entities, $this->get('request')->query->get('page', 1)/* page number */, 5/* limit per page */
+        );
+        $pagination->setTemplate('ApplicationMyNotesBundle:pagination:sliding.html.twig');
+        return $this->render('ApplicationMyNotesBundle:Notes:indexsticky.html.twig', array(
+                    'pagination' => $pagination,
+                ));
+    }
+
+    /* ============================================================
+     * Update position xyz Fonction
+     * ============================================================ */
+
+    //resizable
+    /*
+      public function resizableAction() {
+      $table = new Application_Model_DbTable_Notes();
+      $params = $this->_request->getParams();
+      // if (isset($id)&& $id>0){
+      $id = (int) $params['id'];
+      $where['id = ?'] = $id;
+      $w = (int) $params['w'];
+      $h = (int) $params['h'];
+      $data['wh'] = $w . "x" . $h;
+      $table->update($data, $where);
+      return;
+      }
+     */
+    public function updateposAction() {
+
+
+        $request = $this->getRequest();
+
+        if ($request->isXmlHttpRequest() && $request->getMethod() == 'POST') {
+            $em = $this->getDoctrine()->getManager();
+            $id = '';
+            /*  $applis = array();
+              $cert_app = array();
+             */
+            $id = $request->request->get('id');
+            $x = $request->request->get('x');
+            $y = $request->request->get('y');
+            $z = $request->request->get('z');
+            $w = $request->request->get('w');
+            $h = $request->request->get('h');
+            
+            $note_entity = $em->getRepository('ApplicationMyNotesBundle:Notes')->find($id);
+            if (!$note_entity) {
+                throw $this->createNotFoundException('Unable to find Notes entity.');
+            }
+            $data = array();
+            $data['id'] = $id;
+             if (isset($x) && isset($y) && isset($z)){
+                 //if (array_key_exists('xyz',$data)){
            
-        return $pagerfanta;
-           }
-        else {return null;}
+           // if (isset( $data['xyz'])){
+                    $data['xyz'] = $x . 'x' . $y . 'x' . $z;
+           $note_entity->setXyz($data['xyz']);
+          }
+            if (isset($w) && isset($h)){
+                    $data['wh'] = $w . 'x' . $h;
+                    $note_entity->setWh($data['wh']);
+            }
+            $em->persist($note_entity);
+            $em->flush();
+   
+            $output = array();
+            $response = new Response();
+            $output[] = array('success' => true);
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setContent(json_encode($output));
+            return $response;
+
+            /*   $applis=array(3,4);
+              $response = new Response(json_encode($output));
+              $response->headers->set('Content-Type', 'application/json');
+
+              return $response; */
+       /* } else {
+            $response = new Response();
+            $output[] = array('success' => false);
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setContent(json_encode($output));
+            return $response;
+        }*/
+        }
+
+
         
     }
-    
-     public function indexgenemuAction() {
-      
+
+    /* return $this->render('ApplicationMyNotesBundle:Notes:edit.html.twig', array(
+      'entity' => $entity,
+      'edit_form' => $editForm->createView(),
+      'delete_form' => $deleteForm->createView(),
+      ));
+      } */
+    /*  $this->view->addHelperPath(
+      "ZendX/JQuery/View/Helper", "ZendX_JQuery_View_Helper");
+      $layout = Zend_Layout::getMVCInstance();
+      $table = new Application_Model_DbTable_Notes();
+      $params = $this->_request->getParams();
+      $id = (int) $params['id'];
+      $where['id = ?'] = $id;
+      $x = (int) $params['x'];
+      $y = (int) $params['y'];
+      $z = (int) $params['z'];
+      $data['xyz'] = $x . "x" . $y . "x" . $z;
+      $table->update($data, $where);
+      return;
+      } */
+    /*
+      public function updatesnapAction() {
+      $this->view->addHelperPath(
+      "ZendX/JQuery/View/Helper", "ZendX_JQuery_View_Helper");
+      $layout = Zend_Layout::getMVCInstance();
+      $table = new Application_Model_DbTable_Notes();
+      $params = $this->_request->getParams();
+      $id = (int) $params['id'];
+      $where['id = ?'] = $id;
+      $x = (int) $params['x'];
+      $y = (int) $params['y'];
+      $z = (int) $params['z'];
+      $w = (int) $params['w'];
+      $h = (int) $params['h'];
+      $data['classement'] = $params['classement'];
+      if ($w != 0 && $h != 0)
+      $data['wh'] = $w . "x" . $h;
+      $data['xyz'] = $x . "x" . $y . "x" . $z;
+      $table->update($data, $where);
+      return;
+      }
+
+     */
+
+    private function mypager($adapter = null, $max = 5, $page = 1) {
+        if (isset($adapter)) {
+            $pagerfanta = new Pagerfanta($adapter);
+            $pagerfanta->setMaxPerPage(5);
+
+            return $pagerfanta;
+        } else {
+            return null;
+        }
+    }
+
+    public function indexgenemuAction() {
+
 // parameters to template
-           $entity = new Notes();
+        $entity = new Notes();
         $form = $this->createForm(new NotesType(), $entity);
 
         return $this->render('ApplicationMyNotesBundle:Notes:indexgenemu.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                 ));
-        
-    
+
+
 //return compact('pagination');
     }
-    
+
     //==============================================
     // VIEW ALL ACTEURS
     //==============================================
@@ -84,15 +226,15 @@ private function mypager($adapter=null,$max=5,$page=1){
           $request = $this->get('request');
           $page = $request->query->get('page',1);
          */
-        $em = $this->container->get('doctrine')->getEntityManager();
-         $repo = $em->getRepository('ApplicationMyNotesBundle:Notes')->myFindAll();
-     //
-     //  $entityQuery = $em->getRepository('MyAppFilmothequeBundle:Acteur')->myXFindAll();
+        $em = $this->container->get('doctrine')->getManager();
+        $repo = $em->getRepository('ApplicationMyNotesBundle:Notes')->myFindAll();
+        //
+        //  $entityQuery = $em->getRepository('MyAppFilmothequeBundle:Acteur')->myXFindAll();
         $adapter = new DoctrineORMAdapter($repo);
-        $pagerfanta=$this->mypager($adapter);
-         try {
+        $pagerfanta = $this->mypager($adapter);
+        try {
             $pagerfanta->setCurrentPage($page);
-             $q = $pagerfanta->getCurrentPageResults();
+            $q = $pagerfanta->getCurrentPageResults();
         } catch (NotValidCurrentPageException $e) {
             throw new NotFoundHttpException();
         }
@@ -102,22 +244,23 @@ private function mypager($adapter=null,$max=5,$page=1){
                     'entities' => $q,
                 ));
     }
-  //==============================================
+
+    //==============================================
     // VIEW ALL ACTEURS
     //==============================================
     public function viewapyAction($page = 1) {
-        
-       //    $em = $this->container->get('doctrine')->getEntityManager();
-       //  $source = $em->getRepository('ApplicationMyNotesBundle:Notes');
-     
-       $source = new Entity('ApplicationMyNotesBundle:Notes');
+
+        //    $em = $this->container->get('doctrine')->getManager();
+        //  $source = $em->getRepository('ApplicationMyNotesBundle:Notes');
+
+        $source = new Entity('ApplicationMyNotesBundle:Notes');
         // Get a Grid instance
         // $grid = new Grid('grid');
         $grid = $this->container->get('grid');
         // Attach the source to the grid
-         $grid->setSource($source);
-         $grid->setDefaultOrder('id', 'desc');
-      //   $grid->addExport(new XMLExport('XML Export', 'export'));
+        $grid->setSource($source);
+        $grid->setDefaultOrder('id', 'desc');
+        //   $grid->addExport(new XMLExport('XML Export', 'export'));
         // Set the selector of the number of items per page
         $grid->setLimits(array(5, 10, 15));
 
@@ -126,25 +269,22 @@ private function mypager($adapter=null,$max=5,$page=1){
         $grid->addMassAction(new DeleteMassAction());
         // action column
         $actionsColumn = new ActionsColumn('info_column_1', 'Actions 1');
-$actionsColumn->setSeparator("<br />");
+        $actionsColumn->setSeparator("<br />");
 //$grid->addColumn($actionsColumn);
+        // Add row actions in the default row actions column
+        // $myRowAction = new RowAction('Edit', 'notes_edit');
 
-        
-         // Add row actions in the default row actions column
-      // $myRowAction = new RowAction('Edit', 'notes_edit');
-        
-$myRowAction = new RowAction('', 'notes_edit', true, '_self', array('class' => 'editme'));
+        $myRowAction = new RowAction('', 'notes_edit', true, '_self', array('class' => 'editme'));
 
         $myRowAction->setColumn('info_column1');
         $grid->addRowAction($myRowAction);
 
         $myRowAction = new RowAction('Delete', 'notes_delete', true, '_self');
         $grid->addRowAction($myRowAction);
-         // Return the response of the grid to the template
+        // Return the response of the grid to the template
         return $grid->getGridResponse('ApplicationMyNotesBundle:Notes:indexapy.html.twig');
-
-        
     }
+
     /**
      * Finds and displays a Notes entity.
      *
@@ -259,23 +399,21 @@ $myRowAction = new RowAction('', 'notes_edit', true, '_self', array('class' => '
      * Deletes a Notes entity.
      *
      */
-    
-       //==============================================
+    //==============================================
     // SUPPRIMER ACTEUR
     //==============================================
     public function deleteAction($id) {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $note = $em->find('ApplicationMyNotesBundle:Notes', $id);
         if (!$note) {
             throw new NotFoundHttpException("Note non trouvée");
         }
         $em->remove($note);
         $em->flush();
-         return $this->redirect($this->generateUrl('notes'));
-       // return new RedirectResponse($this->container->get('router')->generate('notesfanta'));
+        return $this->redirect($this->generateUrl('notes'));
+        // return new RedirectResponse($this->container->get('router')->generate('notesfanta'));
     }
-    
-    
+
     public function deleteActionqq(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);

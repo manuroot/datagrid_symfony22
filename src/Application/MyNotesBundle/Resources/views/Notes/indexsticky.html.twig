@@ -1,0 +1,339 @@
+{% extends "ApplicationMyNotesBundle::layout.html.twig" %}
+
+  {% block stylesheets %}
+   {{parent()}}
+     <link rel="stylesheet" href="{{ asset('css/fancy/sticky.css') }}" type="text/css" />
+      <link rel="stylesheet" href="{{ asset('css/fancy/jquery.fancybox-1.2.6.css') }}" type="text/css" />
+      <link rel="stylesheet" href="{{ asset('css/fancy/jquery.fancybox.css') }}" type="text/css" />
+      <link rel="stylesheet" href="{{ asset('css/fancy/jquery.fancybox-buttons.css') }}" type="text/css" />
+     
+   
+ 
+<style>
+  textarea {
+
+        /*   font-family: cursive;*/
+        font:14px 'Gloria Hallelujah', cursive;
+        /*  line-height:1.5;*/
+        background-color:transparent;
+        border:0;
+        /*
+         border-radius:3px;
+          background: linear-gradient(#F9EFAF, #F7E98D);
+          background: -webkit-linear-gradient(#F9EFAF, #F7E98D);
+          box-shadow:0 4px 6px rgba(0,0,0,0.1);*/
+        overflow:hidden;
+        /*transition:box-shadow 0.5s ease;
+        transition:-webkit-box-shadow 0.5s ease;*/
+        font-smoothing:subpixel-antialiased;
+        max-width:520px;
+        height:90%;
+        max-height:100%;
+    }
+    
+
+    textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
+    textarea:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
+    #main-buttonsa,#main-buttonsb,#main-buttonsc{
+            position:absolute;
+            width:70px;
+        height:80px;
+         top:100px;
+    }
+     #main-buttonsa{
+        left:20px;
+    }
+     #main-buttonsb{
+        left:100px;
+       
+    }
+      #main-buttonsc{
+        left:180px;
+        
+       
+    }
+     
+    
+     
+    /* div class="cartdiv"*/
+    .mini {
+         height: 60px;float:left;position:relative;
+        
+    }
+    #cartdiv
+    {
+        width:80%;float:left;margin-top:10px;
+    }
+    #update
+    {
+        float:left;
+        width:100%;
+        margin-top:10px;
+        text-indent:10px;
+        color:#BFC6D0;
+        font-size:12px;
+        display:none;
+    }
+    #snaptarget { height: 60px;float:bottom; }
+    #cart
+    {
+        width:75%;float:left;height:50px;
+        background-color:#869cbf;
+        padding:10px;
+        -moz-border-radius:5px;
+        -webkit-border-radius:5px;
+        border-radius:5px;
+          border-color: #000088;
+
+    }
+    #cart img
+    {
+        width:30px;
+        height:30px;
+        cursor: move;
+    }
+    #cart:hover
+    {
+               background-color:pink;
+        border:solid 1px #BFC6D0;
+    }
+     .carthover
+    {
+               background-color:pink;
+        border:solid 1px #BFC6D0;
+    }
+    
+    ul.items{
+        margin:0;
+        padding:0;
+        list-style-type:none;
+        width:100%;
+        float:left;
+        cursor: move;
+    }
+    ul.items li{ float:left;margin:0 10px; }
+    
+    div.emptytrash
+    {
+        float:left;
+        margin-top:5px;
+      background: url("/images/empty.png") no-repeat;
+        width:90px;
+        height:90px;
+        margin-left:40px;
+    }
+     div.emptytrash:hover
+    {
+      border-color: #CC0000;
+      border-style: solid;
+          
+    }
+    /* class="full"*/
+   div.noemptytrash {
+   /*.full {*/
+     float:left;
+        margin-top:5px;
+  background: url("/images/fullm.png") no-repeat;
+    width:130px;
+        height:130px;
+        margin-left:40px;
+   }
+
+.over {
+    background-color: #cedae3;
+}
+ 
+.out {
+    background-color: #a6bcce;
+}
+
+    .trashhover
+    {
+        background-color:pink;
+        border:solid 1px #BFC6D0;
+    }
+                body {
+                    background-image:url("/images/ravenna.png");
+                }
+        
+        /*- GENERIC BODY STYLES -*/
+        
+</style>
+{% endblock %} 
+    
+  
+
+{% block title %}{{ parent() }} Liste- {% endblock %}
+
+{% block content_header '' %}
+
+{% block content %}
+
+ <a href="{{ path('notes_new') }}" class="btn  btn-warning">Ajouter Note</a>
+<br><br>
+
+
+    
+<div id="main">
+     <div id="cartdiv">
+    <div id="cart">
+       Post-it en attente
+       
+   </div>
+    <div id="update">
+      {#  Updating <img src="/uzf04new/images/ajax-loader.gif" />#}
+            
+    </div>
+             <div id="sticky-notes">
+{% for entity in pagination %}
+                      {% set mypos = entity.xyz|split('x') %}
+                     {% set mysize = entity.wh|split('x') %}
+<!--<tr {% if loop.index is odd %}class="color"{% endif %}>-->
+             {#% debug entities.categories%#}
+   <div class="note zoomTarget {{ entity.color }}" id="{{ entity.id }}" 
+        style="padding-top:0px;  width:{{mysize[0]}}px;height:{{mysize[1]}}px;left:{{mypos[0]}}px;top:{{mypos[1]}}px;">
+        
+        {#height:{{mysize[0]}}px;  left:{{mypos[0]}}px; top:{{mypos[1]}}px;">#}
+       
+       {#
+        list($width, $height) = explode('x', $row['wh']);
+    $notes.= '<div class="note zoomTarget ' . $row['color'] . '" id="' . $row['id'] . '" ';
+    $notes .='style="padding-top:0px;  width:' . $width . 'px;height:' . $height . 'px; left:' . $left . 'px;top:' . $top . 'px;z-index:' . $zindex . '">';
+  #}
+    
+    
+   <div class="bar_titre" style="width:100%;">
+   <div class="categories">{{ entity.categories.nom }}</div>
+   <div class="delnote"><a  class="deltsticky ui-icon ui-icon-trash" id="{{ entity.id }}" href="#"></a></div>
+   </div>
+   <textarea class="area-note" id="stickynote-{{ entity.id }}">{{entity.text}}</textarea>
+    <div class="author">{{ entity.proprietaire }}</div>
+    </div>
+    
+    
+    {% endfor %}
+
+</div>
+</div>
+   
+    <!-- La Poubelle -->
+<div id="trash" class="emptytrash">
+</div>
+    
+</div>
+   
+
+<!--
+    </div>
+     </div>
+-->
+<div style="display: none">
+    <div id="deleted">Record supprimé</div>
+</div>
+
+
+<div id="dialogbox" style="display:none">Confirmer la suppression ?</div>
+<!--
+<span style="cursor:pointer" class="btn orange delete dialog-confirm" id="1">Remove Bookmark</span>
+-->
+
+<div id="dialog-message" style="display:none" title="Message">
+    <p> <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span> Post-it supprimé. </p>
+</div>
+<!--
+<a onclick="openajaxfancybox('/notes/editer/id/1');">Show Product ID 1</a>
+
+<a href="#myDivID" id="fancyBoxLink" title="Sample">Click me to show this awesome div</a>
+-->
+<div style="display:none">
+    <div id="myDivID">
+        <span>Hey this is what is shown inside fancybox.</span>
+        <span>Apparently I can show all kinds of stuff here!</span>
+        <input type="text" value="Add some text here" />
+    </div>
+</div>
+
+
+
+
+
+
+{# display navigation #}
+<!--<div class="navigation">-->
+   
+    {{ knp_pagination_render(pagination) }}
+<!--</div>-->
+
+
+{% endblock %}
+
+
+
+
+ {% block javascripts %}
+
+{{ parent() }}
+     <script type="text/javascript" src="{{ asset('jquery/jquery-ui-1.9.2.custom.min.js') }}"></script>
+  {#
+   <script src="{{ asset('jquery/shapeshift/vendor/jquery.touch-punch.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('jquery/shapeshift/jquery.shapeshift.js') }}" type="text/javascript"></script>
+#}
+  <script type="text/javascript" src="{{ asset('js/jquery.fancybox-1.2.6.pack.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/sticky.js') }}"></script>
+ 
+  <script type="text/javascript">
+ $(document).ready(function(){
+   
+        $("div#trash").droppable({
+            accept: '.note',
+              tolerance: "pointer",  
+            hoverClass: 'trashhover',
+            /* over: function() {
+                       $(this).removeClass('out').addClass('over');
+                },*/
+          
+            drop: function( event, ui ) {
+             console.log('pass dans poubelle'); 
+            
+                  prod_id = ui.draggable.attr("id");
+                ui.draggable.remove();
+                $.ajax({
+                    type: "POST",
+                    url: baseUrl + '/notes/delete',
+                    data: "id=" + prod_id  + "&act=delete",
+                    cache: false,
+                    success: function(html){
+                        $('#cart').html(html);
+                        $("#cart .note").draggable();
+                          $("div#trash").removeClass('emptytrash').addClass('noemptytrash');
+                          $('#cart').append('<p>Post-it ' + prod_id + ' supprimé</p>');
+                       // $("#trash").css("background",'url("/uzf04new/images/full.png")');
+                    }
+                });
+               }
+    });
+    /*	$("ul.subnav").parent().append("<span></span>"); //Only shows drop down trigger when js is enabled (Adds empty span tag after ul.subnav*)
+	
+	$("ul.topnav li span").click(function() { //When trigger is clicked...
+		
+		//Following events are applied to the subnav itself (moving subnav up and down)
+		$(this).parent().find("ul.subnav").slideDown('fast').show(); //Drop down the subnav on click
+
+		$(this).parent().hover(function() {
+		}, function(){	
+			$(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
+		});
+
+		//Following events are applied to the trigger (Hover events for the trigger)
+		}).hover(function() { 
+			$(this).addClass("subhover"); //On hover over, add class "subhover"
+		}, function(){	//On Hover Out
+			$(this).removeClass("subhover"); //On hover out, remove class "subhover"
+	});*/
+});
+</script>
+
+
+
+  
+ {% endblock %}

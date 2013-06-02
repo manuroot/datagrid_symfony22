@@ -2,6 +2,19 @@ notes:
     pattern:  /
     defaults: { _controller: "ApplicationMyNotesBundle:Notes:index" }
 
+notessticky:
+    pattern:  /sticky
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:indexsticky" }
+
+notesisotpe:
+    pattern:  /isotope
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:indexisotope" }
+
+notesupdatepos:
+    pattern:  /updatepos
+    defaults: { _controller: "ApplicationMyNotesBundle:Notes:updatepos" }
+    requirements: { _method: post }
+
 notesfanta:
     pattern:  /fanta/{page}
     defaults: { _controller: ApplicationMyNotesBundle:Notes:viewfanta,page: 1 }
