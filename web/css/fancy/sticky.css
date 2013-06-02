@@ -153,11 +153,11 @@ a.green-button:hover{
 .author{
 	/* The author name on the note: */
 	/*bottom:15px;*/
-	bottom:15px;
+	bottom:12px;
 	color:#666666;
 	font-family:Arial,Verdana,sans-serif;
         font-style:italic;
-	font-size:14px;
+	font-size:12px;
         
 	position:absolute;
 	right:10px;
@@ -183,8 +183,10 @@ a.green-button:hover{
         margin-left:5px;
         /*margin-right:50px;*/
        /* height:auto;*/
-	height:950px;
+	height:700px;
 	z-index:10;
+        	border:1px solid #AAAAAA;
+        
 	/*background:url("/css/fancy/img/add_a_note_help.gif") no-repeat left top;*/
 }
 
@@ -309,7 +311,7 @@ div.bar_titre {
     padding-top:0px;
     margin-top:0px;
    /* margin-left:20px;*/
-    font-size: 12px;
+    font-size: 10px;
     background-image: url('/images/sticky_edit.gif');
     border-bottom: 1px solid #000000;
      height: 20px;

@@ -184,7 +184,9 @@ $('.note').mouseout(function()
             }
         });
     }
-
+/*====================================================
+ * MAIN()
+ ====================================================*/
     $("#dialog-message").hide();
     $("#confirmation_dialog").hide();
 
@@ -293,7 +295,9 @@ $('.note').mouseout(function()
         if (status==false){
             return false;
         }
-        $(this).replaceWith('<img src="' + baseUrl + '"/images/sticky/ajax_load.gif" style="margin:30px auto;display:block" />');
+           /*  <img src="{{ asset('bundles/applicationmynotes/images/edit.png') }}" alt="notes_edit" width="15" height="15" />*/
+                  
+        $(this).replaceWith('<img src="' +  '"/images/sticky/ajax_load.gif" style="margin:30px auto;display:block" />');
         var data=get_datas();
     
 
@@ -408,8 +412,8 @@ $('.note').mouseout(function()
                 /*   console.log("id=",id);*/
                 var dataAjax = {
                     id:  parseInt( ui.helper.attr('id')),
-                    x: ui.position.left,
-                    y: ui.position.top,
+                    x: parseInt(ui.position.left),
+                    y: parseInt(ui.position.top),
                     z: zIndex
        
         
@@ -461,8 +465,8 @@ $('.note').mouseout(function()
             stop:function(e,ui){
                     var dataAjax = {
                     id:  parseInt( ui.helper.attr('id')),
-                    w		: ui.size.width,
-                    h		: ui.size.height,
+                    w		: parseInt(ui.size.width),
+                    h		: parseInt(ui.size.height),
                     z		: zIndex
              };
              $.ajax({
